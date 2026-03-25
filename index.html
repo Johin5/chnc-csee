@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ConvergenSEE — Dark Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&family=Saira+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { background: #000718; color: #fff; font-family: 'Archivo', sans-serif; overflow-x: hidden; }
+      #root { width: 100%; zoom: 105%; }
+      a { text-decoration: none; color: inherit; }
+      button { font-family: inherit; cursor: pointer; }
+      .ticker-wrap { position: relative; overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
+      .ticker-track { display: flex; align-items: center; gap: 80px; width: max-content; animation: ticker 20s linear infinite; }
+      .ticker-track:hover { animation-play-state: paused; }
+      .ticker-item { flex-shrink: 0; display: flex; align-items: center; }
+      .ticker-item img { height: 40px; width: auto; max-width: 168px; object-fit: contain; opacity: 0.72; transition: opacity 0.2s ease, transform 0.2s ease; }
+      .ticker-item img:hover { opacity: 1; }
+      @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+      .chnc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1240px; margin: 0 auto; padding: 0 100px; }
+      .stat-card { background: #0f1520; border: 1px solid rgba(52,204,50,0.15); padding: 40px 30px; }
+      .stat-num { font-family: 'Saira Condensed', sans-serif; font-size: 56px; font-weight: 800; color: #34cc32; line-height: 1; }
+      .stat-label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
