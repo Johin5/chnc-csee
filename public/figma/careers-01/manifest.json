@@ -1,0 +1,261 @@
+[
+  {
+    "file": "221.png",
+    "varName": "img221",
+    "nodeId": "1:1109",
+    "type": "png",
+    "bytes": 2681766
+  },
+  {
+    "file": "background.svg",
+    "varName": "imgBackground",
+    "nodeId": "1:1063",
+    "type": "svg",
+    "bytes": 2515
+  },
+  {
+    "file": "c2-d.svg",
+    "varName": "imgC2D",
+    "nodeId": "1:1289",
+    "type": "svg",
+    "bytes": 563
+  },
+  {
+    "file": "convergen-see.svg",
+    "varName": "imgConvergenSee",
+    "nodeId": "1:1294",
+    "type": "svg",
+    "bytes": 13480
+  },
+  {
+    "file": "ellipse4.svg",
+    "varName": "imgEllipse4",
+    "nodeId": "1:1234",
+    "type": "svg",
+    "bytes": 435
+  },
+  {
+    "file": "ellipse45.svg",
+    "varName": "imgEllipse45",
+    "nodeId": "1:1155",
+    "type": "svg",
+    "bytes": 374
+  },
+  {
+    "file": "ellipse5.svg",
+    "varName": "imgEllipse5",
+    "nodeId": "1:1234",
+    "type": "svg",
+    "bytes": 284
+  },
+  {
+    "file": "fill1.svg",
+    "varName": "imgFill1",
+    "nodeId": "1:1256",
+    "type": "svg",
+    "bytes": 313
+  },
+  {
+    "file": "fill2.svg",
+    "varName": "imgFill2",
+    "nodeId": "1:1257",
+    "type": "svg",
+    "bytes": 421
+  },
+  {
+    "file": "fill3.svg",
+    "varName": "imgFill3",
+    "nodeId": "1:1258",
+    "type": "svg",
+    "bytes": 407
+  },
+  {
+    "file": "fill4.svg",
+    "varName": "imgFill4",
+    "nodeId": "1:1260",
+    "type": "svg",
+    "bytes": 413
+  },
+  {
+    "file": "fill9.svg",
+    "varName": "imgFill9",
+    "nodeId": "1:1266",
+    "type": "svg",
+    "bytes": 428
+  },
+  {
+    "file": "group14.svg",
+    "varName": "imgGroup14",
+    "nodeId": "1:1156",
+    "type": "svg",
+    "bytes": 1219
+  },
+  {
+    "file": "group6.svg",
+    "varName": "imgGroup6",
+    "nodeId": "1:1141",
+    "type": "svg",
+    "bytes": 2386
+  },
+  {
+    "file": "loading.svg",
+    "varName": "imgLoading",
+    "nodeId": "1:1152",
+    "type": "svg",
+    "bytes": 3937
+  },
+  {
+    "file": "mask-group.svg",
+    "varName": "imgMaskGroup",
+    "nodeId": "1:1262",
+    "type": "svg",
+    "bytes": 824
+  },
+  {
+    "file": "mask-group1.svg",
+    "varName": "imgMaskGroup1",
+    "nodeId": "1:1268",
+    "type": "svg",
+    "bytes": 672
+  },
+  {
+    "file": "mask-group2.svg",
+    "varName": "imgMaskGroup2",
+    "nodeId": "1:1273",
+    "type": "svg",
+    "bytes": 899
+  },
+  {
+    "file": "meme1.png",
+    "varName": "imgMeme1",
+    "nodeId": "1:1204",
+    "type": "png",
+    "bytes": 113818
+  },
+  {
+    "file": "partner-rgb1.png",
+    "varName": "imgPartnerRgb1",
+    "nodeId": "1:1277",
+    "type": "png",
+    "bytes": 9186
+  },
+  {
+    "file": "rectangle41.svg",
+    "varName": "imgRectangle41",
+    "nodeId": "1:1155",
+    "type": "svg",
+    "bytes": 759
+  },
+  {
+    "file": "rectangle4152.svg",
+    "varName": "imgRectangle4152",
+    "nodeId": "1:1131",
+    "type": "svg",
+    "bytes": 1048
+  },
+  {
+    "file": "screenshot20251010-at122154-pm1.svg",
+    "varName": "imgScreenshot20251010At122154Pm1",
+    "nodeId": "1:1062",
+    "type": "svg",
+    "bytes": 257
+  },
+  {
+    "file": "screenshot20251010-at122154-pm2.png",
+    "varName": "imgScreenshot20251010At122154Pm2",
+    "nodeId": "1:1097",
+    "type": "png",
+    "bytes": 3220
+  },
+  {
+    "file": "vector.svg",
+    "varName": "imgVector",
+    "nodeId": "1:1251",
+    "type": "svg",
+    "bytes": 1191
+  },
+  {
+    "file": "vector1.svg",
+    "varName": "imgVector1",
+    "nodeId": "1:1251",
+    "type": "svg",
+    "bytes": 1051
+  },
+  {
+    "file": "vector10.svg",
+    "varName": "imgVector10",
+    "nodeId": "1:1155",
+    "type": "svg",
+    "bytes": 298
+  },
+  {
+    "file": "vector11.svg",
+    "varName": "imgVector11",
+    "nodeId": "1:1213",
+    "type": "svg",
+    "bytes": 298
+  },
+  {
+    "file": "vector189.svg",
+    "varName": "imgVector189",
+    "nodeId": "1:1240",
+    "type": "svg",
+    "bytes": 835
+  },
+  {
+    "file": "vector2.svg",
+    "varName": "imgVector2",
+    "nodeId": "1:1251",
+    "type": "svg",
+    "bytes": 410
+  },
+  {
+    "file": "vector3.svg",
+    "varName": "imgVector3",
+    "nodeId": "1:1246",
+    "type": "svg",
+    "bytes": 345
+  },
+  {
+    "file": "vector317.svg",
+    "varName": "imgVector317",
+    "nodeId": "1:1131",
+    "type": "svg",
+    "bytes": 418
+  },
+  {
+    "file": "vector4.svg",
+    "varName": "imgVector4",
+    "nodeId": "1:1252",
+    "type": "svg",
+    "bytes": 837
+  },
+  {
+    "file": "vector55.svg",
+    "varName": "imgVector55",
+    "nodeId": "1:1131",
+    "type": "svg",
+    "bytes": 314
+  },
+  {
+    "file": "vector58.svg",
+    "varName": "imgVector58",
+    "nodeId": "1:1131",
+    "type": "svg",
+    "bytes": 310
+  },
+  {
+    "file": "vector8.svg",
+    "varName": "imgVector8",
+    "nodeId": "1:1155",
+    "type": "svg",
+    "bytes": 275
+  },
+  {
+    "file": "vector9.svg",
+    "varName": "imgVector9",
+    "nodeId": "1:159",
+    "type": "svg",
+    "bytes": 317
+  }
+]

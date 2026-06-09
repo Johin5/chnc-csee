@@ -1,0 +1,240 @@
+[
+  {
+    "file": "img-vector-9.svg",
+    "varName": "imgVector9",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 317
+  },
+  {
+    "file": "img-mahindra-2.jpg",
+    "varName": "imgMahindra2",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 51851
+  },
+  {
+    "file": "img-placeholders.png",
+    "varName": "imgPlaceholders",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 29781
+  },
+  {
+    "file": "img-mahindra-1.svg",
+    "varName": "imgMahindra1",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 260
+  },
+  {
+    "file": "img-rectangle-42042.jpg",
+    "varName": "imgRectangle42042",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 191901
+  },
+  {
+    "file": "img-image-111.jpg",
+    "varName": "imgImage111",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 175214
+  },
+  {
+    "file": "img-image-112.jpg",
+    "varName": "imgImage112",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 287620
+  },
+  {
+    "file": "img-image-113.jpg",
+    "varName": "imgImage113",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 244604
+  },
+  {
+    "file": "img-mahindra-3.jpg",
+    "varName": "imgMahindra3",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 61833
+  },
+  {
+    "file": "img-meme-1.png",
+    "varName": "imgMeme1",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 113818
+  },
+  {
+    "file": "img-partner-rgb-1.png",
+    "varName": "imgPartnerRgb1",
+    "nodeId": "1:2542",
+    "type": "raster",
+    "bytes": 9186
+  },
+  {
+    "file": "img-background.svg",
+    "varName": "imgBackground",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 2515
+  },
+  {
+    "file": "img-vector-10.svg",
+    "varName": "imgVector10",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 724
+  },
+  {
+    "file": "img-vector-11.svg",
+    "varName": "imgVector11",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 296
+  },
+  {
+    "file": "img-image-110.svg",
+    "varName": "imgImage110",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 257
+  },
+  {
+    "file": "img-vector-12.svg",
+    "varName": "imgVector12",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 298
+  },
+  {
+    "file": "img-ellipse-4.svg",
+    "varName": "imgEllipse4",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 435
+  },
+  {
+    "file": "img-ellipse-5.svg",
+    "varName": "imgEllipse5",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 284
+  },
+  {
+    "file": "img-vector-189.svg",
+    "varName": "imgVector189",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 835
+  },
+  {
+    "file": "img-vector-3.svg",
+    "varName": "imgVector3",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 345
+  },
+  {
+    "file": "img-vector.svg",
+    "varName": "imgVector",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 1191
+  },
+  {
+    "file": "img-vector-1.svg",
+    "varName": "imgVector1",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 1051
+  },
+  {
+    "file": "img-vector-2.svg",
+    "varName": "imgVector2",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 410
+  },
+  {
+    "file": "img-vector-4.svg",
+    "varName": "imgVector4",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 837
+  },
+  {
+    "file": "img-fill-1.svg",
+    "varName": "imgFill1",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 313
+  },
+  {
+    "file": "img-fill-2.svg",
+    "varName": "imgFill2",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 421
+  },
+  {
+    "file": "img-fill-3.svg",
+    "varName": "imgFill3",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 407
+  },
+  {
+    "file": "img-fill-4.svg",
+    "varName": "imgFill4",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 413
+  },
+  {
+    "file": "img-mask-group.svg",
+    "varName": "imgMaskGroup",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 824
+  },
+  {
+    "file": "img-fill-9.svg",
+    "varName": "imgFill9",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 428
+  },
+  {
+    "file": "img-mask-group-1.svg",
+    "varName": "imgMaskGroup1",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 672
+  },
+  {
+    "file": "img-mask-group-2.svg",
+    "varName": "imgMaskGroup2",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 899
+  },
+  {
+    "file": "img-c-2-d.svg",
+    "varName": "imgC2D",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 563
+  },
+  {
+    "file": "img-convergen-see.svg",
+    "varName": "imgConvergenSee",
+    "nodeId": "1:2542",
+    "type": "svg",
+    "bytes": 13480
+  }
+]

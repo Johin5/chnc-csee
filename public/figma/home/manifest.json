@@ -1,0 +1,310 @@
+[
+  {
+    "file": "img-ll-logo1.png",
+    "varName": "imgLlLogo1",
+    "nodeId": "1:488",
+    "type": "raster",
+    "bytes": 11473
+  },
+  {
+    "file": "img-ll-logo2.png",
+    "varName": "imgLlLogo2",
+    "nodeId": "1:488",
+    "type": "raster",
+    "bytes": 1415
+  },
+  {
+    "file": "img-mg-logo.png",
+    "varName": "imgMgLogo",
+    "nodeId": "1:489",
+    "type": "raster",
+    "bytes": 90591
+  },
+  {
+    "file": "img-mg-logo1.png",
+    "varName": "imgMgLogo1",
+    "nodeId": "1:489",
+    "type": "raster",
+    "bytes": 1225
+  },
+  {
+    "file": "img-mahindra-m.png",
+    "varName": "imgMahindraM",
+    "nodeId": "1:490",
+    "type": "raster",
+    "bytes": 12335
+  },
+  {
+    "file": "img-mahindra-m1.png",
+    "varName": "imgMahindraM1",
+    "nodeId": "1:490",
+    "type": "raster",
+    "bytes": 198
+  },
+  {
+    "file": "img-mind-craft.png",
+    "varName": "imgMindCraft",
+    "nodeId": "1:491",
+    "type": "raster",
+    "bytes": 36168
+  },
+  {
+    "file": "img-mind-craft1.png",
+    "varName": "imgMindCraft1",
+    "nodeId": "1:491",
+    "type": "raster",
+    "bytes": 4220
+  },
+  {
+    "file": "img-flickvid.png",
+    "varName": "imgFlickvid",
+    "nodeId": "1:492",
+    "type": "raster",
+    "bytes": 25038
+  },
+  {
+    "file": "img-flickvid1.png",
+    "varName": "imgFlickvid1",
+    "nodeId": "1:492",
+    "type": "raster",
+    "bytes": 2035
+  },
+  {
+    "file": "img-aptech-logo.png",
+    "varName": "imgAptechLogo",
+    "nodeId": "1:493",
+    "type": "raster",
+    "bytes": 12389
+  },
+  {
+    "file": "img-aptech-logo1.png",
+    "varName": "imgAptechLogo1",
+    "nodeId": "1:493",
+    "type": "raster",
+    "bytes": 206
+  },
+  {
+    "file": "img-kotak-mf.png",
+    "varName": "imgKotakMf",
+    "nodeId": "1:494",
+    "type": "raster",
+    "bytes": 52898
+  },
+  {
+    "file": "img-kotak-mf1.png",
+    "varName": "imgKotakMf1",
+    "nodeId": "1:494",
+    "type": "raster",
+    "bytes": 1529
+  },
+  {
+    "file": "img-himalaya.png",
+    "varName": "imgHimalaya",
+    "nodeId": "1:495",
+    "type": "raster",
+    "bytes": 60857
+  },
+  {
+    "file": "img-himalaya1.png",
+    "varName": "imgHimalaya1",
+    "nodeId": "1:495",
+    "type": "raster",
+    "bytes": 3677
+  },
+  {
+    "file": "img-logo-team1.png",
+    "varName": "imgLogoTeam1",
+    "nodeId": "1:505",
+    "type": "raster",
+    "bytes": 595472
+  },
+  {
+    "file": "img-asset31.png",
+    "varName": "imgAsset31",
+    "nodeId": "1:533",
+    "type": "raster",
+    "bytes": 1017050
+  },
+  {
+    "file": "img-asset11.png",
+    "varName": "imgAsset11",
+    "nodeId": "1:534",
+    "type": "raster",
+    "bytes": 859343
+  },
+  {
+    "file": "img-vector9.svg",
+    "varName": "imgVector9",
+    "nodeId": "1:536",
+    "type": "svg",
+    "bytes": 298
+  },
+  {
+    "file": "img-image111.png",
+    "varName": "imgImage111",
+    "nodeId": "1:631",
+    "type": "raster",
+    "bytes": 362185
+  },
+  {
+    "file": "img-image110.svg",
+    "varName": "imgImage110",
+    "nodeId": "1:632",
+    "type": "svg",
+    "bytes": 257
+  },
+  {
+    "file": "img-angel-chaturvedi12.jpg",
+    "varName": "imgAngelChaturvedi12",
+    "nodeId": "1:657",
+    "type": "raster",
+    "bytes": 201224
+  },
+  {
+    "file": "img-angel-chaturvedi011.svg",
+    "varName": "imgAngelChaturvedi011",
+    "nodeId": "1:657",
+    "type": "svg",
+    "bytes": 260
+  },
+  {
+    "file": "img-angel-chaturvedi13.jpg",
+    "varName": "imgAngelChaturvedi13",
+    "nodeId": "1:659",
+    "type": "raster",
+    "bytes": 264201
+  },
+  {
+    "file": "img-angel-chaturvedi14.jpg",
+    "varName": "imgAngelChaturvedi14",
+    "nodeId": "1:660",
+    "type": "raster",
+    "bytes": 179380
+  },
+  {
+    "file": "img-partner-rgb1.png",
+    "varName": "imgPartnerRgb1",
+    "nodeId": "1:798",
+    "type": "raster",
+    "bytes": 9186
+  },
+  {
+    "file": "img-ellipse4.svg",
+    "varName": "imgEllipse4",
+    "nodeId": "1:755",
+    "type": "svg",
+    "bytes": 435
+  },
+  {
+    "file": "img-ellipse5.svg",
+    "varName": "imgEllipse5",
+    "nodeId": "1:755",
+    "type": "svg",
+    "bytes": 284
+  },
+  {
+    "file": "img-vector189.svg",
+    "varName": "imgVector189",
+    "nodeId": "1:761",
+    "type": "svg",
+    "bytes": 835
+  },
+  {
+    "file": "img-vector3.svg",
+    "varName": "imgVector3",
+    "nodeId": "1:767",
+    "type": "svg",
+    "bytes": 345
+  },
+  {
+    "file": "img-vector.svg",
+    "varName": "imgVector",
+    "nodeId": "1:772",
+    "type": "svg",
+    "bytes": 1191
+  },
+  {
+    "file": "img-vector1.svg",
+    "varName": "imgVector1",
+    "nodeId": "1:772",
+    "type": "svg",
+    "bytes": 1051
+  },
+  {
+    "file": "img-vector2.svg",
+    "varName": "imgVector2",
+    "nodeId": "1:772",
+    "type": "svg",
+    "bytes": 410
+  },
+  {
+    "file": "img-vector4.svg",
+    "varName": "imgVector4",
+    "nodeId": "1:773",
+    "type": "svg",
+    "bytes": 837
+  },
+  {
+    "file": "img-fill1.svg",
+    "varName": "imgFill1",
+    "nodeId": "1:777",
+    "type": "svg",
+    "bytes": 313
+  },
+  {
+    "file": "img-fill2.svg",
+    "varName": "imgFill2",
+    "nodeId": "1:778",
+    "type": "svg",
+    "bytes": 421
+  },
+  {
+    "file": "img-fill3.svg",
+    "varName": "imgFill3",
+    "nodeId": "1:779",
+    "type": "svg",
+    "bytes": 407
+  },
+  {
+    "file": "img-fill4.svg",
+    "varName": "imgFill4",
+    "nodeId": "1:781",
+    "type": "svg",
+    "bytes": 413
+  },
+  {
+    "file": "img-mask-group.svg",
+    "varName": "imgMaskGroup",
+    "nodeId": "1:783",
+    "type": "svg",
+    "bytes": 822
+  },
+  {
+    "file": "img-fill9.svg",
+    "varName": "imgFill9",
+    "nodeId": "1:787",
+    "type": "svg",
+    "bytes": 428
+  },
+  {
+    "file": "img-mask-group1.svg",
+    "varName": "imgMaskGroup1",
+    "nodeId": "1:789",
+    "type": "svg",
+    "bytes": 670
+  },
+  {
+    "file": "img-mask-group2.svg",
+    "varName": "imgMaskGroup2",
+    "nodeId": "1:794",
+    "type": "svg",
+    "bytes": 895
+  },
+  {
+    "file": "img-meme1.png",
+    "varName": "imgMeme1",
+    "nodeId": "1:725",
+    "type": "raster",
+    "bytes": 113818
+  }
+]

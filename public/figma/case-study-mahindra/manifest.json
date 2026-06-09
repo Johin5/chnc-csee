@@ -1,0 +1,387 @@
+[
+  {
+    "file": "img-airtel-seeklogo1.png",
+    "varName": "imgAirtelSeeklogo1",
+    "nodeId": "1:2933",
+    "type": "png",
+    "bytes": 1990
+  },
+  {
+    "file": "img-aptech-logo.png",
+    "varName": "imgAptechLogo",
+    "nodeId": "1:2934",
+    "type": "png",
+    "bytes": 12389
+  },
+  {
+    "file": "img-aptech-logo1.png",
+    "varName": "imgAptechLogo1",
+    "nodeId": "1:2934",
+    "type": "png",
+    "bytes": 206
+  },
+  {
+    "file": "img-axis-bank-id-jbxqb-hwi11.png",
+    "varName": "imgAxisBankIdJbxqbHwi11",
+    "nodeId": "1:2932",
+    "type": "png",
+    "bytes": 829
+  },
+  {
+    "file": "img-background.svg",
+    "varName": "imgBackground",
+    "nodeId": "1:2844",
+    "type": "svg",
+    "bytes": 2515
+  },
+  {
+    "file": "img-c2-d.svg",
+    "varName": "imgC2D",
+    "nodeId": "1:2876",
+    "type": "svg",
+    "bytes": 574
+  },
+  {
+    "file": "img-c2-d1.svg",
+    "varName": "imgC2D1",
+    "nodeId": "1:3097",
+    "type": "svg",
+    "bytes": 563
+  },
+  {
+    "file": "img-convergen-see.svg",
+    "varName": "imgConvergenSee",
+    "nodeId": "1:3102",
+    "type": "svg",
+    "bytes": 13416
+  },
+  {
+    "file": "img-ellipse4.svg",
+    "varName": "imgEllipse4",
+    "nodeId": "1:3042",
+    "type": "svg",
+    "bytes": 435
+  },
+  {
+    "file": "img-ellipse5.svg",
+    "varName": "imgEllipse5",
+    "nodeId": "1:3042",
+    "type": "svg",
+    "bytes": 284
+  },
+  {
+    "file": "img-fill1.svg",
+    "varName": "imgFill1",
+    "nodeId": "1:3064",
+    "type": "svg",
+    "bytes": 313
+  },
+  {
+    "file": "img-fill2.svg",
+    "varName": "imgFill2",
+    "nodeId": "1:3065",
+    "type": "svg",
+    "bytes": 421
+  },
+  {
+    "file": "img-fill3.svg",
+    "varName": "imgFill3",
+    "nodeId": "1:3066",
+    "type": "svg",
+    "bytes": 407
+  },
+  {
+    "file": "img-fill4.svg",
+    "varName": "imgFill4",
+    "nodeId": "1:3068",
+    "type": "svg",
+    "bytes": 413
+  },
+  {
+    "file": "img-fill9.svg",
+    "varName": "imgFill9",
+    "nodeId": "1:3074",
+    "type": "svg",
+    "bytes": 428
+  },
+  {
+    "file": "img-flickvid.png",
+    "varName": "imgFlickvid",
+    "nodeId": "1:2938",
+    "type": "png",
+    "bytes": 25038
+  },
+  {
+    "file": "img-flickvid1.png",
+    "varName": "imgFlickvid1",
+    "nodeId": "1:2938",
+    "type": "png",
+    "bytes": 2035
+  },
+  {
+    "file": "img-himalaya.png",
+    "varName": "imgHimalaya",
+    "nodeId": "1:2942",
+    "type": "png",
+    "bytes": 60857
+  },
+  {
+    "file": "img-himalaya1.png",
+    "varName": "imgHimalaya1",
+    "nodeId": "1:2942",
+    "type": "png",
+    "bytes": 3677
+  },
+  {
+    "file": "img-image110.svg",
+    "varName": "imgImage110",
+    "nodeId": "1:2917",
+    "type": "svg",
+    "bytes": 257
+  },
+  {
+    "file": "img-image111.jpg",
+    "varName": "imgImage111",
+    "nodeId": "1:2917",
+    "type": "jpg",
+    "bytes": 175214
+  },
+  {
+    "file": "img-image112.jpg",
+    "varName": "imgImage112",
+    "nodeId": "1:2920",
+    "type": "jpg",
+    "bytes": 287620
+  },
+  {
+    "file": "img-image113.jpg",
+    "varName": "imgImage113",
+    "nodeId": "1:2923",
+    "type": "jpg",
+    "bytes": 244604
+  },
+  {
+    "file": "img-kotak-mf.png",
+    "varName": "imgKotakMf",
+    "nodeId": "1:2935",
+    "type": "png",
+    "bytes": 52898
+  },
+  {
+    "file": "img-kotak-mf1.png",
+    "varName": "imgKotakMf1",
+    "nodeId": "1:2935",
+    "type": "png",
+    "bytes": 1529
+  },
+  {
+    "file": "img-ll-logo1.png",
+    "varName": "imgLlLogo1",
+    "nodeId": "1:2929",
+    "type": "png",
+    "bytes": 11473
+  },
+  {
+    "file": "img-ll-logo2.png",
+    "varName": "imgLlLogo2",
+    "nodeId": "1:2929",
+    "type": "png",
+    "bytes": 1415
+  },
+  {
+    "file": "img-mahindra-m.png",
+    "varName": "imgMahindraM",
+    "nodeId": "1:2931",
+    "type": "png",
+    "bytes": 12335
+  },
+  {
+    "file": "img-mahindra-m1.png",
+    "varName": "imgMahindraM1",
+    "nodeId": "1:2931",
+    "type": "png",
+    "bytes": 198
+  },
+  {
+    "file": "img-mahindra1.png",
+    "varName": "imgMahindra1",
+    "nodeId": "1:2890",
+    "type": "png",
+    "bytes": 2901078
+  },
+  {
+    "file": "img-mask-group.svg",
+    "varName": "imgMaskGroup",
+    "nodeId": "1:3070",
+    "type": "svg",
+    "bytes": 824
+  },
+  {
+    "file": "img-mask-group1.svg",
+    "varName": "imgMaskGroup1",
+    "nodeId": "1:3076",
+    "type": "svg",
+    "bytes": 672
+  },
+  {
+    "file": "img-mask-group2.svg",
+    "varName": "imgMaskGroup2",
+    "nodeId": "1:3081",
+    "type": "svg",
+    "bytes": 899
+  },
+  {
+    "file": "img-meme1.png",
+    "varName": "imgMeme1",
+    "nodeId": "1:3012",
+    "type": "png",
+    "bytes": 113818
+  },
+  {
+    "file": "img-mg-logo.png",
+    "varName": "imgMgLogo",
+    "nodeId": "1:2930",
+    "type": "png",
+    "bytes": 90591
+  },
+  {
+    "file": "img-mg-logo1.png",
+    "varName": "imgMgLogo1",
+    "nodeId": "1:2930",
+    "type": "png",
+    "bytes": 1225
+  },
+  {
+    "file": "img-mind-craft.png",
+    "varName": "imgMindCraft",
+    "nodeId": "1:2937",
+    "type": "png",
+    "bytes": 36168
+  },
+  {
+    "file": "img-mind-craft1.png",
+    "varName": "imgMindCraft1",
+    "nodeId": "1:2937",
+    "type": "png",
+    "bytes": 4220
+  },
+  {
+    "file": "img-partner-rgb1.png",
+    "varName": "imgPartnerRgb1",
+    "nodeId": "1:3085",
+    "type": "png",
+    "bytes": 9186
+  },
+  {
+    "file": "img-sbi-logo332051.png",
+    "varName": "imgSbiLogo332051",
+    "nodeId": "1:2939",
+    "type": "png",
+    "bytes": 1573
+  },
+  {
+    "file": "img-vector.svg",
+    "varName": "imgVector",
+    "nodeId": "1:2882",
+    "type": "svg",
+    "bytes": 1101
+  },
+  {
+    "file": "img-vector1.svg",
+    "varName": "imgVector1",
+    "nodeId": "1:3059",
+    "type": "svg",
+    "bytes": 1191
+  },
+  {
+    "file": "img-vector10.svg",
+    "varName": "imgVector10",
+    "nodeId": "1:159",
+    "type": "svg",
+    "bytes": 314
+  },
+  {
+    "file": "img-vector11.svg",
+    "varName": "imgVector11",
+    "nodeId": "1:159",
+    "type": "svg",
+    "bytes": 316
+  },
+  {
+    "file": "img-vector12.svg",
+    "varName": "imgVector12",
+    "nodeId": "1:2861",
+    "type": "svg",
+    "bytes": 724
+  },
+  {
+    "file": "img-vector13.svg",
+    "varName": "imgVector13",
+    "nodeId": "1:2865",
+    "type": "svg",
+    "bytes": 296
+  },
+  {
+    "file": "img-vector14.svg",
+    "varName": "imgVector14",
+    "nodeId": "1:2873",
+    "type": "svg",
+    "bytes": 712
+  },
+  {
+    "file": "img-vector15.svg",
+    "varName": "imgVector15",
+    "nodeId": "1:2887",
+    "type": "svg",
+    "bytes": 710
+  },
+  {
+    "file": "img-vector16.svg",
+    "varName": "imgVector16",
+    "nodeId": "1:3021",
+    "type": "svg",
+    "bytes": 298
+  },
+  {
+    "file": "img-vector189.svg",
+    "varName": "imgVector189",
+    "nodeId": "1:3048",
+    "type": "svg",
+    "bytes": 835
+  },
+  {
+    "file": "img-vector2.svg",
+    "varName": "imgVector2",
+    "nodeId": "1:3059",
+    "type": "svg",
+    "bytes": 1051
+  },
+  {
+    "file": "img-vector3.svg",
+    "varName": "imgVector3",
+    "nodeId": "1:3054",
+    "type": "svg",
+    "bytes": 345
+  },
+  {
+    "file": "img-vector4.svg",
+    "varName": "imgVector4",
+    "nodeId": "1:3059",
+    "type": "svg",
+    "bytes": 410
+  },
+  {
+    "file": "img-vector5.svg",
+    "varName": "imgVector5",
+    "nodeId": "1:3060",
+    "type": "svg",
+    "bytes": 837
+  },
+  {
+    "file": "img-vector9.svg",
+    "varName": "imgVector9",
+    "nodeId": "1:159",
+    "type": "svg",
+    "bytes": 317
+  }
+]

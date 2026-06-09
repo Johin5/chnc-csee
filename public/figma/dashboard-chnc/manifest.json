@@ -1,0 +1,520 @@
+[
+  {
+    "file": "img-group-duotone-fill.svg",
+    "varName": "imgGroupDuotoneFill",
+    "nodeId": "I53:2923;8682:33199",
+    "type": "svg",
+    "bytes": 1517
+  },
+  {
+    "file": "img-arrow.svg",
+    "varName": "imgArrow",
+    "nodeId": "I53:2923;4306:76599",
+    "type": "svg",
+    "bytes": 1630
+  },
+  {
+    "file": "img-rectangle50.jpg",
+    "varName": "imgRectangle50",
+    "nodeId": "53:2939",
+    "type": "raster",
+    "bytes": 57202
+  },
+  {
+    "file": "img-rectangle51.jpg",
+    "varName": "imgRectangle51",
+    "nodeId": "53:2952",
+    "type": "raster",
+    "bytes": 27680
+  },
+  {
+    "file": "img-rectangle52.jpg",
+    "varName": "imgRectangle52",
+    "nodeId": "53:2965",
+    "type": "raster",
+    "bytes": 62575
+  },
+  {
+    "file": "img-vector9-fb.svg",
+    "varName": "imgVector9_fb",
+    "nodeId": "53:2935",
+    "type": "svg",
+    "bytes": 320
+  },
+  {
+    "file": "img-broken-heart-duotone.svg",
+    "varName": "imgBrokenHeartDuotone",
+    "nodeId": "53:2942",
+    "type": "svg",
+    "bytes": 719
+  },
+  {
+    "file": "img-broken-heart-duotone1.svg",
+    "varName": "imgBrokenHeartDuotone1",
+    "nodeId": "53:2946",
+    "type": "svg",
+    "bytes": 874
+  },
+  {
+    "file": "img-rectangle4103.svg",
+    "varName": "imgRectangle4103",
+    "nodeId": "I53:2987;375:20506;24:10165",
+    "type": "svg",
+    "bytes": 551
+  },
+  {
+    "file": "img-vector262.svg",
+    "varName": "imgVector262",
+    "nodeId": "I53:2987;375:20506;24:10166",
+    "type": "svg",
+    "bytes": 422
+  },
+  {
+    "file": "img-vector267.svg",
+    "varName": "imgVector267",
+    "nodeId": "I53:2987;375:20506;24:10167",
+    "type": "svg",
+    "bytes": 322
+  },
+  {
+    "file": "img-vector268.svg",
+    "varName": "imgVector268",
+    "nodeId": "I53:2987;375:20506;24:10168",
+    "type": "svg",
+    "bytes": 322
+  },
+  {
+    "file": "img-customer11.png",
+    "varName": "imgCustomer11",
+    "nodeId": "I53:1887;20:14280",
+    "type": "raster",
+    "bytes": 5029935
+  },
+  {
+    "file": "img-avatar06.jpg",
+    "varName": "imgAvatar06",
+    "nodeId": "53:1888",
+    "type": "raster",
+    "bytes": 8294398
+  },
+  {
+    "file": "img-customer12.jpg",
+    "varName": "imgCustomer12",
+    "nodeId": "I53:3008;499:20399",
+    "type": "raster",
+    "bytes": 148024
+  },
+  {
+    "file": "img-customer13.jpg",
+    "varName": "imgCustomer13",
+    "nodeId": "I53:3008;499:20399",
+    "type": "raster",
+    "bytes": 81896
+  },
+  {
+    "file": "img-customer14.jpg",
+    "varName": "imgCustomer14",
+    "nodeId": "I53:3008;499:20399",
+    "type": "raster",
+    "bytes": 67400
+  },
+  {
+    "file": "img-customer15.jpg",
+    "varName": "imgCustomer15",
+    "nodeId": "I53:3008;499:20399",
+    "type": "raster",
+    "bytes": 151650
+  },
+  {
+    "file": "img-avatar7.jpg",
+    "varName": "imgAvatar7",
+    "nodeId": "I53:3008;499:20399",
+    "type": "raster",
+    "bytes": 55666
+  },
+  {
+    "file": "img-avatar8.jpg",
+    "varName": "imgAvatar8",
+    "nodeId": "I53:3008;499:20399",
+    "type": "raster",
+    "bytes": 109377
+  },
+  {
+    "file": "img-vector204-campaign.svg",
+    "varName": "imgVector204_campaign",
+    "nodeId": "I53:2997;499:20388",
+    "type": "svg",
+    "bytes": 533
+  },
+  {
+    "file": "img-ellipse73-campaign.svg",
+    "varName": "imgEllipse73_campaign",
+    "nodeId": "I53:2997;499:20388",
+    "type": "svg",
+    "bytes": 259
+  },
+  {
+    "file": "img-vector205-campaign.svg",
+    "varName": "imgVector205_campaign",
+    "nodeId": "I53:2997;499:20388",
+    "type": "svg",
+    "bytes": 258
+  },
+  {
+    "file": "img-vector9-expand.svg",
+    "varName": "imgVector9_expand",
+    "nodeId": "53:2999",
+    "type": "svg",
+    "bytes": 316
+  },
+  {
+    "file": "img-subtract-pin.svg",
+    "varName": "imgSubtract_pin",
+    "nodeId": "I53:3008;499:20388",
+    "type": "svg",
+    "bytes": 2079
+  },
+  {
+    "file": "img-vector204-list.svg",
+    "varName": "imgVector204_list",
+    "nodeId": "I53:1910;294:30176",
+    "type": "svg",
+    "bytes": 533
+  },
+  {
+    "file": "img-ellipse73-list.svg",
+    "varName": "imgEllipse73_list",
+    "nodeId": "I53:1910;294:30176",
+    "type": "svg",
+    "bytes": 259
+  },
+  {
+    "file": "img-vector205-list.svg",
+    "varName": "imgVector205_list",
+    "nodeId": "I53:1910;294:30176",
+    "type": "svg",
+    "bytes": 258
+  },
+  {
+    "file": "img-vector9-list.svg",
+    "varName": "imgVector9_list",
+    "nodeId": "53:3020",
+    "type": "svg",
+    "bytes": 320
+  },
+  {
+    "file": "img-subtract-list-pin.svg",
+    "varName": "imgSubtract_listPin",
+    "nodeId": "I53:3041;294:30205;294:30176",
+    "type": "svg",
+    "bytes": 2079
+  },
+  {
+    "file": "img-search-vector.svg",
+    "varName": "imgSearchVector",
+    "nodeId": "53:2800",
+    "type": "svg",
+    "bytes": 1098
+  },
+  {
+    "file": "img-memoji.png",
+    "varName": "imgMemoji",
+    "nodeId": "I53:3197;293:21493;293:15145",
+    "type": "raster",
+    "bytes": 95202
+  },
+  {
+    "file": "img-menu-subtract.svg",
+    "varName": "imgMenuSubtract",
+    "nodeId": "I53:3197;293:21467;24:11530",
+    "type": "svg",
+    "bytes": 1098
+  },
+  {
+    "file": "img-ellipse103.svg",
+    "varName": "imgEllipse103",
+    "nodeId": "I53:3197;293:21467;24:11533",
+    "type": "svg",
+    "bytes": 282
+  },
+  {
+    "file": "img-ellipse165.svg",
+    "varName": "imgEllipse165",
+    "nodeId": "I53:3197;293:21475",
+    "type": "svg",
+    "bytes": 255
+  },
+  {
+    "file": "img-ellipse108.svg",
+    "varName": "imgEllipse108",
+    "nodeId": "I53:3197;293:21476;1000:17806",
+    "type": "svg",
+    "bytes": 286
+  },
+  {
+    "file": "img-vector168.svg",
+    "varName": "imgVector168",
+    "nodeId": "I53:3197;293:21476;1000:17807",
+    "type": "svg",
+    "bytes": 283
+  },
+  {
+    "file": "img-vector170.svg",
+    "varName": "imgVector170",
+    "nodeId": "I53:3197;293:21476;1000:17809",
+    "type": "svg",
+    "bytes": 283
+  },
+  {
+    "file": "img-vector172.svg",
+    "varName": "imgVector172",
+    "nodeId": "I53:3197;293:21476;1000:17811",
+    "type": "svg",
+    "bytes": 283
+  },
+  {
+    "file": "img-vector166.svg",
+    "varName": "imgVector166",
+    "nodeId": "I53:3197;293:21476;1000:17813",
+    "type": "svg",
+    "bytes": 283
+  },
+  {
+    "file": "img-vector907.svg",
+    "varName": "imgVector907",
+    "nodeId": "I53:3197;293:21477",
+    "type": "svg",
+    "bytes": 271
+  },
+  {
+    "file": "img-bell-subtract.svg",
+    "varName": "imgBellSubtract",
+    "nodeId": "I53:3197;293:21481;83:13176",
+    "type": "svg",
+    "bytes": 3287
+  },
+  {
+    "file": "img-ellipse45.svg",
+    "varName": "imgEllipse45",
+    "nodeId": "I53:3197;293:21481;83:13179",
+    "type": "svg",
+    "bytes": 470
+  },
+  {
+    "file": "img-ellipse6.svg",
+    "varName": "imgEllipse6",
+    "nodeId": "I53:3197;293:21481;83:13180",
+    "type": "svg",
+    "bytes": 318
+  },
+  {
+    "file": "img-ellipse65-header.svg",
+    "varName": "imgEllipse65_header",
+    "nodeId": "I53:3197;293:21486;83:13184",
+    "type": "svg",
+    "bytes": 261
+  },
+  {
+    "file": "img-ellipse93-header.svg",
+    "varName": "imgEllipse93_header",
+    "nodeId": "I53:3197;293:21486;83:13185",
+    "type": "svg",
+    "bytes": 286
+  },
+  {
+    "file": "img-vector123-header.svg",
+    "varName": "imgVector123_header",
+    "nodeId": "I53:3197;293:21486;83:13186",
+    "type": "svg",
+    "bytes": 408
+  },
+  {
+    "file": "img-setting-subtract.svg",
+    "varName": "imgSettingSubtract",
+    "nodeId": "I53:3197;293:21491;83:13145",
+    "type": "svg",
+    "bytes": 22383
+  },
+  {
+    "file": "img-play-vector.svg",
+    "varName": "imgPlayVector",
+    "nodeId": "I53:3197;293:21493;293:15154",
+    "type": "svg",
+    "bytes": 530
+  },
+  {
+    "file": "img-ellipse206.svg",
+    "varName": "imgEllipse206",
+    "nodeId": "53:2557",
+    "type": "svg",
+    "bytes": 296
+  },
+  {
+    "file": "img-org-logo-vector.svg",
+    "varName": "imgOrgLogoVector",
+    "nodeId": "53:2508",
+    "type": "svg",
+    "bytes": 1105
+  },
+  {
+    "file": "img-vector9-sidebar-expand.svg",
+    "varName": "imgVector9_sidebarExpand",
+    "nodeId": "I68:3164;2302:54261",
+    "type": "svg",
+    "bytes": 317
+  },
+  {
+    "file": "img-ellipse4-pin.svg",
+    "varName": "imgEllipse4_pin",
+    "nodeId": "I68:3165;277:10692;24:8346",
+    "type": "svg",
+    "bytes": 434
+  },
+  {
+    "file": "img-ellipse5-pin.svg",
+    "varName": "imgEllipse5_pin",
+    "nodeId": "I68:3165;277:10692;24:8347",
+    "type": "svg",
+    "bytes": 284
+  },
+  {
+    "file": "img-vector204-sidebar-pen.svg",
+    "varName": "imgVector204_sidebarPen",
+    "nodeId": "I68:3167;277:10692;24:14584",
+    "type": "svg",
+    "bytes": 531
+  },
+  {
+    "file": "img-ellipse73-sidebar-pen.svg",
+    "varName": "imgEllipse73_sidebarPen",
+    "nodeId": "I68:3167;277:10692;24:14585",
+    "type": "svg",
+    "bytes": 259
+  },
+  {
+    "file": "img-vector205-sidebar-pen.svg",
+    "varName": "imgVector205_sidebarPen",
+    "nodeId": "I68:3167;277:10692;24:14586",
+    "type": "svg",
+    "bytes": 258
+  },
+  {
+    "file": "img-ellipse65-sidebar-q.svg",
+    "varName": "imgEllipse65_sidebarQ",
+    "nodeId": "I68:3168;277:10692;83:13184",
+    "type": "svg",
+    "bytes": 261
+  },
+  {
+    "file": "img-ellipse93-sidebar-q.svg",
+    "varName": "imgEllipse93_sidebarQ",
+    "nodeId": "I68:3168;277:10692;83:13185",
+    "type": "svg",
+    "bytes": 286
+  },
+  {
+    "file": "img-vector123-sidebar-q.svg",
+    "varName": "imgVector123_sidebarQ",
+    "nodeId": "I68:3168;277:10692;83:13186",
+    "type": "svg",
+    "bytes": 408
+  },
+  {
+    "file": "img-vector57-book.svg",
+    "varName": "imgVector57_book",
+    "nodeId": "I68:3170;277:10692;24:15285",
+    "type": "svg",
+    "bytes": 781
+  },
+  {
+    "file": "img-vector55-book.svg",
+    "varName": "imgVector55_book",
+    "nodeId": "I68:3170;277:10692;24:15286",
+    "type": "svg",
+    "bytes": 350
+  },
+  {
+    "file": "img-vector10-video.svg",
+    "varName": "imgVector10_video",
+    "nodeId": "I68:3171;277:10692;24:14093",
+    "type": "svg",
+    "bytes": 499
+  },
+  {
+    "file": "img-ellipse47-video.svg",
+    "varName": "imgEllipse47_video",
+    "nodeId": "I68:3171;277:10692;24:14094",
+    "type": "svg",
+    "bytes": 259
+  },
+  {
+    "file": "img-vector619-video-file.svg",
+    "varName": "imgVector619_videoFile",
+    "nodeId": "I68:3172;277:10692;24:8074",
+    "type": "svg",
+    "bytes": 434
+  },
+  {
+    "file": "img-rectangle4243-video-file.svg",
+    "varName": "imgRectangle4243_videoFile",
+    "nodeId": "I68:3172;277:10692;24:8075",
+    "type": "svg",
+    "bytes": 607
+  },
+  {
+    "file": "img-vector3-message.svg",
+    "varName": "imgVector3_message",
+    "nodeId": "I68:3173;277:10692;24:13313",
+    "type": "svg",
+    "bytes": 345
+  },
+  {
+    "file": "img-ellipse66-search.svg",
+    "varName": "imgEllipse66_search",
+    "nodeId": "I68:3174;277:10692;24:7814",
+    "type": "svg",
+    "bytes": 261
+  },
+  {
+    "file": "img-vector109-search.svg",
+    "varName": "imgVector109_search",
+    "nodeId": "I68:3174;277:10692;24:7815",
+    "type": "svg",
+    "bytes": 277
+  },
+  {
+    "file": "img-vector58-notebook.svg",
+    "varName": "imgVector58_notebook",
+    "nodeId": "I68:3175;277:10692;24:9527",
+    "type": "svg",
+    "bytes": 282
+  },
+  {
+    "file": "img-vector59-notebook.svg",
+    "varName": "imgVector59_notebook",
+    "nodeId": "I68:3175;277:10692;24:9528",
+    "type": "svg",
+    "bytes": 282
+  },
+  {
+    "file": "img-vector60-order.svg",
+    "varName": "imgVector60_order",
+    "nodeId": "I68:3176;277:10692;24:9533",
+    "type": "svg",
+    "bytes": 272
+  },
+  {
+    "file": "img-vector70-money.svg",
+    "varName": "imgVector70_money",
+    "nodeId": "I68:3177;277:10692;24:15784",
+    "type": "svg",
+    "bytes": 272
+  },
+  {
+    "file": "img-ellipse118-money.svg",
+    "varName": "imgEllipse118_money",
+    "nodeId": "I68:3177;277:10692;24:15786",
+    "type": "svg",
+    "bytes": 286
+  }
+]

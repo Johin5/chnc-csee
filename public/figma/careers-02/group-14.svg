@@ -1,0 +1,20 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 789.001 30.163" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 14">
+<path id="Vector 2" d="M12.0014 14.3566L789.001 14.3566" stroke="var(--stroke-0, white)" stroke-opacity="0.6" stroke-width="6"/>
+<g id="Vector 3" filter="url(#filter0_d_0_272)">
+<path d="M12.0014 16L371.001 16.163" stroke="var(--stroke-0, #34CC32)" stroke-width="6"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_272" x="-1.08848e-07" y="3.57628e-07" width="383.003" height="30.163" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="-1"/>
+<feGaussianBlur stdDeviation="6"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.168627 0 0 0 0 0.701961 0 0 0 0 0.164706 0 0 0 0.3 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_272"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_272" result="shape"/>
+</filter>
+</defs>
+</svg>
