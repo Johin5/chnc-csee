@@ -1,5 +1,6 @@
 // Case Studies Page — built from Figma node 1:1855 (Landing Page - Dark-cASE STUDY)
 import { useState } from 'react'
+import useResponsive from './useResponsive'
 
 const G     = '#34cc32'
 const DARK  = '#000718'
@@ -9,16 +10,16 @@ const DIM   = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Figma assets ─────────────────────────────────────────────────────────────
-const imgMahindraPhoto   = 'https://www.figma.com/api/mcp/asset/6de30e55-a94c-4aab-96ca-d9eb167a8dd0'
-const imgAxisPhoto       = 'https://www.figma.com/api/mcp/asset/6d0071c0-ef1d-4147-b77f-4a2af2049d97'
-const imgSBIPhoto        = 'https://www.figma.com/api/mcp/asset/5dfc35df-c9fc-4c44-a384-61312dda3a10'
-const imgLACPhoto        = 'https://www.figma.com/api/mcp/asset/08964222-8a0c-44aa-86fb-e6b53cdc8efe'
-const imgMahindraLogo    = 'https://www.figma.com/api/mcp/asset/b005022a-b4fc-4f1f-9fdf-16184fb89ddb'
-const imgAxisLogo        = 'https://www.figma.com/api/mcp/asset/a4cf5885-c36c-403a-b706-823e7cb8d1bb'
-const imgSBILogo         = 'https://www.figma.com/api/mcp/asset/90b87a6f-12c3-4614-a5ef-7b472ff9ed60'
-const imgLACLogo         = 'https://www.figma.com/api/mcp/asset/d0c517f7-6e3b-4233-84d7-21c56ceb8bb8'
-const imgMeme            = 'https://www.figma.com/api/mcp/asset/4b346632-df10-420a-bf27-0dcf45ac6066'
-const imgPartner         = 'https://www.figma.com/api/mcp/asset/d7894a73-18a8-48b6-8ab7-40b9e416d5d6'
+const imgMahindraPhoto   = '/figma/case-study/img-mahindra2.png'
+const imgAxisPhoto       = '/figma/case-study/img-mahindra4.jpg'
+const imgSBIPhoto        = '/figma/case-study/img-mahindra3.jpg'
+const imgLACPhoto        = '/figma/case-study/img-mahindra5.jpg'
+const imgMahindraLogo    = '/mahindra-logo.png'
+const imgAxisLogo        = '/axis-bank-logo.png'
+const imgSBILogo         = '/sbi-logo.png'
+const imgLACLogo         = '/figma/case-study/img-image30.png'
+const imgMeme            = '/figma/case-study/img-meme1.png'
+const imgPartner         = '/figma/case-study/img-partner-rgb1.png'
 
 // ─── Case study data ──────────────────────────────────────────────────────────
 const CASES = [
@@ -134,16 +135,17 @@ function CaseCard({ c, onClick }) {
 }
 
 export default function CaseStudiesPage({ onNavigate }) {
+  const { isMobile, isSmall } = useResponsive()
   return (
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '100px 100px 0', display: 'flex', flexDirection: 'column', gap: 100, alignItems: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(56px, 8vw, 100px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center', textAlign: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
               fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 150, fontWeight: 800, lineHeight: 1,
+              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
               textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
               whiteSpace: 'nowrap',
             }}>
@@ -151,7 +153,7 @@ export default function CaseStudiesPage({ onNavigate }) {
               <span style={{ color: G }}>DARE </span>
               <span style={{ color: '#fff' }}>YOU</span>
             </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
               Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
             </p>
           </div>
@@ -176,9 +178,9 @@ export default function CaseStudiesPage({ onNavigate }) {
       </section>
 
       {/* ── Case study grid ────────────────────────────────────────────────── */}
-      <section style={{ padding: '100px' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, width: '100%' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, width: '100%' }}>
             {CASES.map((c, i) => (
               <CaseCard
                 key={i}
@@ -201,7 +203,7 @@ export default function CaseStudiesPage({ onNavigate }) {
       </section>
 
       {/* ── Contact: "We will shoot you" ───────────────────────────────────── */}
-      <section style={{ padding: '100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <div style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -211,7 +213,7 @@ export default function CaseStudiesPage({ onNavigate }) {
           </div>
           <h2 style={{
             fontFamily: "'Saira Condensed', sans-serif",
-            fontSize: 80, fontWeight: 800, lineHeight: '80px',
+            fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
             textTransform: 'uppercase', textAlign: 'center', margin: 0,
           }}>
             <span style={{ color: '#fff' }}>We will </span>
@@ -222,7 +224,7 @@ export default function CaseStudiesPage({ onNavigate }) {
 
         <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
           {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', gap: 20, width: '100%' }}>
+            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
               {row.map((lbl, fi) => lbl ? (
                 <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
@@ -233,33 +235,33 @@ export default function CaseStudiesPage({ onNavigate }) {
           ))}
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
             <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%' }} />
+            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
           </div>
           <button type="submit" className="btn-green" style={{
             background: G, color: DARK, border: 'none',
             padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
             fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-            cursor: 'pointer',
+            cursor: 'pointer', width: isMobile ? '100%' : 'auto',
           }}>Send Message</button>
         </form>
       </section>
 
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <footer style={{ background: CARD, padding: '100px' }}>
+      <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-          <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
             {/* Poison */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center', color: '#fff' }}>
                 Choose your <span style={{ color: G }}>poison</span>
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: 323, position: 'relative' }}>
-                  <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain' }} />
+                <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
+                  <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <button className="btn-green" style={{ width: 323, background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
-                  <button className="btn-outline" style={{ width: 323, background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
+                  <button className="btn-green" style={{ width: '100%', background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
+                  <button className="btn-outline" style={{ width: '100%', background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
                 </div>
               </div>
             </div>
@@ -317,7 +319,7 @@ export default function CaseStudiesPage({ onNavigate }) {
           </div>
 
           <div style={{ height: 1, background: BORDER }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4, color: '#fff' }}>© Copyright ConvergenSEE All Rights Reserved</p>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>
               Designed by <span style={{ color: G }}>ConvergenSEE</span>

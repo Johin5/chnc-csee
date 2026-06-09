@@ -10,6 +10,7 @@ import {
 const items = [
   'InsightIT', 'LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT',
   'InfluenceIT', 'ScriptIT', 'AigenIT', 'SearchIT', 'InvoiceIT',
+  'AdaptIT', 'EngageIT',
 ]
 
 function formatLabel(label) {

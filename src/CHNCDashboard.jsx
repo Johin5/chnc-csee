@@ -2,57 +2,57 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 
 // ─── Figma Assets (sidebar: node 64:4011) ────────────────────────────────────
-const sbEllipse206  = 'https://www.figma.com/api/mcp/asset/7721f091-60b5-45fd-a825-bff63199f83b' // meatballs dots
-const sbMahindra    = 'https://www.figma.com/api/mcp/asset/cccee17e-d189-4347-8994-8297b23ba86a' // mahindra logo
-const sbChevron     = 'https://www.figma.com/api/mcp/asset/8b956114-03db-4ad0-b778-97ffaf5d7b3a' // chevron arrow
-const sbEllipse4    = 'https://www.figma.com/api/mcp/asset/218a5227-761d-4a01-939c-29d287556448' // pin body
-const sbEllipse5    = 'https://www.figma.com/api/mcp/asset/2e2ab4b8-c9d2-4775-b26f-6214bbb048f4' // pin dot
-const sbVec204      = 'https://www.figma.com/api/mcp/asset/a9ecfafc-5ef8-47db-94e3-70778ff362c0' // pen body
-const sbEllipse73   = 'https://www.figma.com/api/mcp/asset/0ac6aedd-5134-496a-bd8a-8ad3464ee4e2' // pen dot
-const sbVec205      = 'https://www.figma.com/api/mcp/asset/4d8ed4b2-2c67-4862-a8dd-fae7c779c4a3' // pen line
-const sbEllipse65   = 'https://www.figma.com/api/mcp/asset/55a33e6e-cbff-45aa-b4b8-6f023fbeee61' // question circle
-const sbEllipse93   = 'https://www.figma.com/api/mcp/asset/67e21fe5-3899-437e-a29b-eed7195e76ff' // question dot
-const sbVec123      = 'https://www.figma.com/api/mcp/asset/b07b124c-adc1-4ea0-819a-314c4c161af7' // question mark
-const sbVec57       = 'https://www.figma.com/api/mcp/asset/9f091ef2-0499-40f1-a8ff-6c22a246bf29' // book body
-const sbVec55       = 'https://www.figma.com/api/mcp/asset/caf971e4-42cd-41fc-808c-33c2f5d33628' // book check
-const sbVec10       = 'https://www.figma.com/api/mcp/asset/e632d478-c094-4297-a4df-ef18a27b2bba' // play arrow
-const sbEllipse47   = 'https://www.figma.com/api/mcp/asset/6be05c37-0ba5-4e93-87d3-96a5e4bd076b' // video circle
-const sbVec619      = 'https://www.figma.com/api/mcp/asset/2132cc90-5737-4ab9-b3ab-a7e8cdc7214d' // film strip
-const sbRect4243    = 'https://www.figma.com/api/mcp/asset/7d9316fc-507a-4876-9e1a-3bc98728bbc3' // file rect
-const sbVec3        = 'https://www.figma.com/api/mcp/asset/7e3b1801-5da3-48f7-82da-3f77d2ae90f4' // message body
-const sbEllipse66   = 'https://www.figma.com/api/mcp/asset/73cb75b3-ea9c-45dd-88ef-86b035a9830b' // search circle
-const sbVec109      = 'https://www.figma.com/api/mcp/asset/ef243dca-e5cb-4e62-a49c-0ca728266526' // search line
-const sbVec58       = 'https://www.figma.com/api/mcp/asset/0d0b35a8-8d1f-4c1c-bfa4-5246e809ade4' // notebook spiral
-const sbVec59       = 'https://www.figma.com/api/mcp/asset/78d90288-ac33-46c8-9722-103436ee75a6' // notebook lines
-const sbVec60       = 'https://www.figma.com/api/mcp/asset/b4e5227c-2906-419b-9ec9-31dc4476663d' // order lines
-const sbVec70       = 'https://www.figma.com/api/mcp/asset/4045319e-1b39-420f-90f1-1882125c7c84' // money lines
-const sbEllipse118  = 'https://www.figma.com/api/mcp/asset/e0653ac8-bc13-4ec3-bd8f-e6ed541f4081' // money circle
-const sbC2D         = 'https://www.figma.com/api/mcp/asset/f03f17bf-0318-4c0f-8215-283fd6465595' // ConvergenSEE C logo
+const sbEllipse206  = '/figma/sidebar-chnc/ellipse-206.svg' // meatballs dots
+const sbMahindra    = '/figma/sidebar-chnc/vector.svg' // mahindra logo
+const sbChevron     = '/figma/sidebar-chnc/vector-9.svg' // chevron arrow
+const sbEllipse4    = '/figma/sidebar-chnc/ellipse-4.svg' // pin body
+const sbEllipse5    = '/figma/sidebar-chnc/ellipse-5.svg' // pin dot
+const sbVec204      = '/figma/sidebar-chnc/vector-204.svg' // pen body
+const sbEllipse73   = '/figma/sidebar-chnc/ellipse-73.svg' // pen dot
+const sbVec205      = '/figma/sidebar-chnc/vector-205.svg' // pen line
+const sbEllipse65   = '/figma/sidebar-chnc/ellipse-65.svg' // question circle
+const sbEllipse93   = '/figma/sidebar-chnc/ellipse-93.svg' // question dot
+const sbVec123      = '/figma/sidebar-chnc/vector-123.svg' // question mark
+const sbVec57       = '/figma/sidebar-chnc/vector-57.svg' // book body
+const sbVec55       = '/figma/sidebar-chnc/vector-55.svg' // book check
+const sbVec10       = '/figma/sidebar-chnc/vector-10.svg' // play arrow
+const sbEllipse47   = '/figma/sidebar-chnc/ellipse-47.svg' // video circle
+const sbVec619      = '/figma/sidebar-chnc/vector-619.svg' // film strip
+const sbRect4243    = '/figma/sidebar-chnc/rectangle-4243.svg' // file rect
+const sbVec3        = '/figma/sidebar-chnc/vector-3.svg' // message body
+const sbEllipse66   = '/figma/sidebar-chnc/ellipse-66.svg' // search circle
+const sbVec109      = '/figma/sidebar-chnc/vector-109.svg' // search line
+const sbVec58       = '/figma/sidebar-chnc/vector-58.svg' // notebook spiral
+const sbVec59       = '/figma/sidebar-chnc/vector-59.svg' // notebook lines
+const sbVec60       = '/figma/sidebar-chnc/vector-60.svg' // order lines
+const sbVec70       = '/figma/sidebar-chnc/vector-70.svg' // money lines
+const sbEllipse118  = '/figma/sidebar-chnc/ellipse-118.svg' // money circle
+const sbC2D         = '/figma/sidebar-chnc/c-2d.svg' // ConvergenSEE C logo
 
 // ─── Figma Assets (main panel: node 53:2908) ─────────────────────────────────
-const imgVector          = 'https://www.figma.com/api/mcp/asset/58979493-6ce9-49b3-a5b1-d006dae927b3'
-const imgCustomer11      = 'https://www.figma.com/api/mcp/asset/2b9e3296-a3ac-4da7-a264-e0b52c05ae60'
-const imgAvatar06        = 'https://www.figma.com/api/mcp/asset/f907bc30-74b2-4af5-8d47-c1f5fd6d2b86'
-const imgMemoji          = 'https://www.figma.com/api/mcp/asset/c7333f21-a4d0-44a4-88ee-61bdd9943faf'
-const imgSubtract        = 'https://www.figma.com/api/mcp/asset/09391ed2-cf01-4612-bfd9-1b2fb70d8799'
-const imgEllipse103      = 'https://www.figma.com/api/mcp/asset/39845d66-c173-4e96-8629-1e2b59ba21bb'
-const imgEllipse165      = 'https://www.figma.com/api/mcp/asset/d3f4b78e-deda-4413-a361-620fed9e5546'
-const imgEllipse108      = 'https://www.figma.com/api/mcp/asset/21e79ef6-6fdf-434e-bbcb-67446e91a5e4'
-const imgVector907       = 'https://www.figma.com/api/mcp/asset/e1141dda-31bc-4811-83f8-6a45996e20aa'
-const imgSubtract1       = 'https://www.figma.com/api/mcp/asset/e857f7a9-64f4-4479-8c1f-872c143f6d03'
-const imgEllipse45       = 'https://www.figma.com/api/mcp/asset/d6dc5c00-1305-4028-834e-e77d18db0714'
-const imgEllipse65       = 'https://www.figma.com/api/mcp/asset/cfaf5fbd-57b1-443a-90a5-6b6a615462a4'
-const imgEllipse93       = 'https://www.figma.com/api/mcp/asset/377e6d40-1d2a-48a3-8885-7c4918c62f4b'
-const imgVector123       = 'https://www.figma.com/api/mcp/asset/3b40ae80-b909-4a6c-9d77-80426545cd00'
-const imgSubtract2       = 'https://www.figma.com/api/mcp/asset/32cdc0df-8345-482a-9078-8cfd3497bb3b'
-const imgVector2         = 'https://www.figma.com/api/mcp/asset/e032b696-b1fb-459c-aef6-5ee54d38b0e4'
-const imgGroupDuotoneFill= 'https://www.figma.com/api/mcp/asset/9c2cceba-244a-49df-b784-208322cfdbd7'
-const imgArrow           = 'https://www.figma.com/api/mcp/asset/d0607f42-bfa1-4ded-a421-60f43e44071e'
-const imgSubtract3       = 'https://www.figma.com/api/mcp/asset/001c425a-5ed4-4103-8efd-99e370fa4b97'
-const imgVector10        = 'https://www.figma.com/api/mcp/asset/54242163-202a-4815-842d-d77acbf4a958'
-const imgVector204       = 'https://www.figma.com/api/mcp/asset/98d53e27-f52a-4cae-ae5f-398c306c347c'
-const imgEllipse73       = 'https://www.figma.com/api/mcp/asset/96334678-66ba-4d3f-94f8-a05f8bc5335d'
-const imgVector205       = 'https://www.figma.com/api/mcp/asset/c0131599-7399-41f6-99f2-a9c3045b671e'
+const imgVector          = '/figma/dashboard-chnc/img-search-vector.svg'
+const imgCustomer11      = '/figma/dashboard-chnc/img-customer11.png'
+const imgAvatar06        = '/figma/dashboard-chnc/img-avatar06.jpg'
+const imgMemoji          = '/figma/dashboard-chnc/img-memoji.png'
+const imgSubtract        = '/figma/dashboard-chnc/img-menu-subtract.svg'
+const imgEllipse103      = '/figma/dashboard-chnc/img-ellipse103.svg'
+const imgEllipse165      = '/figma/dashboard-chnc/img-ellipse165.svg'
+const imgEllipse108      = '/figma/dashboard-chnc/img-ellipse108.svg'
+const imgVector907       = '/figma/dashboard-chnc/img-vector907.svg'
+const imgSubtract1       = '/figma/dashboard-chnc/img-bell-subtract.svg'
+const imgEllipse45       = '/figma/dashboard-chnc/img-ellipse45.svg'
+const imgEllipse65       = '/figma/dashboard-chnc/img-ellipse65-header.svg'
+const imgEllipse93       = '/figma/dashboard-chnc/img-ellipse93-header.svg'
+const imgVector123       = '/figma/dashboard-chnc/img-vector123-header.svg'
+const imgSubtract2       = '/figma/dashboard-chnc/img-setting-subtract.svg'
+const imgVector2         = '/figma/dashboard-chnc/img-vector9-expand.svg'
+const imgGroupDuotoneFill= '/figma/dashboard-chnc/img-group-duotone-fill.svg'
+const imgArrow           = '/figma/dashboard-chnc/img-arrow.svg'
+const imgSubtract3       = '/figma/dashboard-chnc/img-subtract-pin.svg'
+const imgVector10        = '/figma/dashboard-chnc/img-vector9-list.svg'
+const imgVector204       = '/figma/dashboard-chnc/img-vector204-campaign.svg'
+const imgEllipse73       = '/figma/dashboard-chnc/img-ellipse73-campaign.svg'
+const imgVector205       = '/figma/dashboard-chnc/img-vector205-campaign.svg'
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -985,254 +985,382 @@ function CreateStandardContent({ controls, tileVariants }) {
 // ─── CreateIT content (Creative Production) ───────────────────────────────────
 function CreateContent({ controls, tileVariants, stepCount = 0 }) {
   const G = '#34cc32'
-  const step = Math.min(stepCount, 9)
 
-  // Cursor positions per step (x, y within the 1119-wide content area)
-  const cursors = [
-    [100, 60],    // 0 idle
-    [320, 55],    // 1 Plan — clicks "New Campaign"
-    [680, 55],    // 2 Gather — fills brief form
-    [300, 240],   // 3 Visualise — AI preview area
-    [300, 320],   // 4 Write Copy — copy editor
-    [750, 240],   // 5 Create — variations grid
-    [750, 370],   // 6 Match — image matcher
-    [300, 500],   // 7 Bring Life — design canvas
-    [750, 500],   // 8 Publish — publish button
-    [540, 400],   // 9 done
+  // Self-contained timer: total elapsed ms since mount
+  const [elapsed, setElapsed] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    return () => clearInterval(id)
+  }, [])
+
+  // Timeline: cumulative ms for each frame start
+  // Frame:    0=idle  1=Brief(3.5s)  2=Generate(5s)  3=Approve(4s)  4=Adapt(3.5s)  5=Copy(5s)  6=Merge(3.5s)  7=Publish(4s)  8=done
+  const timeline = [0, 500, 4000, 9000, 13000, 16500, 21500, 25000, 29000]
+  const totalDuration = 30000
+
+  // Loop the animation
+  const looped = elapsed % totalDuration
+
+  // Determine which frame we're in and how far through it
+  let frame = 0
+  let t = 0
+  for (let i = timeline.length - 1; i >= 0; i--) {
+    if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
+  }
+
+  const copyText = 'Celebrating the spirit of freedom! 🇮🇳 Happy Independence Day to every Indian heart.'
+
+  // Cursor — moves smoothly within each frame
+  const getCursorPos = () => {
+    switch(frame) {
+      case 1:
+        if (t < 800) return [520, 140]
+        if (t < 1600) return [520, 210]
+        if (t < 2400) return [520, 280]
+        return [520, 350]
+      case 2:
+        if (t < 1000) return [400, 175]
+        if (t < 1500) return [250, 220]
+        if (t < 2000) return [380, 220]
+        if (t < 3500) return [500, 330]
+        return [350, 420]
+      case 3:
+        if (t < 1000) return [580, 240]
+        if (t < 1500) return [580, 195]
+        if (t < 3000) return [400, 380]
+        return [400, 380]
+      case 4:
+        if (t < 800) return [220, 260]
+        if (t < 1600) return [440, 260]
+        if (t < 2400) return [660, 260]
+        return [350, 400]
+      case 5:
+        if (t < 500) return [520, 170]
+        if (t < 1000) return [520, 225]
+        if (t < 1500) return [520, 275]
+        if (t < 3200) return [500, 345]
+        return [500, 440]
+      case 6:
+        if (t < 700) return [350, 290]
+        if (t < 1400) return [600, 290]
+        if (t < 2000) return [480, 290]
+        return [480, 410]
+      case 7:
+        if (t < 600) return [700, 160]
+        if (t < 1200) return [700, 215]
+        if (t < 1800) return [700, 270]
+        if (t < 2400) return [700, 325]
+        return [480, 430]
+      default: return [400, 260]
+    }
+  }
+  const [cx, cy] = getCursorPos()
+
+  const overlays = [
+    null,
+    { main: 'Tell it what you need.', sub: 'Campaign name. Platform. That\'s it.' },
+    { main: 'AI generates your visuals.', sub: 'Multiple options. Multiple AI engines. Seconds.' },
+    { main: 'Pick one. Send for approval.', sub: 'One click. Done.' },
+    { main: 'One image. Every format. Every language.', sub: 'Adapt it once. Use it everywhere.' },
+    { main: 'AI writes the copy too.', sub: 'Multiple variations. Pick your favourite.' },
+    { main: 'Image + copy come together.', sub: 'Your final creative. Ready to go.' },
+    { main: 'Brief. Generate. Approve. Adapt. Publish.', sub: 'All in one place. All in minutes.' },
   ]
-  const [cx, cy] = cursors[step]
-
-  // Which panel is active
-  const panels = ['', 'plan', 'brief', 'ai', 'copy', 'variations', 'images', 'design', 'publish', '']
-  const activePanel = panels[step]
-
-  const panelStyle = (name) => ({
-    background: activePanel === name ? '#fff' : '#f4f5f7',
-    border: activePanel === name ? `2px solid ${G}` : '1px solid #dee0e7',
-    transition: 'all 0.5s ease',
-    boxShadow: activePanel === name ? `0 0 20px rgba(52,204,50,0.15)` : 'none',
-  })
-
-  // Typing animation for copy step
-  const copyText = 'Experience the thrill of the open road with Mahindra Thar — Built for More.'
-  const visibleChars = step >= 4 ? copyText.length : 0
+  const overlay = overlays[frame]
+  const progressLabels = ['CAMPAIGN', 'BRIEF', 'PLANNING', 'APPROVE', 'ADAPT', 'COPY', 'PUBLISH']
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 1119, position: 'relative' }}>
-
+    <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative', height: '100%' }}>
       <style>{`
-        @keyframes clickPulse { 0% { transform: scale(1); } 50% { transform: scale(0.85); } 100% { transform: scale(1); } }
         @keyframes shimmer { 0% { background-position: -200px 0; } 100% { background-position: 200px 0; } }
-        @keyframes typeIn { from { width: 0; } to { width: 100%; } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes barGrow { from { width: 0; } to { width: var(--bar-w); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes progressFill { from { width: 0; } to { width: 100%; } }
       `}</style>
 
-      {/* Black Figma cursor */}
-      {step > 0 && step <= 8 && (
+      {/* Progress bar */}
+      <div style={{ display: 'flex', gap: 0, padding: '14px 24px 0' }}>
+        {progressLabels.map((l, i) => (
+          <div key={l} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+            <div style={{ height: 3, width: '100%', background: i < frame ? G : (i === frame && frame > 0) ? G : '#dee0e7', borderRadius: 2, transition: 'background 0.6s ease', opacity: (i === frame && frame > 0) ? 0.5 : 1 }} />
+            <span style={{ fontSize: 8, fontFamily: "'Archivo'", color: i <= frame && frame > 0 ? G : '#9fa3ac', fontWeight: i < frame ? 700 : 400, transition: 'all 0.3s ease' }}>{l}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Black cursor */}
+      {frame > 0 && frame <= 7 && (
         <div style={{
           position: 'absolute', left: cx, top: cy, zIndex: 200,
-          transition: 'left 0.7s cubic-bezier(0.4,0,0.2,1), top 0.7s cubic-bezier(0.4,0,0.2,1)',
+          transition: 'left 0.9s cubic-bezier(0.25,0.1,0.25,1), top 0.9s cubic-bezier(0.25,0.1,0.25,1)',
           pointerEvents: 'none',
-          animation: activePanel ? 'clickPulse 0.3s ease' : undefined,
         }}>
-          <svg width="14" height="19" viewBox="0 0 14 19" fill="none">
+          <svg width="16" height="22" viewBox="0 0 14 19" fill="none">
             <path d="M0 0V18L4.5 13.5L8 19L10 18L6.5 12.5H13L0 0Z" fill="#000" stroke="#fff" strokeWidth="1"/>
           </svg>
         </div>
       )}
 
-      {/* Row 1: Campaign header + brief panel */}
-      <div style={{ display: 'flex', gap: 16 }}>
-        {/* Left: Campaign planner */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('plan'), display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>Content Calendar</p>
-            <div style={{ background: step >= 1 ? G : '#dee0e7', padding: '4px 12px', transition: 'background 0.4s ease' }}>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 10, fontWeight: 600, color: step >= 1 ? '#000' : '#666', margin: 0 }}>+ New Campaign</p>
+      {/* Content area */}
+      <div style={{ flex: 1, padding: '18px 24px', overflow: 'hidden' }}>
+
+        {/* FRAME 1 — Brief IT (3.5s) */}
+        {frame === 1 && (
+          <div key="f1" style={{ animation: 'fadeUp 0.7s ease' }}>
+            <h3 style={{ margin: '0 0 22px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Create Campaign</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+              {[
+                { label: 'Campaign Name', value: 'Independence Day Post' },
+                { label: 'Platform', value: 'Instagram' },
+                { label: 'Region', value: 'India — All States' },
+                { label: 'Objective', value: 'Brand Awareness' },
+              ].map((field, i) => {
+                const show = t > i * 700
+                const greenBorder = t > i * 700 + 500
+                return (
+                  <div key={i} style={{ opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(12px)', transition: 'all 0.7s ease' }}>
+                    <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 5 }}>{field.label}</label>
+                    <div style={{ border: `1.5px solid ${greenBorder ? G : '#dee0e7'}`, padding: '9px 14px', fontSize: 13, fontFamily: "'Archivo'", color: '#333', transition: 'border-color 0.6s ease', borderRadius: 2 }}>
+                      {show ? field.value : ''}
+                      {show && !greenBorder && <span style={{ animation: 'blink 0.8s ease infinite', color: G, marginLeft: 1 }}>|</span>}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
-          {/* Mini calendar grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4 }}>
-            {['M','T','W','T','F','S','S'].map((d,i) => (
-              <div key={i} style={{ textAlign: 'center', fontFamily: "'Archivo', sans-serif", fontSize: 8, color: '#9fa3ac', padding: 2 }}>{d}</div>
-            ))}
-            {Array.from({length: 28}, (_, i) => {
-              const hasPost = [2,5,8,12,15,19,22,25].includes(i)
-              const isActive = step >= 1 && hasPost
-              return (
-                <div key={i} style={{
-                  textAlign: 'center', padding: '3px 0',
-                  fontFamily: "'Archivo', sans-serif", fontSize: 8, color: '#333',
-                  background: isActive ? G : 'transparent',
-                  transition: 'background 0.4s ease',
-                  opacity: isActive ? 1 : 0.5,
-                }}>{i + 1}</div>
-              )
-            })}
-          </div>
-        </div>
+        )}
 
-        {/* Right: Brief / requirements */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('brief'), display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>Campaign Brief</p>
-          {['Brand: Mahindra & Mahindra', 'Objective: Launch Awareness', 'Platforms: Meta, Google, YouTube', 'Formats: Reel, Carousel, Static'].map((line, i) => (
-            <div key={i} style={{
-              display: 'flex', gap: 6, alignItems: 'center',
-              opacity: step >= 2 ? 1 : 0.2,
-              transition: `opacity 0.4s ease ${i * 0.1}s`,
-            }}>
-              <div style={{ width: 10, height: 10, border: `1px solid ${step >= 2 ? G : '#ccc'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.3s ease' }}>
-                {step >= 2 && <div style={{ width: 6, height: 6, background: G }} />}
+        {/* FRAME 2 — Generate Images (5s) */}
+        {frame === 2 && (
+          <div key="f2" style={{ animation: 'fadeUp 0.7s ease' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Planning — Generate Images</h3>
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 5 }}>Brief</label>
+              <div style={{ border: `1.5px solid ${t > 600 ? G : '#dee0e7'}`, padding: '9px 14px', fontSize: 12, fontFamily: "'Archivo'", color: '#333', transition: 'border-color 0.6s ease', borderRadius: 2 }}>
+                Festive post for independence day{t < 1200 && <span style={{ animation: 'blink 0.8s ease infinite', color: G, marginLeft: 1 }}>|</span>}
               </div>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 10, color: '#333', margin: 0 }}>{line}</p>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Row 2: AI Preview + Copy Editor */}
-      <div style={{ display: 'flex', gap: 16 }}>
-        {/* AI Visualise */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('ai'), display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>AI Content Preview</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-            {['Reel', 'Carousel', 'Static'].map((fmt, i) => (
-              <div key={i} style={{
-                background: step >= 3 ? '#e8f5e8' : '#f0f0f0',
-                height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                transition: `background 0.4s ease ${i * 0.15}s`,
-                position: 'relative', overflow: 'hidden',
-              }}>
-                {step >= 3 && (
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    background: `linear-gradient(90deg, transparent, rgba(52,204,50,0.1), transparent)`,
-                    backgroundSize: '200px 100%',
-                    animation: 'shimmer 1.5s ease infinite',
-                  }} />
-                )}
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 9, color: step >= 3 ? G : '#999', margin: 0, fontWeight: 600, position: 'relative' }}>{fmt}</p>
+            <div style={{ display: 'flex', gap: 20, marginBottom: 18 }}>
+              {['GPT', 'Gemini 2.0'].map((p, i) => {
+                const checked = t > 1000 + i * 500
+                return (
+                  <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 7, opacity: checked ? 1 : 0.3, transition: 'opacity 0.5s ease' }}>
+                    <div style={{ width: 15, height: 15, borderRadius: 3, border: `2px solid ${checked ? G : '#ccc'}`, background: checked ? G : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.4s ease', transform: checked ? 'scale(1)' : 'scale(0.8)' }}>
+                      {checked && <span style={{ color: '#fff', fontSize: 9, fontWeight: 800 }}>✓</span>}
+                    </div>
+                    <span style={{ fontSize: 12, fontFamily: "'Archivo'", color: '#333' }}>{p}</span>
+                  </div>
+                )
+              })}
+            </div>
+            {t > 2000 && t < 3500 && (
+              <div style={{ background: '#f5f6f8', borderRadius: 8, padding: 18, textAlign: 'center', border: '1px solid #dee0e7', animation: 'fadeUp 0.5s ease' }}>
+                <p style={{ fontSize: 12, fontFamily: "'Archivo'", color: '#333', margin: '0 0 10px', fontWeight: 600 }}>Generating with Dual AI (GPT + Gemini 2.0)</p>
+                <div style={{ height: 6, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}>
+                  <div style={{ height: '100%', background: G, width: `${Math.min(((t - 2000) / 1500) * 100, 100)}%`, borderRadius: 3, transition: 'width 0.1s linear' }} />
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Copy Editor */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('copy'), display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>Copy Editor</p>
-            {step >= 4 && (
-              <div style={{ display: 'flex', gap: 4 }}>
-                {['EN', 'HI', 'MR'].map(lang => (
-                  <div key={lang} style={{ padding: '2px 6px', background: lang === 'EN' ? G : '#eee', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: lang === 'EN' ? '#000' : '#666' }}>{lang}</div>
+            )}
+            {t > 3500 && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+                {[0,1,2,3,4,5].map(i => (
+                  <div key={i} style={{
+                    aspectRatio: '1/1', background: `hsl(${120 + i * 30}, 30%, ${75 - i * 5}%)`, borderRadius: 4,
+                    opacity: t > 3500 + i * 250 ? 1 : 0, transform: t > 3500 + i * 250 ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.95)',
+                    transition: 'all 0.6s ease', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    position: 'relative', overflow: 'hidden',
+                  }}>
+                    {t > 3500 + i * 250 && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)', backgroundSize: '200px 100%', animation: 'shimmer 2s ease infinite' }} />}
+                    <span style={{ fontSize: 9, color: 'rgba(0,0,0,0.2)', fontFamily: "'Archivo'", position: 'relative' }}>{i < 3 ? 'Gemini' : 'GPT'}</span>
+                  </div>
                 ))}
               </div>
             )}
           </div>
-          <div style={{ background: '#fafafa', border: '1px solid #eee', padding: 10, minHeight: 50 }}>
-            <p style={{
-              fontFamily: "'Archivo', sans-serif", fontSize: 10, color: '#333', margin: 0, lineHeight: '16px',
-              overflow: 'hidden', whiteSpace: 'nowrap',
-              width: step >= 4 ? '100%' : '0%',
-              transition: 'width 1s ease',
-            }}>
-              {copyText}
-            </p>
-            {step >= 4 && <div style={{ width: 1, height: 14, background: '#000', display: 'inline-block', animation: 'clickPulse 0.8s ease infinite' }} />}
-          </div>
-        </div>
-      </div>
+        )}
 
-      {/* Row 3: Variations + Image Matcher */}
-      <div style={{ display: 'flex', gap: 16 }}>
-        {/* Content Variations */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('variations'), display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>Content Variations</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 6 }}>
-            {['V1', 'V2', 'V3', 'V4'].map((v, i) => (
-              <div key={i} style={{
-                height: 50, background: step >= 5 ? '#e8f5e8' : '#f0f0f0',
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4,
-                opacity: step >= 5 ? 1 : 0.3,
-                transition: `all 0.4s ease ${i * 0.1}s`,
-                border: step >= 5 && i === 0 ? `1px solid ${G}` : '1px solid transparent',
-              }}>
-                <div style={{ width: 20, height: 20, background: step >= 5 ? G : '#ddd', opacity: 0.3, transition: 'background 0.3s ease' }} />
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 8, color: '#666', margin: 0 }}>{v}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Image Matcher */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('images'), display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>Image Recognition</p>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <div style={{ width: 50, height: 50, background: '#f0f0f0', border: '1px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 8, color: '#999', margin: 0 }}>Upload</p>
-            </div>
-            {step >= 6 && (
-              <svg width="30" height="10" viewBox="0 0 30 10"><path d="M0 5H25M25 5L20 1M25 5L20 9" stroke={G} strokeWidth="1.5" fill="none"/></svg>
-            )}
-            <div style={{ display: 'flex', gap: 4 }}>
-              {[1,2,3].map(n => (
-                <div key={n} style={{
-                  width: 30, height: 30, background: step >= 6 ? '#e8f5e8' : '#f0f0f0',
-                  border: step >= 6 ? `1px solid ${G}` : '1px solid #eee',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  opacity: step >= 6 ? 1 : 0.3,
-                  transition: `all 0.3s ease ${n * 0.1}s`,
+        {/* FRAME 3 — Approve (4s) */}
+        {frame === 3 && (
+          <div key="f3" style={{ animation: 'fadeUp 0.7s ease' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Select & Approve</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 20 }}>
+              {[0,1,2,3,4,5].map(i => (
+                <div key={i} style={{
+                  aspectRatio: '1/1', background: `hsl(${120 + i * 30}, 30%, ${75 - i * 5}%)`, borderRadius: 4,
+                  border: i === 2 && t > 1000 ? `3px solid ${G}` : '3px solid transparent',
+                  position: 'relative', transition: 'border 0.5s ease',
                 }}>
-                  <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 7, color: step >= 6 ? G : '#999', margin: 0 }}>{step >= 6 ? `${85 + n * 4}%` : ''}</p>
+                  {i === 2 && t > 1000 && (
+                    <div style={{ position: 'absolute', top: 5, right: 5, width: 18, height: 18, borderRadius: 9, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeUp 0.4s ease' }}>
+                      <span style={{ color: '#fff', fontSize: 10, fontWeight: 800 }}>✓</span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Row 4: Design Canvas + Publish */}
-      <div style={{ display: 'flex', gap: 16 }}>
-        {/* Design */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('design'), display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>Design Studio</p>
-          <div style={{ background: '#fafafa', border: '1px solid #eee', height: 60, position: 'relative', overflow: 'hidden' }}>
-            {step >= 7 && (
-              <>
-                <div style={{ position: 'absolute', left: 10, top: 8, width: 80, height: 44, background: '#e8f5e8', border: `1px solid ${G}`, animation: 'fadeUp 0.4s ease forwards' }} />
-                <div style={{ position: 'absolute', left: 100, top: 12, animation: 'fadeUp 0.4s ease forwards 0.15s', opacity: 0 }}>
-                  <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 700, color: '#000', margin: 0 }}>BUILT FOR MORE.</p>
-                  <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 7, color: '#666', margin: 0 }}>Mahindra Thar</p>
-                </div>
-                <div style={{ position: 'absolute', right: 10, bottom: 6, padding: '3px 8px', background: G, animation: 'fadeUp 0.3s ease forwards 0.3s', opacity: 0 }}>
-                  <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 8, fontWeight: 600, color: '#000', margin: 0 }}>Export</p>
-                </div>
-              </>
+            {t > 1500 && t < 3000 && (
+              <div style={{ background: '#fff8e1', border: '1px solid #ffd54f', borderRadius: 6, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, animation: 'fadeUp 0.5s ease' }}>
+                <span style={{ fontSize: 16 }}>⏳</span>
+                <span style={{ fontSize: 13, fontFamily: "'Archivo'", color: '#f57f17', fontWeight: 600 }}>Waiting for Approval...</span>
+              </div>
+            )}
+            {t > 3000 && (
+              <div style={{ background: '#e8fde8', border: `2px solid ${G}`, borderRadius: 6, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, animation: 'fadeUp 0.5s ease' }}>
+                <span style={{ fontSize: 16 }}>✅</span>
+                <span style={{ fontSize: 13, fontFamily: "'Archivo'", color: '#1b5e20', fontWeight: 700 }}>Approved by Stakeholder</span>
+              </div>
             )}
           </div>
-        </div>
+        )}
 
-        {/* Publish */}
-        <div style={{ flex: 1, padding: 20, ...panelStyle('publish'), display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 14, color: '#000718', textTransform: 'uppercase', margin: 0 }}>Publish & Schedule</p>
-          {['Meta — Reel · Scheduled 10:00', 'Instagram — Carousel · Ready', 'Google Display — Static · Ready', 'YouTube — Video · In Review'].map((item, i) => (
-            <div key={i} style={{
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              padding: '4px 0', borderBottom: '1px solid #f0f0f0',
-              opacity: step >= 8 ? 1 : 0.2,
-              transition: `opacity 0.3s ease ${i * 0.1}s`,
-            }}>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 9, color: '#333', margin: 0 }}>{item}</p>
-              {step >= 8 && (
-                <div style={{ width: 12, height: 12, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: `fadeUp 0.3s ease forwards ${i * 0.1}s` }}>
-                  <svg width="8" height="8" viewBox="0 0 8 8"><path d="M1.5 4L3 5.5L6.5 2" stroke="#000" strokeWidth="1" fill="none"/></svg>
+        {/* FRAME 4 — Adapt (3.5s) */}
+        {frame === 4 && (
+          <div key="f4" style={{ animation: 'fadeUp 0.7s ease' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Adapt — Resize & Localize</h3>
+            <div style={{ display: 'flex', gap: 14, marginBottom: 22 }}>
+              {[{ l: 'Square', r: '1/1' }, { l: 'Story', r: '9/16' }, { l: 'Banner', r: '16/9' }].map((f, i) => (
+                <div key={f.l} style={{
+                  flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                  opacity: t > i * 700 ? 1 : 0, transform: t > i * 700 ? 'scale(1)' : 'scale(0.88)',
+                  transition: 'all 0.7s ease',
+                }}>
+                  <div style={{ width: '100%', aspectRatio: f.r, background: 'hsl(150, 30%, 70%)', borderRadius: 4, border: `2px solid ${G}`, maxHeight: 130 }} />
+                  <span style={{ fontSize: 11, fontFamily: "'Archivo'", color: '#666' }}>{f.l}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, opacity: t > 2200 ? 1 : 0, transition: 'opacity 0.6s ease' }}>
+              <label style={{ fontSize: 12, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600 }}>Language:</label>
+              {['English', 'Hindi', 'Tamil'].map((l, i) => (
+                <div key={l} style={{ padding: '5px 14px', background: i === 0 ? G : '#f0f0f0', fontSize: 11, fontFamily: "'Archivo'", fontWeight: 600, color: i === 0 ? '#000' : '#666', borderRadius: 3 }}>{l}</div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 5 — Generate Copy (5s) */}
+        {frame === 5 && (
+          <div key="f5" style={{ animation: 'fadeUp 0.7s ease' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Generate Copy</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 18 }}>
+              {[{ l: 'Description', v: 'Independence Day Post' }, { l: 'Ideation', v: 'Wish everyone Happy Independence Day' }, { l: 'Tone', v: 'Authentic' }].map((f, i) => {
+                const show = t > i * 400
+                const greenBorder = t > i * 400 + 300
+                return (
+                  <div key={i} style={{ opacity: show ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+                    <label style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }}>{f.l}</label>
+                    <div style={{ border: `1.5px solid ${greenBorder ? G : '#dee0e7'}`, padding: '7px 12px', fontSize: 12, fontFamily: "'Archivo'", color: '#333', transition: 'border-color 0.5s ease', borderRadius: 2 }}>{f.v}</div>
+                  </div>
+                )
+              })}
+            </div>
+            {t > 1500 && t < 3200 && (
+              <div style={{ background: '#f5f6f8', borderRadius: 8, padding: 18, textAlign: 'center', border: '1px solid #dee0e7', animation: 'fadeUp 0.5s ease' }}>
+                <p style={{ fontSize: 12, fontFamily: "'Archivo'", color: '#333', margin: '0 0 10px', fontWeight: 600 }}>Generating content...</p>
+                <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 10 }}>
+                  <span style={{ fontSize: 10, color: G, fontFamily: "'Archivo'" }}>✓ OpenAI</span>
+                  <span style={{ fontSize: 10, color: t > 2200 ? G : '#9fa3ac', fontFamily: "'Archivo'" }}>{t > 2200 ? '✓' : '...'} Gemini</span>
+                </div>
+                <div style={{ height: 6, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}>
+                  <div style={{ height: '100%', background: G, width: `${Math.min(((t - 1500) / 1700) * 100, 100)}%`, borderRadius: 3, transition: 'width 0.1s linear' }} />
+                </div>
+              </div>
+            )}
+            {t > 3200 && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {[copyText, 'From struggle to strength. India shines brighter every year. #IndependenceDay', 'Jai Hind! 🇮🇳 Honoring the heroes who made our freedom possible.'].map((v, i) => (
+                  <div key={i} style={{
+                    padding: '10px 14px', background: i === 0 ? '#e8fde8' : '#f5f6f8',
+                    border: i === 0 ? `2px solid ${G}` : '1px solid #dee0e7',
+                    fontSize: 11, fontFamily: "'Archivo'", color: '#333', lineHeight: '16px', borderRadius: 4,
+                    opacity: t > 3200 + i * 350 ? 1 : 0, transform: t > 3200 + i * 350 ? 'translateY(0)' : 'translateY(10px)',
+                    transition: 'all 0.6s ease',
+                  }}>{v}</div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* FRAME 6 — Merge (3.5s) */}
+        {frame === 6 && (
+          <div key="f6" style={{ animation: 'fadeUp 0.7s ease', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 28 }}>
+            <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase', alignSelf: 'flex-start' }}>Merge & Preview</h3>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: t > 1200 ? 0 : 70, transition: 'gap 1.2s cubic-bezier(0.25,0.1,0.25,1)', position: 'relative', minHeight: 150 }}>
+              <div style={{ width: 130, height: 130, background: 'hsl(150, 30%, 70%)', borderRadius: 6, transition: 'transform 1s ease', transform: t > 1200 ? 'translateX(0)' : 'translateX(-25px)', boxShadow: '0 6px 20px rgba(0,0,0,0.12)' }} />
+              <div style={{
+                width: 130, height: 130, background: '#fff', border: '1.5px solid #dee0e7', borderRadius: 6, padding: 12,
+                transition: 'all 1s ease', transform: t > 1200 ? 'translateX(-130px)' : 'translateX(25px)',
+                opacity: t > 1200 ? 0 : 1, boxShadow: '0 6px 20px rgba(0,0,0,0.12)',
+              }}>
+                <p style={{ fontSize: 9, color: '#333', fontFamily: "'Archivo'", lineHeight: '14px', margin: 0 }}>{copyText}</p>
+              </div>
+              {t > 1500 && (
+                <div style={{ position: 'absolute', width: 170, background: '#fff', borderRadius: 8, overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.18)', animation: 'fadeUp 0.7s ease' }}>
+                  <div style={{ height: 110, background: 'hsl(150, 30%, 70%)' }} />
+                  <div style={{ padding: 10 }}>
+                    <p style={{ fontSize: 9, color: '#333', fontFamily: "'Archivo'", lineHeight: '12px', margin: 0 }}>{copyText.slice(0, 60)}...</p>
+                  </div>
                 </div>
               )}
             </div>
-          ))}
-        </div>
+            {t > 2200 && (
+              <div style={{ width: '55%', height: 6, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}>
+                <div style={{ height: '100%', background: G, animation: 'progressFill 1s ease forwards', borderRadius: 3 }} />
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* FRAME 7 — Publish (4s) */}
+        {frame === 7 && (
+          <div key="f7" style={{ animation: 'fadeUp 0.7s ease' }}>
+            <h3 style={{ margin: '0 0 20px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Publish & Schedule</h3>
+            {['Meta — Reel · Scheduled 10:00 AM', 'Instagram — Carousel · Ready', 'Google Display — Static · Ready', 'YouTube — Video · In Review'].map((item, i) => (
+              <div key={i} style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '12px 14px', borderBottom: '1px solid #f0f0f0',
+                opacity: t > i * 500 ? 1 : 0.15, transition: 'opacity 0.6s ease',
+              }}>
+                <p style={{ fontFamily: "'Archivo'", fontSize: 13, color: '#333', margin: 0 }}>{item}</p>
+                {t > i * 500 + 600 && (
+                  <div style={{ width: 20, height: 20, background: G, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeUp 0.4s ease' }}>
+                    <svg width="10" height="10" viewBox="0 0 8 8"><path d="M1.5 4L3 5.5L6.5 2" stroke="#000" strokeWidth="1.2" fill="none"/></svg>
+                  </div>
+                )}
+              </div>
+            ))}
+            {t > 2800 && (
+              <div style={{ textAlign: 'center', marginTop: 28, animation: 'fadeUp 0.7s ease' }}>
+                <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>Campaign Live!</p>
+                <p style={{ fontFamily: "'Archivo'", fontSize: 12, color: '#666', margin: 0 }}>Brief. Generate. Approve. Adapt. Publish.</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* FRAME 0 — idle before start */}
+        {frame === 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
+            <div style={{ animation: 'fadeUp 0.5s ease' }}>
+              <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>CreateIT</p>
+              <p style={{ fontFamily: "'Archivo'", fontSize: 12, color: '#666', margin: 0 }}>Your end-to-end content creation workflow</p>
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Step indicator — dark strip at bottom */}
+      {overlay && (
+        <div style={{
+          background: 'rgba(0,7,24,0.92)', padding: '10px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          opacity: t > 200 ? 1 : 0, transition: 'opacity 0.5s ease',
+        }}>
+          <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", fontWeight: 600, color: '#fff' }}>{overlay.main}</p>
+          <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo'", color: G, fontWeight: 500 }}>{overlay.sub}</p>
+        </div>
+      )}
     </div>
   )
 }

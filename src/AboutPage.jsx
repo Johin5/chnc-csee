@@ -1,5 +1,6 @@
 // About Page — built from Figma node 1:841 (Landing Page - Dark-About)
 import { useState, useEffect } from 'react'
+import useResponsive from './useResponsive'
 
 const G    = '#34cc32'
 const DARK = '#000718'
@@ -8,18 +9,19 @@ const MUTED = 'rgba(255,255,255,0.7)'
 const DIM  = '#666a74'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
-const imgTeam        = 'https://www.figma.com/api/mcp/asset/16d074f7-27a2-4c29-8bf4-76fd9e970bb9'
-const imgBala        = 'https://www.figma.com/api/mcp/asset/e29d3e44-4624-4d44-b5d8-a4082aa08d35'
-const imgValCard1    = 'https://www.figma.com/api/mcp/asset/232a3a23-f6ab-4454-ba6e-2c987bc14236'
-const imgValCard2    = 'https://www.figma.com/api/mcp/asset/57a30c07-179e-4be7-8ee0-a5a46b6ffb1a'
-const imgMeme        = 'https://www.figma.com/api/mcp/asset/9899f16d-9fe9-49c8-a60a-c039bebaa1ab'
-const imgPartner     = 'https://www.figma.com/api/mcp/asset/610964a7-7f4c-4704-b425-6707afb4cf87'
+const imgTeam        = '/figma/about/img221.png'
+const imgBala        = '/figma/about/img-image6.png'
+const imgValCard1    = '/figma/about/img-component134.jpg'
+const imgValCard2    = '/figma/about/img-component135.jpg'
+const imgMeme        = '/figma/about/img-meme1.png'
+const imgPartner     = '/figma/about/img-partner-rgb1.png'
 
 // ─── Value card ───────────────────────────────────────────────────────────────
 function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
+  const { isMobile } = useResponsive()
   return (
     <div className="card-hover" style={{
-      position: 'relative', width: 610, height: 300,
+      position: 'relative', width: isMobile ? '100%' : 610, maxWidth: 610, height: isMobile ? 'clamp(200px, 50vw, 300px)' : 300,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       overflow: 'hidden', flexShrink: 0,
     }}>
@@ -32,16 +34,16 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
       {/* text */}
       <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
         <div style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 60, fontWeight: 600,
-          lineHeight: '64px', textTransform: 'uppercase',
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 600,
+          lineHeight: 1.05, textTransform: 'uppercase',
         }}>
           <span style={{ color: line1Green ? G : '#fff', fontWeight: line1Green ? 700 : 600 }}>{line1}</span>
           {line1Green ? '' : ''}
         </div>
         {line2 && (
           <div style={{
-            fontFamily: "'Saira Condensed', sans-serif", fontSize: 60, fontWeight: line2Green ? 700 : 600,
-            lineHeight: '64px', textTransform: 'uppercase',
+            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: line2Green ? 700 : 600,
+            lineHeight: 1.05, textTransform: 'uppercase',
             color: line2Green ? G : '#fff',
           }}>
             {line2}
@@ -56,6 +58,7 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
 const WORDS = ['Think', 'Believe', 'Create']
 
 export default function AboutPage({ onNavigateHome }) {
+  const { isMobile, isSmall } = useResponsive()
   const [wordIdx, setWordIdx] = useState(1) // start on "Believe"
   const [visible, setVisible] = useState(true)
 
@@ -81,12 +84,12 @@ export default function AboutPage({ onNavigateHome }) {
         {/* Hero text */}
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: 30, padding: '100px 100px 80px',
+          justifyContent: 'center', gap: 30, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 80px',
           textAlign: 'center',
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
             <h1 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 150, fontWeight: 800,
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
               textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1, margin: 0,
               whiteSpace: 'nowrap',
             }}>
@@ -103,14 +106,14 @@ export default function AboutPage({ onNavigateHome }) {
               <span style={{ color: '#fff' }}> IT</span>
             </h1>
             <p style={{
-              fontFamily: "'Archivo', sans-serif", fontSize: 24,
+              fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)',
               fontWeight: 400, color: '#fff', lineHeight: '30px', margin: 0,
             }}>
               We are <span style={{ color: G, fontWeight: 700 }}>ConvergenSEE</span>
             </p>
           </div>
           <p style={{
-            fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff',
+            fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
             lineHeight: '24px', maxWidth: 798,
           }}>
             Discover the power of our secure and rewarding copy. Explore our range of copy and take
@@ -120,7 +123,7 @@ export default function AboutPage({ onNavigateHome }) {
         </div>
 
         {/* Team photo with gradient fade */}
-        <div style={{ position: 'relative', height: 785, overflow: 'hidden' }}>
+        <div style={{ position: 'relative', height: isSmall ? 'clamp(320px, 70vw, 785px)' : 785, overflow: 'hidden' }}>
           <img src={imgTeam} alt="ConvergenSEE Team" style={{
             position: 'absolute', left: 0, top: '-37.58%',
             width: '100%', height: '137.58%', objectFit: 'cover',
@@ -135,25 +138,27 @@ export default function AboutPage({ onNavigateHome }) {
       </section>
 
       {/* ── Letter from Bala ────────────────────────────────────────────────── */}
-      <section style={{ background: CARD, paddingLeft: 100 }}>
-        <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'space-between' }}>
+      <section style={{ background: CARD, paddingLeft: isSmall ? 0 : 100 }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', alignItems: 'stretch', justifyContent: 'space-between' }}>
           {/* Left: text */}
           <div style={{
             display: 'flex', flexDirection: 'column', gap: 30,
             justifyContent: 'center', paddingTop: 80, paddingBottom: 80,
-            paddingRight: 60, flexShrink: 0, maxWidth: 538,
+            paddingLeft: isSmall ? 'clamp(20px, 6vw, 100px)' : 0,
+            paddingRight: isSmall ? 'clamp(20px, 6vw, 100px)' : 60,
+            flexShrink: 0, maxWidth: isSmall ? '100%' : 538,
           }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{
-                fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800,
-                lineHeight: '80px', textTransform: 'uppercase',
+                fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
+                lineHeight: 1, textTransform: 'uppercase',
               }}>
                 <div style={{ color: '#fff' }}>Letter from</div>
                 <div style={{ color: G }}>bala</div>
               </div>
             </div>
             <p style={{
-              fontFamily: "'Archivo', sans-serif", fontSize: 18,
+              fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
               color: MUTED, lineHeight: '24px',
             }}>
               Discover the power of our secure and rewarding copy. Explore our range of copy and
@@ -166,7 +171,7 @@ export default function AboutPage({ onNavigateHome }) {
           </div>
 
           {/* Right: photo */}
-          <div style={{ width: 732, height: 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
+          <div style={{ width: isSmall ? '100%' : 732, maxWidth: 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
             <div style={{ position: 'absolute', inset: 0, background: '#d9d9d9' }} />
             <img src={imgBala} alt="Letter from Bala" style={{
               position: 'absolute',
@@ -180,8 +185,8 @@ export default function AboutPage({ onNavigateHome }) {
       </section>
 
       {/* ── Core Values ─────────────────────────────────────────────────────── */}
-      <section style={{ background: DARK, padding: '100px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+      <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
           {/* Heading */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
@@ -195,8 +200,8 @@ export default function AboutPage({ onNavigateHome }) {
               }}>VALUES</span>
             </div>
             <h2 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800,
-              textTransform: 'uppercase', lineHeight: '70px', textAlign: 'center', margin: 0,
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
+              textTransform: 'uppercase', lineHeight: 1, textAlign: 'center', margin: 0,
               whiteSpace: 'nowrap',
             }}>
               <span style={{ color: '#fff' }}>OUR </span>
@@ -206,8 +211,8 @@ export default function AboutPage({ onNavigateHome }) {
           </div>
 
           {/* 2×2 grid */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <div style={{ display: 'flex', gap: 20 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
               <ValueCard
                 line1="Walk"
                 line1Green
@@ -223,7 +228,7 @@ export default function AboutPage({ onNavigateHome }) {
                 bg={imgValCard2}
               />
             </div>
-            <div style={{ display: 'flex', gap: 20 }}>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
               <ValueCard
                 line1="OWN"
                 line1Green
@@ -232,7 +237,7 @@ export default function AboutPage({ onNavigateHome }) {
                 bg={imgValCard1}
               />
               <div className="card-hover" style={{
-                position: 'relative', width: 610, height: 300,
+                position: 'relative', width: isMobile ? '100%' : 610, maxWidth: 610, height: isMobile ? 'clamp(200px, 50vw, 300px)' : 300,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 overflow: 'hidden', flexShrink: 0,
               }}>
@@ -241,12 +246,12 @@ export default function AboutPage({ onNavigateHome }) {
                 <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.7)' }} />
                 <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
                   <div style={{
-                    fontFamily: "'Saira Condensed', sans-serif", fontSize: 60, fontWeight: 600,
-                    lineHeight: '64px', textTransform: 'uppercase', color: '#fff',
+                    fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 600,
+                    lineHeight: 1.05, textTransform: 'uppercase', color: '#fff',
                   }}>CHASE THE</div>
                   <div style={{
-                    fontFamily: "'Saira Condensed', sans-serif", fontSize: 60, fontWeight: 700,
-                    lineHeight: '64px', textTransform: 'uppercase', color: G,
+                    fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 700,
+                    lineHeight: 1.05, textTransform: 'uppercase', color: G,
                   }}>CHNC</div>
                 </div>
               </div>
@@ -256,11 +261,11 @@ export default function AboutPage({ onNavigateHome }) {
       </section>
 
       {/* ── Join the Chaos ───────────────────────────────────────────────────── */}
-      <section style={{ background: DARK, padding: '100px', textAlign: 'center' }}>
+      <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', textAlign: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <h2 style={{
-            fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800,
-            textTransform: 'uppercase', lineHeight: '70px', margin: 0,
+            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
+            textTransform: 'uppercase', lineHeight: 1, margin: 0,
             whiteSpace: 'nowrap',
           }}>
             <span style={{ color: '#fff' }}>JOIN THE </span>
@@ -276,8 +281,8 @@ export default function AboutPage({ onNavigateHome }) {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────────── */}
-      <footer style={{ background: CARD, padding: '100px' }}>
-        <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start', marginBottom: 48 }}>
+      <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start', marginBottom: 48 }}>
 
           {/* Meme CTA */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
@@ -290,7 +295,7 @@ export default function AboutPage({ onNavigateHome }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div style={{
                 background: '#0e1620', border: `2px solid ${G}`,
-                width: 323, height: 150, position: 'relative', overflow: 'visible',
+                width: '100%', maxWidth: 323, height: 150, position: 'relative', overflow: 'visible',
               }}>
                 <img src={imgMeme} alt="Meme" style={{
                   position: 'absolute', left: '50%', top: -32,
@@ -298,16 +303,16 @@ export default function AboutPage({ onNavigateHome }) {
                   width: 203, height: 177, objectFit: 'contain',
                 }} />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
                 <button className="btn-green" style={{
                   background: G, color: DARK, border: 'none',
-                  padding: '15px 20px', width: 323,
+                  padding: '15px 20px', width: '100%',
                   fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
-                  textTransform: 'uppercase', cursor: 'pointer',
+                  textTransform: 'uppercase', cursor: 'pointer', boxSizing: 'border-box',
                 }}>I skipped to the end</button>
                 <div className="btn-outline" style={{
                   background: CARD, border: `1px solid ${G}`,
-                  padding: '15px 20px', width: 323,
+                  padding: '15px 20px', width: '100%',
                   fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
                   color: G, textTransform: 'uppercase', textAlign: 'center', cursor: 'pointer',
                   boxSizing: 'border-box',
@@ -348,7 +353,7 @@ export default function AboutPage({ onNavigateHome }) {
             <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, color: G, textTransform: 'uppercase' }}>Connect with us</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, color: '#fff', textTransform: 'uppercase', fontWeight: 600 }}>Address</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', width: 277, fontWeight: 300 }}>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', maxWidth: 277, fontWeight: 300 }}>
                 A 303, Supreme Business Park, Hirandani Gardens, Powai, Mumbai, Maharashtra, 400076
               </p>
             </div>
@@ -379,7 +384,7 @@ export default function AboutPage({ onNavigateHome }) {
         </div>
 
         <div style={{ height: 1, background: 'rgba(255,255,255,0.1)', marginBottom: 24 }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4 }}>© Copyright ConvergenSEE All Rights Reserved</p>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14 }}>
             Designed by <span style={{ color: G }}>ConvergenSEE</span>

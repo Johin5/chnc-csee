@@ -1,5 +1,6 @@
 // Blog Page — built from Figma node 1:2081 (Landing Page - Dark-Blog)
 import { useState } from 'react'
+import useResponsive from './useResponsive'
 
 const G      = '#34cc32'
 const DARK   = '#000718'
@@ -9,13 +10,13 @@ const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Assets ───────────────────────────────────────────────────────────────────
-const imgBlog1      = 'https://www.figma.com/api/mcp/asset/ccd75305-e08f-4acb-a0a7-671b22a159e2'
-const imgBlog2      = 'https://www.figma.com/api/mcp/asset/80fba765-e313-49e7-9cdc-a4c49d3f886f'
-const imgBlog3      = 'https://www.figma.com/api/mcp/asset/c914f6e9-fde8-49ab-b8aa-e6f61e0a02f1'
-const imgBlog4      = 'https://www.figma.com/api/mcp/asset/f417b7fe-f2c4-47dd-9a41-1daa6e61d058'
-const imgAvatar     = 'https://www.figma.com/api/mcp/asset/35122000-3d15-4a70-a67e-54b96a30ee5a'
-const imgMeme       = 'https://www.figma.com/api/mcp/asset/70eeb9f0-c789-4e2c-bec3-9301bb277d05'
-const imgPartner    = 'https://www.figma.com/api/mcp/asset/679ea41f-6316-4f11-80f0-58c7c0a47edb'
+const imgBlog1      = '/figma/blog/img-mahindra2.jpg'
+const imgBlog2      = '/figma/blog/img-mahindra3.jpg'
+const imgBlog3      = '/figma/blog/img-mahindra4.jpg'
+const imgBlog4      = '/figma/blog/img-mahindra5.jpg'
+const imgAvatar     = '/figma/blog/img-placeholders.png'
+const imgMeme       = '/figma/blog/img-meme1.png'
+const imgPartner    = '/figma/blog/img-partner-rgb1.png'
 
 const BLOGS = [
   { img: imgBlog1, tags: [{ label: 'Technology', color: '#323fcc' }, { label: 'Auto', color: '#cc32b0' }], title: 'A relentless pursuit of perfection in product design', desc: 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy.', author: 'Becky Conner', role: 'Content lead', date: 'Posted 11/12/2025' },
@@ -111,17 +112,18 @@ function BlogCard({ img, tags, title, desc, author, role, date, onClick }) {
 
 export default function BlogPage({ onNavigate }) {
   const [filter, setFilter] = useState('ALL')
+  const { isMobile, isSmall } = useResponsive()
 
   return (
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
 
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '100px 100px 0', display: 'flex', flexDirection: 'column', gap: 100, alignItems: 'center', textAlign: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 100px)', alignItems: 'center', textAlign: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
               fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 150, fontWeight: 800, lineHeight: 1,
+              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
               textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
               whiteSpace: 'nowrap',
             }}>
@@ -129,12 +131,12 @@ export default function BlogPage({ onNavigate }) {
               <span style={{ color: G }}>DARE </span>
               <span style={{ color: '#fff' }}>YOU</span>
             </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
               Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
             </p>
           </div>
           {/* Filter tabs */}
-          <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 'clamp(8px, 1.5vw, 20px)', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
             {FILTERS.map(f => (
               <button
                 key={f}
@@ -156,8 +158,8 @@ export default function BlogPage({ onNavigate }) {
       </section>
 
       {/* ── Blog grid ────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '100px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, width: '100%' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, width: '100%' }}>
           {BLOGS.map((b, i) => (
             <BlogCard key={i} {...b} onClick={i === 0 ? () => onNavigate('blog-read') : undefined} />
           ))}
@@ -171,12 +173,12 @@ export default function BlogPage({ onNavigate }) {
       </section>
 
       {/* ── Contact ──────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '0 100px 100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+      <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 10, paddingTop: 5, borderBottom: `2px solid ${G}` }}>
             <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff' }}>Connect with us</span>
           </div>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, lineHeight: '80px', textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1, textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
             <span style={{ color: '#fff' }}>We will </span>
             <span style={{ color: G }}>shoot </span>
             <span style={{ color: '#fff' }}>you</span>
@@ -184,7 +186,7 @@ export default function BlogPage({ onNavigate }) {
         </div>
         <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
           {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', gap: 20, width: '100%' }}>
+            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
               {row.map((lbl, fi) => lbl ? (
                 <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
@@ -197,27 +199,27 @@ export default function BlogPage({ onNavigate }) {
             <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
             <textarea className="input-glow" rows={6} placeholder="Enter here" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
           </div>
-          <button className="btn-green" type="submit" style={{ background: G, color: DARK, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer' }}>
+          <button className="btn-green" type="submit" style={{ background: G, color: DARK, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isMobile ? '100%' : undefined }}>
             Send Message
           </button>
         </form>
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────────── */}
-      <footer style={{ background: CARD, padding: '100px', width: '100%', boxSizing: 'border-box' }}>
+      <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-          <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center', color: '#fff', margin: 0 }}>
                 Choose your <span style={{ color: G }}>poison</span>
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: 323, position: 'relative' }}>
-                  <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain' }} />
+                <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
+                  <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <button className="btn-green" style={{ width: 323, background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
-                  <button className="btn-outline" style={{ width: 323, background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
+                  <button className="btn-green" style={{ width: '100%', background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
+                  <button className="btn-outline" style={{ width: '100%', background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
                 </div>
               </div>
             </div>
@@ -268,7 +270,7 @@ export default function BlogPage({ onNavigate }) {
             </div>
           </div>
           <div style={{ height: 1, background: BORDER }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4, color: '#fff', margin: 0 }}>© Copyright ConvergenSEE All Rights Reserved</p>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', margin: 0 }}>
               Designed by <span style={{ color: G }}>ConvergenSEE</span>

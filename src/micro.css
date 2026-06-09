@@ -1,3 +1,7 @@
+/* ── Responsive safety net ───────────────────────────────────────────────────── */
+html, body { overflow-x: hidden; max-width: 100%; }
+img, video, svg { max-width: 100%; }
+
 /* ── Text selection ──────────────────────────────────────────────────────────── */
 ::selection {
   background: #34cc32;
@@ -29,17 +33,22 @@
   transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
 }
 .btn-outline:hover {
-  background: #34cc32 !important;
-  color: #000718 !important;
+  color: #34cc32 !important;
+  border-color: #34cc32 !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(52, 204, 50, 0.3);
+  box-shadow: 0 6px 24px rgba(52, 204, 50, 0.2);
 }
 .btn-outline:hover * {
-  color: #000718 !important;
+  color: #34cc32 !important;
 }
 .btn-outline:active {
+  color: #34cc32 !important;
+  border-color: #34cc32 !important;
   transform: translateY(0) scale(0.97);
   box-shadow: none;
+}
+.btn-outline:active * {
+  color: #34cc32 !important;
 }
 
 /* Filter / pill buttons */
@@ -123,7 +132,7 @@
 /* Form inputs */
 .input-glow {
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid transparent !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
 }
 .input-glow:focus {
   border-color: #34cc32 !important;

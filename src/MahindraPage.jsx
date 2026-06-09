@@ -1,5 +1,7 @@
 // Mahindra Case Study Page — built from Figma node 1:2843 (Landing Page - Dark-cASE STUDY-mahindra)
 
+import useResponsive from './useResponsive'
+
 const G      = '#34cc32'
 const DARK   = '#000718'
 const CARD   = '#0f1520'
@@ -8,27 +10,28 @@ const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Assets ───────────────────────────────────────────────────────────────────
-const imgMahindraHero  = 'https://www.figma.com/api/mcp/asset/755848dc-fda3-41ea-9c4e-afd7e6eaee7e'
-const imgMahindraLogo  = 'https://www.figma.com/api/mcp/asset/e42c86ec-90a0-437b-9120-e9f5224d38fc'
-const imgConvergenC    = 'https://www.figma.com/api/mcp/asset/1e618d19-8d23-41a5-bdae-ddf1ce9c3286'
-const imgGallery1      = 'https://www.figma.com/api/mcp/asset/f124bb23-5df9-4f9f-80a1-f075c15409f6'
-const imgGallery2      = 'https://www.figma.com/api/mcp/asset/362ee7b9-f928-4f9d-8749-b01486f400b8'
-const imgGallery3      = 'https://www.figma.com/api/mcp/asset/fa81c5c3-d4f9-449e-b8e4-25ec7e61cfdf'
-const imgLlLogo        = 'https://www.figma.com/api/mcp/asset/482bd648-ab7b-4173-beb3-1bba9247a1d1'
-const imgMgLogo        = 'https://www.figma.com/api/mcp/asset/ee34d6fc-14cf-46df-a558-575dd658d29f'
-const imgMahindraM     = 'https://www.figma.com/api/mcp/asset/611649bf-fd9c-4fd3-acc7-fa27c521feb7'
-const imgAxisLogo      = 'https://www.figma.com/api/mcp/asset/d338eedd-f11a-4f4b-8046-f80770028f19'
-const imgAirtel        = 'https://www.figma.com/api/mcp/asset/2a59435d-288b-4f86-9a19-355b6ef6a723'
-const imgAptech        = 'https://www.figma.com/api/mcp/asset/25ffce9f-8834-4742-9c1e-8daf1bbf1c1a'
-const imgKotakMf       = 'https://www.figma.com/api/mcp/asset/52e7517e-f212-4c5c-afb0-1e7adfe93dcc'
-const imgMindCraft     = 'https://www.figma.com/api/mcp/asset/a6cff8e3-ead4-43b5-958e-1bdebc679255'
-const imgFlickvid      = 'https://www.figma.com/api/mcp/asset/48bb578a-f73f-4bb6-9f9e-e65564da571d'
-const imgSBI           = 'https://www.figma.com/api/mcp/asset/99197a32-3de4-424a-90fc-17180aa8202e'
-const imgHimalaya      = 'https://www.figma.com/api/mcp/asset/37bdf660-7b34-4744-a544-e2892aa744e0'
-const imgMeme          = 'https://www.figma.com/api/mcp/asset/745818a3-4cd3-4a6b-861c-f57c78dd4cff'
-const imgPartnerRgb    = 'https://www.figma.com/api/mcp/asset/d3d56718-ca2f-47b5-b1c9-b7741a6b4f4a'
+const imgMahindraHero  = '/figma/case-study-mahindra/img-mahindra1.png'
+const imgMahindraLogo  = '/figma/case-study-mahindra/img-mahindra-m.png'
+const imgConvergenC    = '/figma/case-study-mahindra/img-c2-d.svg'
+const imgGallery1      = '/figma/case-study-mahindra/img-image111.jpg'
+const imgGallery2      = '/figma/case-study-mahindra/img-image112.jpg'
+const imgGallery3      = '/figma/case-study-mahindra/img-image113.jpg'
+const imgLlLogo        = '/figma/case-study-mahindra/img-ll-logo1.png'
+const imgMgLogo        = '/figma/case-study-mahindra/img-mg-logo.png'
+const imgMahindraM     = '/figma/case-study-mahindra/img-mahindra-m.png'
+const imgAxisLogo      = '/figma/case-study-mahindra/img-axis-bank-id-jbxqb-hwi11.png'
+const imgAirtel        = '/figma/case-study-mahindra/img-airtel-seeklogo1.png'
+const imgAptech        = '/figma/case-study-mahindra/img-aptech-logo.png'
+const imgKotakMf       = '/figma/case-study-mahindra/img-kotak-mf.png'
+const imgMindCraft     = '/figma/case-study-mahindra/img-mind-craft.png'
+const imgFlickvid      = '/figma/case-study-mahindra/img-flickvid.png'
+const imgSBI           = '/figma/case-study-mahindra/img-sbi-logo332051.png'
+const imgHimalaya      = '/figma/case-study-mahindra/img-himalaya.png'
+const imgMeme          = '/figma/case-study-mahindra/img-meme1.png'
+const imgPartnerRgb    = '/figma/case-study-mahindra/img-partner-rgb1.png'
 
 export default function MahindraPage({ onBack }) {
+  const { isMobile, isSmall } = useResponsive()
   return (
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
 
@@ -36,7 +39,7 @@ export default function MahindraPage({ onBack }) {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
         {/* ── Hero section ──────────────────────────────────────────────────── */}
-        <section style={{ padding: '100px 100px 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+        <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
           {/* Breadcrumb + Title */}
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -76,19 +79,19 @@ export default function MahindraPage({ onBack }) {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', height: 426, overflow: 'hidden', position: 'relative' }}>
+          <div style={{ width: '100%', height: isSmall ? 'clamp(220px, 50vw, 426px)' : 426, overflow: 'hidden', position: 'relative' }}>
             <img src={imgMahindraHero} alt="Mahindra" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </div>
 
           {/* Top stats row */}
-          <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, alignItems: isMobile ? 'stretch' : 'flex-start', width: '100%', justifyContent: 'center' }}>
             {[
               { val: '96%',   label: 'Surge in website actions in just 3 months' },
               { val: '1.3M+', label: 'Fraud attempts tackled and resolved' },
               { val: '203K+', label: 'Spike in online reviews in 8 months' },
             ].map((s, i) => (
-              <div key={i} style={{ width: 300, padding: 30, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 80, lineHeight: '90px', color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
+              <div key={i} style={{ width: isMobile ? '100%' : 300, maxWidth: 300, padding: 'clamp(20px, 4vw, 30px)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{s.label}</p>
               </div>
             ))}
@@ -96,18 +99,18 @@ export default function MahindraPage({ onBack }) {
         </section>
 
         {/* ── The Challenge ─────────────────────────────────────────────────── */}
-        <section style={{ padding: '100px 100px 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 80, lineHeight: '70px', color: '#fff', textTransform: 'uppercase', margin: 0 }}>
+        <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(40px, 8vw, 80px)', lineHeight: 1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>
             The Challenge
           </h2>
-          <div style={{ display: 'flex', gap: 20, alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: 'stretch', width: '100%', justifyContent: 'center' }}>
             {[
               { num: '1.', text: 'Data-driven insights revealed key performance metrics, highlighting areas for optimization and growth strategies.' },
               { num: '2.', text: 'Inconsistent local presence across thousands of agents' },
               { num: '3.', text: 'Data-driven insights revealed key performance metrics, highlighting areas for optimization and growth strategies.' },
             ].map((item, i) => (
-              <div key={i} style={{ background: CARD, padding: 30, width: 400, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 50, lineHeight: '50px', color: G, margin: 0, textTransform: 'uppercase' }}>{item.num}</p>
+              <div key={i} style={{ background: CARD, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 400, maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(36px, 6vw, 50px)', lineHeight: 1, color: G, margin: 0, textTransform: 'uppercase' }}>{item.num}</p>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{item.text}</p>
               </div>
             ))}
@@ -115,28 +118,28 @@ export default function MahindraPage({ onBack }) {
         </section>
 
         {/* ── Solution ──────────────────────────────────────────────────────── */}
-        <section style={{ padding: '100px 100px 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 80, lineHeight: '70px', color: '#fff', textTransform: 'uppercase', margin: 0 }}>
+        <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(40px, 8vw, 80px)', lineHeight: 1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>
             Solution
           </h2>
-          <div style={{ width: 786, display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ width: isSmall ? '100%' : 786, maxWidth: 786, display: 'flex', flexDirection: 'column', gap: 20 }}>
             {[
               'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.',
               'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.',
               'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.',
             ].map((text, i) => (
-              <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '30px', margin: 0 }}>
+              <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '30px', margin: 0 }}>
                 <span style={{ color: G }}>🟢</span> {text}
               </p>
             ))}
           </div>
-          <div style={{ display: 'flex', gap: 20, alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: 'stretch', width: '100%', justifyContent: 'center' }}>
             {[
               { val: '96%',   label: 'Surge in website actions in just 3 months', tag: 'AUTOMOBILE BRAND' },
               { val: '1.3M+', label: 'Fraud attempts tackled and resolved',        tag: 'FINANCE BRAND' },
             ].map((s, i) => (
-              <div key={i} style={{ background: CARD, padding: 30, width: 610, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 80, lineHeight: '90px', color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
+              <div key={i} style={{ background: CARD, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 610, maxWidth: 610, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{s.label}</p>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 16, color: G, textTransform: 'uppercase', margin: 0 }}>{s.tag}</p>
               </div>
@@ -145,11 +148,11 @@ export default function MahindraPage({ onBack }) {
         </section>
 
         {/* ── Gallery ───────────────────────────────────────────────────────── */}
-        <section style={{ padding: '100px 100px 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 80, lineHeight: '70px', color: '#fff', textTransform: 'uppercase', margin: 0 }}>
+        <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(40px, 8vw, 80px)', lineHeight: 1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>
             Gallery
           </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center', width: '100%' }}>
             {/* Arrows above images, right-aligned to match right edge of 3rd image */}
             <div style={{ display: 'flex', gap: 10, alignSelf: 'flex-end' }}>
               <div className="arrow-btn" style={{ width: 40, height: 40, borderRadius: 999, background: CARD, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
@@ -160,9 +163,9 @@ export default function MahindraPage({ onBack }) {
               </div>
             </div>
             {/* Photos */}
-            <div style={{ display: 'flex', gap: 20, justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, justifyContent: 'center', width: '100%', alignItems: 'center' }}>
               {[imgGallery1, imgGallery2, imgGallery3].map((src, i) => (
-                <div key={i} className="card-hover" style={{ width: 400, height: 562, overflow: 'hidden', flexShrink: 0 }}>
+                <div key={i} className="card-hover" style={{ width: isSmall ? '100%' : 400, maxWidth: 400, height: isSmall ? 'clamp(320px, 80vw, 562px)' : 562, overflow: 'hidden', flexShrink: 0 }}>
                   <img src={src} alt={`Gallery ${i + 1}`} className="img-zoom" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </div>
               ))}
@@ -171,8 +174,8 @@ export default function MahindraPage({ onBack }) {
         </section>
 
         {/* ── Other brands ──────────────────────────────────────────────────── */}
-        <section style={{ padding: '100px', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 80, lineHeight: '70px', color: '#fff', textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
+        <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(36px, 7vw, 80px)', lineHeight: 1.05, color: '#fff', textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
             Check out the awesomeeeeee stuff we've done for{' '}
             <span style={{ color: G }}>other brands</span>
           </h2>
@@ -200,12 +203,12 @@ export default function MahindraPage({ onBack }) {
         </section>
 
         {/* ── Contact: "We will shoot you" ────────────────────────────────────── */}
-        <section style={{ padding: '0 100px 100px', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+        <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 10, paddingTop: 5, borderBottom: `2px solid ${G}` }}>
               <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff' }}>Connect with us</span>
             </div>
-            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, lineHeight: '80px', textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
+            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1, textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
               <span style={{ color: '#fff' }}>We will </span>
               <span style={{ color: G }}>shoot </span>
               <span style={{ color: '#fff' }}>you</span>
@@ -214,7 +217,7 @@ export default function MahindraPage({ onBack }) {
 
           <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
             {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-              <div key={ri} style={{ display: 'flex', gap: 20, width: '100%' }}>
+              <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
                 {row.map((lbl, fi) => lbl ? (
                   <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                     <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
@@ -227,29 +230,29 @@ export default function MahindraPage({ onBack }) {
               <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
               <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
             </div>
-            <button type="submit" className="btn-green" style={{ background: G, color: DARK, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer' }}>
+            <button type="submit" className="btn-green" style={{ background: G, color: DARK, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isMobile ? '100%' : undefined }}>
               Send Message
             </button>
           </form>
         </section>
 
         {/* ── Footer ──────────────────────────────────────────────────────────── */}
-        <footer style={{ background: CARD, padding: '100px', width: '100%', boxSizing: 'border-box' }}>
+        <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box' }}>
           <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-            <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 48 : 'clamp(40px, 8vw, 144px)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
 
               {/* Choose your poison */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center', width: isMobile ? '100%' : 'auto' }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center', color: '#fff', margin: 0 }}>
                   Choose your <span style={{ color: G }}>poison</span>
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                  <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: 323, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: isMobile ? '100%' : 'auto' }}>
+                  <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: isMobile ? '100%' : 323, maxWidth: 323, position: 'relative', overflow: 'hidden' }}>
                     <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain' }} />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <button className="btn-green" style={{ width: 323, background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
-                    <button className="btn-outline" style={{ width: 323, background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: isMobile ? '100%' : 'auto' }}>
+                    <button className="btn-green" style={{ width: isMobile ? '100%' : 323, maxWidth: 323, background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
+                    <button className="btn-outline" style={{ width: isMobile ? '100%' : 323, maxWidth: 323, background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
                   </div>
                 </div>
               </div>
@@ -307,7 +310,7 @@ export default function MahindraPage({ onBack }) {
             </div>
 
             <div style={{ height: 1, background: BORDER }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 0, justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center' }}>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4, color: '#fff', margin: 0 }}>© Copyright ConvergenSEE All Rights Reserved</p>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', margin: 0 }}>
                 Designed by <span style={{ color: G }}>ConvergenSEE</span>

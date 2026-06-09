@@ -1,5 +1,6 @@
 // Careers Page — built from Figma design
 import { useState } from 'react'
+import useResponsive from './useResponsive'
 
 const G      = '#34cc32'
 const DARK   = '#000718'
@@ -9,10 +10,10 @@ const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
-const imgTestimonial = 'https://www.figma.com/api/mcp/asset/4a693e56-4573-48ed-89ff-027c239c782d'
-const imgTeam        = 'https://www.figma.com/api/mcp/asset/330b717b-2e65-4c5a-a560-1ae382c19636'
-const imgMeme        = 'https://www.figma.com/api/mcp/asset/70eeb9f0-c789-4e2c-bec3-9301bb277d05'
-const imgPartner     = 'https://www.figma.com/api/mcp/asset/679ea41f-6316-4f11-80f0-58c7c0a47edb'
+const imgTestimonial = '/figma/careers-01/221.png'
+const imgTeam        = '/figma/careers-01/221.png'
+const imgMeme        = '/figma/careers-01/meme1.png'
+const imgPartner     = '/figma/careers-01/partner-rgb1.png'
 
 // ─── Shared atoms ────────────────────────────────────────────────────────────
 const BtnGreen = ({ children, style, ...p }) => (
@@ -51,12 +52,12 @@ const InputField = ({ label, style }) => (
 function Hero() {
   return (
     <section style={{
-      paddingTop: 206, textAlign: 'center',
+      textAlign: 'center',
       display: 'flex', flexDirection: 'column', alignItems: 'center',
-      gap: 20, padding: '206px 100px 100px',
+      gap: 20, padding: 'clamp(140px, 18vw, 206px) clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)',
     }}>
       <h1 style={{
-        fontFamily: "'Saira Condensed', sans-serif", fontSize: 150, fontWeight: 800,
+        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
         textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1, margin: 0,
       }}>
         <span style={{ color: '#fff' }}>WE </span>
@@ -70,7 +71,7 @@ function Hero() {
         To take the <span style={{ fontWeight: 700, color: G }}>CHNC</span>
       </p>
       <p style={{
-        fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff',
+        fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
         lineHeight: '24px', maxWidth: 798, margin: 0,
       }}>
         Discover the power of our secure and rewarding copy. Explore our range of copy and take
@@ -83,6 +84,7 @@ function Hero() {
 
 // ─── Testimonial Section ─────────────────────────────────────────────────────
 function Testimonial() {
+  const { isSmall } = useResponsive()
   const stats = [
     { value: '96%', label: 'Increase in traffic growth' },
     { value: '10x', label: 'Revenue increase' },
@@ -91,28 +93,30 @@ function Testimonial() {
 
   return (
     <section style={{
-      display: 'flex', overflow: 'hidden', height: 505,
-      padding: '0 100px', justifyContent: 'center',
+      display: 'flex', flexDirection: isSmall ? 'column' : 'row',
+      overflow: 'hidden', height: isSmall ? 'auto' : 505,
+      padding: '0 clamp(20px, 6vw, 100px)', justifyContent: 'center',
     }}>
       {/* Left card */}
       <div className="card-hover" style={{
-        width: 746, background: CARD, padding: 50,
+        width: isSmall ? '100%' : 746, maxWidth: 746, background: CARD,
+        padding: 'clamp(24px, 4vw, 50px)',
         display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        flexShrink: 0, boxSizing: 'border-box',
+        gap: 30, flexShrink: 0, boxSizing: 'border-box',
       }}>
         <p style={{
-          fontFamily: "'Archivo', sans-serif", fontSize: 24, color: '#fff',
+          fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: '#fff',
           lineHeight: '32px', maxWidth: 658, margin: 0,
         }}>
           "ConvergenSEE changed the trajectory and{' '}
           <span style={{ color: G }}>success</span>{' '}
           of my business, and I'm a lifelong user at this point."
         </p>
-        <div style={{ display: 'flex', gap: 80 }}>
+        <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
           {stats.map((s, i) => (
             <div key={i}>
               <p style={{
-                fontFamily: "'Saira Condensed', sans-serif", fontSize: 60,
+                fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)',
                 fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1,
               }}>{s.value}</p>
               <p style={{
@@ -126,7 +130,8 @@ function Testimonial() {
 
       {/* Right card — photo */}
       <div style={{
-        width: 494, height: 505, borderRadius: 15,
+        width: isSmall ? '100%' : 494, maxWidth: 494,
+        height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, borderRadius: 15,
         overflow: 'hidden', position: 'relative', flexShrink: 0,
       }}>
         <img src={imgTestimonial} alt="Alina Sharma" style={{
@@ -155,20 +160,22 @@ function Testimonial() {
 
 // ─── We Are ConvergenSEE ─────────────────────────────────────────────────────
 function WeAreSection() {
+  const { isSmall } = useResponsive()
   return (
     <section style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
-      paddingTop: 100, textAlign: 'center',
+      paddingTop: 'clamp(56px, 8vw, 100px)', padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0',
+      textAlign: 'center',
     }}>
       <h2 style={{
-        fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800,
+        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
         textTransform: 'uppercase', lineHeight: 1, margin: 0,
       }}>
         <span style={{ color: '#fff' }}>WE ARE </span>
         <span style={{ color: G }}>CONVERGENSEE</span>
       </h2>
       <p style={{
-        fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff',
+        fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
         lineHeight: '24px', maxWidth: 798, margin: '20px 0 0',
       }}>
         Discover the power of our secure and rewarding copy. Explore our range of copy and take
@@ -178,8 +185,9 @@ function WeAreSection() {
 
       {/* Team photo */}
       <div style={{
-        position: 'relative', width: 1440, height: 785,
-        overflow: 'hidden', marginTop: 60,
+        position: 'relative', width: '100%', maxWidth: 1440,
+        height: isSmall ? 'clamp(300px, 60vw, 785px)' : 785,
+        overflow: 'hidden', marginTop: 'clamp(40px, 6vw, 60px)',
       }}>
         <img src={imgTeam} alt="ConvergenSEE Team" style={{
           width: '100%', height: '100%', objectFit: 'cover',
@@ -196,16 +204,17 @@ function WeAreSection() {
 
 // ─── Join The Chaos — Contact Form ───────────────────────────────────────────
 function JoinSection() {
+  const { isMobile } = useResponsive()
   const [fileName] = useState('my-cv.pdf')
   const [progress] = useState(72)
 
   return (
     <section style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
-      padding: '100px 100px',
+      padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)',
     }}>
       <h2 style={{
-        fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800,
+        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
         textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
       }}>
         <span style={{ color: '#fff' }}>JOIN THE </span>
@@ -213,12 +222,12 @@ function JoinSection() {
       </h2>
 
       {/* Form fields */}
-      <div style={{ maxWidth: 1240, width: '100%', marginTop: 60 }}>
-        <div style={{ display: 'flex', gap: 20, marginBottom: 20 }}>
+      <div style={{ maxWidth: 1240, width: '100%', marginTop: 'clamp(40px, 6vw, 60px)' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, marginBottom: 20 }}>
           <InputField label="Your name" />
           <InputField label="Contact number" />
         </div>
-        <div style={{ display: 'flex', gap: 20 }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20 }}>
           <InputField label="Your email" />
           <InputField label="Position" />
         </div>
@@ -226,8 +235,8 @@ function JoinSection() {
 
       {/* File upload area */}
       <div style={{
-        width: 882, background: CARD, border: `1px dashed ${BORDER}`,
-        padding: 30, marginTop: 40, boxSizing: 'border-box',
+        width: isMobile ? '100%' : 882, maxWidth: 882, background: CARD, border: `1px dashed ${BORDER}`,
+        padding: 'clamp(20px, 4vw, 30px)', marginTop: 40, boxSizing: 'border-box',
       }}>
         <p style={{
           fontFamily: "'Saira Condensed', sans-serif", fontSize: 24, fontWeight: 600,
@@ -300,8 +309,8 @@ function JoinSection() {
       </div>
 
       {/* Send message */}
-      <div style={{ marginTop: 40 }}>
-        <BtnGreen style={{ padding: '18px 60px', fontSize: 18 }}>SEND MESSAGE</BtnGreen>
+      <div style={{ marginTop: 40, width: isMobile ? '100%' : 'auto', maxWidth: 882 }}>
+        <BtnGreen style={{ padding: '18px 60px', fontSize: 18, width: isMobile ? '100%' : 'auto' }}>SEND MESSAGE</BtnGreen>
       </div>
     </section>
   )
@@ -309,6 +318,7 @@ function JoinSection() {
 
 // ─── Careers Page ────────────────────────────────────────────────────────────
 export default function CareersPage({ onBack }) {
+  const { isSmall } = useResponsive()
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
@@ -318,8 +328,8 @@ export default function CareersPage({ onBack }) {
       <JoinSection />
 
       {/* ── Footer ──────────────────────────────────────────────────────────── */}
-      <footer style={{ background: DARK, padding: '80px 100px 40px' }}>
-        <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start', marginBottom: 48 }}>
+      <footer style={{ background: DARK, padding: 'clamp(56px, 8vw, 80px) clamp(20px, 6vw, 100px) 40px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start', marginBottom: 48 }}>
 
           {/* Meme CTA */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
@@ -332,24 +342,24 @@ export default function CareersPage({ onBack }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div style={{
                 background: '#0e1620', border: `2px solid ${G}`,
-                width: 323, height: 150, position: 'relative', overflow: 'visible',
+                width: '100%', maxWidth: 323, height: 150, position: 'relative', overflow: 'visible',
               }}>
                 <img src={imgMeme} alt="Meme" style={{
                   position: 'absolute', left: '50%', top: -32,
                   transform: 'translateX(-50%)',
-                  width: 203, height: 177, objectFit: 'contain',
+                  width: 203, height: 177, objectFit: 'contain', maxWidth: '90%',
                 }} />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
                 <button className="btn-green" style={{
                   background: G, color: DARK, border: 'none',
-                  padding: '15px 20px', width: 323,
+                  padding: '15px 20px', width: '100%',
                   fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
                   textTransform: 'uppercase', cursor: 'pointer',
                 }}>I skipped to the end</button>
                 <div className="btn-outline" style={{
                   background: CARD, border: `1px solid ${G}`,
-                  padding: '15px 20px', width: 323,
+                  padding: '15px 20px', width: '100%',
                   fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
                   color: G, textTransform: 'uppercase', textAlign: 'center', cursor: 'pointer',
                   boxSizing: 'border-box',
@@ -421,7 +431,7 @@ export default function CareersPage({ onBack }) {
         </div>
 
         <div style={{ height: 1, background: BORDER, marginBottom: 24 }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4 }}>© Copyright ConvergenSEE All Rights Reserved</p>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14 }}>
             Designed by <span style={{ color: G }}>ConvergenSEE</span>

@@ -1,5 +1,7 @@
 // BlogReadPage — blog article read page built from Figma design
 
+import useResponsive from './useResponsive'
+
 const G      = '#34cc32'
 const DARK   = '#000718'
 const CARD   = '#0f1520'
@@ -8,15 +10,15 @@ const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Assets ───────────────────────────────────────────────────────────────────
-const imgHero       = 'https://www.figma.com/api/mcp/asset/57ef2701-2234-421d-ba6f-00a21c8b6b29'
-const imgBody1      = 'https://www.figma.com/api/mcp/asset/77d66522-76da-4699-b04e-d1e11372d6a4'
-const imgBody2      = 'https://www.figma.com/api/mcp/asset/0c2cd850-b80e-4545-b340-e2093039f913'
-const imgBody3      = 'https://www.figma.com/api/mcp/asset/bb427c93-b7a5-4a67-9f1c-a24306c63f96'
-const imgRelated1   = 'https://www.figma.com/api/mcp/asset/13b7873c-e360-45de-b9ee-a511eb4720f2'
-const imgRelated2   = 'https://www.figma.com/api/mcp/asset/78672095-ea1a-44f4-abce-46e04fc0726f'
-const imgAvatar     = 'https://www.figma.com/api/mcp/asset/befb549b-79f7-4946-8b55-e4f97c235d84'
-const imgMeme       = 'https://www.figma.com/api/mcp/asset/70eeb9f0-c789-4e2c-bec3-9301bb277d05'
-const imgPartner    = 'https://www.figma.com/api/mcp/asset/679ea41f-6316-4f11-80f0-58c7c0a47edb'
+const imgHero       = '/figma/blog-read/img-rectangle-42042.jpg'
+const imgBody1      = '/figma/blog-read/img-image-111.jpg'
+const imgBody2      = '/figma/blog-read/img-image-112.jpg'
+const imgBody3      = '/figma/blog-read/img-image-113.jpg'
+const imgRelated1   = '/figma/blog-read/img-mahindra-2.jpg'
+const imgRelated2   = '/figma/blog-read/img-mahindra-3.jpg'
+const imgAvatar     = '/figma/blog-read/img-placeholders.png'
+const imgMeme       = '/figma/blog-read/img-meme-1.png'
+const imgPartner    = '/figma/blog-read/img-partner-rgb-1.png'
 
 // ─── Lorem text ───────────────────────────────────────────────────────────────
 const LOREM = 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.'
@@ -25,9 +27,10 @@ const LOREM_LONG = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
 
 // ─── Related blog card ────────────────────────────────────────────────────────
 function RelatedCard({ img }) {
+  const { isSmall } = useResponsive()
   return (
-    <div className="card-hover" style={{ width: 600, background: CARD, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 30, paddingLeft: 30, paddingRight: 30 }}>
-      <div style={{ width: 600, height: 317, overflow: 'hidden', marginLeft: -30, marginRight: -30, flexShrink: 0 }}>
+    <div className="card-hover" style={{ width: isSmall ? '100%' : 600, maxWidth: 600, background: CARD, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 30, paddingLeft: 30, paddingRight: 30, boxSizing: 'border-box' }}>
+      <div style={{ width: 'calc(100% + 60px)', height: isSmall ? 'clamp(200px, 50vw, 317px)' : 317, overflow: 'hidden', marginLeft: -30, marginRight: -30, flexShrink: 0 }}>
         <img className="img-zoom" src={img} alt="Related blog" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       </div>
       <div style={{ background: DARK, padding: 20, width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 20, marginTop: 30 }}>
@@ -59,11 +62,12 @@ function RelatedCard({ img }) {
 }
 
 export default function BlogReadPage({ onBack }) {
+  const { isMobile, isSmall } = useResponsive()
   return (
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
 
       {/* ── Article section ─────────────────────────────────────────────────── */}
-      <section style={{ padding: '0 100px' }}>
+      <section style={{ padding: '0 clamp(20px, 6vw, 100px)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto' }}>
 
           {/* Breadcrumb */}
@@ -87,7 +91,7 @@ export default function BlogReadPage({ onBack }) {
           <h1 style={{
             fontFamily: "'Archivo', sans-serif",
             fontWeight: 700,
-            fontSize: 48,
+            fontSize: 'clamp(30px, 5vw, 48px)',
             lineHeight: 1.1,
             color: '#fff',
             margin: 0,
@@ -110,7 +114,7 @@ export default function BlogReadPage({ onBack }) {
           </div>
 
           {/* Hero image */}
-          <div style={{ width: '100%', height: 426, overflow: 'hidden', marginBottom: 60 }}>
+          <div style={{ width: '100%', height: isSmall ? 'clamp(220px, 50vw, 426px)' : 426, overflow: 'hidden', marginBottom: 60 }}>
             <img src={imgHero} alt="Blog hero" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </div>
 
@@ -149,10 +153,10 @@ export default function BlogReadPage({ onBack }) {
           </p>
 
           {/* 3 images in a row */}
-          <div style={{ display: 'flex', gap: 20, marginBottom: 50 }}>
-            <img src={imgBody1} alt="Blog image 1" style={{ width: 400, height: 562, objectFit: 'cover', display: 'block' }} />
-            <img src={imgBody2} alt="Blog image 2" style={{ width: 400, height: 562, objectFit: 'cover', display: 'block' }} />
-            <img src={imgBody3} alt="Blog image 3" style={{ width: 400, height: 562, objectFit: 'cover', display: 'block' }} />
+          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, marginBottom: 50 }}>
+            <img src={imgBody1} alt="Blog image 1" style={{ width: isMobile ? '100%' : 0, flex: isMobile ? 'none' : 1, height: isMobile ? 'clamp(300px, 80vw, 562px)' : 562, objectFit: 'cover', display: 'block' }} />
+            <img src={imgBody2} alt="Blog image 2" style={{ width: isMobile ? '100%' : 0, flex: isMobile ? 'none' : 1, height: isMobile ? 'clamp(300px, 80vw, 562px)' : 562, objectFit: 'cover', display: 'block' }} />
+            <img src={imgBody3} alt="Blog image 3" style={{ width: isMobile ? '100%' : 0, flex: isMobile ? 'none' : 1, height: isMobile ? 'clamp(300px, 80vw, 562px)' : 562, objectFit: 'cover', display: 'block' }} />
           </div>
 
           {/* More body text — 8 paragraphs */}
@@ -166,12 +170,12 @@ export default function BlogReadPage({ onBack }) {
       </section>
 
       {/* ── More Related Blogs ──────────────────────────────────────────────── */}
-      <section style={{ padding: '100px' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 60, alignItems: 'center' }}>
           <h2 style={{
             fontFamily: "'Saira Condensed', sans-serif",
             fontWeight: 800,
-            fontSize: 80,
+            fontSize: 'clamp(40px, 8vw, 80px)',
             color: '#fff',
             textTransform: 'uppercase',
             margin: 0,
@@ -179,7 +183,7 @@ export default function BlogReadPage({ onBack }) {
           }}>
             MORE RELATED BLOGS
           </h2>
-          <div style={{ display: 'flex', gap: 30 }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 30, width: '100%', alignItems: 'center' }}>
             <RelatedCard img={imgRelated1} />
             <RelatedCard img={imgRelated2} />
           </div>
@@ -187,12 +191,12 @@ export default function BlogReadPage({ onBack }) {
       </section>
 
       {/* ── Contact ──────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '0 100px 100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+      <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 10, paddingTop: 5, borderBottom: `2px solid ${G}` }}>
             <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff' }}>Connect with us</span>
           </div>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, lineHeight: '80px', textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1, textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
             <span style={{ color: '#fff' }}>We will </span>
             <span style={{ color: G }}>shoot </span>
             <span style={{ color: '#fff' }}>you</span>
@@ -200,7 +204,7 @@ export default function BlogReadPage({ onBack }) {
         </div>
         <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
           {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', gap: 20, width: '100%' }}>
+            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
               {row.map((lbl, fi) => lbl ? (
                 <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
@@ -213,27 +217,27 @@ export default function BlogReadPage({ onBack }) {
             <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
             <textarea className="input-glow" rows={6} placeholder="Enter here" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
           </div>
-          <button className="btn-green" type="submit" style={{ background: G, color: DARK, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer' }}>
+          <button className="btn-green" type="submit" style={{ background: G, color: DARK, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
             Send Message
           </button>
         </form>
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────────── */}
-      <footer style={{ background: CARD, padding: '100px', width: '100%', boxSizing: 'border-box' }}>
+      <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-          <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center', color: '#fff', margin: 0 }}>
                 Choose your <span style={{ color: G }}>poison</span>
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: 323, position: 'relative' }}>
-                  <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain' }} />
+                <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
+                  <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <button className="btn-green" style={{ width: 323, background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
-                  <button className="btn-outline" style={{ width: 323, background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
+                  <button className="btn-green" style={{ width: '100%', background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
+                  <button className="btn-outline" style={{ width: '100%', background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
                 </div>
               </div>
             </div>
@@ -284,7 +288,7 @@ export default function BlogReadPage({ onBack }) {
             </div>
           </div>
           <div style={{ height: 1, background: BORDER }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4, color: '#fff', margin: 0 }}>&copy; Copyright ConvergenSEE All Rights Reserved</p>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', margin: 0 }}>
               Designed by <span style={{ color: G }}>ConvergenSEE</span>

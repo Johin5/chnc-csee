@@ -1,6 +1,7 @@
 // Solutions Page — built from Figma node 1:1559 (Landing Page - Dark-Solution)
 import { useState, useEffect, useRef } from 'react'
 import CHNCDashboard from './CHNCDashboard'
+import useResponsive from './useResponsive'
 
 const G     = '#34cc32'
 const DARK  = '#000718'
@@ -10,8 +11,8 @@ const DIM   = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Figma assets ─────────────────────────────────────────────────────────────
-const imgMeme        = 'https://www.figma.com/api/mcp/asset/8a0ee08c-cd01-4c3c-aee3-b8fad0837a48'
-const imgPartner     = 'https://www.figma.com/api/mcp/asset/e523dd09-07f5-4166-b9db-66e5c8cafa52'
+const imgMeme        = '/figma/about/img-meme1.png'
+const imgPartner     = '/figma/about/img-partner-rgb1.png'
 
 // ─── Shared atoms ─────────────────────────────────────────────────────────────
 const BtnGreen = ({ children, style, ...p }) => (
@@ -59,11 +60,11 @@ function Hero({ active, onSelect }) {
   const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AigenIT','SearchIT','InvoiceIT']
 
   return (
-    <section style={{ padding: '100px 100px 0', textAlign: 'center', position: 'relative' }}>
+    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', textAlign: 'center', position: 'relative' }}>
       {/* headline */}
       <h1 style={{
         fontFamily: "'Saira Condensed', sans-serif",
-        fontSize: 150, fontWeight: 800, lineHeight: 1,
+        fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
         textTransform: 'uppercase', letterSpacing: '-3px',
         margin: 0, whiteSpace: 'nowrap',
       }}>
@@ -86,7 +87,7 @@ function Hero({ active, onSelect }) {
       <div style={{ marginTop: 40 }}>
         <p style={{
           fontFamily: "'Archivo', sans-serif",
-          fontSize: 130, fontWeight: 800, lineHeight: '147px',
+          fontSize: 'clamp(64px, 13vw, 130px)', fontWeight: 800, lineHeight: 1.1,
           color: G, letterSpacing: '-3.25px',
           textShadow: '0px 4px 35px rgba(52,204,50,0.5)',
           margin: 0,
@@ -127,19 +128,21 @@ function ContentCreation() {
     },
   ]
 
+  const { isMobile } = useResponsive()
+
   return (
-    <section style={{ padding: '100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
       <div style={{ textAlign: 'center' }}>
         <h2 style={{
           fontFamily: "'Saira Condensed', sans-serif",
-          fontSize: 80, fontWeight: 800, lineHeight: '70px',
+          fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
           textTransform: 'uppercase', color: '#fff', margin: 0,
         }}>CONTENT CREATION</h2>
-        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, marginTop: 16 }}>
+        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, marginTop: 16 }}>
           Create Content and get approval in hours, not days.
         </p>
       </div>
-      <div style={{ display: 'flex', gap: 20, width: '100%', maxWidth: 1240 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%', maxWidth: 1240 }}>
         {cards.map((c, i) => (
           <div key={i} className="card-hover" style={{
             flex: 1, background: CARD, padding: 30,
@@ -293,6 +296,7 @@ function WorkflowStack({ steps, count }) {
 }
 
 function HowWeDoIt({ activeModule }) {
+  const { isSmall } = useResponsive()
   const dashRef = useRef(null)
   const steps = MODULE_STEPS[activeModule] || DEFAULT_STEPS
   const [stepCount, setStepCount] = useState(0)
@@ -312,29 +316,33 @@ function HowWeDoIt({ activeModule }) {
   useEffect(() => {
     if (!inView) return
     setStepCount(0)
+    // Variable durations per frame (ms): Brief, Generate, Approve, Adapt, Copy, Merge, Publish, stat
+    const durations = [3000, 4000, 3500, 3000, 4000, 3000, 3500, 2000]
     let c = 0
-    const id = setInterval(() => {
+    const advance = () => {
       c++
-      if (c > steps.length) { clearInterval(id); return }
+      if (c > steps.length) return
       setStepCount(c)
-    }, 1100)
-    return () => clearInterval(id)
+      setTimeout(advance, durations[c] || 3000)
+    }
+    const firstTimer = setTimeout(advance, durations[0] || 3000)
+    return () => clearTimeout(firstTimer)
   }, [steps, inView])
 
   return (
-    <section style={{ padding: '100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
       <h2 style={{
         fontFamily: "'Saira Condensed', sans-serif",
-        fontSize: 80, fontWeight: 800, lineHeight: '70px',
+        fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
         textTransform: 'uppercase', textAlign: 'center', margin: 0,
       }}>
         <span style={{ color: '#fff' }}>How we do </span>
         <span style={{ color: G }}>IT?</span>
       </h2>
 
-      <div style={{ display: 'flex', gap: 50, alignItems: 'center', width: '100%', maxWidth: 1280 }}>
+      <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 50, alignItems: 'center', width: '100%', maxWidth: 1280 }}>
         {/* CHNC Dashboard */}
-        <div ref={dashRef} style={{ width: 836, height: 540, flexShrink: 0, borderRadius: 8, overflow: 'hidden', boxShadow: '0 0 0 1px rgba(52,204,50,0.2), 0 20px 60px rgba(0,0,0,0.6)' }}>
+        <div ref={dashRef} style={{ width: isSmall ? '100%' : 836, maxWidth: 836, height: isSmall ? 'clamp(300px, 60vw, 540px)' : 540, flexShrink: 0, borderRadius: 8, overflow: 'hidden', boxShadow: '0 0 0 1px rgba(52,204,50,0.2), 0 20px 60px rgba(0,0,0,0.6)' }}>
           <CHNCDashboard tilesTrigger={true} activeModule={activeModule} onModuleChange={() => {}} stepCount={stepCount} showWorkflow={true} />
         </div>
 
@@ -343,7 +351,7 @@ function HowWeDoIt({ activeModule }) {
       </div>
 
       <p style={{
-        fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff',
+        fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
         lineHeight: '24px', textAlign: 'center', maxWidth: 804,
       }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
@@ -358,19 +366,21 @@ function AllOfThisWithJust() {
     'Approved design/tonality references',
     'Content formats & publishing needs',
   ]
+  const { isMobile } = useResponsive()
+
   return (
-    <section style={{ padding: '100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
       <div style={{ textAlign: 'center' }}>
         <h2 style={{
           fontFamily: "'Saira Condensed', sans-serif",
-          fontSize: 80, fontWeight: 800, lineHeight: '70px',
+          fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
           textTransform: 'uppercase', color: '#fff', margin: 0,
         }}>All of this with just...</h2>
-        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, marginTop: 16 }}>
+        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, marginTop: 16 }}>
           Create Content and get approval in hours, not days.
         </p>
       </div>
-      <div style={{ display: 'flex', gap: 20, width: '100%', maxWidth: 1240 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%', maxWidth: 1240 }}>
         {items.map((text, i) => (
           <div key={i} className="card-hover" style={{
             flex: 1, background: CARD, border: `1px solid ${G}`,
@@ -405,10 +415,10 @@ function ReadyToCreate() {
   }
 
   return (
-    <section style={{ padding: '100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
       <h2 style={{
         fontFamily: "'Saira Condensed', sans-serif",
-        fontSize: 80, fontWeight: 800, lineHeight: '80px',
+        fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
         textTransform: 'uppercase', textAlign: 'center', margin: 0,
       }}>
         <span style={{ color: '#fff' }}>Ready to Create </span>
@@ -419,10 +429,10 @@ function ReadyToCreate() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
         {auditQs.map((q, qi) => (
           <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'center' }}>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 18, color: '#fff', textAlign: 'center' }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', textAlign: 'center' }}>
               {q.q} <span style={{ color: G }}>{q.qGreen}</span>{q.qEnd || ''}
             </p>
-            <div style={{ display: 'flex', gap: 20 }}>
+            <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
               {q.opts.map((opt, oi) => (
                 <BtnOutline key={oi} active={oi === selections[qi]} onClick={() => handleSelect(qi, oi)}>{opt}</BtnOutline>
               ))}
@@ -435,8 +445,9 @@ function ReadyToCreate() {
 }
 
 function Contact() {
+  const { isMobile } = useResponsive()
   return (
-    <section style={{ padding: '100px', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
         <div style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -447,7 +458,7 @@ function Contact() {
         </div>
         <h2 style={{
           fontFamily: "'Saira Condensed', sans-serif",
-          fontSize: 80, fontWeight: 800, lineHeight: '80px',
+          fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
           textTransform: 'uppercase', textAlign: 'center', margin: 0,
         }}>
           <span style={{ color: '#fff' }}>We will </span>
@@ -462,7 +473,7 @@ function Contact() {
           ['Company name', 'Designation'],
           ['Your email', null],
         ].map((row, ri) => (
-          <div key={ri} style={{ display: 'flex', gap: 20, width: '100%' }}>
+          <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
             {row.map((lbl, fi) => lbl ? (
               <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
@@ -473,32 +484,33 @@ function Contact() {
         ))}
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-          <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%' }} />
+          <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
         </div>
-        <BtnGreen type="submit">Send Message</BtnGreen>
+        <BtnGreen type="submit" style={isMobile ? { width: '100%' } : undefined}>Send Message</BtnGreen>
       </form>
     </section>
   )
 }
 
 function Footer() {
+  const { isSmall } = useResponsive()
   return (
-    <footer style={{ background: CARD, padding: '100px' }}>
+    <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-        <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
           {/* Poison */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
             <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center', color: '#fff' }}>
               Choose your <span style={{ color: G }}>poison</span>
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: 323, position: 'relative' }}>
-                <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain' }} />
+              <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
+                <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <BtnGreen style={{ width: 323 }}>I skipped to the end</BtnGreen>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
+                <BtnGreen style={{ width: '100%' }}>I skipped to the end</BtnGreen>
                 <button className="btn-outline" style={{
-                  width: 323, background: CARD, border: `1px solid ${G}`,
+                  width: '100%', background: CARD, border: `1px solid ${G}`,
                   padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
                   fontSize: 16, fontWeight: 700, color: G,
                   textTransform: 'uppercase', cursor: 'pointer',
@@ -560,7 +572,7 @@ function Footer() {
         </div>
 
         <div style={{ height: 1, background: BORDER }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4, color: '#fff' }}>© Copyright ConvergenSEE All Rights Reserved</p>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>
             Designed by <span style={{ color: G }}>ConvergenSEE</span>

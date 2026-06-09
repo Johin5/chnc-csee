@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, lazy, Suspense } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring, animate } from 'framer-motion'
 import CHNCDock from './ui/dock'
+import useResponsive from './useResponsive'
 
 import CHNCPlaceholder from './CHNCPlaceholder'
 
@@ -18,32 +19,32 @@ const WorkPage = lazy(() => import('./WorkPage'))
 const SocialsPage = lazy(() => import('./SocialsPage'))
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
-const logoC    = 'https://www.figma.com/api/mcp/asset/8d67f170-0c40-4318-95bf-b7f48a1163ff'
-const logoText = 'https://www.figma.com/api/mcp/asset/335949c4-ea5f-4175-9283-8968385f8a8a'
-const teamPhoto= 'https://www.figma.com/api/mcp/asset/3691d674-27e3-48ba-930d-bdf147ed4142'
-const clientLL = 'https://www.figma.com/api/mcp/asset/dce25564-04e4-43f9-878c-45decdbeaf22'
-const clientMG = 'https://www.figma.com/api/mcp/asset/9f9a85ba-8bc6-461e-b00f-cac947ef12ab'
-const clientMH = 'https://www.figma.com/api/mcp/asset/32a99f2a-df54-4262-b79e-c6a24c57a6d5'
-const clientMC = 'https://www.figma.com/api/mcp/asset/cfc104fc-9bd7-4a4e-a9ef-b86105774874'
-const clientFV = 'https://www.figma.com/api/mcp/asset/5c1671b7-9070-4c79-96e1-82a56539aeac'
-const clientAP = 'https://www.figma.com/api/mcp/asset/e17a0dd3-6ad3-4f39-bfbe-32d63a7acb9f'
-const clientKT = 'https://www.figma.com/api/mcp/asset/97462237-e963-43e3-941e-9d14924f0e3d'
-const clientHM = 'https://www.figma.com/api/mcp/asset/ffb4f13c-6b42-48cc-9fe0-7e60dc07a5c5'
-const funnel1  = 'https://www.figma.com/api/mcp/asset/edefd126-94ca-4a4f-a498-d530429619d2'
-const platform = 'https://www.figma.com/api/mcp/asset/f9e4be46-613f-4652-aee8-57436fd19ed0'
-const platformSide = 'https://www.figma.com/api/mcp/asset/72b006c6-d98f-4776-9614-bfa332147d91'
-const realityImg = 'https://www.figma.com/api/mcp/asset/2141e76b-87c4-426f-84de-8df16ec3318b'
-const testiPhoto = 'https://www.figma.com/api/mcp/asset/c5117577-6707-4fe7-94f9-9b8e26ccbe11'
-const boardImg = 'https://www.figma.com/api/mcp/asset/f2281844-f959-4cc2-b137-ce9d6e31bffd'
-const imgBlogs   = 'https://www.figma.com/api/mcp/asset/96319a12-ac0b-4f84-81e9-00abc94f4baa'
-const imgSocials = 'https://www.figma.com/api/mcp/asset/c4754304-153c-4e1e-a98b-9b918b5423df'
-const imgWork    = 'https://www.figma.com/api/mcp/asset/f4f94759-6ec5-417d-a1ee-5737c25df5e0'
-const teamImg1 = 'https://www.figma.com/api/mcp/asset/da4440fc-d03d-493b-b0fc-3472ba8d2754'
-const teamImg2 = 'https://www.figma.com/api/mcp/asset/8d5c55a2-0211-46b9-b275-63f38e3af287'
-const teamImg3 = 'https://www.figma.com/api/mcp/asset/33da8b04-bea3-40b3-9807-e651617d3935'
-const teamImg4 = 'https://www.figma.com/api/mcp/asset/42830a7a-1649-4edf-af97-d9f9757346d0'
-const memeImg  = 'https://www.figma.com/api/mcp/asset/70eeb9f0-c789-4e2c-bec3-9301bb277d05'
-const partnerImg = 'https://www.figma.com/api/mcp/asset/679ea41f-6316-4f11-80f0-58c7c0a47edb'
+const logoC    = '/figma/home/logo-c.svg'
+const logoText = '/figma/home/logo-text.svg'
+const teamPhoto= '/figma/home/img-logo-team1.png'
+const clientLL = '/figma/home/img-ll-logo1.png'
+const clientMG = '/figma/home/img-mg-logo.png'
+const clientMH = '/figma/home/img-mahindra-m.png'
+const clientMC = '/figma/home/img-mind-craft.png'
+const clientFV = '/figma/home/img-flickvid.png'
+const clientAP = '/figma/home/img-aptech-logo.png'
+const clientKT = '/figma/home/img-kotak-mf.png'
+const clientHM = '/figma/home/img-himalaya.png'
+const funnel1  = '/figma/home/funnel1.png'
+const platform = '/figma/home/img-asset11.png'
+const platformSide = '/figma/home/img-asset31.png'
+const realityImg = '/figma/home/reality.png'
+const testiPhoto = '/figma/home/img-image111.png'
+const boardImg = '/figma/home/board.png'
+const imgBlogs   = '/figma/blog/img-mahindra2.jpg'
+const imgSocials = '/creative-1.jpg'
+const imgWork    = '/figma/work/macbook2.png'
+const teamImg1 = '/figma/home/img-angel-chaturvedi12.jpg'
+const teamImg2 = '/figma/home/img-angel-chaturvedi13.jpg'
+const teamImg3 = '/figma/home/img-angel-chaturvedi14.jpg'
+const teamImg4 = '/figma/home/img-angel-chaturvedi12.jpg'
+const memeImg  = '/figma/home/img-meme1.png'
+const partnerImg = '/figma/home/img-partner-rgb1.png'
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const G = '#34cc32'
@@ -56,10 +57,10 @@ const BORDER = 'rgba(255,255,255,0.1)'
 const SectionLabel = ({ children }) => (
   <div style={{
     display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start',
-    height: 32,
+    width: 'fit-content', height: 32,
   }}>
     <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff', flex: 1, display: 'flex', alignItems: 'center' }}>{children}</span>
-    <div style={{ width: 42, height: 2, background: G }} />
+    <div style={{ width: '100%', height: 2, background: G }} />
   </div>
 )
 
@@ -75,7 +76,7 @@ const BtnGreen = ({ children, style, className, ...props }) => (
 
 const BtnOutlineGreen = ({ children, style, className, ...props }) => (
   <button {...props} className={`btn-outline ${className || ''}`} style={{
-    background: CARD, color: G, border: `1px solid ${G}`,
+    background: 'transparent', color: '#fff', border: '1px solid #fff',
     padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
     fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
     letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
@@ -86,11 +87,15 @@ const BtnOutlineGreen = ({ children, style, className, ...props }) => (
 // ─── Nav ──────────────────────────────────────────────────────────────────────
 function Nav({ activePage = 'home', onNavigate }) {
   const links = ['Home', 'About', 'Solution', 'Case Studies', 'Blogs', 'Work', 'Career']
+  const targetFor = (l) => ({ Home: 'home', About: 'about', Solution: 'solutions', 'Case Studies': 'case-studies', Blogs: 'blog', Work: 'work', Career: 'careers' }[l])
+  const { isSmall } = useResponsive()
+  const [open, setOpen] = useState(false)
+  const go = (l) => { onNavigate(targetFor(l)); setOpen(false) }
   return (
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 300,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '30px 100px',
+      padding: '8px clamp(16px, 5vw, 100px)',
       background: 'rgba(0,7,24,0.8)', backdropFilter: 'blur(10px)',
     }}>
       <div
@@ -100,34 +105,69 @@ function Nav({ activePage = 'home', onNavigate }) {
         <img src={logoC} alt="C" style={{ height: 24, width: 27, objectFit: 'contain' }} />
         <img src={logoText} alt="ConvergenSEE" style={{ height: 18, width: 146, objectFit: 'contain', marginLeft: 4 }} />
       </div>
-      <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-        {links.map((l) => {
-          const isActive = l === 'About' ? activePage === 'about' : l === 'Home' ? activePage === 'home' : l === 'Solution' ? activePage === 'solutions' : l === 'Case Studies' ? activePage === 'case-studies' : l === 'Career' ? activePage === 'careers' : l === 'Work' ? activePage === 'work' : l === 'Blogs' ? activePage === 'blog' : false
-          return (
-            <a
-              key={l}
-              className={isActive ? '' : 'nav-link'}
-              href={['About', 'Home', 'Solution', 'Case Studies', 'Blogs', 'Career'].includes(l) ? undefined : '#'}
-              onClick={l === 'About'        ? (e) => { e.preventDefault(); onNavigate('about') }
-                     : l === 'Home'         ? (e) => { e.preventDefault(); onNavigate('home') }
-                     : l === 'Solution'     ? (e) => { e.preventDefault(); onNavigate('solutions') }
-                     : l === 'Case Studies' ? (e) => { e.preventDefault(); onNavigate('case-studies') }
-                     : l === 'Blogs'        ? (e) => { e.preventDefault(); onNavigate('blog') }
-                     : l === 'Career'       ? (e) => { e.preventDefault(); onNavigate('careers') }
-                     : l === 'Work'         ? (e) => { e.preventDefault(); onNavigate('work') }
-                     : undefined}
-              style={{
-                padding: '10px', fontFamily: "'Saira Condensed', sans-serif",
-                fontSize: 16, textTransform: 'uppercase', cursor: 'pointer',
-                textDecoration: 'none',
-                color: isActive ? G : MUTED,
-                fontWeight: isActive ? 700 : 400,
-              }}
-            >{l}</a>
-          )
-        })}
-      </div>
-      <BtnOutlineGreen>Let's Connect</BtnOutlineGreen>
+
+      {!isSmall && (
+        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          {links.map((l) => {
+            const isActive = activePage === targetFor(l)
+            return (
+              <a
+                key={l}
+                className={isActive ? '' : 'nav-link'}
+                onClick={(e) => { e.preventDefault(); go(l) }}
+                style={{
+                  padding: '10px', fontFamily: "'Saira Condensed', sans-serif",
+                  fontSize: 16, textTransform: 'uppercase', cursor: 'pointer',
+                  textDecoration: 'none',
+                  color: isActive ? G : MUTED,
+                  fontWeight: isActive ? 700 : 400,
+                }}
+              >{l}</a>
+            )
+          })}
+        </div>
+      )}
+
+      {!isSmall && <BtnOutlineGreen style={{ padding: '8px 14px', fontSize: 16, fontWeight: 400 }}>Let's Connect</BtnOutlineGreen>}
+
+      {isSmall && (
+        <button
+          aria-label="Menu"
+          onClick={() => setOpen((o) => !o)}
+          style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 5, padding: 8 }}
+        >
+          {[0, 1, 2].map((i) => (
+            <span key={i} style={{
+              width: 24, height: 2, background: '#fff', display: 'block',
+              transition: 'transform 0.25s ease, opacity 0.25s ease',
+              transform: open ? (i === 0 ? 'translateY(7px) rotate(45deg)' : i === 2 ? 'translateY(-7px) rotate(-45deg)' : 'none') : 'none',
+              opacity: open && i === 1 ? 0 : 1,
+            }} />
+          ))}
+        </button>
+      )}
+
+      {isSmall && open && (
+        <div style={{
+          position: 'absolute', top: '100%', left: 0, right: 0,
+          background: 'rgba(0,7,24,0.97)', backdropFilter: 'blur(10px)',
+          borderTop: `1px solid ${BORDER}`,
+          display: 'flex', flexDirection: 'column', padding: '12px clamp(16px, 5vw, 100px) 24px', gap: 4,
+        }}>
+          {links.map((l) => {
+            const isActive = activePage === targetFor(l)
+            return (
+              <a key={l} onClick={(e) => { e.preventDefault(); go(l) }} style={{
+                padding: '12px 0', fontFamily: "'Saira Condensed', sans-serif",
+                fontSize: 18, textTransform: 'uppercase', cursor: 'pointer', textDecoration: 'none',
+                color: isActive ? G : MUTED, fontWeight: isActive ? 700 : 400,
+                borderBottom: `1px solid ${BORDER}`,
+              }}>{l}</a>
+            )
+          })}
+          <BtnOutlineGreen style={{ marginTop: 14, fontSize: 16, fontWeight: 400 }}>Let's Connect</BtnOutlineGreen>
+        </div>
+      )}
     </nav>
   )
 }
@@ -139,7 +179,7 @@ function Hero() {
       position: 'relative', height: '100vh', display: 'flex',
       alignItems: 'center', justifyContent: 'center',
       overflow: 'hidden', textAlign: 'center',
-      background: DARK,
+      background: DARK, padding: '0 20px',
     }}>
       {/* Background video */}
       <video
@@ -166,7 +206,7 @@ function Hero() {
       <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 40 }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h1 style={{
-            fontFamily: "'Saira Condensed', sans-serif", fontSize: 150, fontWeight: 800,
+            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
             textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1,
             whiteSpace: 'nowrap',
           }}>
@@ -214,28 +254,29 @@ function Clients() {
 
 // ─── About ────────────────────────────────────────────────────────────────────
 function About() {
+  const { isSmall } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: '100px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: isSmall ? 'column' : 'row', alignItems: 'center', justifyContent: 'space-between', gap: 40 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 30, width: isSmall ? '100%' : 'auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <SectionLabel>About</SectionLabel>
             <h2 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800,
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
               textTransform: 'uppercase', lineHeight: 1, color: '#fff',
             }}>
               We are<br />
               Convergen<span style={{ color: G }}>SEE</span>
             </h2>
           </div>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', maxWidth: 531 }}>
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, maxWidth: 531 }}>
             Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.
           </p>
           <BtnGreen style={{ width: 'fit-content' }}>Meet the team</BtnGreen>
         </div>
-        <div style={{ width: 562, height: 564, overflow: 'hidden', flexShrink: 0 }}>
+        <div style={{ width: isSmall ? '100%' : 562, maxWidth: 562, height: isSmall ? 'clamp(320px, 80vw, 564px)' : 564, overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <img src={teamPhoto} alt="Team" style={{
-            width: '142%', height: '115%', marginLeft: '-33%', marginTop: '-7%', objectFit: 'cover',
+            width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center',
           }} />
         </div>
       </div>
@@ -268,9 +309,10 @@ function FeatureColumn({ items, align = 'left' }) {
         const split = f.name.replace(/(IT)$/, '|IT').split('|')
         return (
           <div key={f.name} style={{
-            background: CARD, padding: '20px 22px',
-            borderLeft: align === 'left' ? `2px solid ${G}` : 'none',
-            borderRight: align === 'right' ? `2px solid ${G}` : 'none',
+            background: 'transparent', padding: '20px 22px',
+            border: '1px solid rgba(255,255,255,0.15)',
+            borderLeft: align === 'left' ? `2px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
+            borderRight: align === 'right' ? `2px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
           }}>
             <p style={{
               fontFamily: "'Saira Condensed', sans-serif", fontSize: 20, fontWeight: 700,
@@ -295,6 +337,7 @@ const chncStats = [
 
 function CHNC({ onNavigate }) {
   const scrollRef = useRef()
+  const { isSmall } = useResponsive()
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
@@ -314,6 +357,13 @@ function CHNC({ onNavigate }) {
   const [tilesReady, setTilesReady] = useState(true)
   const [cardReady, setCardReady] = useState(false)
   const [activeModule, setActiveModule] = useState('InsightIT')
+  // Edge-bleed layout: text on the left, dashboard bleeds off the right edge
+  const vTopAlign = true
+  const vAccent   = true
+  const vLink     = true
+  const vBleed    = true
+  const vRefined  = false
+  const cardVisible = cardReady
   const lockedRotateX = useMotionValue(32)
   const lockedScale   = useMotionValue(0.45)
   const lockedDock    = useMotionValue(0)
@@ -329,6 +379,8 @@ function CHNC({ onNavigate }) {
     AigenIT: { title: 'AigenIT', desc: 'AI agents that automate workflows end to end. From content generation to campaign optimisation.' },
     SearchIT: { title: 'SearchIT', desc: 'SEO tools and search visibility management. Dominate organic rankings with data-driven strategies.' },
     InvoiceIT: { title: 'InvoiceIT', desc: 'Streamline proposals, invoicing and vendor management. One platform for all financial workflows.' },
+    AdaptIT: { title: 'AdaptIT', desc: 'Localise and adapt campaigns for every market. Tailor content to regions, languages and audiences at scale.' },
+    EngageIT: { title: 'EngageIT', desc: 'Build lasting customer relationships across channels. Automate journeys, conversations and retention.' },
   }
 
   useEffect(() => {
@@ -360,20 +412,20 @@ function CHNC({ onNavigate }) {
   return (
     <section style={{ paddingTop: 0, marginTop: -60, background: DARK }}>
       {/* Section title + CHNC heading above dashboard */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, paddingTop: 80, marginBottom: 20 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, paddingTop: 80, marginBottom: 20, padding: '80px 20px 0' }}>
         <SectionLabel>Features &amp; Modules</SectionLabel>
         <h2 style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800,
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 7vw, 80px)', fontWeight: 800,
           textTransform: 'uppercase', lineHeight: 1, textAlign: 'center',
         }}>
           What platform <span style={{ color: G }}>offers?</span>
         </h2>
       </div>
-      <div style={{ position: 'relative', height: 430, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <img src={funnel1} alt="" style={{ position: 'absolute', left: 0, top: 0, width: 423, height: 423, objectFit: 'contain', opacity: 0.8 }} />
-        <img src={funnel1} alt="" style={{ position: 'absolute', right: 0, top: 7, width: 423, height: 423, objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
+      <div style={{ position: 'relative', height: isSmall ? 240 : 430, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <img src={funnel1} alt="" style={{ position: 'absolute', left: 0, top: 0, width: 'clamp(180px, 30vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
+        <img src={funnel1} alt="" style={{ position: 'absolute', right: 0, top: 7, width: 'clamp(180px, 30vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 113, fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
+          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(64px, 12vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, letterSpacing: '4px', textTransform: 'uppercase', marginTop: 16 }}>
             The Opportunity Creators
           </p>
@@ -388,8 +440,8 @@ function CHNC({ onNavigate }) {
             alignItems: 'center', justifyContent: 'flex-start',
             paddingTop: '20px', overflow: 'visible',
           }}>
-            <div style={{ position: 'relative', width: '88%', maxWidth: '1060px',
-              transform: cardReady ? 'translateX(160px)' : 'translateX(0)',
+            <div style={{ position: 'relative', width: isSmall ? '92%' : '88%', maxWidth: '1060px',
+              transform: (!isSmall && cardVisible) ? 'translateX(230px)' : 'translateX(0)',
               transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
             }}>
               {/* Green glow bloom behind dashboard */}
@@ -407,21 +459,39 @@ function CHNC({ onNavigate }) {
                   const info = MODULE_INFO[activeModule] || MODULE_INFO.InsightIT
                   return (
                     <div style={{
-                      position: 'absolute', right: '100%', top: '6%', bottom: '6%',
-                      width: 300, marginRight: 20, zIndex: 2,
-                      background: G, padding: '40px 28px',
-                      display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-                      opacity: cardReady ? 1 : 0,
-                      transform: cardReady ? 'translateX(0)' : 'translateX(60px)',
+                      ...(isSmall
+                        ? { position: 'relative', width: '100%', marginBottom: 24, paddingTop: 0, paddingBottom: 0, opacity: 1, transform: 'none' }
+                        : {
+                            position: 'absolute',
+                            ...(vBleed ? { right: '100%', marginRight: 28 } : { left: '100%', marginLeft: 20 }),
+                            top: '6%',
+                            ...(vTopAlign ? { bottom: 'auto' } : { bottom: '6%' }),
+                            width: vRefined ? 320 : 300,
+                            paddingTop: 40, paddingBottom: 40,
+                            opacity: cardVisible ? 1 : 0,
+                            transform: cardVisible ? 'translateX(0)' : 'translateX(-60px)',
+                          }),
+                      zIndex: 2,
+                      background: 'transparent',
+                      borderLeft: vRefined ? `2px solid ${G}` : 'none',
+                      paddingLeft: vRefined ? 24 : 28, paddingRight: 28,
+                      display: 'flex', flexDirection: 'column',
+                      justifyContent: vTopAlign ? 'flex-start' : 'space-between',
+                      gap: vTopAlign ? 28 : 0,
                       transition: 'opacity 0.5s ease 0.2s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s',
                     }}>
                       <div>
+                        {vAccent && (
+                          <div style={{ marginBottom: 14 }}>
+                            <SectionLabel>Module</SectionLabel>
+                          </div>
+                        )}
                         <p style={{
                           fontFamily: "'Saira Condensed', sans-serif", fontSize: 36, fontWeight: 700,
-                          color: DARK, lineHeight: 1.1, marginBottom: 16,
+                          color: '#fff', lineHeight: 1.1, marginBottom: 16,
                         }}>{info.title}</p>
                         <p style={{
-                          fontFamily: "'Archivo', sans-serif", fontSize: 15, color: 'rgba(0,7,24,0.7)',
+                          fontFamily: "'Archivo', sans-serif", fontSize: 15, color: MUTED,
                           lineHeight: '22px',
                         }}>{info.desc}</p>
                         {info.stats && (
@@ -430,10 +500,10 @@ function CHNC({ onNavigate }) {
                               <div key={si}>
                                 <p style={{
                                   fontFamily: "'Saira Condensed', sans-serif", fontSize: 64, fontWeight: 800,
-                                  color: DARK, lineHeight: 1, marginBottom: 4,
+                                  color: G, lineHeight: 1, marginBottom: 4,
                                 }}>{s.num}</p>
                                 <p style={{
-                                  fontFamily: "'Archivo', sans-serif", fontSize: 13, color: 'rgba(0,7,24,0.6)',
+                                  fontFamily: "'Archivo', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.6)',
                                   lineHeight: '18px',
                                 }}>{s.label}</p>
                               </div>
@@ -441,23 +511,35 @@ function CHNC({ onNavigate }) {
                           </div>
                         )}
                       </div>
-                      <button
-                        onClick={() => onNavigate && onNavigate('solutions')}
-                        style={{
-                          background: DARK, color: '#fff', border: 'none',
-                          padding: '14px 20px', fontFamily: "'Saira Condensed', sans-serif",
-                          fontSize: 15, fontWeight: 700, textTransform: 'uppercase',
-                          letterSpacing: '0.02em', cursor: 'pointer',
-                          alignSelf: 'flex-start',
-                        }}
-                      >Explore Module →</button>
+                      {vLink ? (
+                        <button
+                          onClick={() => onNavigate && onNavigate('solutions')}
+                          style={{
+                            background: 'transparent', color: G, border: 'none', padding: 0,
+                            fontFamily: "'Saira Condensed', sans-serif", fontSize: 15, fontWeight: 700,
+                            textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer',
+                            alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 8,
+                          }}
+                        >Learn more →</button>
+                      ) : (
+                        <button
+                          onClick={() => onNavigate && onNavigate('solutions')}
+                          style={{
+                            background: G, color: DARK, border: 'none',
+                            padding: '14px 20px', fontFamily: "'Saira Condensed', sans-serif",
+                            fontSize: 15, fontWeight: 700, textTransform: 'uppercase',
+                            letterSpacing: '0.02em', cursor: 'pointer',
+                            alignSelf: 'flex-start',
+                          }}
+                        >Explore Module →</button>
+                      )}
                     </div>
                   )
                 })()}
                 <motion.div
                   style={{
                     width: '100%', aspectRatio: '1440/930',
-                    boxShadow: '0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(52,204,50,0.3), 0 0 80px rgba(52,204,50,0.18)',
+                    boxShadow: '0 40px 120px rgba(0,0,0,0.7), 0 0 80px rgba(52,204,50,0.12)',
                     transformOrigin: 'center center', borderRadius: 8, overflow: 'hidden',
                     rotateX, scale: imageScale, willChange: 'transform',
                     background: '#f9f9fd',
@@ -470,11 +552,17 @@ function CHNC({ onNavigate }) {
                   </Suspense>
                 </motion.div>
               </div>
-              <motion.div style={{
-                position: 'absolute', top: '100%', left: 0, right: 0,
-                display: 'flex', justifyContent: 'center',
-                marginTop: done ? 20 : 8, opacity: dockOpacity,
-              }}>
+              <motion.div
+                // Mirror the parent's edge-bleed shift with the same timing so the
+                // dock stays viewport-centered the whole time (no slide of its own).
+                animate={{ x: (!isSmall && cardVisible) ? -230 : 0 }}
+                transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+                style={{
+                  position: 'absolute', top: '100%', left: 0, right: 0,
+                  display: 'flex', justifyContent: 'center',
+                  marginTop: done ? 20 : 8, opacity: dockOpacity,
+                }}
+              >
                 <CHNCDock triggerOpacity={dockOpacity} activeModule={activeModule} onSelect={setActiveModule} />
               </motion.div>
             </div>
@@ -496,19 +584,20 @@ const impacts = [
 ]
 
 function Impact() {
+  const { isMobile } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: '100px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Impact we made</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Our <span style={{ color: G }}>impact</span>
           </h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, width: '100%' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, width: '100%' }}>
           {impacts.map((s) => (
-            <div key={s.num} style={{ border: `2px solid ${BORDER}`, padding: 30 }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 700, color: G, lineHeight: '90px' }}>{s.num}</p>
+            <div key={s.num} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)' }}>
+              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 700, color: G, lineHeight: 1.1 }}>{s.num}</p>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.desc}</p>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 600, color: G, textTransform: 'uppercase', marginTop: 10 }}>{s.tag}</p>
             </div>
@@ -541,7 +630,7 @@ function QuizPill({ label, isActive, onClick }) {
         fontFamily: "'Saira Condensed', sans-serif",
         fontSize: 16,
         fontWeight: isActive || hovered ? 700 : 500,
-        color: isActive || hovered ? G : DIM,
+        color: isActive || hovered ? G : '#fff',
         textTransform: 'uppercase',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
@@ -552,27 +641,28 @@ function QuizPill({ label, isActive, onClick }) {
 }
 
 function BrandAudit() {
+  const { isSmall } = useResponsive()
   const [selections, setSelections] = useState(auditQs.map(q => q.active))
   const handleSelect = (qi, oi) => {
     setSelections(prev => { const next = [...prev]; next[qi] = oi; return next })
   }
   return (
-    <section style={{ background: DARK, padding: '100px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Brand audit</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Want a <span style={{ color: G }}>brand audit?</span>
           </h2>
         </div>
-        <div style={{ display: 'flex', gap: 229, alignItems: 'flex-start', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', width: '100%' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40, flexShrink: 0 }}>
             {auditQs.map((q, qi) => (
               <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 18, color: '#fff' }}>
                   {q.q} <span style={{ color: G }}>{q.qGreen}</span>{q.qEnd || ''}
                 </p>
-                <div style={{ display: 'flex', gap: 20 }}>
+                <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
                   {q.opts.map((opt, oi) => (
                     <QuizPill key={oi} label={opt} isActive={oi === selections[qi]} onClick={() => handleSelect(qi, oi)} />
                   ))}
@@ -580,8 +670,8 @@ function BrandAudit() {
               </div>
             ))}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', width: 410, flexShrink: 0 }}>
-            <div style={{ width: '100%', height: 410, boxShadow: '0 4px 65px rgba(43,179,42,0.1)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', width: isSmall ? '100%' : 410, maxWidth: 410, flexShrink: 0, alignSelf: isSmall ? 'center' : 'auto' }}>
+            <div style={{ width: '100%', height: isSmall ? 'clamp(280px, 70vw, 410px)' : 410, boxShadow: '0 4px 65px rgba(43,179,42,0.1)', overflow: 'hidden' }}>
               <img src={realityImg} alt="Reality Check" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24, textAlign: 'center' }}>
@@ -589,14 +679,14 @@ function BrandAudit() {
             </p>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 20, alignItems: 'flex-end', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: isSmall ? 'stretch' : 'flex-end', width: '100%' }}>
           {['Your name', 'Your name', 'Your name'].map((lbl, i) => (
             <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
               <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-              <input placeholder="Enter here" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%' }} />
+              <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
             </div>
           ))}
-          <BtnGreen>Know More</BtnGreen>
+          <BtnGreen style={isSmall ? { width: '100%' } : undefined}>Know More</BtnGreen>
         </div>
       </div>
     </section>
@@ -612,49 +702,52 @@ const testiStats = [
 ]
 
 function Testimonials() {
+  const { isSmall } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: '100px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, color: G, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, color: G, textAlign: 'center' }}>
             Testimonials
           </h2>
         </div>
-        <div style={{ display: 'flex', gap: 20 }}>
+        <div style={{ display: 'flex', gap: 'clamp(8px, 1.5vw, 20px)', flexWrap: 'wrap', justifyContent: 'center' }}>
           {testiTabs.map((t, i) => (
             <button key={t} style={{
-              background: CARD, border: i === 1 ? `1px solid ${G}` : 'none',
+              background: 'transparent', border: i === 1 ? `1px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
               padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
               fontSize: 16, fontWeight: i === 1 ? 700 : 500,
-              color: i === 1 ? G : DIM, textTransform: 'uppercase',
+              color: i === 1 ? G : '#fff', textTransform: 'uppercase',
             }}>{t}</button>
           ))}
         </div>
         <div style={{ width: '100%' }}>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginBottom: 20 }}>
-            <button style={{ width: 40, height: 40, borderRadius: 40, background: CARD, border: 'none', color: '#fff', fontSize: 18 }}>‹</button>
+            <button style={{ width: 40, height: 40, borderRadius: 40, background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 18 }}>‹</button>
             <button style={{ width: 40, height: 40, borderRadius: 40, background: G, border: 'none', color: DARK, fontSize: 18 }}>›</button>
           </div>
-          <div style={{ display: 'flex', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', width: '100%' }}>
             <div style={{
               flex: 1, background: DARK, border: `2px solid ${BORDER}`,
-              borderRight: 'none', padding: 50, display: 'flex', flexDirection: 'column',
-              justifyContent: 'space-between', minHeight: 505,
+              borderRight: isSmall ? `2px solid ${BORDER}` : 'none',
+              borderBottom: isSmall ? 'none' : `2px solid ${BORDER}`,
+              padding: 'clamp(24px, 4vw, 50px)', display: 'flex', flexDirection: 'column',
+              justifyContent: 'space-between', gap: 30, minHeight: isSmall ? 'auto' : 505,
             }}>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 24, color: '#fff', lineHeight: '30px', maxWidth: 658 }}>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: '#fff', lineHeight: 1.3, maxWidth: 658 }}>
                 "ConvergenSEE changed the trajectory and <span style={{ color: '#2bb32a' }}>success</span> of my business, and I'm a lifelong user at this point."
               </p>
-              <div style={{ display: 'flex', gap: 80 }}>
+              <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
                 {testiStats.map((s) => (
-                  <div key={s.num} style={{ background: CARD, padding: 10 }}>
-                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 60, fontWeight: 700, lineHeight: '70px' }}>{s.num}</p>
+                  <div key={s.num} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', padding: 10 }}>
+                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 700, lineHeight: 1.1 }}>{s.num}</p>
                     <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.label}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div style={{ width: 494, height: 505, position: 'relative', border: `2px solid ${BORDER}`, borderLeft: 'none', overflow: 'hidden', flexShrink: 0 }}>
+            <div style={{ width: isSmall ? '100%' : 494, height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, position: 'relative', border: `2px solid ${BORDER}`, borderLeft: isSmall ? `2px solid ${BORDER}` : 'none', overflow: 'hidden', flexShrink: 0 }}>
               <img src={testiPhoto} alt="Alina Sharma" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,7,24,0) 42%, #000718)' }} />
               <div style={{ position: 'absolute', bottom: 40, left: 38 }}>
@@ -758,16 +851,17 @@ function WantMoreCard({ img, label, desc, onClick }) {
 }
 
 function WantMore({ onNavigate }) {
+  const { isMobile } = useResponsive()
   return (
-    <section id="want-more" style={{ background: DARK, padding: '100px 100px 0' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section id="want-more" style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>More</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>
             Want <span style={{ color: G }}>more?</span>
           </h2>
         </div>
-        <div style={{ display: 'flex', gap: 8, width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 8, width: '100%' }}>
           {moreCards.map((c) => (
             <WantMoreCard key={c.label} {...c} onClick={c.page ? () => onNavigate(c.page) : undefined} />
           ))}
@@ -839,15 +933,15 @@ function TeamCard({ member }) {
 
 function Team({ onNavigate }) {
   return (
-    <section style={{ background: DARK, padding: '100px 0' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 80, padding: '0 100px' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) 0' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 'clamp(40px, 6vw, 80px)', padding: '0 clamp(20px, 6vw, 100px)' }}>
         <SectionLabel>Team</SectionLabel>
-        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 7vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
           Meet the <span style={{ color: G }}>opportunity creators!</span>
         </h2>
       </div>
       <div style={{ position: 'relative' }}>
-        <div style={{ display: 'flex', gap: 2, overflowX: 'auto', padding: '0 100px', scrollbarWidth: 'none' }}>
+        <div style={{ display: 'flex', gap: 2, overflowX: 'auto', padding: '0 clamp(20px, 6vw, 100px)', scrollbarWidth: 'none' }}>
           {teamMembers.map((m, i) => (
             <TeamCard key={i} member={m} />
           ))}
@@ -949,16 +1043,17 @@ function BoardCard({ member }) {
 }
 
 function AdvisoryBoard() {
+  const { isMobile } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: '100px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 80, alignItems: 'center' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Board</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             <span style={{ color: G }}>Advisory </span>board
           </h2>
         </div>
-        <div style={{ display: 'flex', gap: 16, width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 16, width: '100%' }}>
           {boardMembers.map((m, i) => <BoardCard key={i} member={m} />)}
         </div>
       </div>
@@ -968,12 +1063,13 @@ function AdvisoryBoard() {
 
 // ─── Contact ──────────────────────────────────────────────────────────────────
 function Contact() {
+  const { isMobile } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: '100px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 60, alignItems: 'center' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Connect with us</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 80, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             We will <span style={{ color: G }}>shoot</span> you
           </h2>
         </div>
@@ -983,18 +1079,18 @@ function Contact() {
             [['Company name', 'Designation']],
             [['Your email', null]],
           ].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', gap: 20, width: '100%' }}>
+            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
               {row[0].map((lbl, fi) => lbl ? (
                 <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%' }} />
+                  <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
                 </div>
               ) : <div key={fi} style={{ flex: 1 }} />)}
             </div>
           ))}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%' }} />
+            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%' }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <BtnGreen type="submit">Send Message</BtnGreen>
@@ -1007,22 +1103,23 @@ function Contact() {
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 export function Footer() {
+  const { isSmall } = useResponsive()
   return (
-    <footer style={{ background: CARD, padding: '100px' }}>
+    <footer style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', borderTop: '1px solid rgba(255,255,255,0.22)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-        <div style={{ display: 'flex', gap: 144, alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
           {/* Poison */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
             <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center' }}>
               Choose your <span style={{ color: G }}>poison</span>
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: 323, position: 'relative' }}>
-                <img src={memeImg} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain' }} />
+              <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
+                <img src={memeImg} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <BtnGreen style={{ width: 323 }}>I skipped to the end</BtnGreen>
-                <BtnOutlineGreen style={{ width: 323 }}>I went through the whole website</BtnOutlineGreen>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
+                <BtnGreen style={{ width: '100%' }}>I skipped to the end</BtnGreen>
+                <BtnOutlineGreen style={{ width: '100%' }}>I went through the whole website</BtnOutlineGreen>
               </div>
             </div>
           </div>
@@ -1078,7 +1175,7 @@ export function Footer() {
           </div>
         </div>
         <div style={{ height: 1, background: 'rgba(255,255,255,0.1)' }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4 }}>© Copyright ConvergenSEE All Rights Reserved</p>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14 }}>
             Designed by <span style={{ color: G }}>ConvergenSEE</span>

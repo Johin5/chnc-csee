@@ -1,5 +1,6 @@
 // Socials Page — social media hub
 import { useState } from 'react'
+import useResponsive from './useResponsive'
 
 const G = '#34cc32'
 const DARK = '#000718'
@@ -219,6 +220,7 @@ function PostCard({ post }) {
 }
 
 export default function SocialsPage({ onBack }) {
+  const { isMobile, isSmall } = useResponsive()
   const [filter, setFilter] = useState('ALL')
   const filters = ['ALL', ...PLATFORMS.map(p => p.name.toUpperCase())]
   const filtered = filter === 'ALL' ? POSTS : POSTS.filter(p => p.platform.toUpperCase() === filter)
@@ -227,19 +229,19 @@ export default function SocialsPage({ onBack }) {
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
 
       {/* Hero */}
-      <section style={{ padding: '100px 100px 0', display: 'flex', flexDirection: 'column', gap: 100, alignItems: 'center', textAlign: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 100, alignItems: 'center', textAlign: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
               fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 150, fontWeight: 800, lineHeight: 1,
+              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
               textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
               whiteSpace: 'nowrap',
             }}>
               <span style={{ color: '#fff' }}>OUR </span>
               <span style={{ color: G }}>SOCIALS</span>
             </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 600, margin: 0 }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 600, margin: 0 }}>
               Follow us across platforms. We share insights, behind-the-scenes, campaigns, and the occasional meme.
             </p>
           </div>
@@ -247,23 +249,23 @@ export default function SocialsPage({ onBack }) {
       </section>
 
       {/* Platform cards */}
-      <section style={{ padding: '80px 100px' }}>
-        <div style={{ display: 'flex', gap: 8 }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 80px) clamp(20px, 6vw, 100px)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSmall ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 8 }}>
           {PLATFORMS.map(p => <PlatformCard key={p.name} platform={p} />)}
         </div>
       </section>
 
       {/* Feed */}
-      <section style={{ padding: '0 100px 100px' }}>
+      <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', justifyContent: 'space-between', alignItems: isSmall ? 'flex-start' : 'center', gap: isSmall ? 24 : 0 }}>
             <h2 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 48, fontWeight: 800,
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(32px, 6vw, 48px)', fontWeight: 800,
               textTransform: 'uppercase', lineHeight: 1, margin: 0,
             }}>
               Latest <span style={{ color: G }}>posts</span>
             </h2>
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {filters.map(f => (
                 <button
                   key={f}
@@ -283,7 +285,7 @@ export default function SocialsPage({ onBack }) {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 4 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSmall ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 4 }}>
             {filtered.map((post, i) => <PostCard key={i} post={post} />)}
           </div>
         </div>

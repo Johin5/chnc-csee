@@ -1,5 +1,6 @@
 // Work Page — "Our Work" portfolio grid
 import { useState } from 'react'
+import useResponsive from './useResponsive'
 
 const G      = '#34cc32'
 const DARK   = '#000718'
@@ -13,88 +14,88 @@ const CHNC_PROJECTS = [
   {
     name: 'Platform UI/UX', category: 'Design', year: '2025', client: 'CHNC',
     timeline: '4 months',
-    img: 'https://www.figma.com/api/mcp/asset/ccd75305-e08f-4acb-a0a7-671b22a159e2',
+    img: '/figma/work/macbook2.png',
     headline: 'How CHNC unified eight services into a single command-centre dashboard, cutting operator onboarding time by 60%.',
     intro: 'The CHNC platform had grown organically across eight product verticals. Navigation was fragmented, data was siloed, and operators were spending more time switching contexts than executing strategy. We were tasked with designing a unified interface that felt as powerful as it looked.',
     challenge: 'A fractured product experience was slowing down operators and masking the platform\'s true capability.',
     challengeBody: 'With eight distinct modules built by separate teams, the platform lacked a shared design language. Onboarding new operators took weeks. Power users had to maintain mental maps across six different nav structures. The cost of context-switching was real and measurable.',
     imgs: [
-      'https://www.figma.com/api/mcp/asset/ccd75305-e08f-4acb-a0a7-671b22a159e2',
-      'https://www.figma.com/api/mcp/asset/80fba765-e313-49e7-9cdc-a4c49d3f886f',
+      '/figma/work/macbook2.png',
+      '/figma/home/img-asset11.png',
     ],
   },
   {
     name: 'Brand Identity', category: 'Branding', year: '2024', client: 'CHNC',
     timeline: '6 weeks',
-    img: 'https://www.figma.com/api/mcp/asset/80fba765-e313-49e7-9cdc-a4c49d3f886f',
+    img: '/figma/home/img-asset11.png',
     headline: 'Building a brand identity that communicates convergence, ambition, and technological authority in a single mark.',
     intro: 'CHNC needed a visual identity that could carry weight across a B2B SaaS platform, enterprise pitch decks, and street-level marketing. The identity had to feel premium without feeling distant — authoritative without feeling cold.',
     challenge: 'No brand system existed. Every touchpoint was inconsistent, eroding trust with enterprise buyers.',
     challengeBody: 'Stakeholders across verticals were producing materials independently, resulting in five different logo treatments, three colour palettes, and no typographic consistency. The brand was invisible where it needed to be loudest.',
     imgs: [
-      'https://www.figma.com/api/mcp/asset/80fba765-e313-49e7-9cdc-a4c49d3f886f',
-      'https://www.figma.com/api/mcp/asset/c914f6e9-fde8-49ab-b8aa-e6f61e0a02f1',
+      '/figma/home/img-asset11.png',
+      '/figma/dashboard-chnc/img-rectangle50.jpg',
     ],
   },
   {
     name: 'Marketing Collateral', category: 'Campaign', year: '2024', client: 'CHNC',
     timeline: '3 months',
-    img: 'https://www.figma.com/api/mcp/asset/c914f6e9-fde8-49ab-b8aa-e6f61e0a02f1',
+    img: '/figma/dashboard-chnc/img-rectangle50.jpg',
     headline: 'A modular collateral system that lets any team produce on-brand materials without a designer in the loop.',
     intro: 'Marketing velocity was being throttled by design bottlenecks. Every sales deck, one-pager, and event banner had to pass through a two-person design team. We built a template system that put production power in the hands of the people closest to the customer.',
     challenge: 'Sales cycles were stalling because custom collateral took too long to produce.',
     challengeBody: 'The design team was a single point of failure for every client-facing asset. A bespoke pitch deck took 4–6 business days. Event materials were routinely off-brand. The pipeline was suffering in silence.',
     imgs: [
-      'https://www.figma.com/api/mcp/asset/c914f6e9-fde8-49ab-b8aa-e6f61e0a02f1',
-      'https://www.figma.com/api/mcp/asset/f417b7fe-f2c4-47dd-9a41-1daa6e61d058',
+      '/figma/dashboard-chnc/img-rectangle50.jpg',
+      '/figma/dashboard-chnc/img-rectangle51.jpg',
     ],
   },
   {
     name: 'Motion & Video', category: 'Production', year: '2023', client: 'CHNC',
     timeline: '8 weeks',
-    img: 'https://www.figma.com/api/mcp/asset/f417b7fe-f2c4-47dd-9a41-1daa6e61d058',
+    img: '/figma/dashboard-chnc/img-rectangle51.jpg',
     headline: 'A motion identity that turns data dashboards into cinematic proof of platform capability.',
     intro: 'Static screenshots couldn\'t communicate the dynamism of the CHNC platform. We developed a motion language — transitions, micro-animations, and a product film — that translated raw feature depth into felt experience.',
     challenge: 'Video content was ad hoc, inconsistent, and consistently underperforming on paid channels.',
     challengeBody: 'Three separate agencies had produced product videos over two years, each with different visual treatments. Click-through rates on paid social were below industry benchmarks. The platform\'s speed and intelligence were simply not coming through on screen.',
     imgs: [
-      'https://www.figma.com/api/mcp/asset/f417b7fe-f2c4-47dd-9a41-1daa6e61d058',
-      'https://www.figma.com/api/mcp/asset/70eeb9f0-c789-4e2c-bec3-9301bb277d05',
+      '/figma/dashboard-chnc/img-rectangle51.jpg',
+      '/figma/work/macbook1.png',
     ],
   },
   {
     name: 'Web Design', category: 'Design', year: '2023', client: 'CHNC',
     timeline: '5 months',
-    img: 'https://www.figma.com/api/mcp/asset/70eeb9f0-c789-4e2c-bec3-9301bb277d05',
+    img: '/figma/work/macbook1.png',
     headline: 'Redesigning the CHNC marketing site to convert enterprise decision-makers in under three minutes.',
     intro: 'The existing site was functional but forgettable. In a category defined by complexity, buyers needed to feel confident and excited before they ever booked a demo. We rebuilt the site as a conversion engine disguised as a brand statement.',
     challenge: 'High traffic, low conversion. The site was generating awareness it couldn\'t close.',
     challengeBody: 'Session data showed users spending time on the platform overview pages but dropping before reaching the demo CTA. The value proposition wasn\'t landing. Enterprise buyers were leaving with questions the site never answered.',
     imgs: [
-      'https://www.figma.com/api/mcp/asset/70eeb9f0-c789-4e2c-bec3-9301bb277d05',
-      'https://www.figma.com/api/mcp/asset/35122000-3d15-4a70-a67e-54b96a30ee5a',
+      '/figma/work/macbook1.png',
+      '/figma/home/img-asset31.png',
     ],
   },
   {
     name: 'KrateIT', category: 'Branding', year: '2022', client: 'KrateIT',
     timeline: '10 weeks',
-    img: 'https://www.figma.com/api/mcp/asset/35122000-3d15-4a70-a67e-54b96a30ee5a',
+    img: '/figma/home/img-asset31.png',
     headline: 'A bold consumer brand for a logistics disruptor entering a market dominated by incumbents with thirty-year head starts.',
     intro: 'KrateIT was entering the last-mile logistics space with a tech-first model that none of the legacy players had. The brand needed to signal speed, reliability, and modernity — and it needed to do it loud enough to cut through category noise.',
     challenge: 'Breaking into a commoditised market where price is assumed to be the only differentiator.',
     challengeBody: 'Established players owned the trust narrative. Shippers defaulted to incumbents out of habit, not preference. KrateIT had a genuinely superior product but no brand equity to support the claim. They needed identity before they could drive adoption.',
     imgs: [
-      'https://www.figma.com/api/mcp/asset/35122000-3d15-4a70-a67e-54b96a30ee5a',
-      'https://www.figma.com/api/mcp/asset/ccd75305-e08f-4acb-a0a7-671b22a159e2',
+      '/figma/home/img-asset31.png',
+      '/figma/work/macbook2.png',
     ],
   },
 ]
 
 // Brand photos from Figma (backgrounds)
-const imgMahindraPhoto = 'https://www.figma.com/api/mcp/asset/6de30e55-a94c-4aab-96ca-d9eb167a8dd0'
-const imgAxisPhoto     = 'https://www.figma.com/api/mcp/asset/6d0071c0-ef1d-4147-b77f-4a2af2049d97'
-const imgSBIPhoto      = 'https://www.figma.com/api/mcp/asset/5dfc35df-c9fc-4c44-a384-61312dda3a10'
-const imgLACPhoto      = 'https://www.figma.com/api/mcp/asset/08964222-8a0c-44aa-86fb-e6b53cdc8efe'
+const imgMahindraPhoto = '/figma/case-study/img-mahindra2.png'
+const imgAxisPhoto     = '/figma/case-study/img-mahindra3.jpg'
+const imgSBIPhoto      = '/figma/case-study/img-mahindra4.jpg'
+const imgLACPhoto      = '/figma/case-study/img-mahindra5.jpg'
 
 const BRAND_PROJECTS = [
   {
@@ -292,11 +293,12 @@ function ProjectTile({ project, onClick }) {
 
 // ─── Case Study Modal ─────────────────────────────────────────────────────────
 function CaseStudyModal({ project, onClose }) {
+  const { isMobile, isSmall } = useResponsive()
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: DARK, overflow: 'auto', fontFamily: "'Archivo', sans-serif", color: '#fff' }}>
 
       {/* Breadcrumb nav — sits just below the main nav */}
-      <div style={{ marginTop: 106, position: 'sticky', top: 106, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 60px', background: 'rgba(0,7,24,0.95)', backdropFilter: 'blur(16px)', borderBottom: `1px solid ${BORDER}` }}>
+      <div style={{ marginTop: 106, position: 'sticky', top: 106, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px clamp(20px, 6vw, 60px)', background: 'rgba(0,7,24,0.95)', backdropFilter: 'blur(16px)', borderBottom: `1px solid ${BORDER}` }}>
         <div
           onClick={onClose}
           style={{ display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED }}
@@ -314,8 +316,8 @@ function CaseStudyModal({ project, onClose }) {
       </div>
 
       {/* Service header */}
-      <div style={{ padding: '60px 60px 48px', borderBottom: `1px solid ${BORDER}`, display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'center', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1.05, color: '#fff', margin: 0 }}>
+      <div style={{ padding: 'clamp(40px, 6vw, 60px) clamp(20px, 6vw, 60px) clamp(32px, 5vw, 48px)', borderBottom: `1px solid ${BORDER}`, display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'center', textAlign: 'center' }}>
+        <h1 style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 'clamp(32px, 6vw, 56px)', lineHeight: 1.05, color: '#fff', margin: 0 }}>
           {project.name}
         </h1>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED, lineHeight: '24px', margin: 0, maxWidth: 640 }}>
@@ -340,11 +342,11 @@ function CaseStudyModal({ project, onClose }) {
       {/* Sectioned gallery or fallback 2-col grid */}
       {project.sections ? project.sections.map((sec, si) => (
         <div key={si} style={{ borderTop: `1px solid ${BORDER}` }}>
-          <div style={{ padding: '40px 60px 20px', display: 'flex', alignItems: 'baseline', gap: 16 }}>
-            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 30, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{sec.label}</h2>
+          <div style={{ padding: 'clamp(28px, 5vw, 40px) clamp(20px, 6vw, 60px) 20px', display: 'flex', alignItems: 'baseline', gap: 16 }}>
+            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(22px, 4vw, 30px)', color: '#fff', textTransform: 'uppercase', margin: 0 }}>{sec.label}</h2>
             {sec.brand && <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, letterSpacing: '2px', textTransform: 'uppercase' }}>{sec.brand}</span>}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2, background: DARK }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 2, background: DARK }}>
             {sec.imgs.map((img, i) => (
               <div key={i} style={{ overflow: 'hidden', background: CARD }}>
                 <img src={img} alt="" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block' }} />
@@ -354,7 +356,7 @@ function CaseStudyModal({ project, onClose }) {
         </div>
       )) : (
         <>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, background: DARK }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 2, background: DARK }}>
             {project.imgs.map((img, i) => (
               <div key={i} style={{ overflow: 'hidden', background: CARD }}>
                 <img src={img} alt="" style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }} />
@@ -368,13 +370,13 @@ function CaseStudyModal({ project, onClose }) {
       )}
 
       {/* Reels & Shorts */}
-      <div style={{ padding: '48px 60px', borderTop: `1px solid ${BORDER}`, display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 30, color: '#fff', textTransform: 'uppercase', margin: 0 }}>Reels & Shorts</h2>
-        <div style={{ display: 'flex', gap: 8 }}>
+      <div style={{ padding: 'clamp(32px, 5vw, 48px) clamp(20px, 6vw, 60px)', borderTop: `1px solid ${BORDER}`, display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 4vw, 30px)', color: '#fff', textTransform: 'uppercase', margin: 0 }}>Reels & Shorts</h2>
+        <div style={{ display: 'flex', gap: 8, flexWrap: isSmall ? 'wrap' : 'nowrap' }}>
           {(project.reels || [project.img, project.imgs[0], project.imgs[1] || project.img, project.img]).map((src, i) => {
             const isVideo = src.endsWith('.mp4')
             return (
-              <div key={i} style={{ flex: 1, aspectRatio: '9/16', overflow: 'hidden', background: CARD, position: 'relative', cursor: 'pointer' }}>
+              <div key={i} style={{ flex: isSmall ? '1 1 140px' : 1, minWidth: isSmall ? 120 : 0, aspectRatio: '9/16', overflow: 'hidden', background: CARD, position: 'relative', cursor: 'pointer' }}>
                 {isVideo ? (
                   <video src={src} muted loop autoPlay playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 ) : (
@@ -400,6 +402,7 @@ function CaseStudyModal({ project, onClose }) {
 
 // ─── WorkPage ─────────────────────────────────────────────────────────────────
 export default function WorkPage({ onBack }) {
+  const { isMobile } = useResponsive()
   const [tab, setTab] = useState('chnc')
   const [modal, setModal] = useState(null)
 
@@ -409,19 +412,19 @@ export default function WorkPage({ onBack }) {
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
 
       {/* Hero */}
-      <section style={{ padding: '100px 100px 0', display: 'flex', flexDirection: 'column', gap: 100, alignItems: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(48px, 8vw, 100px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center', textAlign: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
               fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 150, fontWeight: 800, lineHeight: 1,
+              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
               textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
               whiteSpace: 'nowrap',
             }}>
               <span style={{ color: '#fff' }}>OUR </span>
               <span style={{ color: G }}>WORK</span>
             </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
               Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
             </p>
           </div>
@@ -449,8 +452,8 @@ export default function WorkPage({ onBack }) {
       </section>
 
       {/* Project grid */}
-      <div style={{ padding: '100px 100px 120px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+      <div style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) clamp(72px, 10vw, 120px)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8 }}>
           {projects.map((p) => (
             tab === 'brand'
               ? <BrandTile key={p.name} project={p} onClick={setModal} />
@@ -460,7 +463,7 @@ export default function WorkPage({ onBack }) {
       </div>
 
       {/* Footer strip */}
-      <div style={{ borderTop: `1px solid ${BORDER}`, padding: '40px 100px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ borderTop: `1px solid ${BORDER}`, padding: '40px clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM }}>© Copyright ConvergenSEE All Rights Reserved</p>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM }}>
           Designed by <span style={{ color: G }}>ConvergenSEE</span>
