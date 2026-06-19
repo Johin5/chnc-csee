@@ -428,19 +428,35 @@ function CHNC({ onNavigate }) {
   const imageScale  = done ? lockedScale   : imageScaleRaw
   const dockOpacity = done ? lockedDock    : 0
 
-  // Funnel flow: service cards pour down + inward into the funnel as you scroll,
-  // and the CHNC logo reveals at the neck.
+  // Funnel flow: service cards pour down + inward into the funnel neck as you
+  // scroll, staggered row-by-row, and the CHNC logo reveals at the neck.
   const flowRef = useRef()
-  const { scrollYProgress: flow } = useScroll({ target: flowRef, offset: ['start 0.55', 'end 0.78'] })
-  const cardY      = useTransform(flow, [0, 1], [0, 130])
-  const cardScale  = useTransform(flow, [0, 1], [1, 0.55])
-  const cardFade   = useTransform(flow, [0, 0.85], [1, 0])
-  const colLeftX   = useTransform(flow, [0, 1], [0, 260])
-  const colMidX    = useTransform(flow, [0, 1], [0, 0])
-  const colRightX  = useTransform(flow, [0, 1], [0, -260])
-  const colX = [colLeftX, colMidX, colRightX]
-  const chncOpacity = useTransform(flow, [0.4, 0.9], [0, 1])
-  const chncScale   = useTransform(flow, [0.45, 1], [0.5, 1])
+  const { scrollYProgress: flowRaw } = useScroll({ target: flowRef, offset: ['start 0.85', 'end 0.5'] })
+  // Spring-smooth the raw scroll so motion glides instead of tracking wheel ticks.
+  const flow = useSpring(flowRaw, { stiffness: 60, damping: 20, mass: 0.6 })
+
+  // Row 0 = top (travels furthest, leaves last), Row 2 = bottom (nearest the funnel, leaves first).
+  const yTop = useTransform(flow, [0.18, 1],   [0, 320])
+  const sTop = useTransform(flow, [0.18, 1],   [1, 0.35])
+  const oTop = useTransform(flow, [0.5, 0.92], [1, 0])
+  const yMid = useTransform(flow, [0.09, 0.9], [0, 220])
+  const sMid = useTransform(flow, [0.09, 0.9], [1, 0.4])
+  const oMid = useTransform(flow, [0.38, 0.82],[1, 0])
+  const yBot = useTransform(flow, [0, 0.78],   [0, 120])
+  const sBot = useTransform(flow, [0, 0.78],   [1, 0.45])
+  const oBot = useTransform(flow, [0.28, 0.72],[1, 0])
+  const rowY = [yTop, yMid, yBot]
+  const rowS = [sTop, sMid, sBot]
+  const rowO = [oTop, oMid, oBot]
+
+  // Columns converge toward the centre (the funnel neck).
+  const xLeft  = useTransform(flow, [0, 1], [0, 360])
+  const xMid   = useTransform(flow, [0, 1], [0, 0])
+  const xRight = useTransform(flow, [0, 1], [0, -360])
+  const colX = [xLeft, xMid, xRight]
+
+  const chncOpacity = useTransform(flow, [0.55, 0.95], [0, 1])
+  const chncScale   = useTransform(flow, [0.55, 1],    [0.55, 1])
 
   return (
     <section style={{ paddingTop: 0, marginTop: -60, background: DARK }}>
@@ -461,7 +477,8 @@ function CHNC({ onNavigate }) {
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 24, width: '100%' }}>
           {platformFeatures.map((f, i) => {
             const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '22px 30px', display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'flex-start' }
-            const animStyle = isSmall ? cardStyle : { ...cardStyle, x: colX[i % 3], y: cardY, scale: cardScale, opacity: cardFade, willChange: 'transform, opacity' }
+            const r = Math.floor(i / 3), c = i % 3
+            const animStyle = isSmall ? cardStyle : { ...cardStyle, x: colX[c], y: rowY[r], scale: rowS[r], opacity: rowO[r], willChange: 'transform, opacity' }
             return (
             <motion.div key={f.title} style={animStyle}>
               <img src={f.icon} alt="" style={{ width: 40, height: 40, objectFit: 'contain', flexShrink: 0 }} />
