@@ -65,9 +65,12 @@ const SectionLabel = ({ children }) => (
 )
 
 const BtnGreen = ({ children, style, className, ...props }) => (
-  <button {...props} className={`btn-green ${className || ''}`} style={{
-    background: G, color: DARK, border: 'none',
-    padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
+  <button {...props} className={`btn-outline ${className || ''}`} style={{
+    background: 'transparent', color: '#fff', border: '1px solid #fff',
+    height: 46, padding: '0 20px',
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    boxSizing: 'border-box',
+    fontFamily: "'Saira Condensed', sans-serif",
     fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
     letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
     ...style,
@@ -77,7 +80,10 @@ const BtnGreen = ({ children, style, className, ...props }) => (
 const BtnOutlineGreen = ({ children, style, className, ...props }) => (
   <button {...props} className={`btn-outline ${className || ''}`} style={{
     background: 'transparent', color: '#fff', border: '1px solid #fff',
-    padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
+    height: 46, padding: '0 20px',
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    boxSizing: 'border-box',
+    fontFamily: "'Saira Condensed', sans-serif",
     fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
     letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
     ...style,
@@ -436,10 +442,10 @@ function CHNC({ onNavigate }) {
       </div>
 
       {/* Feature grid (services) */}
-      <div style={{ maxWidth: 1240, margin: '0 auto 60px', padding: '0 clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 20, width: '100%' }}>
+      <div style={{ maxWidth: 1480, margin: '0 auto 60px', padding: '0 clamp(16px, 3vw, 48px)', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 24, width: '100%' }}>
           {platformFeatures.map((f) => (
-            <div key={f.title} style={{ background: DARK, border: `2px solid ${BORDER}`, padding: 30, display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'flex-start' }}>
+            <div key={f.title} style={{ background: DARK, border: `2px solid ${BORDER}`, padding: '22px 30px', display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'flex-start' }}>
               <img src={f.icon} alt="" style={{ width: 40, height: 40, objectFit: 'contain', flexShrink: 0 }} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 2.4vw, 32px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
@@ -450,9 +456,9 @@ function CHNC({ onNavigate }) {
         </div>
       </div>
 
-      <div style={{ position: 'relative', height: isSmall ? 240 : 430, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-        <img src={funnel1} alt="" style={{ position: 'absolute', left: 0, top: 0, width: 'clamp(180px, 30vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
-        <img src={funnel1} alt="" style={{ position: 'absolute', right: 0, top: 7, width: 'clamp(180px, 30vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
+      <div style={{ position: 'relative', height: isSmall ? 240 : 430, maxWidth: 1384, margin: '0 auto', padding: '0 clamp(16px, 3vw, 48px) clamp(20px, 4vw, 48px)', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
+        <img src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
+        <img src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 7, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(64px, 12vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, letterSpacing: '4px', textTransform: 'uppercase', marginTop: 16 }}>
@@ -462,9 +468,9 @@ function CHNC({ onNavigate }) {
       </div>
 
       <div ref={scrollRef} style={{ position: 'relative' }}>
-        <div style={{ height: '140vh', position: 'relative' }}>
+        <div style={{ height: '100vh', position: 'relative' }}>
           <div style={{
-            position: 'sticky', top: 84, height: 'calc(100vh - 84px)',
+            position: 'sticky', top: 84, height: 'calc(100vh - 220px)',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'flex-start',
             paddingTop: '20px', overflow: 'visible',
@@ -1147,8 +1153,8 @@ export function Footer() {
                 <img src={memeImg} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
-                <BtnGreen style={{ width: '100%' }}>I skipped to the end</BtnGreen>
-                <BtnOutlineGreen style={{ width: '100%' }}>I went through the whole website</BtnOutlineGreen>
+                <BtnGreen className="btn-hover-red" style={{ width: '100%' }}>I skipped to the end</BtnGreen>
+                <BtnOutlineGreen className="btn-hover-cyan" style={{ width: '100%' }}>I went through the whole website</BtnOutlineGreen>
               </div>
             </div>
           </div>
@@ -1185,15 +1191,15 @@ export function Footer() {
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Email us</p>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, marginTop: 5 }}>letsconnect@convergenseeasia.com</p>
             </div>
-            <div style={{ display: 'flex', gap: 13, alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
               {/* Instagram */}
-              <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
                 <rect x="2" y="2" width="14" height="14" rx="4" stroke="#666a74" strokeWidth="1.5" fill="none"/>
                 <circle cx="9" cy="9" r="3" stroke="#666a74" strokeWidth="1.5" fill="none"/>
                 <circle cx="13" cy="5" r="1" fill="#666a74"/>
               </svg>
               {/* LinkedIn */}
-              <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
                 <rect x="2" y="2" width="14" height="14" rx="2" stroke="#666a74" strokeWidth="1.5" fill="none"/>
                 <circle cx="6" cy="7" r="1" fill="#666a74"/>
                 <rect x="5.5" y="9" width="1" height="4" fill="#666a74"/>

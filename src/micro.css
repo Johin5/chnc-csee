@@ -51,6 +51,24 @@ img, video, svg { max-width: 100%; }
   color: #34cc32 !important;
 }
 
+/* Per-button hover color overrides */
+.btn-hover-cyan:hover, .btn-hover-cyan:active,
+.btn-hover-cyan:hover *, .btn-hover-cyan:active * {
+  color: #2ad3e6 !important;
+}
+.btn-hover-cyan:hover, .btn-hover-cyan:active {
+  border-color: #2ad3e6 !important;
+  box-shadow: 0 6px 24px rgba(42, 211, 230, 0.2);
+}
+.btn-hover-red:hover, .btn-hover-red:active,
+.btn-hover-red:hover *, .btn-hover-red:active * {
+  color: #ee2226 !important;
+}
+.btn-hover-red:hover, .btn-hover-red:active {
+  border-color: #ee2226 !important;
+  box-shadow: 0 6px 24px rgba(238, 34, 38, 0.2);
+}
+
 /* Filter / pill buttons */
 .pill-hover {
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.15s ease;
