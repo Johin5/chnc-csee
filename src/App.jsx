@@ -428,6 +428,20 @@ function CHNC({ onNavigate }) {
   const imageScale  = done ? lockedScale   : imageScaleRaw
   const dockOpacity = done ? lockedDock    : 0
 
+  // Funnel flow: service cards pour down + inward into the funnel as you scroll,
+  // and the CHNC logo reveals at the neck.
+  const flowRef = useRef()
+  const { scrollYProgress: flow } = useScroll({ target: flowRef, offset: ['start 0.55', 'end 0.78'] })
+  const cardY      = useTransform(flow, [0, 1], [0, 130])
+  const cardScale  = useTransform(flow, [0, 1], [1, 0.55])
+  const cardFade   = useTransform(flow, [0, 0.85], [1, 0])
+  const colLeftX   = useTransform(flow, [0, 1], [0, 260])
+  const colMidX    = useTransform(flow, [0, 1], [0, 0])
+  const colRightX  = useTransform(flow, [0, 1], [0, -260])
+  const colX = [colLeftX, colMidX, colRightX]
+  const chncOpacity = useTransform(flow, [0.4, 0.9], [0, 1])
+  const chncScale   = useTransform(flow, [0.45, 1], [0.5, 1])
+
   return (
     <section style={{ paddingTop: 0, marginTop: -60, background: DARK }}>
       {/* Section title + CHNC heading above dashboard */}
@@ -441,30 +455,36 @@ function CHNC({ onNavigate }) {
         </h2>
       </div>
 
-      {/* Feature grid (services) */}
+      <div ref={flowRef}>
+      {/* Feature grid (services) — cards flow into the funnel on scroll */}
       <div style={{ maxWidth: 1480, margin: '0 auto 60px', padding: '0 clamp(16px, 3vw, 48px)', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 24, width: '100%' }}>
-          {platformFeatures.map((f) => (
-            <div key={f.title} style={{ background: DARK, border: `2px solid ${BORDER}`, padding: '22px 30px', display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'flex-start' }}>
+          {platformFeatures.map((f, i) => {
+            const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '22px 30px', display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'flex-start' }
+            const animStyle = isSmall ? cardStyle : { ...cardStyle, x: colX[i % 3], y: cardY, scale: cardScale, opacity: cardFade, willChange: 'transform, opacity' }
+            return (
+            <motion.div key={f.title} style={animStyle}>
               <img src={f.icon} alt="" style={{ width: 40, height: 40, objectFit: 'contain', flexShrink: 0 }} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 2.4vw, 32px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'rgba(255,255,255,0.7)', lineHeight: '24px', margin: 0, maxWidth: 315 }}>{f.desc}</p>
               </div>
-            </div>
-          ))}
+            </motion.div>
+            )
+          })}
         </div>
       </div>
 
       <div style={{ position: 'relative', height: isSmall ? 240 : 430, maxWidth: 1384, margin: '0 auto', padding: '0 clamp(16px, 3vw, 48px) clamp(20px, 4vw, 48px)', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
         <img src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
         <img src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 7, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
-        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+        <motion.div style={isSmall ? { position: 'relative', zIndex: 1, textAlign: 'center' } : { position: 'relative', zIndex: 1, textAlign: 'center', opacity: chncOpacity, scale: chncScale }}>
           <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(64px, 12vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, letterSpacing: '4px', textTransform: 'uppercase', marginTop: 16 }}>
             The Opportunity Creators
           </p>
-        </div>
+        </motion.div>
+      </div>
       </div>
 
       <div ref={scrollRef} style={{ position: 'relative' }}>
