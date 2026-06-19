@@ -335,9 +335,22 @@ const chncStats = [
   { num: '8+', label: 'Years of market expertise' },
 ]
 
+const platformFeatures = [
+  { icon: '/figma/features/pen.svg',    title: 'Create Content',         desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/pin.svg',    title: 'Location Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/atom.svg',   title: 'AI Agents',              desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/happy.svg',  title: 'Social Media Management', desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/file.svg',   title: 'Generate AI Scripts',    desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/search.svg', title: 'Proposal Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/pen.svg',    title: 'Amplify',                desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/pin.svg',    title: 'MessageIT',              desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { icon: '/figma/features/atom.svg',   title: 'InfluenceIT',            desc: 'Posting isn’t presence. We turn your content into real connection.' },
+]
+
 function CHNC({ onNavigate }) {
   const scrollRef = useRef()
-  const { isSmall } = useResponsive()
+  const { isSmall, isMobile, isTablet } = useResponsive()
+  const cols = isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
@@ -421,6 +434,22 @@ function CHNC({ onNavigate }) {
           What platform <span style={{ color: G }}>offers?</span>
         </h2>
       </div>
+
+      {/* Feature grid (services) */}
+      <div style={{ maxWidth: 1240, margin: '0 auto 60px', padding: '0 clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 20, width: '100%' }}>
+          {platformFeatures.map((f) => (
+            <div key={f.title} style={{ background: DARK, border: `2px solid ${BORDER}`, padding: 30, display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'flex-start' }}>
+              <img src={f.icon} alt="" style={{ width: 40, height: 40, objectFit: 'contain', flexShrink: 0 }} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 2.4vw, 32px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'rgba(255,255,255,0.7)', lineHeight: '24px', margin: 0, maxWidth: 315 }}>{f.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div style={{ position: 'relative', height: isSmall ? 240 : 430, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         <img src={funnel1} alt="" style={{ position: 'absolute', left: 0, top: 0, width: 'clamp(180px, 30vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
         <img src={funnel1} alt="" style={{ position: 'absolute', right: 0, top: 7, width: 'clamp(180px, 30vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
@@ -1224,7 +1253,6 @@ export default function App() {
           <Impact />
           <BrandAudit />
           <Testimonials />
-          <WantMore onNavigate={setPage} />
           <Team onNavigate={setPage} />
           <AdvisoryBoard />
           <Contact />

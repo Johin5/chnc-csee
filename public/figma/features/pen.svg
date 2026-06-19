@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Pen_light">
+<rect id="Rectangle 49" x="6.66667" y="26.6667" width="26.6667" height="6.66667" rx="3.33333" stroke="var(--stroke-0, #34CC32)"/>
+<path id="Vector 204" d="M7.42458 17.8035L13.3333 26.6667H26.6667L32.5754 17.8035C32.9382 17.2593 33.1196 16.9872 33.0903 16.6907C33.0609 16.3943 32.8297 16.163 32.3672 15.7005L20 3.33333L7.63281 15.7005C7.17032 16.163 6.93908 16.3943 6.90972 16.6907C6.88036 16.9872 7.06177 17.2593 7.42458 17.8035Z" stroke="var(--stroke-0, #34CC32)"/>
+<circle id="Ellipse 73" cx="20" cy="18.3333" r="4.5" stroke="var(--stroke-0, #34CC32)"/>
+<path id="Vector 205" d="M20 3.33333V15" stroke="var(--stroke-0, #34CC32)"/>
+</g>
+</svg>
