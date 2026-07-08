@@ -212,7 +212,7 @@ function Hero() {
       <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 40 }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h1 style={{
-            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
+            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(46px, 10vw, 150px)', fontWeight: 800,
             textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1,
             whiteSpace: 'nowrap',
           }}>
@@ -268,7 +268,7 @@ function About() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <SectionLabel>About</SectionLabel>
             <h2 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800,
               textTransform: 'uppercase', lineHeight: 1, color: '#fff',
             }}>
               We are<br />
@@ -464,7 +464,7 @@ function CHNC({ onNavigate }) {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, paddingTop: 80, marginBottom: 20, padding: '80px 20px 0' }}>
         <SectionLabel>Features &amp; Modules</SectionLabel>
         <h2 style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 7vw, 80px)', fontWeight: 800,
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800,
           textTransform: 'uppercase', lineHeight: 1, textAlign: 'center',
         }}>
           What platform <span style={{ color: G }}>offers?</span>
@@ -496,7 +496,7 @@ function CHNC({ onNavigate }) {
         <img src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
         <img src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 7, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
         <motion.div style={isSmall ? { position: 'relative', zIndex: 1, textAlign: 'center' } : { position: 'relative', zIndex: 1, textAlign: 'center', opacity: chncOpacity, scale: chncScale }}>
-          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(64px, 12vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
+          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(52px, 7.5vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, letterSpacing: '4px', textTransform: 'uppercase', marginTop: 16 }}>
             The Opportunity Creators
           </p>
@@ -662,14 +662,14 @@ function Impact() {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Impact we made</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Our <span style={{ color: G }}>impact</span>
           </h2>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, width: '100%' }}>
           {impacts.map((s) => (
             <div key={s.num} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)' }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 700, color: G, lineHeight: 1.1 }}>{s.num}</p>
+              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 5.3vw, 80px)', fontWeight: 700, color: G, lineHeight: 1.1 }}>{s.num}</p>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.desc}</p>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 600, color: G, textTransform: 'uppercase', marginTop: 10 }}>{s.tag}</p>
             </div>
@@ -723,7 +723,7 @@ function BrandAudit() {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Brand audit</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Want a <span style={{ color: G }}>brand audit?</span>
           </h2>
         </div>
@@ -780,7 +780,7 @@ function Testimonials() {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, color: G, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, color: G, textAlign: 'center' }}>
             Testimonials
           </h2>
         </div>
@@ -929,7 +929,7 @@ function WantMore({ onNavigate }) {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>More</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>
             Want <span style={{ color: G }}>more?</span>
           </h2>
         </div>
@@ -1121,7 +1121,7 @@ function AdvisoryBoard() {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Board</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             <span style={{ color: G }}>Advisory </span>board
           </h2>
         </div>
@@ -1141,7 +1141,7 @@ function Contact() {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Connect with us</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             We will <span style={{ color: G }}>shoot</span> you
           </h2>
         </div>
