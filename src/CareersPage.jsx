@@ -1,159 +1,465 @@
 // Careers Page — built from Figma design
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import useResponsive from './useResponsive'
+import { TEAM } from './teamRoster'
+import { TEAM_GROUPS } from './careersTeams'
+import JoinSection from './JoinSection'
+import JobPage from './JobPage'
 
-const G      = '#34cc32'
-const DARK   = '#000718'
-const CARD   = '#0f1520'
-const MUTED  = 'rgba(255,255,255,0.7)'
-const DIM    = '#666a74'
-const BORDER = 'rgba(255,255,255,0.1)'
+import Footer from './Footer'
+import { BtnGreen, BtnOutline, G, DARK, CARD, MUTED, DIM, BORDER } from './careersAtoms'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
-const imgTestimonial = '/figma/careers-01/221.png'
 const imgTeam        = '/figma/careers-01/221.png'
-const imgMeme        = '/figma/careers-01/meme1.png'
-const imgPartner     = '/figma/careers-01/partner-rgb1.png'
-
-// ─── Shared atoms ────────────────────────────────────────────────────────────
-const BtnGreen = ({ children, style, ...p }) => (
-  <button {...p} className="btn-green" style={{
-    background: G, color: DARK, border: 'none',
-    padding: '15px 30px', fontFamily: "'Saira Condensed', sans-serif",
-    fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-    letterSpacing: '0.02em', cursor: 'pointer', ...style,
-  }}>{children}</button>
-)
-
-const BtnOutline = ({ children, style, ...p }) => (
-  <button {...p} className="btn-outline" style={{
-    background: 'transparent', color: G,
-    border: `1px solid ${G}`,
-    padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
-    fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-    letterSpacing: '0.02em', cursor: 'pointer', ...style,
-  }}>{children}</button>
-)
-
-const InputField = ({ label, style }) => (
-  <input
-    className="input-glow"
-    placeholder={label}
-    style={{
-      flex: 1, background: CARD, border: `1px solid ${BORDER}`,
-      padding: '18px 20px', color: '#fff',
-      fontFamily: "'Archivo', sans-serif", fontSize: 16,
-      outline: 'none', boxSizing: 'border-box', ...style,
-    }}
-  />
-)
 
 // ─── Hero Section ────────────────────────────────────────────────────────────
+// Blog-page hero shape — headline block on top, then the whole roster tiled
+// edge to edge underneath it, so "doesn't take anyone" lands against the actual
+// faces that made it. Tiles sit desaturated; hovering one brings it forward in
+// full colour with that person's own pose shot.
+
+// `interactive` off makes the tile a plain still — no pose swap, no lift, no
+// name plate. The team cards use it; only the hero wall reacts to a cursor.
+function FaceTile({ member, gridColumnStart, showName = false, interactive = true }) {
+  const { name, role, photo, pose } = member
+  const [hovered, setHovered] = useState(false)
+  // Pose shots only download once a tile is first touched — a 40-odd face wall
+  // would otherwise pull double its weight before the hero even paints.
+  const requested = useRef(false)
+  const open  = () => { requested.current = true; setHovered(true) }
+  const close = () => setHovered(false)
+
+  return (
+    <div
+      onMouseEnter={interactive ? open : undefined}
+      onMouseLeave={interactive ? close : undefined}
+      onTouchStart={interactive ? () => (hovered ? close() : open()) : undefined}
+      style={{
+        position: 'relative', overflow: 'hidden', gridColumnStart,
+        background: '#0b1120', cursor: interactive ? 'pointer' : 'default',
+        zIndex: hovered ? 3 : 'auto',
+        outline: hovered ? `1px solid ${G}` : '1px solid transparent',
+        transform: hovered ? 'scale(1.08)' : 'scale(1)',
+        filter: hovered ? 'none' : 'grayscale(1) brightness(0.72)',
+        transition: 'transform 0.35s ease, filter 0.35s ease, outline-color 0.3s ease',
+      }}
+    >
+      <img
+        src={photo} alt={name} loading="lazy"
+        style={{
+          width: '100%', height: '100%', objectFit: 'cover', objectPosition: FACE_ANCHOR,
+          display: 'block',
+          opacity: hovered && pose ? 0 : 1, transition: 'opacity 0.35s ease',
+        }}
+      />
+      {interactive && pose && (
+        <img
+          src={requested.current ? pose : undefined} alt="" aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: FACE_ANCHOR, display: 'block', pointerEvents: 'none',
+            opacity: hovered ? 1 : 0, transition: 'opacity 0.35s ease',
+          }}
+        />
+      )}
+      {showName && interactive && (
+        <div style={{
+          position: 'absolute', left: 0, right: 0, bottom: 0, padding: '30px 10px 10px',
+          background: 'linear-gradient(to top, rgba(0,7,24,0.95) 25%, transparent 100%)',
+          opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
+        }}>
+          <p style={{
+            fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 15,
+            lineHeight: 1.1, textTransform: 'uppercase', color: '#fff', margin: 0,
+          }}>{name}</p>
+          <p style={{
+            fontFamily: "'Archivo', sans-serif", fontSize: 10.5, lineHeight: 1.25,
+            color: G, margin: '3px 0 0',
+          }}>{role}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+const GAP = 2
+// The portraits are 640×880 (0.727) with the head starting ~15% down. A cell
+// wider than that ratio makes object-fit trim vertically, so the crop is pinned
+// near the top (see FACE_ANCHOR) and eats into the body, never the head. Past
+// ~1.15 the tiles stop reading as portraits, so that is the ceiling.
+const MAX_RATIO   = 0.75   // upright rectangles, near the 3:4 of the source crops
+const FACE_ANCHOR = '50% 15%'
+// The nav is a 46px button between 8px paddings — the wall starts right under
+// it rather than under the legacy 106px nav allowance.
+const NAV_H = { desktop: 62, small: 56 }
+
+// Biggest tiles that still fit the whole roster inside the frame as complete
+// rows — nobody half-cropped by the top or bottom edge of the hero. Fewer
+// columns means bigger tiles, so the first column count that fits wins.
+function fitWall(w, h, n, maxRatio = MAX_RATIO) {
+  for (let cols = 1; cols <= Math.min(30, n); cols++) {
+    const rows = Math.ceil(n / cols)
+    const tw = (w - GAP * (cols - 1)) / cols
+    const th = (h - GAP * (rows - 1)) / rows
+    if (tw / th <= maxRatio) return { cols, rows }
+  }
+  return { cols: 30, rows: Math.ceil(n / 30) }
+}
+
 function Hero() {
+  const { isSmall } = useResponsive()
+
+  // Measured, not hard-coded: the frame is a clamp() of the viewport, so the
+  // column count has to be solved against whatever size it actually resolves to.
+  const wallRef = useRef(null)
+  const [box, setBox] = useState({ w: 0, h: 0 })
+  useLayoutEffect(() => {
+    const el = wallRef.current
+    if (!el) return
+    const measure = () => setBox({ w: el.clientWidth, h: el.clientHeight })
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const { cols, rows } = box.w && box.h
+    ? fitWall(box.w, box.h, TEAM.length)
+    : { cols: 0, rows: 0 }
+  const remainder = cols ? TEAM.length % cols : 0
+  const lastRowStart = TEAM.length - remainder
+
   return (
     <section style={{
-      textAlign: 'center',
-      display: 'flex', flexDirection: 'column', alignItems: 'center',
-      gap: 20, padding: 'clamp(140px, 18vw, 206px) clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)',
+      position: 'relative', width: '100%', overflow: 'hidden',
+      // Same frame as the Mahindra case-study hero image — full-bleed, running
+      // under the fixed nav (hence the +106).
+      height: isSmall
+        ? 'calc(clamp(360px, 78vw, 480px) + 106px)'
+        : 'calc(clamp(480px, 42vw, 560px) + 106px)',
     }}>
-      <h1 style={{
-        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
-        textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1, margin: 0,
+      {/* ── The wall ─────────────────────────────────────────────────────────── */}
+      <div ref={wallRef} style={{
+        // starts right below the fixed nav, not under it — the top row's heads
+        // would otherwise sit behind the header bar
+        position: 'absolute', top: isSmall ? NAV_H.small : NAV_H.desktop, left: 0, right: 0, bottom: 0,
+        display: 'grid', gap: GAP,
+        gridTemplateColumns: cols ? `repeat(${cols}, 1fr)` : '1fr',
+        gridTemplateRows: rows ? `repeat(${rows}, 1fr)` : '1fr',
+        visibility: cols ? 'visible' : 'hidden',
       }}>
-        <span style={{ color: '#fff' }}>WE </span>
-        <span style={{ color: G }}>DARE</span>
-        <span style={{ color: '#fff' }}> YOU</span>
-      </h1>
-      <p style={{
-        fontFamily: "'Archivo', sans-serif", fontSize: 24,
-        color: '#fff', margin: 0,
+        {TEAM.map((m, i) => (
+          <FaceTile
+            key={m.name} member={m}
+            // centre the final short row
+            gridColumnStart={remainder && i === lastRowStart
+              ? 1 + Math.floor((cols - remainder) / 2)
+              : undefined}
+          />
+        ))}
+      </div>
+
+      {/* scrim — darkest through the middle so the headline holds */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+        background: `radial-gradient(ellipse 72% 58% at 50% 50%, rgba(0,7,24,0.95) 0%, rgba(0,7,24,0.84) 48%, rgba(0,7,24,0.5) 100%),
+                     linear-gradient(to bottom, ${DARK} 0%, rgba(0,7,24,0.15) 22%, rgba(0,7,24,0.15) 74%, ${DARK} 100%)`,
+      }} />
+
+      {/* ── Headline ─────────────────────────────────────────────────────────── */}
+      <div style={{
+        // above the lifted tile (z-index 3) — a face pops out of the wall
+        // behind the type, never over it
+        position: 'absolute', inset: 0, zIndex: 4, pointerEvents: 'none',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        gap: 30, boxSizing: 'border-box', textAlign: 'center',
+        padding: `${isSmall ? NAV_H.small : NAV_H.desktop}px clamp(20px, 6vw, 100px) 0`,
       }}>
-        To take the <span style={{ fontWeight: 700, color: G }}>CHNC</span>
-      </p>
-      <p style={{
-        fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
-        lineHeight: '24px', maxWidth: 798, margin: 0,
-      }}>
-        Discover the power of our secure and rewarding copy. Explore our range of copy and take
-        control of your copy today. Discover the power of our secure and rewarding copy. Explore
-        our range of copy and take control of your copy today. Discover us.
-      </p>
+        <h1 style={{
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(44px, 9vw, 110px)', fontWeight: 800,
+          textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 0.95, margin: 0,
+          maxWidth: 1000, textShadow: '0 4px 40px rgba(0,7,24,0.95)',
+        }}>
+          <span style={{ color: '#fff' }}>THIS WALL DOESN'T TAKE </span>
+          <span style={{ color: G }}>ANYONE</span>
+        </h1>
+        <p style={{
+          fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
+          lineHeight: '24px', maxWidth: 700, margin: 0, textShadow: '0 2px 20px rgba(0,7,24,0.95)',
+        }}>
+          {TEAM.length} people made it onto it. Hover any face to meet them — then decide whether
+          yours belongs up there too.
+        </p>
+      </div>
     </section>
   )
 }
 
-// ─── Testimonial Section ─────────────────────────────────────────────────────
-function Testimonial() {
-  const { isSmall } = useResponsive()
-  const stats = [
-    { value: '96%', label: 'Increase in traffic growth' },
-    { value: '10x', label: 'Revenue increase' },
-    { value: '96%', label: 'Increase in sales' },
-  ]
+// ─── Open positions marquee ──────────────────────────────────────────────────
+// Every vacancy across the teams, in team order — the roles the marquee scrolls
+// are exactly the ones the team cards list, because both read this array.
+const OPEN_ROLES = TEAM_GROUPS.flatMap(g => g.openings.map(o => ({ ...o, team: g.name })))
+
+// Comfortable reading pace for scrolling type. Faster than this and the roles
+// blur past before they can be read.
+const MARQUEE_SPEED = 55 // px per second
+
+function OpenRoles({ onOpenJob }) {
+  const trackRef = useRef(null)
+  const [duration, setDuration] = useState(0)
+
+  // The track holds two copies of the list and the keyframe travels -50%, so
+  // one loop covers exactly one copy — hence scrollWidth / 2.
+  useLayoutEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    const measure = () => setDuration(el.scrollWidth / 2 / MARQUEE_SPEED)
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   return (
     <section style={{
-      display: 'flex', flexDirection: isSmall ? 'column' : 'row',
-      overflow: 'hidden', height: isSmall ? 'auto' : 505,
-      padding: '0 clamp(20px, 6vw, 100px)', justifyContent: 'center',
+      position: 'relative', overflow: 'hidden',
+      borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`,
+      background: '#050d1e', padding: '20px 0',
+      marginBottom: 'clamp(56px, 8vw, 100px)',
     }}>
-      {/* Left card */}
-      <div className="card-hover" style={{
-        width: isSmall ? '100%' : 746, maxWidth: 746, background: CARD,
-        padding: 'clamp(24px, 4vw, 50px)',
-        display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        gap: 30, flexShrink: 0, boxSizing: 'border-box',
+      {/* Fixed label — the roles scroll behind it, and the veil it sits on
+          fades them out rather than letting them collide with the words. */}
+      <div style={{
+        position: 'absolute', left: 0, top: 0, bottom: 0, zIndex: 2,
+        display: 'flex', alignItems: 'center',
+        padding: '0 clamp(64px, 9vw, 140px) 0 clamp(16px, 3vw, 48px)',
+        background: `linear-gradient(to right, #050d1e 0%, #050d1e 82%, rgba(5,13,30,0.7) 92%, rgba(5,13,30,0) 100%)`,
+        pointerEvents: 'none',
       }}>
-        <p style={{
-          fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: '#fff',
-          lineHeight: '32px', maxWidth: 658, margin: 0,
-        }}>
-          "ConvergenSEE changed the trajectory and{' '}
-          <span style={{ color: G }}>success</span>{' '}
-          of my business, and I'm a lifelong user at this point."
-        </p>
-        <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
-          {stats.map((s, i) => (
-            <div key={i}>
-              <p style={{
-                fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)',
-                fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1,
-              }}>{s.value}</p>
-              <p style={{
-                fontFamily: "'Archivo', sans-serif", fontSize: 16,
-                color: MUTED, margin: '8px 0 0', lineHeight: '20px',
-              }}>{s.label}</p>
-            </div>
+        <span style={{
+          fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
+          fontSize: 'clamp(20px, 3vw, 34px)', textTransform: 'uppercase',
+          letterSpacing: '0.02em', color: G, whiteSpace: 'nowrap',
+        }}>Open Positions</span>
+      </div>
+
+      <div className="ticker-wrap">
+        <div
+          ref={trackRef} className="marquee-track"
+          style={{ animationDuration: duration ? `${duration}s` : undefined }}
+        >
+          {[...OPEN_ROLES, ...OPEN_ROLES].map((job, i) => (
+            <span key={i} style={{ display: 'flex', alignItems: 'center' }}>
+              <span
+                className="marquee-role" onClick={() => onOpenJob(job)}
+                style={{
+                  fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
+                  fontSize: 'clamp(20px, 3vw, 34px)', textTransform: 'uppercase',
+                  letterSpacing: '0.02em', color: '#fff', whiteSpace: 'nowrap',
+                }}
+              >{job.title}</span>
+              <span aria-hidden="true" style={{
+                color: G, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 400,
+                fontSize: 'clamp(20px, 3vw, 34px)', padding: '0 clamp(20px, 3vw, 40px)',
+              }}>|</span>
+            </span>
           ))}
         </div>
       </div>
+    </section>
+  )
+}
 
-      {/* Right card — photo */}
-      <div style={{
-        width: isSmall ? '100%' : 494, maxWidth: 494,
-        height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, borderRadius: 15,
-        overflow: 'hidden', position: 'relative', flexShrink: 0,
+// ─── The teams you can be a part of ──────────────────────────────────────────
+// Two-panel card: pick a team and the left side answers "what could I apply
+// for here" — what the team does, then its live vacancies — while the right
+// side shows who you'd be joining.
+
+const byName = Object.fromEntries(TEAM.map(m => [m.name, m]))
+
+function TeamPhotos({ members }) {
+  const gridRef = useRef(null)
+  const [box, setBox] = useState({ w: 0, h: 0 })
+  useLayoutEffect(() => {
+    const el = gridRef.current
+    if (!el) return
+    const measure = () => setBox({ w: el.clientWidth, h: el.clientHeight })
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  // Same solver as the hero wall — every face on the team fits in whole rows,
+  // however many of them there are. Squarer cells are allowed here so a team of
+  // four lands as a 2×2 instead of a row of three and a lonely fourth.
+  const { cols, rows } = box.w && box.h
+    ? fitWall(box.w, box.h, members.length, 1.0)
+    : { cols: 0, rows: 0 }
+  const remainder = cols ? members.length % cols : 0
+  const lastRowStart = members.length - remainder
+
+  return (
+    <div ref={gridRef} style={{
+      position: 'absolute', inset: 0, display: 'grid', gap: GAP,
+      gridTemplateColumns: cols ? `repeat(${cols}, 1fr)` : '1fr',
+      gridTemplateRows: rows ? `repeat(${rows}, 1fr)` : '1fr',
+      visibility: cols ? 'visible' : 'hidden',
+    }}>
+      {members.map((m, i) => (
+        <FaceTile
+          key={m.name} member={m} interactive={false}
+          gridColumnStart={remainder && i === lastRowStart
+            ? 1 + Math.floor((cols - remainder) / 2)
+            : undefined}
+        />
+      ))}
+    </div>
+  )
+}
+
+function MeetTheTeams({ onOpenJob }) {
+  const { isSmall } = useResponsive()
+  // Index 0 is the "All" tab; every other index is TEAM_GROUPS[active - 1].
+  const [active, setActive] = useState(0)
+  const group = active ? TEAM_GROUPS[active - 1] : null
+  const members = group ? group.members.map(n => byName[n]).filter(Boolean) : []
+
+  // Roles carry their team so the All view can say where each one sits.
+  const openings = group
+    ? group.openings.map(o => ({ ...o, team: group.name }))
+    : TEAM_GROUPS.flatMap(g => g.openings.map(o => ({ ...o, team: g.name })))
+
+  return (
+    <section style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 40,
+      padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)',
+    }}>
+      <h2 style={{
+        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
+        textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
       }}>
-        <img src={imgTestimonial} alt="Alina Sharma" style={{
-          width: '100%', height: '100%', objectFit: 'cover',
-        }} />
-        {/* gradient overlay */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: `linear-gradient(to bottom, rgba(0,0,0,0) 42%, ${DARK} 100%)`,
-        }} />
-        {/* name + role */}
-        <div style={{ position: 'absolute', left: 38, bottom: 35, zIndex: 1 }}>
-          <p style={{
-            fontFamily: "'Archivo', sans-serif", fontSize: 24, fontWeight: 700,
-            color: '#fff', margin: 0,
-          }}>Alina Sharma</p>
-          <p style={{
-            fontFamily: "'Archivo', sans-serif", fontSize: 16, fontWeight: 500,
-            color: '#fff', margin: '4px 0 0',
-          }}>Mahindra</p>
-        </div>
+        <span style={{ color: '#fff' }}>THE TEAMS YOU CAN BE </span>
+        <span style={{ color: G }}>A PART OF</span>
+      </h2>
+
+      {/* Switcher */}
+      <div style={{
+        display: 'flex', gap: 'clamp(8px, 1.5vw, 20px)', flexWrap: 'wrap',
+        alignItems: 'center', justifyContent: 'center',
+      }}>
+        {['All openings', ...TEAM_GROUPS.map(g => g.name)].map((label, i) => (
+          <button
+            key={label} className="pill-hover" onClick={() => setActive(i)}
+            style={{
+              background: CARD, border: i === active ? `1px solid ${G}` : '1px solid transparent',
+              height: 46, padding: '0 20px',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
+              fontSize: 16, fontWeight: i === active ? 700 : 500,
+              color: i === active ? G : DIM, textTransform: 'uppercase', cursor: 'pointer',
+            }}
+          >{label}</button>
+        ))}
       </div>
+
+      {/* Openings — its own outlined panel, centred title over a 3-up grid of
+          landscape tiles, above the team the roles belong to */}
+      <div style={{
+        width: '100%', maxWidth: 1240, border: `2px solid ${BORDER}`,
+        padding: 'clamp(28px, 4vw, 50px)', boxSizing: 'border-box',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(24px, 3vw, 36px)',
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <p style={{
+            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(28px, 4vw, 40px)',
+            fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.02em',
+            lineHeight: 1, color: '#fff', margin: 0,
+          }}>Job Openings</p>
+          <p style={{
+            fontFamily: "'Archivo', sans-serif", fontSize: 14, color: G, margin: '8px 0 0',
+          }}>{group ? group.name : 'Across every team'}</p>
+        </div>
+
+        {openings.length ? (
+          <div style={{
+            display: 'grid', gap: 'clamp(12px, 1.6vw, 20px)', width: '100%',
+            gridTemplateColumns: isSmall ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+          }}>
+            {openings.map(job => (
+              <button
+                key={`${job.team}-${job.title}`} className="role-tile"
+                onClick={() => onOpenJob(job)}
+                style={{
+                  aspectRatio: '5 / 2', background: 'transparent', border: `1px solid ${BORDER}`,
+                  padding: 'clamp(12px, 2vw, 20px)', cursor: 'pointer',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  gap: 6, textAlign: 'center', color: '#fff', boxSizing: 'border-box',
+                }}
+              >
+                <span style={{
+                  fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
+                  fontSize: 'clamp(16px, 2vw, 24px)', textTransform: 'uppercase',
+                  letterSpacing: '0.02em', lineHeight: 1.1,
+                }}>{job.title}</span>
+                {!group && (
+                  <span style={{
+                    fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM,
+                  }}>{job.team}</span>
+                )}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p style={{
+            fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED,
+            lineHeight: '24px', margin: 0, textAlign: 'center',
+          }}>
+            Nothing open on this team right now &mdash; send your CV anyway, we keep the good ones.
+          </p>
+        )}
+      </div>
+
+      {/* The team itself — only once a specific team is picked */}
+      {group && (
+        <div style={{
+          display: 'flex', flexDirection: isSmall ? 'column' : 'row',
+          overflow: 'hidden', height: isSmall ? 'auto' : 440,
+          justifyContent: 'center', width: '100%', maxWidth: 1240,
+        }}>
+          {/* Left — who they are */}
+          <div style={{
+            width: isSmall ? '100%' : 746, maxWidth: 746,
+            background: 'transparent', border: `2px solid ${BORDER}`,
+            padding: 'clamp(24px, 4vw, 50px)',
+            display: 'flex', flexDirection: 'column', justifyContent: 'center',
+            gap: 14, flexShrink: 0, boxSizing: 'border-box',
+          }}>
+            <h3 style={{
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(32px, 5vw, 54px)',
+              fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, color: G, margin: 0,
+            }}>{group.name}</h3>
+            <p style={{
+              fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED, margin: 0,
+            }}>
+              {members.length} {members.length === 1 ? 'person' : 'people'} on this team
+            </p>
+            <p style={{
+              fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(17px, 2.2vw, 21px)', color: '#fff',
+              lineHeight: '30px', maxWidth: 658, margin: '6px 0 0',
+            }}>{group.blurb}</p>
+          </div>
+
+          {/* Right — the faces on it */}
+          <div style={{
+            position: 'relative', width: isSmall ? '100%' : 494, maxWidth: 494,
+            height: isSmall ? 'clamp(320px, 80vw, 440px)' : 440,
+            overflow: 'hidden', flexShrink: 0,
+          }}>
+            <TeamPhotos key={group.name} members={members} />
+          </div>
+        </div>
+      )}
     </section>
   )
 }
@@ -203,241 +509,26 @@ function WeAreSection() {
 }
 
 // ─── Join The Chaos — Contact Form ───────────────────────────────────────────
-function JoinSection() {
-  const { isMobile } = useResponsive()
-  const [fileName] = useState('my-cv.pdf')
-  const [progress] = useState(72)
-
-  return (
-    <section style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center',
-      padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)',
-    }}>
-      <h2 style={{
-        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
-        textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
-      }}>
-        <span style={{ color: '#fff' }}>JOIN THE </span>
-        <span style={{ color: G }}>Chaos!</span>
-      </h2>
-
-      {/* Form fields */}
-      <div style={{ maxWidth: 1240, width: '100%', marginTop: 'clamp(40px, 6vw, 60px)' }}>
-        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, marginBottom: 20 }}>
-          <InputField label="Your name" />
-          <InputField label="Contact number" />
-        </div>
-        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20 }}>
-          <InputField label="Your email" />
-          <InputField label="Position" />
-        </div>
-      </div>
-
-      {/* File upload area */}
-      <div style={{
-        width: isMobile ? '100%' : 882, maxWidth: 882, background: CARD, border: `1px dashed ${BORDER}`,
-        padding: 'clamp(20px, 4vw, 30px)', marginTop: 40, boxSizing: 'border-box',
-      }}>
-        <p style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 24, fontWeight: 600,
-          color: '#fff', textTransform: 'uppercase', margin: 0,
-        }}>UPLOAD FILES</p>
-        <p style={{
-          fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED,
-          margin: '8px 0 0',
-        }}>Select and upload the files of your choice</p>
-
-        {/* Drop zone */}
-        <div style={{
-          border: `2px dashed ${BORDER}`, padding: '40px 20px',
-          textAlign: 'center', marginTop: 20,
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
-        }}>
-          {/* Upload icon */}
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path d="M20 28V12m0 0l-6 6m6-6l6 6" stroke={DIM} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M8 28v2a4 4 0 004 4h16a4 4 0 004-4v-2" stroke={DIM} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          <p style={{
-            fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED, margin: 0,
-          }}>
-            Drag and drop image or{' '}
-            <span style={{ color: G, cursor: 'pointer', textDecoration: 'underline' }}>Browse</span>
-          </p>
-          <p style={{
-            fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, margin: 0,
-          }}>Max file size: 25MB &middot; PDF, DOC, DOCX</p>
-        </div>
-
-        {/* Browse button */}
-        <div style={{ marginTop: 16, display: 'flex', justifyContent: 'center' }}>
-          <BtnOutline>BROWSE</BtnOutline>
-        </div>
-
-        {/* Uploaded file item */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 14,
-          marginTop: 24, padding: '14px 16px',
-          background: DARK, border: `1px solid ${BORDER}`,
-        }}>
-          {/* File icon */}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke={DIM} strokeWidth="1.5" fill="none"/>
-            <path d="M14 2v6h6" stroke={DIM} strokeWidth="1.5" fill="none"/>
-          </svg>
-          <div style={{ flex: 1 }}>
-            <p style={{
-              fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff',
-              margin: 0,
-            }}>{fileName}</p>
-            {/* Progress bar */}
-            <div style={{
-              width: '100%', height: 4, background: 'rgba(255,255,255,0.1)',
-              borderRadius: 2, marginTop: 6,
-            }}>
-              <div style={{
-                width: `${progress}%`, height: '100%', background: G,
-                borderRadius: 2, transition: 'width 0.3s ease',
-              }} />
-            </div>
-          </div>
-          {/* Trash icon */}
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ cursor: 'pointer', flexShrink: 0 }}>
-            <path d="M3 5h14M8 5V3h4v2m-7 0v10a2 2 0 002 2h6a2 2 0 002-2V5" stroke={DIM} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-          </svg>
-        </div>
-      </div>
-
-      {/* Send message */}
-      <div style={{ marginTop: 40, width: isMobile ? '100%' : 'auto', maxWidth: 882 }}>
-        <BtnGreen style={{ padding: '18px 60px', fontSize: 18, width: isMobile ? '100%' : 'auto' }}>SEND MESSAGE</BtnGreen>
-      </div>
-    </section>
-  )
-}
-
 // ─── Careers Page ────────────────────────────────────────────────────────────
-export default function CareersPage({ onBack }) {
+export default function CareersPage({ onBack, onNavigate }) {
   const { isSmall } = useResponsive()
+  // Picking a role swaps the whole page for its detail view (Figma 1:1320) and
+  // returns to the top; going back drops you where the careers page left off.
+  const [job, setJob] = useState(null)
+  const openJob = (j) => { setJob(j); window.scrollTo(0, 0) }
+
+  if (job) return <JobPage job={job} onBack={() => setJob(null)} onNavigate={onNavigate} />
+
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
       <Hero />
-      <Testimonial />
+      <OpenRoles onOpenJob={openJob} />
+      <MeetTheTeams onOpenJob={openJob} />
       <WeAreSection />
       <JoinSection />
 
-      {/* ── Footer ──────────────────────────────────────────────────────────── */}
-      <footer style={{ background: DARK, padding: 'clamp(56px, 8vw, 80px) clamp(20px, 6vw, 100px) 40px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start', marginBottom: 48 }}>
-
-          {/* Meme CTA */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
-            <p style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600,
-              color: '#fff', textTransform: 'uppercase', letterSpacing: '0.02em',
-            }}>
-              Choose your <span style={{ color: G }}>poison</span>
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={{
-                background: '#0e1620', border: `2px solid ${G}`,
-                width: '100%', maxWidth: 323, height: 150, position: 'relative', overflow: 'visible',
-              }}>
-                <img src={imgMeme} alt="Meme" style={{
-                  position: 'absolute', left: '50%', top: -32,
-                  transform: 'translateX(-50%)',
-                  width: 203, height: 177, objectFit: 'contain', maxWidth: '90%',
-                }} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
-                <button className="btn-green" style={{
-                  background: G, color: DARK, border: 'none',
-                  padding: '15px 20px', width: '100%',
-                  fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
-                  textTransform: 'uppercase', cursor: 'pointer',
-                }}>I skipped to the end</button>
-                <div className="btn-outline" style={{
-                  background: CARD, border: `1px solid ${G}`,
-                  padding: '15px 20px', width: '100%',
-                  fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
-                  color: G, textTransform: 'uppercase', textAlign: 'center', cursor: 'pointer',
-                  boxSizing: 'border-box',
-                }}>I went through the whole website</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick links */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, color: G, textTransform: 'uppercase' }}>Quick links</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {['Home', 'About us', 'Solutions'].map(link => (
-                <div key={link} className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', cursor: 'pointer' }}
-                  onClick={link === 'Home' ? onBack : undefined}>
-                  <span style={{ color: DIM, fontSize: 12 }}>›</span>
-                  <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM }}>{link}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Legal */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, color: G, textTransform: 'uppercase' }}>Legal</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {['Terms of Use', 'Privacy Policy'].map(link => (
-                <div key={link} className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', cursor: 'pointer' }}>
-                  <span style={{ color: DIM, fontSize: 12 }}>›</span>
-                  <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM }}>{link}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Connect with us */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, color: G, textTransform: 'uppercase' }}>Connect with us</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, color: '#fff', textTransform: 'uppercase', fontWeight: 600 }}>Address</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', width: 277, fontWeight: 300 }}>
-                A 303, Supreme Business Park, Hirandani Gardens, Powai, Mumbai, Maharashtra, 400076
-              </p>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, color: '#fff', textTransform: 'uppercase', fontWeight: 600 }}>Call us</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', fontWeight: 300 }}>+91 9091399139</p>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, color: '#fff', textTransform: 'uppercase', fontWeight: 600 }}>Email us</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', fontWeight: 300 }}>letsconnect@convergenseeasia.com</p>
-            </div>
-            {/* Social */}
-            <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-              <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="4" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="9" cy="9" r="3" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="13" cy="5" r="1" fill={DIM}/>
-              </svg>
-              <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="2" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="6" cy="7" r="1" fill={DIM}/>
-                <rect x="5.5" y="9" width="1" height="4" fill={DIM}/>
-                <path d="M9 9v4m0-3a2 2 0 0 1 4 0v3" stroke={DIM} strokeWidth="1.2" fill="none"/>
-              </svg>
-            </div>
-            <img src={imgPartner} alt="Google Partner" style={{ width: 41, height: 39, objectFit: 'contain', marginTop: 20 }} />
-          </div>
-        </div>
-
-        <div style={{ height: 1, background: BORDER, marginBottom: 24 }} />
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4 }}>© Copyright ConvergenSEE All Rights Reserved</p>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14 }}>
-            Designed by <span style={{ color: G }}>ConvergenSEE</span>
-          </p>
-        </div>
-      </footer>
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

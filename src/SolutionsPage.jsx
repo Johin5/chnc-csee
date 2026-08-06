@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import CHNCDashboard from './CHNCDashboard'
 import useResponsive from './useResponsive'
 
+import Footer from './Footer'
 const G     = '#34cc32'
 const DARK  = '#000718'
 const CARD  = '#0f1520'
@@ -11,16 +12,14 @@ const DIM   = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Figma assets ─────────────────────────────────────────────────────────────
-const imgMeme        = '/figma/about/img-meme1.png'
-const imgPartner     = '/figma/about/img-partner-rgb1.png'
 
 // ─── Shared atoms ─────────────────────────────────────────────────────────────
 const BtnGreen = ({ children, style, ...p }) => (
-  <button {...p} className="btn-green" style={{
-    background: G, color: DARK, border: 'none',
-    padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
+  <button {...p} className="btn-outline" style={{
+    background: 'transparent', color: '#fff', border: '1px solid #fff',
+    height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
     fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-    letterSpacing: '0.02em', cursor: 'pointer', ...style,
+    letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)', ...style,
   }}>{children}</button>
 )
 const BtnOutline = ({ children, style, active, onClick, ...p }) => {
@@ -31,21 +30,22 @@ const BtnOutline = ({ children, style, active, onClick, ...p }) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: active ? 'transparent' : CARD,
-        color: (active || hovered) ? G : DIM,
-        border: (active || hovered) ? `1px solid ${G}` : '1px solid transparent',
-        padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
+        background: 'transparent',
+        color: (active || hovered) ? G : '#fff',
+        border: `1px solid ${active ? G : hovered ? 'rgba(52,204,50,0.5)' : 'rgba(255,255,255,0.15)'}`,
+        height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
         fontSize: 16, fontWeight: (active || hovered) ? 700 : 500,
         textTransform: 'uppercase', letterSpacing: '0.02em',
         cursor: 'pointer', backdropFilter: 'blur(10px)',
-        transition: 'all 0.25s ease',
+        transition: 'all 0.2s ease',
+        transform: hovered && !active ? 'scale(1.02)' : 'scale(1)',
         ...style,
       }}>{children}</button>
   )
 }
 const Pill = ({ label, active, onClick }) => (
   <div className="pill-hover" onClick={onClick} style={{
-    padding: '15px 20px', backdropFilter: 'blur(10px)',
+    height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', backdropFilter: 'blur(10px)',
     background: CARD, cursor: 'pointer',
     border: active ? `1px solid ${G}` : 'none',
     fontFamily: "'Saira Condensed', sans-serif",
@@ -61,6 +61,16 @@ function Hero({ active, onSelect }) {
 
   return (
     <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', textAlign: 'center', position: 'relative' }}>
+      {/* CHNC */}
+      <div style={{ marginBottom: 24 }}>
+        <p style={{
+          fontFamily: "'Archivo', sans-serif",
+          fontSize: 'clamp(64px, 13vw, 130px)', fontWeight: 800, lineHeight: 1.1,
+          color: G, letterSpacing: '-3.25px',
+          margin: 0,
+        }}>CHNC</p>
+      </div>
+
       {/* headline */}
       <h1 style={{
         fontFamily: "'Saira Condensed', sans-serif",
@@ -69,7 +79,7 @@ function Hero({ active, onSelect }) {
         margin: 0, whiteSpace: 'nowrap',
       }}>
         <span style={{ color: '#fff' }}>ALL IN </span>
-        <span style={{ color: G }}>ONE </span>
+        <span style={{ color: '#fff' }}>ONE </span>
         <span style={{ color: '#fff' }}>SOLUTION</span>
       </h1>
 
@@ -81,17 +91,6 @@ function Hero({ active, onSelect }) {
         {services.map((l) => (
           <Pill key={l} label={l} active={l === active} onClick={() => onSelect(l)} />
         ))}
-      </div>
-
-      {/* CHNC glow */}
-      <div style={{ marginTop: 40 }}>
-        <p style={{
-          fontFamily: "'Archivo', sans-serif",
-          fontSize: 'clamp(64px, 13vw, 130px)', fontWeight: 800, lineHeight: 1.1,
-          color: G, letterSpacing: '-3.25px',
-          textShadow: '0px 4px 35px rgba(52,204,50,0.5)',
-          margin: 0,
-        }}>CHNC</p>
       </div>
     </section>
   )
@@ -145,7 +144,8 @@ function ContentCreation() {
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%', maxWidth: 1240 }}>
         {cards.map((c, i) => (
           <div key={i} className="card-hover" style={{
-            flex: 1, background: CARD, padding: 30,
+            flex: 1, background: 'transparent', border: `2px solid ${BORDER}`,
+            padding: 'clamp(20px, 4vw, 30px)',
             display: 'flex', flexDirection: 'column', gap: 10,
           }}>
             {c.top}
@@ -158,6 +158,16 @@ function ContentCreation() {
 }
 
 const MODULE_STEPS = {
+  LocateIT: [
+    { bold: 'Create', rest: ' every listing — details, hours and map pin in one form' },
+    { bold: 'Audit', rest: ' at scale — 42,318 checked, strays caught & fixed' },
+    { bold: 'Manage', rest: ' — update once, publish to 312 locations' },
+    { bold: 'Verify', rest: ' every location — submitted → verified, tracked live' },
+    { bold: 'Go live', rest: ' on Google — every branch found, everywhere' },
+    { bold: 'Optimise', rest: ' with ranked, high-impact actions done for you' },
+    { bold: 'Perform', rest: ' — track impressions, actions and mobile share' },
+    { stat: true, text: '10 stores or 10,000 — one dashboard' },
+  ],
   CreateIT: [
     { bold: 'Plan', rest: ' your content for organic/paid media' },
     { bold: 'Gather', rest: ' requirements from relevant stakeholders' },
@@ -232,7 +242,7 @@ function WorkflowStack({ steps, count }) {
             {/* Card body */}
             <div style={{
               background: 'transparent',
-              padding: '16px 20px',
+              height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
               display: 'flex', alignItems: 'center', justifyContent: isStat ? 'center' : 'flex-start', gap: 14,
               height: '100%', boxSizing: 'border-box',
               animation: visible && !stacked && !isStat ? `fillBg 0.3s ease forwards 0.65s` : undefined,
@@ -383,8 +393,8 @@ function AllOfThisWithJust() {
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%', maxWidth: 1240 }}>
         {items.map((text, i) => (
           <div key={i} className="card-hover" style={{
-            flex: 1, background: CARD, border: `1px solid ${G}`,
-            padding: 30,
+            flex: 1, background: 'transparent', border: `2px solid ${BORDER}`,
+            padding: 'clamp(20px, 4vw, 30px)',
           }}>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{text}</p>
           </div>
@@ -477,14 +487,14 @@ function Contact() {
             {row.map((lbl, fi) => lbl ? (
               <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                <input placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
+                <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
               </div>
             ) : <div key={fi} style={{ flex: 1 }} />)}
           </div>
         ))}
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-          <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
+          <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
         </div>
         <BtnGreen type="submit" style={isMobile ? { width: '100%' } : undefined}>Send Message</BtnGreen>
       </form>
@@ -492,99 +502,8 @@ function Contact() {
   )
 }
 
-function Footer() {
-  const { isSmall } = useResponsive()
-  return (
-    <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
-          {/* Poison */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center', color: '#fff' }}>
-              Choose your <span style={{ color: G }}>poison</span>
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
-                <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
-                <BtnGreen style={{ width: '100%' }}>I skipped to the end</BtnGreen>
-                <button className="btn-outline" style={{
-                  width: '100%', background: CARD, border: `1px solid ${G}`,
-                  padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
-                  fontSize: 16, fontWeight: 700, color: G,
-                  textTransform: 'uppercase', cursor: 'pointer',
-                }}>I went through the whole website</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Quick links</p>
-            {['Home', 'About us', 'Solutions'].map(l => (
-              <a key={l} href="#" className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, textDecoration: 'none' }}>
-                <span style={{ color: G }}>›</span>{l}
-              </a>
-            ))}
-          </div>
-
-          {/* Legal */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Legal</p>
-            {['Terms of Use', 'Privacy Policy'].map(l => (
-              <a key={l} href="#" className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, textDecoration: 'none' }}>
-                <span style={{ color: G }}>›</span>{l}
-              </a>
-            ))}
-          </div>
-
-          {/* Contact */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Connect with us</p>
-            <div>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Address</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', marginTop: 5, maxWidth: 277 }}>A 303, Supreme Business Park, Hirandani Gardens, Powai, Mumbai, Maharashtra, 400076</p>
-            </div>
-            <div>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Call us</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, marginTop: 5 }}>+91 9091399139</p>
-            </div>
-            <div>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Email us</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, marginTop: 5 }}>letsconnect@convergenseeasia.com</p>
-            </div>
-            <div style={{ display: 'flex', gap: 13, alignItems: 'center' }}>
-              <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="4" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="9" cy="9" r="3" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="13" cy="5" r="1" fill={DIM}/>
-              </svg>
-              <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="2" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="6" cy="7" r="1" fill={DIM}/>
-                <rect x="5.5" y="9" width="1" height="4" fill={DIM}/>
-                <path d="M9 9v4m0-3a2 2 0 0 1 4 0v3" stroke={DIM} strokeWidth="1.2" fill="none"/>
-              </svg>
-            </div>
-            <img src={imgPartner} alt="Google Partner" style={{ width: 41, height: 39, objectFit: 'contain', marginTop: 10 }} />
-          </div>
-        </div>
-
-        <div style={{ height: 1, background: BORDER }} />
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4, color: '#fff' }}>© Copyright ConvergenSEE All Rights Reserved</p>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>
-            Designed by <span style={{ color: G }}>ConvergenSEE</span>
-          </p>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 // ─── Page ──────────────────────────────────────────────────────────────────────
-export default function SolutionsPage() {
+export default function SolutionsPage({ onNavigate }) {
   const [activePill, setActivePill] = useState('CreateIT')
   const activeModule = activePill
 
@@ -596,7 +515,7 @@ export default function SolutionsPage() {
       <AllOfThisWithJust />
       <ReadyToCreate />
       <Contact />
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

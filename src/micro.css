@@ -220,6 +220,26 @@ img, video, svg { max-width: 100%; }
   transform: scale(1.05);
 }
 
+/* Open-positions marquee — reuses the global @keyframes ticker (index.html),
+   which translates a doubled track by -50% for a seamless loop. Duration is set
+   inline from the measured track width so the speed stays readable at any
+   viewport instead of racing on wide screens. */
+.marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation-name: ticker;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-role { transition: color 0.25s ease; cursor: pointer; }
+.marquee-role:hover { color: #34cc32; }
+
+/* Job-opening tiles */
+.role-tile { transition: border-color 0.25s ease, color 0.25s ease; }
+.role-tile:hover { border-color: #34cc32; color: #34cc32; }
+
 /* Client logo ticker items */
 .ticker-item {
   transition: opacity 0.3s ease, transform 0.3s ease;

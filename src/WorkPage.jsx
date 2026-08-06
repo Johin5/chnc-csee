@@ -1,6 +1,7 @@
 // Work Page — "Our Work" portfolio grid
 import { useState } from 'react'
 import useResponsive from './useResponsive'
+import Footer from './Footer'
 
 const G      = '#34cc32'
 const DARK   = '#000718'
@@ -162,7 +163,6 @@ function PlatformTile({ name }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: CARD,
         border: `1px solid ${hovered ? G : BORDER}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '40px 20px', cursor: 'default',
@@ -326,7 +326,7 @@ function CaseStudyModal({ project, onClose }) {
         {project.sections && (
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center', marginTop: 4 }}>
             {project.sections.map((sec, i) => (
-              <span key={i} style={{ background: CARD, border: `1px solid ${BORDER}`, padding: '6px 14px', fontFamily: "'Archivo', sans-serif", fontSize: 13, color: MUTED }}>
+              <span key={i} style={{ border: `1px solid ${BORDER}`, padding: '6px 14px', fontFamily: "'Archivo', sans-serif", fontSize: 13, color: MUTED }}>
                 {sec.label}
               </span>
             ))}
@@ -401,7 +401,7 @@ function CaseStudyModal({ project, onClose }) {
 }
 
 // ─── WorkPage ─────────────────────────────────────────────────────────────────
-export default function WorkPage({ onBack }) {
+export default function WorkPage({ onBack, onNavigate }) {
   const { isMobile } = useResponsive()
   const [tab, setTab] = useState('chnc')
   const [modal, setModal] = useState(null)
@@ -435,7 +435,7 @@ export default function WorkPage({ onBack }) {
             const isActive = (t === 'CHNC PLATFORM' && tab === 'chnc') || (t === 'BRAND WORK' && tab === 'brand')
             return (
               <div key={t} className="pill-hover" onClick={() => setTab(t === 'CHNC PLATFORM' ? 'chnc' : 'brand')} style={{
-                padding: '15px 20px',
+                height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
                 background: CARD,
                 border: isActive ? `1px solid ${G}` : 'none',
                 backdropFilter: 'blur(10px)',
@@ -462,13 +462,7 @@ export default function WorkPage({ onBack }) {
         </div>
       </div>
 
-      {/* Footer strip */}
-      <div style={{ borderTop: `1px solid ${BORDER}`, padding: '40px clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM }}>© Copyright ConvergenSEE All Rights Reserved</p>
-        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM }}>
-          Designed by <span style={{ color: G }}>ConvergenSEE</span>
-        </p>
-      </div>
+      <Footer onNavigate={onNavigate} />
 
       {modal && <CaseStudyModal project={modal} onClose={() => setModal(null)} />}
     </div>

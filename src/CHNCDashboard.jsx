@@ -1365,6 +1365,554 @@ function CreateContent({ controls, tileVariants, stepCount = 0 }) {
   )
 }
 
+// ─── LocateIT animated walkthrough (Local Presence at scale) ──────────────────
+// 7-frame product video: AUDIT → MANAGE → STANDARDISE → OPTIMISE → PERFORM → COMPETE → CLOSE
+// Anonymized per brief: client = ConvergenSEE, competitors A/B/C, fictional reviewers.
+function formatIN(n) {
+  const s = Math.round(n).toString()
+  const lastThree = s.length > 3 ? s.slice(-3) : s
+  const other = s.length > 3 ? s.slice(0, -3) : ''
+  if (!other) return lastThree
+  return other.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + lastThree
+}
+const easeOut = p => 1 - Math.pow(1 - Math.max(0, Math.min(1, p)), 2)
+
+function LocateWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
+  const G = '#34cc32'
+  const cardBg = 'linear-gradient(135deg, #cfe9d6, #b7dccf)'
+
+  const [elapsed, setElapsed] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    return () => clearInterval(id)
+  }, [])
+
+  // Frame: 0 idle 1 Create 2 Audit 3 Manage(hero) 4 Verify 5 GoLive(hero) 6 Optimise 7 Perform 8 Close
+  const timeline = [0, 500, 4500, 8500, 13500, 17500, 23000, 28000, 32500, 36000]
+  const totalDuration = 36000
+  const looped = elapsed % totalDuration
+
+  let frame = 0, t = 0
+  for (let i = timeline.length - 1; i >= 0; i--) {
+    if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
+  }
+
+  const getCursorPos = () => {
+    switch (frame) {
+      case 1:
+        if (t < 900) return [430, 120]
+        if (t < 1800) return [430, 175]
+        return [720, 300]
+      case 2:
+        if (t < 1000) return [300, 130]
+        if (t < 2400) return [700, 300]
+        return [980, 360]
+      case 3:
+        if (t < 900) return [300, 150]
+        if (t < 1600) return [200, 100]
+        return [520, 320]
+      case 4:
+        if (t < 1200) return [500, 200]
+        if (t < 2600) return [820, 300]
+        return [820, 380]
+      case 5:
+        if (t < 1400) return [300, 200]
+        if (t < 2600) return [820, 260]
+        return [820, 320]
+      case 6:
+        if (t < 1000) return [520, 150]
+        if (t < 2600) return [520, 300]
+        return [640, 345]
+      case 7:
+        if (t < 1400) return [520, 160]
+        return [640, 260]
+      default: return [400, 240]
+    }
+  }
+  const [cx, cy] = getCursorPos()
+
+  const overlays = [
+    null,
+    { main: 'Step 1. Create every listing.', sub: 'Details, hours, map pin — one form.' },
+    { main: 'Step 2. Audit at scale.', sub: '42,318 checked. Strays caught & fixed.' },
+    { main: 'Step 3. Update once. Publish everywhere.', sub: 'One upload → 312 locations.' },
+    { main: 'Step 4. Verify every location.', sub: 'Submitted → Verified. Tracked live.' },
+    { main: 'Step 5. Live on Google.', sub: 'Every branch — found, everywhere.' },
+    { main: 'Step 6. It tells you what to fix.', sub: 'High-impact actions — ranked, then done.' },
+    { main: 'Step 7. Watch it pay off.', sub: '84L+ impressions. 87% on mobile.' },
+    { main: '10 stores or 10,000. One dashboard.', sub: 'Manage your Local Presence at scale.' },
+  ]
+  const overlay = overlays[frame]
+  const progressLabels = ['CREATE', 'AUDIT', 'MANAGE', 'VERIFY', 'GO LIVE', 'OPTIMISE', 'PERFORM']
+  const crumbs = [
+    '', 'LocateIT ▸ Location Setup', 'LocateIT ▸ Locations Setup ▸ Stray List',
+    'LocateIT ▸ Manage Locations ▸ Photos', 'InsightIT ▸ Local Reports ▸ Listing Verification',
+    'LocateIT ▸ Location Setup ▸ Go Live', 'InsightIT ▸ Optima ▸ Review Feed',
+    'InsightIT ▸ Local Analytics ▸ GBP', 'LocateIT',
+  ]
+
+  const th = { fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4, padding: '7px 12px', textAlign: 'left' }
+  const td = { fontSize: 11, fontFamily: "'Archivo'", color: '#333', padding: '7px 12px' }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative', height: '100%' }}>
+      <style>{`
+        @keyframes locFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes locBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes locSweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(2600%); } }
+        @keyframes locPop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes locStamp { 0% { transform: scale(2.2) rotate(-18deg); opacity: 0; } 55% { transform: scale(0.92) rotate(-8deg); opacity: 1; } 100% { transform: scale(1) rotate(-8deg); opacity: 1; } }
+        @keyframes locBloom { from { transform: scale(0.2); opacity: 0; } to { transform: scale(1); opacity: 0.85; } }
+        @keyframes locDrop { 0% { transform: translate(-50%,-140%) scale(0.5); opacity: 0; } 70% { transform: translate(-50%,-92%) scale(1.12); } 100% { transform: translate(-50%,-100%) scale(1); opacity: 1; } }
+        @keyframes locRipple { 0% { transform: translate(-50%,-50%) scale(0.2); opacity: 0.55; } 100% { transform: translate(-50%,-50%) scale(1); opacity: 0; } }
+        @keyframes locDraw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+        @keyframes locBandUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
+
+      {/* Progress bar */}
+      <div style={{ display: 'flex', gap: 0, padding: '14px 24px 0' }}>
+        {progressLabels.map((l, i) => {
+          const done = (frame - 1) > i || frame === 8
+          const cur = (frame - 1) === i && frame !== 8
+          return (
+            <div key={l} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+              <div style={{ height: 3, width: '100%', background: (done || cur) ? G : '#dee0e7', borderRadius: 2, transition: 'background 0.6s ease', opacity: cur ? 0.5 : 1 }} />
+              <span style={{ fontSize: 8, fontFamily: "'Archivo'", color: (done || cur) ? G : '#9fa3ac', fontWeight: done ? 700 : 400, transition: 'all 0.3s ease' }}>{l}</span>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Cursor */}
+      {frame > 0 && frame <= 7 && (
+        <div style={{
+          position: 'absolute', left: cx, top: cy, zIndex: 200,
+          transition: 'left 0.9s cubic-bezier(0.25,0.1,0.25,1), top 0.9s cubic-bezier(0.25,0.1,0.25,1)',
+          pointerEvents: 'none',
+        }}>
+          <svg width="16" height="22" viewBox="0 0 14 19" fill="none">
+            <path d="M0 0V18L4.5 13.5L8 19L10 18L6.5 12.5H13L0 0Z" fill="#000" stroke="#fff" strokeWidth="1" />
+          </svg>
+        </div>
+      )}
+
+      {/* Content area */}
+      <div style={{ flex: 1, padding: '12px 24px', overflow: 'hidden', position: 'relative' }}>
+
+        {frame > 0 && frame < 8 && (
+          <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo'", color: '#9fa3ac', fontWeight: 600 }}>
+            {crumbs[frame].split('▸').map((c, i, a) => (
+              <span key={i} style={{ color: i === a.length - 1 ? G : '#9fa3ac' }}>{c}{i < a.length - 1 ? ' ▸ ' : ''}</span>
+            ))}
+          </p>
+        )}
+
+        {/* FRAME 1 — CREATE: Create / Edit Listing */}
+        {frame === 1 && (() => {
+          const name = 'ConvergenSEE — Powai, Mumbai'.slice(0, Math.max(0, Math.floor(t / 40)))
+          const hours = [['Mon', '9:00 AM – 9:00 PM'], ['Tue', '9:00 AM – 9:00 PM'], ['Wed', '9:00 AM – 9:00 PM'], ['Thu', '9:00 AM – 9:00 PM'], ['Fri', '9:00 AM – 9:00 PM'], ['Sat', '10:00 AM – 8:00 PM'], ['Sun', 'Closed']]
+          return (
+            <div key="l1" style={{ animation: 'locFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Create / Edit Listing</h3>
+                <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', padding: '6px 16px', borderRadius: 3, letterSpacing: 0.5 }}>Save</div>
+              </div>
+              <div style={{ display: 'flex', gap: 18 }}>
+                {/* Left: fields */}
+                <div style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: 11 }}>
+                  <div>
+                    <label style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }}>Business Name</label>
+                    <div style={{ border: `1.5px solid ${t > 1120 ? G : '#dee0e7'}`, padding: '8px 12px', fontSize: 12, fontFamily: "'Archivo'", color: '#333', borderRadius: 2, transition: 'border-color 0.5s ease' }}>{name}{t < 1120 && <span style={{ animation: 'locBlink 0.8s infinite', color: G }}>|</span>}</div>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }}>Category</label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {t > 1200 && <span style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 11, fontFamily: "'Archivo'", fontWeight: 700, padding: '5px 12px', borderRadius: 14, animation: 'locPop 0.5s ease' }}>Retail</span>}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    <div style={{ flex: 1, opacity: t > 1500 ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+                      <label style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }}>Phone</label>
+                      <div style={{ border: '1.5px solid #dee0e7', padding: '8px 12px', fontSize: 12, fontFamily: "'Archivo'", color: '#333', borderRadius: 2 }}>+91 90913 99139</div>
+                    </div>
+                    <div style={{ flex: 1.3, opacity: t > 1900 ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+                      <label style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }}>Website</label>
+                      <div style={{ border: '1.5px solid #dee0e7', padding: '8px 12px', fontSize: 12, fontFamily: "'Archivo'", color: '#333', borderRadius: 2 }}>convergensee.ai</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Right: hours block */}
+                <div style={{ flex: 1, opacity: t > 800 ? 1 : 0, transform: t > 800 ? 'translateX(0)' : 'translateX(12px)', transition: 'all 0.6s ease' }}>
+                  <label style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }}>Operational Hours</label>
+                  <div style={{ border: '1.5px solid #dee0e7', borderRadius: 4, overflow: 'hidden' }}>
+                    {hours.map(([d, h], i) => (
+                      <div key={d} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 12px', borderBottom: i < 6 ? '1px solid #f0f0f0' : 'none', background: i % 2 ? '#fafbfc' : '#fff' }}>
+                        <span style={{ fontSize: 10, fontFamily: "'Archivo'", fontWeight: 600, color: '#555' }}>{d}</span>
+                        <span style={{ fontSize: 10, fontFamily: "'Archivo'", color: h === 'Closed' ? '#c62828' : '#333' }}>{h}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* Map pane */}
+              <div style={{ marginTop: 12, position: 'relative', height: 150, borderRadius: 6, overflow: 'hidden', border: '1px solid #dee0e7', background: '#eef2f5', backgroundImage: 'linear-gradient(#e2e8ec 1px, transparent 1px), linear-gradient(90deg, #e2e8ec 1px, transparent 1px)', backgroundSize: '26px 26px', opacity: t > 1400 ? 1 : 0, transform: t > 1400 ? 'translateY(0)' : 'translateY(16px)', transition: 'all 0.6s ease' }}>
+                <div style={{ position: 'absolute', left: '3%', top: '46%', right: '30%', height: 6, background: '#d7dee3', borderRadius: 3, transform: 'rotate(-4deg)' }} />
+                <div style={{ position: 'absolute', left: '40%', top: '10%', width: 7, bottom: '10%', background: '#d7dee3', borderRadius: 3, transform: 'rotate(6deg)' }} />
+                {t > 1800 && (
+                  <div style={{ position: 'absolute', left: '55%', top: '52%', animation: 'locDrop 0.6s ease forwards' }}>
+                    <svg width="22" height="28" viewBox="0 0 16 20"><path d="M8 0C3.6 0 0 3.6 0 8c0 5.5 8 12 8 12s8-6.5 8-12c0-4.4-3.6-8-8-8z" fill="#e53935" /><circle cx="8" cy="8" r="3" fill="#fff" /></svg>
+                  </div>
+                )}
+                <span style={{ position: 'absolute', left: 10, bottom: 8, fontSize: 9, fontFamily: "'Archivo'", color: '#9fa3ac' }}>Powai, Mumbai</span>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 2 — AUDIT */}
+        {frame === 2 && (() => {
+          const rows = [
+            ['ConvergenSEE — Powai', '9, Central Ave, Powai', 'ok'],
+            ['ConvergenSEE — Bandra', 'Linking Rd, Bandra West', 'ok'],
+            ['ConvergenSEE — Andheri', 'Chakala, Andheri East', 'ok'],
+            ['ConvergenSEE — Central Ave', 'Plot 24, Central Avenue, Powai, Mumbai', 'stray'],
+            ['ConvergenSEE — Thane', 'Ghodbunder Rd, Thane', 'ok'],
+            ['ConvergenSEE — Vashi', 'Sector 17, Vashi', 'ok'],
+          ]
+          const fixed = t > 2400
+          return (
+            <div key="l2" style={{ animation: 'locFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Locations Setup</h3>
+                <div style={{ textAlign: 'right' }}>
+                  <p style={{ margin: 0, fontSize: 22, fontFamily: "'Saira Condensed'", fontWeight: 800, color: G, lineHeight: 1 }}>{(easeOut(t / 2400) * 92.4).toFixed(1)}%</p>
+                  <p style={{ margin: 0, fontSize: 8, fontFamily: "'Archivo'", color: '#9fa3ac', fontWeight: 600 }}>ACCURACY</p>
+                </div>
+              </div>
+              {/* stepper */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                {['Active Locations', 'Run Classification', 'Stray List'].map((s, i) => {
+                  const done = i < 2 || fixed
+                  const active = i === 2 && !fixed
+                  return (
+                    <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 7, flex: i < 2 ? 1 : 'none' }}>
+                      <div style={{ width: 16, height: 16, borderRadius: 8, background: done ? G : '#fff', border: `2px solid ${(done || active) ? G : '#dee0e7'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        {done ? <span style={{ color: '#fff', fontSize: 8, fontWeight: 800 }}>✓</span> : <span style={{ color: active ? G : '#bbb', fontSize: 8, fontWeight: 800 }}>{i + 1}</span>}
+                      </div>
+                      <span style={{ fontSize: 10, fontFamily: "'Archivo'", fontWeight: 600, color: (done || active) ? '#000718' : '#9fa3ac', whiteSpace: 'nowrap' }}>{s}</span>
+                      {i < 2 && <div style={{ flex: 1, height: 2, background: G }} />}
+                    </div>
+                  )
+                })}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#f5f6f8', border: '1px solid #dee0e7', borderRadius: 4, padding: '5px 10px' }}>
+                  <span style={{ fontSize: 11 }}>📄</span><span style={{ fontSize: 10, fontFamily: "'Archivo'", color: '#333' }}>locations_batch.xlsx</span>
+                </div>
+                <span style={{ fontSize: 10, fontFamily: "'Archivo'", color: G, fontWeight: 600 }}>All Process Completed ✓</span>
+                <div style={{ background: '#e8fde8', border: `1px solid ${G}`, borderRadius: 4, padding: '4px 10px', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: '#1b5e20' }}>Primary: 6</div>
+                <div style={{ background: fixed ? '#e8fde8' : '#fff3e0', border: `1px solid ${fixed ? G : '#ffb74d'}`, borderRadius: 4, padding: '4px 10px', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: fixed ? '#1b5e20' : '#e65100', transition: 'all 0.4s ease' }}>Stray: {fixed ? 0 : 1}</div>
+              </div>
+              {/* stray table */}
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee' }}>
+                  <div style={{ ...th, flex: 1.2 }}>Branch</div><div style={{ ...th, flex: 1.6 }}>Excel Address</div><div style={{ ...th, flex: 1.8 }}>Google Audit Address</div><div style={{ ...th, width: 90 }}>Status</div>
+                </div>
+                {rows.map(([b, addr], i) => {
+                  const isStray = rows[i][2] === 'stray'
+                  return (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', borderBottom: i < 5 ? '1px solid #f2f2f2' : 'none', background: isStray && !fixed ? '#fdecea' : isStray && fixed ? '#e8fde8' : '#fff', transition: 'background 0.5s ease' }}>
+                      <div style={{ ...td, flex: 1.2, fontWeight: 600 }}>{b}</div>
+                      <div style={{ ...td, flex: 1.6 }}>{isStray ? 'Plot 24, Central Avenue, Powai, Mumbai' : addr}</div>
+                      <div style={{ ...td, flex: 1.8 }}>{isStray ? '24, Central Ave, Hiranandani Gardens, Powai 400076' : addr}</div>
+                      <div style={{ ...td, width: 90 }}>
+                        {isStray
+                          ? (fixed ? <span style={{ color: '#1b5e20', fontWeight: 800, fontSize: 10 }}>Synced ✓</span> : <span style={{ background: '#ffe0b2', color: '#e65100', fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 10 }}>STRAY</span>)
+                          : <span style={{ color: '#1b5e20', fontWeight: 700, fontSize: 10 }}>Matched ✓</span>}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10 }}>
+                <div style={{ background: t > 2600 ? G : '#f0f0f0', color: t > 2600 ? '#000' : '#bbb', fontSize: 10, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', padding: '6px 18px', borderRadius: 3, letterSpacing: 0.5, transition: 'all 0.4s ease' }}>Finish</div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 3 — MANAGE (hero #1): photo fan-out + bulk update */}
+        {frame === 3 && (
+          <div key="l3" style={{ animation: 'locFadeUp 0.6s ease' }}>
+            <div style={{ display: 'flex', gap: 16, marginBottom: 8 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Manage Locations — Photos</h3>
+              <div style={{ display: 'flex', gap: 14, alignItems: 'flex-end' }}>
+                {['GBP', 'PHOTOS', 'DETAILS'].map(tab => (
+                  <span key={tab} style={{ fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: tab === 'PHOTOS' ? G : '#9fa3ac', borderBottom: tab === 'PHOTOS' ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 3 }}>{tab}</span>
+                ))}
+              </div>
+            </div>
+            {/* Fan-out canvas */}
+            <div style={{ position: 'relative', height: 128, marginBottom: 8 }}>
+              <div style={{ position: 'absolute', inset: 0, border: `1.5px dashed ${t > 700 ? G : '#dee0e7'}`, borderRadius: 8, transition: 'border-color 0.5s ease' }} />
+              {Array.from({ length: 12 }).map((_, i) => {
+                const col = i % 4, row = Math.floor(i / 4)
+                const fan = t > 1000
+                const appear = t > 1000 + i * 80
+                return (
+                  <div key={i} style={{
+                    position: 'absolute',
+                    left: fan ? 60 + col * 250 : 430, top: fan ? 12 + row * 38 : 8,
+                    width: 232, height: 30, borderRadius: 5, background: cardBg, boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+                    display: 'flex', alignItems: 'center', paddingLeft: 10,
+                    opacity: fan ? (appear ? 1 : 0) : (i === 0 ? 1 : 0),
+                    transition: 'all 0.7s cubic-bezier(0.25,0.1,0.25,1)', transitionDelay: fan ? `${i * 50}ms` : '0ms', zIndex: 12 - i,
+                  }}>
+                    <span style={{ fontSize: 8, fontFamily: "'Archivo'", color: 'rgba(0,0,0,0.3)' }}>Location {i + 1}</span>
+                  </div>
+                )
+              })}
+            </div>
+            {/* 312 locations row */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #dee0e7', borderRadius: 6, padding: '8px 14px', marginBottom: 8, opacity: t > 2200 ? 1 : 0, transform: t > 2200 ? 'translateY(0)' : 'translateY(8px)', transition: 'all 0.6s ease' }}>
+              <span style={{ fontSize: 12, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>Storefront_Hero.jpg</span>
+              <span style={{ fontSize: 11, fontFamily: "'Archivo'", color: '#666' }}>312 locations</span>
+              <span style={{ fontSize: 10, fontFamily: "'Archivo'", fontWeight: 800, padding: '3px 10px', borderRadius: 10, background: t > 3000 ? '#e8fde8' : '#fff8e1', color: t > 3000 ? '#1b5e20' : '#f57f17', transition: 'all 0.4s ease' }}>{t > 3000 ? 'Published ✓' : 'In Queue'}</span>
+            </div>
+            {/* Business details bulk sweep table */}
+            <div style={{ position: 'relative', border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+              <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee' }}>
+                <div style={{ ...th, flex: 1.4 }}>Business Details — Bulk Update</div><div style={{ ...th, flex: 1 }}>Field</div><div style={{ ...th, width: 90 }}>Status</div>
+              </div>
+              {['Powai', 'Bandra', 'Andheri', 'Thane', 'Vashi', 'Kurla', 'Dadar', 'Chembur'].map((b, i) => (
+                <div key={b} style={{ display: 'flex', alignItems: 'center', borderBottom: i < 7 ? '1px solid #f2f2f2' : 'none' }}>
+                  <div style={{ ...td, flex: 1.4, fontWeight: 600, padding: '5px 12px' }}>ConvergenSEE — {b}</div>
+                  <div style={{ ...td, flex: 1, padding: '5px 12px' }}>Hours · Phone · URL</div>
+                  <div style={{ ...td, width: 90, padding: '5px 12px' }}><span style={{ color: t > 1400 + i * 120 ? '#1b5e20' : '#9fa3ac', fontWeight: 700, fontSize: 10, transition: 'color 0.3s ease' }}>{t > 1400 + i * 120 ? 'Updated ✓' : 'Queued'}</span></div>
+                </div>
+              ))}
+              {t > 1400 && <div style={{ position: 'absolute', top: 0, left: 0, width: 80, height: '100%', background: 'linear-gradient(90deg, transparent, rgba(52,204,50,0.28), transparent)', animation: 'locSweep 1.8s ease-in-out infinite' }} />}
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 4 — VERIFY */}
+        {frame === 4 && (() => {
+          const rows = [
+            ['ConvergenSEE — Powai', 'Powai, Mumbai'],
+            ['ConvergenSEE — Bandra', 'Bandra West, Mumbai'],
+            ['ConvergenSEE — Andheri', 'Andheri East, Mumbai'],
+            ['ConvergenSEE — Thane', 'Ghodbunder, Thane'],
+            ['ConvergenSEE — Vashi', 'Vashi, Navi Mumbai'],
+            ['ConvergenSEE — Kurla', 'Kurla West, Mumbai'],
+          ]
+          return (
+            <div key="l4" style={{ animation: 'locFadeUp 0.6s ease' }}>
+              <h3 style={{ margin: '0 0 10px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Listing Verification</h3>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                {['GOOGLE', 'INDIA', 'MAHARASHTRA', 'MUMBAI'].map((f, i) => (
+                  <div key={f} style={{ flex: 1, textAlign: 'center', background: i === 0 ? '#e8fde8' : '#f5f6f8', border: `1px solid ${i === 0 ? G : '#dee0e7'}`, color: i === 0 ? '#1b5e20' : '#666', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, padding: '7px 4px', borderRadius: 4 }}>{f}</div>
+                ))}
+              </div>
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee' }}>
+                  <div style={{ ...th, width: 34 }}></div><div style={{ ...th, flex: 1.4 }}>Branch</div><div style={{ ...th, flex: 1.2 }}>Location</div><div style={{ ...th, width: 130 }}>Status</div>
+                </div>
+                {rows.map(([b, loc], i) => {
+                  const stamp = 700 + i * 430
+                  const state = t >= stamp ? 2 : t >= stamp - 350 ? 1 : 0
+                  const label = state === 2 ? 'Verified ✓' : state === 1 ? 'In Progress' : 'Submitted'
+                  const col = state === 2 ? '#1b5e20' : state === 1 ? '#e65100' : '#9fa3ac'
+                  const bg = state === 2 ? '#e8fde8' : state === 1 ? '#fff3e0' : '#f5f6f8'
+                  return (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', borderBottom: i < 5 ? '1px solid #f2f2f2' : 'none' }}>
+                      <div style={{ width: 34, display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ width: 15, height: 15, borderRadius: 3, border: `2px solid ${state === 2 ? G : '#ccc'}`, background: state === 2 ? G : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s ease' }}>{state === 2 && <span style={{ color: '#fff', fontSize: 8, fontWeight: 800 }}>✓</span>}</div>
+                      </div>
+                      <div style={{ ...td, flex: 1.4, fontWeight: 600 }}>{b}</div>
+                      <div style={{ ...td, flex: 1.2 }}>{loc}</div>
+                      <div style={{ ...td, width: 130 }}><span style={{ background: bg, color: col, fontSize: 9, fontWeight: 800, padding: '3px 9px', borderRadius: 10, animation: state === 2 ? 'locPop 0.4s ease' : 'none' }}>{label}</span></div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 5 — GO LIVE (hero #2) */}
+        {frame === 5 && (() => {
+          const live = t > 1800
+          return (
+            <div key="l5" style={{ animation: 'locFadeUp 0.6s ease', display: 'flex', gap: 18 }}>
+              {/* Left: tiles + ripple map */}
+              <div style={{ flex: 1.3, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div style={{ display: 'flex', gap: 10 }}>
+                  {[['Claimed', formatIN(easeOut(t / 2000) * 42318)], ['Pushed to GBP', formatIN(easeOut(t / 2200) * 42318)], ['Audited all', '92.4%']].map(([l, v]) => (
+                    <div key={l} style={{ flex: 1, background: '#f5f6f8', border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 12px' }}>
+                      <p style={{ margin: 0, fontSize: 18, fontFamily: "'Saira Condensed'", fontWeight: 800, color: '#000718', lineHeight: 1 }}>{v}</p>
+                      <p style={{ margin: '4px 0 0', fontSize: 8, fontFamily: "'Archivo'", color: '#9fa3ac', fontWeight: 600, textTransform: 'uppercase' }}>{l}</p>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ position: 'relative', flex: 1, minHeight: 150, borderRadius: 6, overflow: 'hidden', border: '1px solid #dee0e7', background: '#eef2f5', backgroundImage: 'linear-gradient(#e2e8ec 1px, transparent 1px), linear-gradient(90deg, #e2e8ec 1px, transparent 1px)', backgroundSize: '26px 26px' }}>
+                  {[[50, 50], [30, 34], [70, 40], [40, 68], [64, 66], [22, 56], [80, 58]].map(([x, y], i) => (
+                    <div key={i} style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, animation: `locDrop 0.5s ease forwards ${300 + i * 130}ms`, opacity: 0 }}>
+                      <svg width="15" height="19" viewBox="0 0 16 20"><path d="M8 0C3.6 0 0 3.6 0 8c0 5.5 8 12 8 12s8-6.5 8-12c0-4.4-3.6-8-8-8z" fill={G} /><circle cx="8" cy="8" r="3" fill="#fff" /></svg>
+                    </div>
+                  ))}
+                  {live && [0, 1, 2].map(i => (
+                    <div key={i} style={{ position: 'absolute', left: '50%', top: '50%', width: 160, height: 160, borderRadius: '50%', border: `2px solid ${G}`, animation: `locRipple 1.8s ease-out infinite ${i * 500}ms` }} />
+                  ))}
+                </div>
+              </div>
+              {/* Right: phone knowledge panel */}
+              <div style={{ flex: 0.85, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', opacity: t > 400 ? 1 : 0, transform: t > 400 ? 'translateX(0)' : 'translateX(40px)', transition: 'all 0.7s cubic-bezier(0.25,0.1,0.25,1)' }}>
+                <div style={{ width: 214, background: '#1a1a2e', borderRadius: 26, padding: 8, boxShadow: '0 10px 30px rgba(0,0,0,0.25)', position: 'relative' }}>
+                  <div style={{ background: '#fff', borderRadius: 20, overflow: 'hidden' }}>
+                    <div style={{ height: 74, background: cardBg }} />
+                    <div style={{ padding: '10px 12px' }}>
+                      <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", fontWeight: 700, color: '#222' }}>ConvergenSEE — Powai, Mumbai</p>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 5, margin: '4px 0 8px' }}>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: '#222' }}>4.6</span>
+                        <span style={{ color: '#f5a623', fontSize: 10 }}>★★★★<span style={{ color: '#ddd' }}>★</span></span>
+                        <span style={{ fontSize: 9, color: '#666' }}>· 512 reviews</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
+                        {[0, 1, 2].map(i => <div key={i} style={{ flex: 1, height: 26, borderRadius: 3, background: cardBg }} />)}
+                      </div>
+                      <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
+                        {['Directions', 'Reviews'].map(x => <div key={x} style={{ flex: 1, textAlign: 'center', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, padding: '4px 0', borderRadius: 12 }}>{x}</div>)}
+                      </div>
+                      <p style={{ margin: '0 0 2px', fontSize: 9, fontFamily: "'Archivo'", color: '#555' }}>Central Avenue, Powai, Mumbai 400076</p>
+                      <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo'", color: '#1b5e20', fontWeight: 700 }}>Open now · 9 AM – 9 PM</p>
+                    </div>
+                  </div>
+                  {live && (
+                    <div style={{ position: 'absolute', top: '46%', left: '50%', transform: 'translate(-50%,-50%) rotate(-8deg)', background: G, color: '#03210a', fontSize: 13, fontFamily: "'Saira Condensed'", fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, padding: '7px 16px', borderRadius: 4, boxShadow: '0 6px 18px rgba(0,0,0,0.3)', whiteSpace: 'nowrap', animation: 'locStamp 0.6s cubic-bezier(0.25,0.1,0.25,1) forwards' }}>Live on Google ✓</div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 6 — OPTIMISE */}
+        {frame === 6 && (
+          <div key="l6" style={{ animation: 'locFadeUp 0.6s ease' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Optima — Recommendations</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 9, fontFamily: "'Archivo'", color: '#9fa3ac', fontWeight: 600 }}>{t > 1200 ? '63%' : '60%'}</span>
+                <div style={{ width: 80, height: 5, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}><div style={{ height: '100%', background: G, width: t > 1200 ? '63%' : '60%', transition: 'width 0.8s ease', borderRadius: 3 }} /></div>
+              </div>
+            </div>
+            {[['HIGH', '#c62828', '#fdecea', '7 locations have no new reviews in 30 days', '48% of consumers only trust reviews from the past 2 weeks'],
+              ['MED', '#e65100', '#fff3e0', '4 listings missing category tags', 'Complete categories rank 2x more often in Map Pack'],
+              ['LOW', '#1b5e20', '#e8fde8', 'Add 12 more photos to Andheri branch', 'Listings with 10+ photos get 42% more direction requests']].map((r, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, border: '1px solid #dee0e7', borderRadius: 6, padding: '9px 14px', marginBottom: 8, opacity: t > 200 + i * 250 ? 1 : 0, transform: t > 200 + i * 250 ? 'translateX(0)' : 'translateX(-14px)', transition: 'all 0.5s ease' }}>
+                <span style={{ background: r[2], color: r[1], fontSize: 9, fontWeight: 800, padding: '3px 9px', borderRadius: 10, minWidth: 34, textAlign: 'center' }}>{r[0]}</span>
+                <div style={{ flex: 1 }}>
+                  <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>{r[3]}</p>
+                  <p style={{ margin: '2px 0 0', fontSize: 10, fontFamily: "'Archivo'", color: '#9fa3ac' }}>{r[4]}</p>
+                </div>
+              </div>
+            ))}
+            {/* review response */}
+            <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: 11, marginTop: 2, opacity: t > 1600 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                <div style={{ width: 22, height: 22, borderRadius: 11, background: '#e0e7ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 800, color: '#4453c9' }}>RS</div>
+                <span style={{ fontSize: 11, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>Riya S.</span>
+                <span style={{ color: '#f5a623', fontSize: 11 }}>★★<span style={{ color: '#ddd' }}>☆</span></span>
+                <span style={{ marginLeft: 'auto', fontSize: 9, fontFamily: "'Archivo'", fontWeight: 800, padding: '2px 8px', borderRadius: 10, background: t > 2800 ? '#e8fde8' : '#f0f0f0', color: t > 2800 ? '#1b5e20' : '#9fa3ac', transition: 'all 0.4s ease' }}>{t > 2800 ? 'Positive' : 'Neutral'}</span>
+              </div>
+              {t > 1800 && (
+                <div style={{ background: '#f5f6f8', borderRadius: 4, padding: '7px 10px', fontSize: 10, fontFamily: "'Archivo'", color: '#333', lineHeight: '15px' }}>
+                  {'Thank you for the feedback, Riya! Our Powai team will make it right on your next visit.'.slice(0, Math.max(0, Math.floor((t - 1800) / 16)))}
+                  {t < 3400 && <span style={{ animation: 'locBlink 0.8s infinite', color: G }}>|</span>}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 7 — PERFORM */}
+        {frame === 7 && (
+          <div key="l7" style={{ animation: 'locFadeUp 0.6s ease' }}>
+            <h3 style={{ margin: '0 0 12px', fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Local Analytics — Google Business Profile</h3>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <div style={{ flex: 1.5, border: '1px solid #dee0e7', borderRadius: 6, padding: 14 }}>
+                <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase' }}>Customer Actions</p>
+                <svg viewBox="0 0 300 150" style={{ width: '100%', height: 168 }}>
+                  {[['M0 120 C50 110 90 86 150 80 S250 46 300 28', G], ['M0 134 C60 128 100 112 160 106 S255 84 300 70', '#7bc3ff'], ['M0 142 C60 140 110 132 170 128 S260 116 300 108', '#ffb74d']].map(([d, c], i) => (
+                    <path key={i} d={d} fill="none" stroke={c} strokeWidth="3" strokeLinecap="round" style={{ strokeDasharray: 600, strokeDashoffset: 600, animation: `locDraw 1.4s ease forwards ${i * 200}ms` }} />
+                  ))}
+                </svg>
+                <p style={{ margin: '6px 0 0', fontSize: 10, fontFamily: "'Archivo'", color: '#666' }}>Total actions: <strong style={{ color: '#333' }}>{formatIN(easeOut(t / 2400) * 1908224)}</strong></p>
+              </div>
+              <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: 14, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <p style={{ margin: '0 0 4px', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase' }}>Total Impressions</p>
+                <p style={{ margin: '0 0 14px', fontSize: 28, fontFamily: "'Saira Condensed'", fontWeight: 800, color: '#000718', lineHeight: 1 }}>{formatIN(easeOut(t / 2200) * 8431520)}</p>
+                {t > 2200 && (
+                  <div style={{ animation: 'locFadeUp 0.6s ease', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 15 }}>💻</span>
+                      <div style={{ flex: 1, height: 9, background: '#eef0f3', borderRadius: 4, overflow: 'hidden' }}><div style={{ width: '13%', height: '100%', background: '#7bc3ff', borderRadius: 4 }} /></div>
+                      <span style={{ fontSize: 11, fontFamily: "'Archivo'", fontWeight: 700, color: '#333' }}>13%</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 15 }}>📱</span>
+                      <div style={{ flex: 1, height: 9, background: '#eef0f3', borderRadius: 4, overflow: 'hidden' }}><div style={{ width: '87%', height: '100%', background: G, borderRadius: 4 }} /></div>
+                      <span style={{ fontSize: 13, fontFamily: "'Archivo'", fontWeight: 800, color: G }}>87%</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 8 — CLOSE */}
+        {frame === 8 && (
+          <div key="l8" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center', animation: 'locFadeUp 0.7s ease' }}>
+            <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
+              10 stores or <span style={{ color: G }}>10,000</span>.<br />One dashboard.
+            </p>
+            <p style={{ fontFamily: "'Archivo'", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>Manage your Local Presence at scale.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontFamily: "'Saira Condensed'", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>LocateIT</span>
+              <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
+              <span style={{ fontFamily: "'Archivo'", fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 0 — idle */}
+        {frame === 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
+            <div style={{ animation: 'locFadeUp 0.5s ease' }}>
+              <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>LocateIT</p>
+              <p style={{ fontFamily: "'Archivo'", fontSize: 12, color: '#666', margin: 0 }}>Local Presence Management at scale</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Lower-third overlay band — full width, sharp corners, 2px green top rule */}
+      {overlay && (
+        <div key={`band-${frame}`} style={{
+          background: 'rgba(0,7,24,0.95)', borderTop: `2px solid ${G}`, padding: '11px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          animation: 'locBandUp 0.5s ease',
+        }}>
+          <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo'", fontWeight: 700, color: '#fff' }}>{overlay.main}</p>
+          <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo'", color: G, fontWeight: 500 }}>{overlay.sub}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── SocialiseIT content ──────────────────────────────────────────────────────
 function SocialiseContent({ controls, tileVariants }) {
   return (
@@ -1654,7 +2202,8 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
 
           {/* Module content */}
           <div style={{ position: 'relative', width: 1121 }}>
-            {activeModule === 'LocateIT'    && <LocateContent    controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'LocateIT' && showWorkflow && <LocateWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'LocateIT' && !showWorkflow && <LocateContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'AmplifyIT'   && <AmplifyContent   controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'CreateIT' && showWorkflow && <CreateContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
             {activeModule === 'CreateIT' && !showWorkflow && <CreateStandardContent controls={controls} tileVariants={tileVariants} />}

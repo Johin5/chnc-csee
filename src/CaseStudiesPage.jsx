@@ -1,7 +1,8 @@
 // Case Studies Page — built from Figma node 1:1855 (Landing Page - Dark-cASE STUDY)
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import useResponsive from './useResponsive'
 
+import Footer from './Footer'
 const G     = '#34cc32'
 const DARK  = '#000718'
 const CARD  = '#0f1520'
@@ -18,13 +19,13 @@ const imgMahindraLogo    = '/mahindra-logo.png'
 const imgAxisLogo        = '/axis-bank-logo.png'
 const imgSBILogo         = '/sbi-logo.png'
 const imgLACLogo         = '/figma/case-study/img-image30.png'
-const imgMeme            = '/figma/case-study/img-meme1.png'
-const imgPartner         = '/figma/case-study/img-partner-rgb1.png'
 
 // ─── Case study data ──────────────────────────────────────────────────────────
 const CASES = [
   {
     photo: imgMahindraPhoto,
+    video: '/mahindra.mp4',
+    poster: '/mahindra-poster.jpg',
     logoBg: '#fff',
     logo: '/mahindra-logo.png',
     name: 'Mahindra & Mahindra',
@@ -33,6 +34,8 @@ const CASES = [
   },
   {
     photo: imgAxisPhoto,
+    video: '/axis-bank.mp4',
+    poster: '/axis-bank-poster.jpg',
     logoBg: '#ae285d',
     logo: '/axis-bank-logo.png',
     name: 'Axis bank',
@@ -62,18 +65,42 @@ const INDUSTRIES = ['AUTO', 'ALL', 'FMCG', 'RETAIL', 'FSI', 'OTHERS']
 // ─── Components ───────────────────────────────────────────────────────────────
 function CaseCard({ c, onClick }) {
   const [hovered, setHovered] = useState(false)
+  const videoRef = useRef(null)
+  // Freeze the clip on the frame under the cursor while the stats are showing
+  const setHover = (on) => {
+    setHovered(on)
+    const v = videoRef.current
+    if (!v) return
+    if (on) v.pause()
+    else v.play().catch(() => {})
+  }
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       onClick={onClick}
       style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', cursor: onClick ? 'pointer' : 'default', background: '#1a2235' }}
     >
-      <img src={c.photo} alt={c.name} style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
-        transform: hovered ? 'scale(1.04)' : 'scale(1)',
-        transition: 'transform 0.6s ease',
-      }} />
+      {c.video ? (
+        <video
+          ref={videoRef}
+          autoPlay muted loop playsInline preload="metadata"
+          poster={c.poster}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+            transform: hovered ? 'scale(1.04)' : 'scale(1)',
+            transition: 'transform 0.6s ease',
+          }}
+        >
+          <source src={c.video} type="video/mp4" />
+        </video>
+      ) : (
+        <img src={c.photo} alt={c.name} style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+          transform: hovered ? 'scale(1.04)' : 'scale(1)',
+          transition: 'transform 0.6s ease',
+        }} />
+      )}
       {/* Dark overlay */}
       <div style={{
         position: 'absolute', inset: 0,
@@ -81,22 +108,29 @@ function CaseCard({ c, onClick }) {
         transition: 'background 0.4s ease',
       }} />
 
-      {/* Top — type label only */}
-      <div style={{ position: 'absolute', top: 20, right: 20 }}>
-        <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{c.type}</span>
+      {/* Top — type tag, boxed like the industry pills */}
+      <div style={{ position: 'absolute', top: 20, right: 20, zIndex: 3 }}>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', height: 30, padding: '0 14px',
+          background: 'transparent',
+          border: `2px solid ${BORDER}`,
+          fontFamily: "'Saira Condensed', sans-serif",
+          fontSize: 13, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase',
+          color: '#fff',
+        }}>{c.type}</span>
       </div>
 
-      {/* Centre logo — always visible, fades on hover */}
+      {/* Centre logo — revealed on hover, alongside the stats */}
       <div style={{
         position: 'absolute', inset: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        opacity: hovered ? 0 : 1,
-        transform: hovered ? 'scale(0.7)' : 'scale(1)',
+        opacity: hovered ? 1 : 0,
+        transform: hovered ? 'translateY(-9%) scale(1)' : 'translateY(-9%) scale(0.85)',
         transition: 'opacity 0.5s ease, transform 0.5s ease',
         pointerEvents: 'none',
         zIndex: 2,
       }}>
-        <img src={c.logo} alt={c.name} style={{ width: 220, height: 80, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
+        <img src={c.logo} alt={c.name} style={{ width: 220, maxWidth: '60%', height: 80, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
       </div>
 
       {/* Bottom gradient */}
@@ -162,7 +196,7 @@ export default function CaseStudiesPage({ onNavigate }) {
         <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
           {INDUSTRIES.map((ind, i) => (
             <div key={ind} className="pill-hover" style={{
-              padding: '15px 20px',
+              height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
               background: CARD,
               border: i === 1 ? `1px solid ${G}` : 'none',
               backdropFilter: 'blur(10px)',
@@ -194,7 +228,7 @@ export default function CaseStudiesPage({ onNavigate }) {
           <button className="btn-outline" style={{
             marginTop: 10,
             background: 'transparent', border: `1px solid ${G}`,
-            padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
+            height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
             fontSize: 16, fontWeight: 700, color: G,
             textTransform: 'uppercase', cursor: 'pointer',
             backdropFilter: 'blur(10px)',
@@ -228,105 +262,25 @@ export default function CaseStudiesPage({ onNavigate }) {
               {row.map((lbl, fi) => lbl ? (
                 <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
+                  <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
                 </div>
               ) : <div key={fi} style={{ flex: 1 }} />)}
             </div>
           ))}
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
             <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: CARD, border: 'none', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
+            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
           </div>
-          <button type="submit" className="btn-green" style={{
-            background: G, color: DARK, border: 'none',
-            padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
+          <button type="submit" className="btn-outline" style={{
+            background: 'transparent', color: '#fff', border: '1px solid #fff',
+            height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
             fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
             cursor: 'pointer', width: isMobile ? '100%' : 'auto',
           }}>Send Message</button>
         </form>
       </section>
 
-      {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <footer style={{ background: CARD, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
-            {/* Poison */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center', color: '#fff' }}>
-                Choose your <span style={{ color: G }}>poison</span>
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
-                  <img src={imgMeme} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
-                  <button className="btn-green" style={{ width: '100%', background: G, border: 'none', padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: DARK, textTransform: 'uppercase', cursor: 'pointer' }}>I skipped to the end</button>
-                  <button className="btn-outline" style={{ width: '100%', background: CARD, border: `1px solid ${G}`, padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>I went through the whole website</button>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Quick links</p>
-              {['Home', 'About us', 'Solutions'].map(l => (
-                <a key={l} href="#" className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, textDecoration: 'none' }}>
-                  <span style={{ color: G }}>›</span>{l}
-                </a>
-              ))}
-            </div>
-
-            {/* Legal */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Legal</p>
-              {['Terms of Use', 'Privacy Policy'].map(l => (
-                <a key={l} href="#" className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, textDecoration: 'none' }}>
-                  <span style={{ color: G }}>›</span>{l}
-                </a>
-              ))}
-            </div>
-
-            {/* Contact */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Connect with us</p>
-              <div>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Address</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', marginTop: 5, maxWidth: 277 }}>A 303, Supreme Business Park, Hirandani Gardens, Powai, Mumbai, Maharashtra, 400076</p>
-              </div>
-              <div>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Call us</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, marginTop: 5 }}>+91 9091399139</p>
-              </div>
-              <div>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Email us</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, marginTop: 5 }}>letsconnect@convergenseeasia.com</p>
-              </div>
-              <div style={{ display: 'flex', gap: 13, alignItems: 'center' }}>
-                <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="2" y="2" width="14" height="14" rx="4" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                  <circle cx="9" cy="9" r="3" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                  <circle cx="13" cy="5" r="1" fill={DIM}/>
-                </svg>
-                <svg className="social-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="2" y="2" width="14" height="14" rx="2" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                  <circle cx="6" cy="7" r="1" fill={DIM}/>
-                  <rect x="5.5" y="9" width="1" height="4" fill={DIM}/>
-                  <path d="M9 9v4m0-3a2 2 0 0 1 4 0v3" stroke={DIM} strokeWidth="1.2" fill="none"/>
-                </svg>
-              </div>
-              <img src={imgPartner} alt="Google Partner" style={{ width: 41, height: 39, objectFit: 'contain', marginTop: 10 }} />
-            </div>
-          </div>
-
-          <div style={{ height: 1, background: BORDER }} />
-          <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4, color: '#fff' }}>© Copyright ConvergenSEE All Rights Reserved</p>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>
-              Designed by <span style={{ color: G }}>ConvergenSEE</span>
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

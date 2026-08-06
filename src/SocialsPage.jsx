@@ -1,6 +1,7 @@
 // Socials Page — social media hub
 import { useState } from 'react'
 import useResponsive from './useResponsive'
+import Footer from './Footer'
 
 const G = '#34cc32'
 const DARK = '#000718'
@@ -87,7 +88,7 @@ function PlatformCard({ platform }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        flex: 1, background: CARD, padding: '36px 28px',
+        flex: 1, padding: '36px 28px',
         display: 'flex', flexDirection: 'column', gap: 20,
         textDecoration: 'none', cursor: 'pointer',
         border: `1px solid ${hovered ? G : BORDER}`,
@@ -219,7 +220,7 @@ function PostCard({ post }) {
   )
 }
 
-export default function SocialsPage({ onBack }) {
+export default function SocialsPage({ onBack, onNavigate }) {
   const { isMobile, isSmall } = useResponsive()
   const [filter, setFilter] = useState('ALL')
   const filters = ['ALL', ...PLATFORMS.map(p => p.name.toUpperCase())]
@@ -290,6 +291,8 @@ export default function SocialsPage({ onBack }) {
           </div>
         </div>
       </section>
+
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

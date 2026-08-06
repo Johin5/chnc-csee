@@ -2,6 +2,9 @@ import { useRef, useState, useEffect, lazy, Suspense } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring, animate } from 'framer-motion'
 import CHNCDock from './ui/dock'
 import useResponsive from './useResponsive'
+import { withPose } from './teamRoster'
+import TeamMemberCard from './TeamMemberCard'
+import Footer from './Footer'
 
 import CHNCPlaceholder from './CHNCPlaceholder'
 
@@ -39,12 +42,6 @@ const boardImg = '/figma/home/board.png'
 const imgBlogs   = '/figma/blog/img-mahindra2.jpg'
 const imgSocials = '/creative-1.jpg'
 const imgWork    = '/figma/work/macbook2.png'
-const teamImg1 = '/figma/home/img-angel-chaturvedi12.jpg'
-const teamImg2 = '/figma/home/img-angel-chaturvedi13.jpg'
-const teamImg3 = '/figma/home/img-angel-chaturvedi14.jpg'
-const teamImg4 = '/figma/home/img-angel-chaturvedi12.jpg'
-const memeImg  = '/figma/home/img-meme1.png'
-const partnerImg = '/figma/home/img-partner-rgb1.png'
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const G = '#34cc32'
@@ -92,8 +89,8 @@ const BtnOutlineGreen = ({ children, style, className, ...props }) => (
 
 // ─── Nav ──────────────────────────────────────────────────────────────────────
 function Nav({ activePage = 'home', onNavigate }) {
-  const links = ['Home', 'About', 'Solution', 'Case Studies', 'Blogs', 'Work', 'Career']
-  const targetFor = (l) => ({ Home: 'home', About: 'about', Solution: 'solutions', 'Case Studies': 'case-studies', Blogs: 'blog', Work: 'work', Career: 'careers' }[l])
+  const links = ['Home', 'About us', 'Solution', 'Case Studies', 'Blogs', 'Work', 'Career']
+  const targetFor = (l) => ({ Home: 'home', 'About us': 'about', Solution: 'solutions', 'Case Studies': 'case-studies', Blogs: 'blog', Work: 'work', Career: 'careers' }[l])
   const { isSmall } = useResponsive()
   const [open, setOpen] = useState(false)
   const go = (l) => { onNavigate(targetFor(l)); setOpen(false) }
@@ -134,7 +131,7 @@ function Nav({ activePage = 'home', onNavigate }) {
         </div>
       )}
 
-      {!isSmall && <BtnOutlineGreen style={{ padding: '8px 14px', fontSize: 16, fontWeight: 400 }}>Let's Connect</BtnOutlineGreen>}
+      {!isSmall && <BtnOutlineGreen>Let's Connect</BtnOutlineGreen>}
 
       {isSmall && (
         <button
@@ -171,7 +168,7 @@ function Nav({ activePage = 'home', onNavigate }) {
               }}>{l}</a>
             )
           })}
-          <BtnOutlineGreen style={{ marginTop: 14, fontSize: 16, fontWeight: 400 }}>Let's Connect</BtnOutlineGreen>
+          <BtnOutlineGreen style={{ marginTop: 14 }}>Let's Connect</BtnOutlineGreen>
         </div>
       )}
     </nav>
@@ -187,16 +184,17 @@ function Hero() {
       overflow: 'hidden', textAlign: 'center',
       background: DARK, padding: '0 20px',
     }}>
-      {/* Background video */}
+      {/* Background video — ConvergenSEE homepage showreel */}
       <video
-        autoPlay muted loop playsInline
+        autoPlay muted loop playsInline preload="metadata"
+        poster="/home-hero-poster.jpg"
         style={{
           position: 'absolute', inset: 0,
           width: '100%', height: '100%',
-          objectFit: 'cover', opacity: 0.35,
+          objectFit: 'cover', opacity: 0.6,
         }}
       >
-        <source src="/people-tech.mp4" type="video/mp4" />
+        <source src="/home-hero.mp4" type="video/mp4" />
       </video>
 
       {/* Dark overlays for text readability */}
@@ -214,13 +212,13 @@ function Hero() {
           <h1 style={{
             fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(46px, 10vw, 150px)', fontWeight: 800,
             textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1,
-            whiteSpace: 'nowrap',
+            whiteSpace: 'nowrap', textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
           }}>
             <span style={{ color: '#fff' }}>We </span>
             <span style={{ color: G }}>DARE </span>
             <span style={{ color: '#fff' }}>You</span>
           </h1>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 8 }}>
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 8, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
             Discover the power of our secure and rewarding copy. Explore our range of copy.
           </p>
         </div>
@@ -342,21 +340,28 @@ const chncStats = [
 ]
 
 const platformFeatures = [
-  { icon: '/figma/features/pen.svg',    title: 'Create Content',         desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/pin.svg',    title: 'Location Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/atom.svg',   title: 'AI Agents',              desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/happy.svg',  title: 'Social Media Management', desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/file.svg',   title: 'Generate AI Scripts',    desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/search.svg', title: 'Proposal Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/pen.svg',    title: 'Amplify',                desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/pin.svg',    title: 'MessageIT',              desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { icon: '/figma/features/atom.svg',   title: 'InfluenceIT',            desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'Create Content',          desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'Location Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'AI Agents',               desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'Social Media Management', desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'Generate AI Scripts',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'Proposal Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'Amplify',                 desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'MessageIT',               desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'InfluenceIT',             desc: 'Posting isn’t presence. We turn your content into real connection.' },
 ]
 
 function CHNC({ onNavigate }) {
   const scrollRef = useRef()
-  const { isSmall, isMobile, isTablet } = useResponsive()
+  const { isSmall, isMobile, isTablet, width } = useResponsive()
   const cols = isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'
+
+  // Responsive edge-bleed: dashboard width + shift scale with the viewport so the
+  // dashboard's right edge always sits ~4px past the screen (a hair of bleed, no
+  // content clipped) and the left card always has room. At 1512px this resolves to
+  // the original 1060px width + 230px shift, so wide screens look unchanged.
+  const dashW = Math.min(1060, width - 360)   // leave ~360px for the left info card
+  const shiftX = Math.round((width - dashW) / 2 + 4)
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
@@ -431,32 +436,37 @@ function CHNC({ onNavigate }) {
   // Funnel flow: service cards pour down + inward into the funnel neck as you
   // scroll, staggered row-by-row, and the CHNC logo reveals at the neck.
   const flowRef = useRef()
-  const { scrollYProgress: flowRaw } = useScroll({ target: flowRef, offset: ['start 0.85', 'end 0.5'] })
+  // Start point is deliberately late ('start 0.25'): progress stays at 0 until the
+  // grid's top has risen to a quarter down the viewport, i.e. all nine cards are on
+  // screen and readable. Only then does scrolling begin to pour them into the funnel.
+  const { scrollYProgress: flowRaw } = useScroll({ target: flowRef, offset: ['start 0.25', 'end 0.5'] })
   // Spring-smooth the raw scroll so motion glides instead of tracking wheel ticks.
-  const flow = useSpring(flowRaw, { stiffness: 60, damping: 20, mass: 0.6 })
+  const flow = useSpring(flowRaw, { stiffness: 45, damping: 22, mass: 0.8 })
 
   // Row 0 = top (travels furthest, leaves last), Row 2 = bottom (nearest the funnel, leaves first).
-  const yTop = useTransform(flow, [0.18, 1],   [0, 320])
-  const sTop = useTransform(flow, [0.18, 1],   [1, 0.35])
-  const oTop = useTransform(flow, [0.5, 0.92], [1, 0])
-  const yMid = useTransform(flow, [0.09, 0.9], [0, 220])
-  const sMid = useTransform(flow, [0.09, 0.9], [1, 0.4])
-  const oMid = useTransform(flow, [0.38, 0.82],[1, 0])
-  const yBot = useTransform(flow, [0, 0.78],   [0, 120])
-  const sBot = useTransform(flow, [0, 0.78],   [1, 0.45])
-  const oBot = useTransform(flow, [0.28, 0.72],[1, 0])
+  // Each row holds still for the first stretch of the range so nothing drifts on the
+  // very first wheel tick — the bottom row leads, the top row follows.
+  const yTop = useTransform(flow, [0.30, 1],    [0, 320])
+  const sTop = useTransform(flow, [0.30, 1],    [1, 0.35])
+  const oTop = useTransform(flow, [0.60, 0.95], [1, 0])
+  const yMid = useTransform(flow, [0.20, 0.92], [0, 220])
+  const sMid = useTransform(flow, [0.20, 0.92], [1, 0.4])
+  const oMid = useTransform(flow, [0.50, 0.86], [1, 0])
+  const yBot = useTransform(flow, [0.10, 0.82], [0, 120])
+  const sBot = useTransform(flow, [0.10, 0.82], [1, 0.45])
+  const oBot = useTransform(flow, [0.40, 0.76], [1, 0])
   const rowY = [yTop, yMid, yBot]
   const rowS = [sTop, sMid, sBot]
   const rowO = [oTop, oMid, oBot]
 
   // Columns converge toward the centre (the funnel neck).
-  const xLeft  = useTransform(flow, [0, 1], [0, 360])
-  const xMid   = useTransform(flow, [0, 1], [0, 0])
-  const xRight = useTransform(flow, [0, 1], [0, -360])
+  const xLeft  = useTransform(flow, [0.10, 1], [0, 360])
+  const xMid   = useTransform(flow, [0.10, 1], [0, 0])
+  const xRight = useTransform(flow, [0.10, 1], [0, -360])
   const colX = [xLeft, xMid, xRight]
 
-  const chncOpacity = useTransform(flow, [0.55, 0.95], [0, 1])
-  const chncScale   = useTransform(flow, [0.55, 1],    [0.55, 1])
+  const chncOpacity = useTransform(flow, [0.60, 0.95], [0, 1])
+  const chncScale   = useTransform(flow, [0.60, 1],    [0.55, 1])
 
   return (
     <section style={{ paddingTop: 0, marginTop: -60, background: DARK }}>
@@ -481,7 +491,6 @@ function CHNC({ onNavigate }) {
             const animStyle = isSmall ? cardStyle : { ...cardStyle, x: colX[c], y: rowY[r], scale: rowS[r], opacity: rowO[r], willChange: 'transform, opacity' }
             return (
             <motion.div key={f.title} style={animStyle}>
-              <img src={f.icon} alt="" style={{ width: 40, height: 40, objectFit: 'contain', flexShrink: 0 }} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 2.4vw, 32px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'rgba(255,255,255,0.7)', lineHeight: '24px', margin: 0, maxWidth: 315 }}>{f.desc}</p>
@@ -512,8 +521,8 @@ function CHNC({ onNavigate }) {
             alignItems: 'center', justifyContent: 'flex-start',
             paddingTop: '20px', overflow: 'visible',
           }}>
-            <div style={{ position: 'relative', width: isSmall ? '92%' : '88%', maxWidth: '1060px',
-              transform: (!isSmall && cardVisible) ? 'translateX(230px)' : 'translateX(0)',
+            <div style={{ position: 'relative', width: isSmall ? '92%' : dashW, maxWidth: isSmall ? '1060px' : undefined,
+              transform: (!isSmall && cardVisible) ? `translateX(${shiftX}px)` : 'translateX(0)',
               transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
             }}>
               {/* Green glow bloom behind dashboard */}
@@ -598,7 +607,7 @@ function CHNC({ onNavigate }) {
                           onClick={() => onNavigate && onNavigate('solutions')}
                           style={{
                             background: G, color: DARK, border: 'none',
-                            padding: '14px 20px', fontFamily: "'Saira Condensed', sans-serif",
+                            height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
                             fontSize: 15, fontWeight: 700, textTransform: 'uppercase',
                             letterSpacing: '0.02em', cursor: 'pointer',
                             alignSelf: 'flex-start',
@@ -627,7 +636,7 @@ function CHNC({ onNavigate }) {
               <motion.div
                 // Mirror the parent's edge-bleed shift with the same timing so the
                 // dock stays viewport-centered the whole time (no slide of its own).
-                animate={{ x: (!isSmall && cardVisible) ? -230 : 0 }}
+                animate={{ x: (!isSmall && cardVisible) ? -shiftX : 0 }}
                 transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   position: 'absolute', top: '100%', left: 0, right: 0,
@@ -698,7 +707,7 @@ function QuizPill({ label, isActive, onClick }) {
       style={{
         background: 'transparent',
         border: `1px solid ${isActive ? G : hovered ? 'rgba(52,204,50,0.5)' : 'rgba(255,255,255,0.15)'}`,
-        padding: '15px 20px',
+        height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
         fontFamily: "'Saira Condensed', sans-serif",
         fontSize: 16,
         fontWeight: isActive || hovered ? 700 : 500,
@@ -755,7 +764,7 @@ function BrandAudit() {
           {['Your name', 'Your name', 'Your name'].map((lbl, i) => (
             <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
               <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-              <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
+              <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
             </div>
           ))}
           <BtnGreen style={isSmall ? { width: '100%' } : undefined}>Know More</BtnGreen>
@@ -788,7 +797,7 @@ function Testimonials() {
           {testiTabs.map((t, i) => (
             <button key={t} style={{
               background: 'transparent', border: i === 1 ? `1px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
-              padding: '15px 20px', fontFamily: "'Saira Condensed', sans-serif",
+              height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
               fontSize: 16, fontWeight: i === 1 ? 700 : 500,
               color: i === 1 ? G : '#fff', textTransform: 'uppercase',
             }}>{t}</button>
@@ -944,64 +953,8 @@ function WantMore({ onNavigate }) {
 }
 
 // ─── Team ─────────────────────────────────────────────────────────────────────
-const teamMembers = [
-  { img: teamImg1, name: 'Harper Langley', role: 'Product Manager' },
-  { img: teamImg2, name: 'Dulce Dorwart', role: 'Designer' },
-  { img: teamImg3, name: 'Dulce Dorwart', role: 'Designer' },
-  { img: teamImg4, name: 'Dulce Dorwart', role: 'Designer' },
-  { img: teamImg1, name: 'Harper Langley', role: 'Product Manager' },
-]
-
-function TeamCard({ member }) {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        width: 320, flexShrink: 0, position: 'relative',
-        overflow: 'hidden', cursor: 'pointer',
-        border: `1px solid ${hovered ? G : 'transparent'}`,
-        transition: 'border-color 0.3s ease',
-      }}
-    >
-      {/* Portrait image */}
-      <div style={{ height: 440, overflow: 'hidden' }}>
-        <img
-          src={member.img} alt={member.name}
-          style={{
-            width: '100%', height: '100%', objectFit: 'cover', display: 'block',
-            transform: hovered ? 'scale(1.06)' : 'scale(1)',
-            transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)',
-          }}
-        />
-      </div>
-
-      {/* Persistent bottom gradient */}
-      <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, height: '55%',
-        background: 'linear-gradient(to top, rgba(0,7,24,0.95) 0%, rgba(0,7,24,0.6) 50%, transparent 100%)',
-        pointerEvents: 'none',
-      }} />
-
-      {/* Text overlay */}
-      <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, padding: '28px 24px',
-        transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
-        transition: 'transform 0.35s ease',
-      }}>
-        {/* Green accent line */}
-        <div style={{
-          width: hovered ? 40 : 0, height: 2, background: G,
-          marginBottom: 12,
-          transition: 'width 0.35s ease',
-        }} />
-        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 28, lineHeight: 1, color: '#fff', margin: '0 0 6px', textTransform: 'uppercase' }}>{member.name}</p>
-        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: hovered ? G : MUTED, margin: 0, letterSpacing: '1px', transition: 'color 0.3s ease' }}>{member.role}</p>
-      </div>
-    </div>
-  )
-}
+// A slice of the real roster for the home-page strip — everyone here has a pose.
+const teamMembers = withPose.slice(0, 12)
 
 function Team({ onNavigate }) {
   return (
@@ -1014,8 +967,8 @@ function Team({ onNavigate }) {
       </div>
       <div style={{ position: 'relative' }}>
         <div style={{ display: 'flex', gap: 2, overflowX: 'auto', padding: '0 clamp(20px, 6vw, 100px)', scrollbarWidth: 'none' }}>
-          {teamMembers.map((m, i) => (
-            <TeamCard key={i} member={m} />
+          {teamMembers.map(m => (
+            <TeamMemberCard key={m.name} member={m} variant="strip" />
           ))}
         </div>
         <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 160, background: 'linear-gradient(to right, #000718 60%, transparent)', pointerEvents: 'none' }} />
@@ -1155,14 +1108,14 @@ function Contact() {
               {row[0].map((lbl, fi) => lbl ? (
                 <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
+                  <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
                 </div>
               ) : <div key={fi} style={{ flex: 1 }} />)}
             </div>
           ))}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%' }} />
+            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%' }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <BtnGreen type="submit">Send Message</BtnGreen>
@@ -1173,120 +1126,110 @@ function Contact() {
   )
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
-export function Footer() {
-  const { isSmall } = useResponsive()
+// ─── App ──────────────────────────────────────────────────────────────────────
+// ─── TEMP DEV TOOL — device preview. Remove before final launch. ───────────────
+const PREVIEW_DEVICES = [
+  { label: 'iPhone', w: 390, h: 844 },
+  { label: 'iPad', w: 820, h: 1180 },
+  { label: 'Air 13" (1280)', w: 1280, h: 800 },
+  { label: 'Air 13" (1440)', w: 1440, h: 900 },
+  { label: 'MBP 14"', w: 1512, h: 982 },
+  { label: 'MBP 16"', w: 1728, h: 1117 },
+]
+
+function DevicePreview() {
+  const { width: screenW } = useResponsive()
+  const [w, setW] = useState(1440)
+  const [h, setH] = useState(900)
+  const [activeLabel, setActiveLabel] = useState('Air 13" (1440)')
+
+  const pick = (d) => { setW(d.w); setH(d.h); setActiveLabel(d.label) }
+  const setCustom = (val) => { setW(val); setActiveLabel('Custom') }
+
+  const TOOLBAR = 92
+  const availW = screenW - 48
+  const availH = (typeof window !== 'undefined' ? window.innerHeight : 900) - TOOLBAR - 48
+  const scale = Math.min(1, availW / w, availH / h)
+
   return (
-    <footer style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', borderTop: '1px solid rgba(255,255,255,0.22)' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
-          {/* Poison */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', textAlign: 'center' }}>
-              Choose your <span style={{ color: G }}>poison</span>
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
-                <img src={memeImg} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 323 }}>
-                <BtnGreen className="btn-hover-red" style={{ width: '100%' }}>I skipped to the end</BtnGreen>
-                <BtnOutlineGreen className="btn-hover-cyan" style={{ width: '100%' }}>I went through the whole website</BtnOutlineGreen>
-              </div>
-            </div>
-          </div>
-          {/* Quick Links */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Quick links</p>
-            {['Home', 'About us', 'Solutions'].map(l => (
-              <a key={l} href="#" className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, textDecoration: 'none' }}>
-                <span style={{ color: G }}>›</span>{l}
-              </a>
-            ))}
-          </div>
-          {/* Legal */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Legal</p>
-            {['Terms of Use', 'Privacy Policy'].map(l => (
-              <a key={l} href="#" className="footer-link" style={{ display: 'flex', gap: 5, alignItems: 'center', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, textDecoration: 'none' }}>
-                <span style={{ color: G }}>›</span>{l}
-              </a>
-            ))}
-          </div>
-          {/* Contact */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 18, fontWeight: 600, textTransform: 'uppercase', color: G }}>Connect with us</p>
-            <div>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Address</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px', marginTop: 5, maxWidth: 277 }}>A 303, Supreme Business Park, Hirandani Gardens, Powai, Mumbai, Maharashtra, 400076</p>
-            </div>
-            <div>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Call us</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, marginTop: 5 }}>+91 9091399139</p>
-            </div>
-            <div>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600, textTransform: 'uppercase', color: '#fff' }}>Email us</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, marginTop: 5 }}>letsconnect@convergenseeasia.com</p>
-            </div>
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-              {/* Instagram */}
-              <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="4" stroke="#666a74" strokeWidth="1.5" fill="none"/>
-                <circle cx="9" cy="9" r="3" stroke="#666a74" strokeWidth="1.5" fill="none"/>
-                <circle cx="13" cy="5" r="1" fill="#666a74"/>
-              </svg>
-              {/* LinkedIn */}
-              <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="2" stroke="#666a74" strokeWidth="1.5" fill="none"/>
-                <circle cx="6" cy="7" r="1" fill="#666a74"/>
-                <rect x="5.5" y="9" width="1" height="4" fill="#666a74"/>
-                <path d="M9 9v4m0-3a2 2 0 0 1 4 0v3" stroke="#666a74" strokeWidth="1.2" fill="none"/>
-              </svg>
-            </div>
-            <img src={partnerImg} alt="Google Partner" style={{ width: 41, height: 39, objectFit: 'contain', marginTop: 20 }} />
-          </div>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 100000, background: '#05060a', display: 'flex', flexDirection: 'column' }}>
+      {/* Toolbar */}
+      <div style={{ height: TOOLBAR, flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '0 20px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          {PREVIEW_DEVICES.map((d) => (
+            <button key={d.label} onClick={() => pick(d)} style={{
+              fontFamily: "'Archivo', sans-serif", fontSize: 13,
+              padding: '6px 12px', cursor: 'pointer',
+              background: activeLabel === d.label ? '#34cc32' : 'transparent',
+              color: activeLabel === d.label ? '#000718' : '#fff',
+              border: `1px solid ${activeLabel === d.label ? '#34cc32' : 'rgba(255,255,255,0.2)'}`,
+            }}>{d.label}</button>
+          ))}
+          <a href="/" style={{ marginLeft: 'auto', fontFamily: "'Archivo', sans-serif", fontSize: 13, padding: '6px 12px', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>✕ Exit preview</a>
         </div>
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.1)' }} />
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 12 : 0, justifyContent: 'space-between', alignItems: 'center', textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, lineHeight: 1.4 }}>© Copyright ConvergenSEE All Rights Reserved</p>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14 }}>
-            Designed by <span style={{ color: G }}>ConvergenSEE</span>
-          </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <input type="range" min={320} max={1920} step={1} value={w} onChange={(e) => setCustom(Number(e.target.value))} style={{ width: 320, accentColor: '#34cc32' }} />
+          <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#34cc32', fontWeight: 700 }}>{w} × {h}px · {Math.round(scale * 100)}%</span>
+          <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>(drag slider for any width)</span>
         </div>
       </div>
-    </footer>
+
+      {/* Stage */}
+      <div style={{ flex: 1, overflow: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: 24 }}>
+        <div style={{ width: w * scale, height: h * scale, flexShrink: 0 }}>
+          <iframe
+            title="preview"
+            src="/"
+            style={{
+              width: w, height: h, border: '1px solid rgba(255,255,255,0.2)', background: '#000718',
+              transform: `scale(${scale})`, transformOrigin: 'top left', display: 'block',
+            }}
+          />
+        </div>
+      </div>
+    </div>
   )
 }
 
-// ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const [page, setPageRaw] = useState('home')
   const setPage = (p) => { setPageRaw(p); window.scrollTo(0, 0) }
 
+  const isPreviewShell = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('preview')
+  const inIframe = typeof window !== 'undefined' && window.self !== window.top
+  if (isPreviewShell) return <DevicePreview />
+
   return (
     <>
+      {!inIframe && (
+        <a href="/?preview" style={{
+          position: 'fixed', bottom: 16, right: 16, zIndex: 99999,
+          background: '#34cc32', color: '#000718', fontFamily: "'Archivo', sans-serif", fontSize: 13, fontWeight: 700,
+          padding: '10px 14px', borderRadius: 4, boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+        }}>📱 Preview screen sizes</a>
+      )}
       <Nav activePage={page} onNavigate={setPage} />
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#000718' }} />}>
       {page === 'about' ? (
-        <AboutPage onNavigateHome={() => setPage('home')} />
+        <AboutPage onNavigateHome={() => setPage('home')} onNavigate={setPage} />
       ) : page === 'solutions' ? (
-        <SolutionsPage />
+        <SolutionsPage onNavigate={setPage} />
       ) : page === 'case-studies' ? (
         <CaseStudiesPage onNavigate={setPage} />
       ) : page === 'mahindra' ? (
-        <MahindraPage onBack={() => setPage('case-studies')} />
+        <MahindraPage onNavigate={setPage} />
       ) : page === 'team' ? (
-        <TeamPage onBack={() => setPage('home')} />
+        <TeamPage onBack={() => setPage('home')} onNavigate={setPage} />
       ) : page === 'blog' ? (
         <BlogPage onNavigate={setPage} />
       ) : page === 'blog-read' ? (
-        <BlogReadPage onBack={() => setPage('blog')} />
+        <BlogReadPage onBack={() => setPage('blog')} onNavigate={setPage} />
       ) : page === 'careers' ? (
-        <CareersPage onBack={() => setPage('home')} />
+        <CareersPage onBack={() => setPage('home')} onNavigate={setPage} />
       ) : page === 'work' ? (
-        <WorkPage onBack={() => setPage('home')} />
+        <WorkPage onBack={() => setPage('home')} onNavigate={setPage} />
       ) : page === 'socials' ? (
-        <SocialsPage onBack={() => setPage('home')} />
+        <SocialsPage onBack={() => setPage('home')} onNavigate={setPage} />
       ) : (
         <>
           <Hero />
@@ -1299,7 +1242,7 @@ export default function App() {
           <Team onNavigate={setPage} />
           <AdvisoryBoard />
           <Contact />
-          <Footer />
+          <Footer onNavigate={setPage} />
         </>
       )}
       </Suspense>
