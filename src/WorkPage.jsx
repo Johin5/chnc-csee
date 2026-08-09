@@ -1,5 +1,8 @@
+'use client'
+
 // Work Page — "Our Work" portfolio grid
 import { useState } from 'react'
+import Image from 'next/image'
 import useResponsive from './useResponsive'
 import Footer from './Footer'
 
@@ -193,8 +196,8 @@ function BrandTile({ project, onClick }) {
       onClick={() => onClick(project)}
       style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', cursor: 'pointer', background: CARD }}
     >
-      <img src={project.img} alt={project.name} style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+      <Image src={project.img} alt={project.name} fill sizes="100vw" style={{
+        objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)',
         transition: 'transform 0.6s ease',
       }} />
@@ -267,8 +270,8 @@ function ProjectTile({ project, onClick }) {
       onClick={() => onClick(project)}
       style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', cursor: 'pointer', background: CARD }}
     >
-      <img src={project.img} alt={project.name} style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+      <Image src={project.img} alt={project.name} fill sizes="100vw" style={{
+        objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)',
         transition: 'transform 0.6s ease',
       }} />
@@ -349,7 +352,7 @@ function CaseStudyModal({ project, onClose }) {
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 2, background: DARK }}>
             {sec.imgs.map((img, i) => (
               <div key={i} style={{ overflow: 'hidden', background: CARD }}>
-                <img src={img} alt="" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block' }} />
+                <img src={img} alt="" loading="lazy" decoding="async" style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover', display: 'block' }} />
               </div>
             ))}
           </div>
@@ -359,12 +362,12 @@ function CaseStudyModal({ project, onClose }) {
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 2, background: DARK }}>
             {project.imgs.map((img, i) => (
               <div key={i} style={{ overflow: 'hidden', background: CARD }}>
-                <img src={img} alt="" style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }} />
+                <img src={img} alt="" loading="lazy" decoding="async" style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }} />
               </div>
             ))}
           </div>
           <div style={{ background: CARD, marginTop: 2 }}>
-            <img src={project.imgs[0]} alt="" style={{ width: '100%', display: 'block', maxHeight: 500, objectFit: 'cover', opacity: 0.85 }} />
+            <img src={project.imgs[0]} alt="" loading="lazy" decoding="async" style={{ width: '100%', display: 'block', maxHeight: 500, objectFit: 'cover', opacity: 0.85 }} />
           </div>
         </>
       )}
@@ -380,7 +383,7 @@ function CaseStudyModal({ project, onClose }) {
                 {isVideo ? (
                   <video src={src} muted loop autoPlay playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 ) : (
-                  <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={src} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 )}
                 <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.3)' }} />
                 {!isVideo && (
@@ -401,7 +404,7 @@ function CaseStudyModal({ project, onClose }) {
 }
 
 // ─── WorkPage ─────────────────────────────────────────────────────────────────
-export default function WorkPage({ onBack, onNavigate }) {
+export default function WorkPage() {
   const { isMobile } = useResponsive()
   const [tab, setTab] = useState('chnc')
   const [modal, setModal] = useState(null)
@@ -462,7 +465,7 @@ export default function WorkPage({ onBack, onNavigate }) {
         </div>
       </div>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
 
       {modal && <CaseStudyModal project={modal} onClose={() => setModal(null)} />}
     </div>

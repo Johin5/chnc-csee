@@ -1,3 +1,5 @@
+'use client'
+
 // ─── Application form ────────────────────────────────────────────────────────
 // Shared by the careers page ("Join the chaos!") and every job page ("Future
 // opportunities start here") — same fields, same upload, different framing.

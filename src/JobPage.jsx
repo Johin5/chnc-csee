@@ -1,6 +1,9 @@
+'use client'
+
 // Job detail page — built from Figma node 1:1320 (Landing Page - Dark-careers-02)
 // "JOIN OUR <TEAM> TEAM" over two panels (responsibilities / requirements),
 // then the shared application form under "Future opportunities start here".
+import Link from 'next/link'
 import useResponsive from './useResponsive'
 import Footer from './Footer'
 import JoinSection from './JoinSection'
@@ -42,7 +45,7 @@ function Panel({ title, items }) {
   )
 }
 
-export default function JobPage({ job, onBack, onNavigate }) {
+export default function JobPage({ job }) {
   const { isSmall } = useResponsive()
 
   return (
@@ -53,15 +56,17 @@ export default function JobPage({ job, onBack, onNavigate }) {
         padding: 'clamp(140px, 18vw, 206px) clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)',
       }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-          <button
-            onClick={onBack} className="btn-outline"
+          <Link
+            href="/careers" className="btn-outline"
             style={{
               background: 'transparent', border: `1px solid ${G}`, color: G,
               height: 40, padding: '0 18px', cursor: 'pointer',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              boxSizing: 'border-box', textDecoration: 'none',
               fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.02em',
             }}
-          >&larr; All openings</button>
+          >&larr; All openings</Link>
 
           <h1 style={{
             fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(48px, 10vw, 150px)',
@@ -99,7 +104,7 @@ export default function JobPage({ job, onBack, onNavigate }) {
         </>}
       />
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

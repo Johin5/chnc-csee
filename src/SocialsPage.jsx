@@ -1,5 +1,8 @@
+'use client'
+
 // Socials Page — social media hub
 import { useState } from 'react'
+import Image from 'next/image'
 import useResponsive from './useResponsive'
 import Footer from './Footer'
 
@@ -153,8 +156,8 @@ function PostCard({ post }) {
           <source src={post.src} type="video/mp4" />
         </video>
       ) : (
-        <img src={post.img} alt={post.caption} style={{
-          position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+        <Image src={post.img} alt={post.caption} fill sizes="100vw" style={{
+          objectFit: 'cover',
           transform: hovered ? 'scale(1.05)' : 'scale(1)',
           transition: 'transform 0.6s ease',
         }} />
@@ -220,7 +223,7 @@ function PostCard({ post }) {
   )
 }
 
-export default function SocialsPage({ onBack, onNavigate }) {
+export default function SocialsPage() {
   const { isMobile, isSmall } = useResponsive()
   const [filter, setFilter] = useState('ALL')
   const filters = ['ALL', ...PLATFORMS.map(p => p.name.toUpperCase())]
@@ -292,7 +295,7 @@ export default function SocialsPage({ onBack, onNavigate }) {
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

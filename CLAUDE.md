@@ -1,67 +1,80 @@
-# ConvergenSEE website
+# ConvergenSEE website (Next.js)
 
-The live marketing site for ConvergenSEE (Mumbai digital marketing agency).
-This folder is the only active one — see "Sibling folders" below before
-assuming otherwise.
+The Next.js 16 rebuild of the ConvergenSEE marketing site (Mumbai digital
+marketing agency), migrated from the Vite SPA that still lives on `main` /
+in `../convergensee-website`. This worktree is branch `website-2`.
 
-Vite 8 + React 19 SPA. No TypeScript, no test suite, no CSS framework.
+Next.js 16 App Router + React 19. Plain JSX (no TypeScript), no test suite,
+no CSS framework — styling is inline `style={{}}` objects plus
+`src/globals.css`.
 
 ## Running it
 
-There are **no npm scripts defined** — use Vite directly:
-
-- `npx vite` — dev server
-- `npx vite build` — production build into `dist/`
-
-Deploy is a commit and push: `git push origin main` on
-https://github.com/Johin5/chnc-csee.
+- `npm run dev` — dev server
+- `npm run build` — production build (all routes statically prerendered)
+- `npm run start` — serve the production build
 
 ## Layout
 
-- `src/App.jsx` — the home page's sections *and* the router. Everything under
-  `Site()` at the bottom of the file.
-- `src/<Name>Page.jsx` — one file per page (About, Solutions, CaseStudies,
-  Mahindra, Team, Blog, BlogRead, Careers, Job, Work, Socials).
-- `src/routes.js` — **the only file that knows about URLs.** Pages navigate by
-  key (`onNavigate('about')`) and this maps keys to paths. Change a path here
-  and every nav link, footer link and CTA follows.
-- `src/Footer.jsx` — the site footer, used by every page. Nine hand-copied
-  copies used to exist and had drifted apart; do not inline a footer into a
-  page again.
-- `src/careersTeams.js` — teams and their job openings. Adding an opening here
-  gives it a page at `/careers/<slugified-title>` automatically.
-- `src/teamRoster.js` — the ~40-person roster. Portraits are 640×880 crops in
-  `public/team/`.
-- `src/micro.css` — the few global classes (`.btn-outline`, `.footer-link`,
-  `.social-icon`, hover states). Everything else is inline style objects.
+- `app/` — thin server components only: one `page.jsx` per route exporting
+  metadata, plus `layout.jsx` (fonts, Nav, default metadata, Organization
+  JSON-LD), `sitemap.js`, `robots.js`, `icon.svg`, `opengraph-image.jpg`,
+  `not-found.jsx`.
+- `app/careers/[role]` and `app/blogs/[slug]` — dynamic routes with
+  `generateStaticParams` + `generateMetadata` + `notFound()`, fed by the data
+  modules below. JobPosting / Article / Breadcrumb JSON-LD live here.
+- `src/<Name>Page.jsx` — one `'use client'` body component per page.
+- `src/lib/routes.js` — **the only file that knows about URLs.** `PATH_FOR`,
+  `slugify`, `jobPath`, `findJobBySlug`, `ALL_JOBS`, `keyForPath`. Server-safe.
+- `src/lib/seo.js` — `SITE_URL` (canonical: https://convergensee.ai — www 301s
+  at the host), `buildMetadata()`, JSON-LD builders, `JsonLd` component.
+- `src/lib/careersTeams.js` — teams + openings; an opening added here gets a
+  page at `/careers/<slug>`, a sitemap entry and JobPosting JSON-LD for free.
+- `src/lib/blogPosts.js` — blog posts, same pattern; add a post object and the
+  listing card, `/blogs/<slug>` page and sitemap entry follow.
+- `src/lib/teamRoster.js` — the ~40-person roster. Portraits are 640×880 crops
+  in `public/team/`.
+- `src/Nav.jsx` — fixed header, rendered once by the layout; highlight comes
+  from `usePathname()` + `keyForPath`.
+- `src/Footer.jsx` — the site footer, real `<Link>`s, takes no props.
+- `src/ContactForm.jsx` + `src/lib/actions.js` — the shared contact form and
+  its server action. The action validates and logs; **delivery (email/CRM) is
+  still TODO.**
+- `src/globals.css` — @font-face (self-hosted Archivo + Saira Condensed in
+  `public/fonts/`; family names must stay 'Archivo' / 'Saira Condensed'
+  because inline styles reference them literally), reset, ticker keyframes,
+  micro-interaction classes.
+- `src/useResponsive.js` — viewport hook. Initial width is a constant 1440 so
+  SSR and hydration agree; phones relayout one frame after mount. Don't
+  reintroduce a `window.innerWidth` initial state.
 
 ## Conventions
 
-- Styling is inline `style={{}}` objects, not classes. Colours are re-declared
-  per file as `G` (#34cc32 green), `DARK` (#000718), `CARD` (#0f1520),
-  `DIM` (#666a74), `BORDER` (rgba(255,255,255,0.1)).
-- Boxes/panels are `background: transparent` with a 1–2px `BORDER` outline, not
-  a filled `CARD` background.
-- Pages take an `onNavigate` prop and call it with page keys, never paths.
-- Deep links need an SPA fallback on the host — `vercel.json` and
-  `public/_redirects` cover Vercel and Netlify. Anywhere else needs its own.
+- Colours are re-declared per file as `G` (#34cc32 green), `DARK` (#000718),
+  `CARD` (#0f1520), `DIM` (#666a74), `BORDER` (rgba(255,255,255,0.1)).
+- Boxes/panels are `background: transparent` with a 1–2px `BORDER` outline.
+- Navigation is `<Link href={PATH_FOR[key]}>` (crawlable) for anything
+  anchor-like; `useRouter().push()` only for genuine button handlers.
+- New images: `next/image` with `fill` inside positioned containers or real
+  width/height; small svg icons stay plain `<img>`.
 
 ## Known gaps (pre-launch checklist)
 
-1. No form submits anywhere — the home contact form and the CV upload in
-   `JoinSection.jsx` both discard their input.
-2. The green "📱 Preview screen sizes" dev tool in `App.jsx` renders in
-   production. Remove before launch.
-3. Every route serves the title `ConvergenSEE — Dark Home`. No per-page
-   titles, description, OG tags, favicon, `robots.txt` or sitemap.
-4. Placeholder copy: all blog posts, the Work page hero, and the team blurbs
-   and groupings in `careersTeams.js` (self-flagged as unapproved).
-5. No host connected yet.
+1. Contact form logs submissions server-side only — wire email/CRM delivery
+   in `src/lib/actions.js`. The careers CV upload (`JoinSection.jsx`) is
+   still a visual mock.
+2. Placeholder copy everywhere the Figma build had it: the one blog post,
+   Work page hero, team blurbs/groupings in `careersTeams.js`, advisory
+   board bios.
+3. Media weight: `public/` is ~130MB (8MB jpgs, 47MB `public/figma/`,
+   13MB review-reel.mp4) — compress/prune before launch.
+4. JobPosting JSON-LD uses placeholder `datePosted`; add real dates to
+   openings when known.
+5. Host not connected yet. When it is: point apex + www at it, 301 www→apex,
+   and confirm `SITE_URL` in `src/lib/seo.js`.
 
-## Sibling folders — none of these are the site
+## Sibling folders — none of these are this site
 
-Everything else under `/Users/apple/CC CSEE/` is dead, untouched since March
-2026: `csee-react` (the old csnc-v2.vercel.app deploy), `csee-react-2009`,
-`CHNC-SCroll`, `framer`, `backups`, `sidebar icons`, and
-`techdata-convergensee` (July 2026). `/Users/apple/CSEE Website/
-reimagine-everything` is a separate Lovable app that also renders CHNC.
+`../convergensee-website` is the old Vite SPA (branch `main`). Everything
+else under `/Users/apple/CC CSEE/` is dead: `csee-react`, `csee-react-2009`,
+`CHNC-SCroll`, `framer`, `backups`, `sidebar icons`, `techdata-convergensee`.

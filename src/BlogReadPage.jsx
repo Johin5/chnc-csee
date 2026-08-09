@@ -1,9 +1,15 @@
+'use client'
+
 // BlogReadPage — blog article read page built from Figma design
 
 import { useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 import useResponsive from './useResponsive'
 
 import Footer from './Footer'
+import ContactForm from './ContactForm'
+import { BLOG_POSTS } from './lib/blogPosts'
 const G      = '#34cc32'
 const DARK   = '#000718'
 const CARD   = '#0f1520'
@@ -12,13 +18,9 @@ const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Assets ───────────────────────────────────────────────────────────────────
-const imgHero       = '/figma/blog-read/img-rectangle-42042.jpg'
 const imgBody1      = '/figma/blog-read/img-image-111.jpg'
 const imgBody2      = '/figma/blog-read/img-image-112.jpg'
 const imgBody3      = '/figma/blog-read/img-image-113.jpg'
-const imgRelated1   = '/figma/blog-read/img-mahindra-2.jpg'
-const imgRelated2   = '/figma/blog-read/img-mahindra-3.jpg'
-const imgAvatar     = '/figma/blog-read/img-placeholders.png'
 
 // ─── Lorem text ───────────────────────────────────────────────────────────────
 const LOREM = 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.'
@@ -40,25 +42,19 @@ function Tag({ label, compact }) {
   )
 }
 
-// ─── Related blogs — same set as the blog grid, minus the one being read ──────
-const RELATED = [
-  { img: imgRelated1, tags: ['Technology', 'Auto'], title: 'A relentless pursuit of perfection in product design', desc: 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.', author: 'Becky Conner', role: 'Content lead', date: 'Posted 11/12/2025' },
-  { img: imgRelated2, tags: ['Technology', 'Auto'], title: 'A relentless pursuit of perfection in product design', desc: 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.', author: 'Becky Conner', role: 'Content lead', date: 'Posted 11/12/2025' },
-]
-
 // Tile that reads the same as a card on the Case Studies grid: photo, tag pills,
 // title always on, description + byline revealed on hover.
-function RelatedTile({ b, onClick }) {
+function RelatedTile({ b }) {
   const [hovered, setHovered] = useState(false)
   return (
-    <div
+    <Link
+      href={`/blogs/${b.slug}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-      style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10', cursor: onClick ? 'pointer' : 'default', background: '#1a2235' }}
+      style={{ display: 'block', position: 'relative', overflow: 'hidden', aspectRatio: '16/10', cursor: 'pointer', background: '#1a2235', color: 'inherit', textDecoration: 'none' }}
     >
-      <img src={b.img} alt={b.title} style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+      <Image src={b.img} alt={b.title} fill sizes="100vw" style={{
+        objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.6s ease',
       }} />
       <div style={{ position: 'absolute', inset: 0, background: hovered ? 'rgba(0,7,24,0.85)' : 'rgba(0,7,24,0.45)', transition: 'background 0.4s ease' }} />
@@ -84,7 +80,7 @@ function RelatedTile({ b, onClick }) {
         <div style={{ maxHeight: hovered ? 160 : 0, overflow: 'hidden', opacity: hovered ? 1 : 0, transition: 'max-height 0.45s ease, opacity 0.35s ease' }}>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: MUTED, lineHeight: '18px', margin: 0 }}>{b.desc}</p>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 12 }}>
-            <img src={imgAvatar} alt={b.author} style={{ width: 26, height: 26, borderRadius: '50%', objectFit: 'cover' }} />
+            <img src={b.avatar} alt={b.author} loading="lazy" decoding="async" style={{ width: 26, height: 26, borderRadius: '50%', objectFit: 'cover' }} />
             <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: G, fontWeight: 600 }}>{b.author}</span>
             <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{b.role}</span>
           </div>
@@ -93,23 +89,28 @@ function RelatedTile({ b, onClick }) {
 
       {/* Green border on hover */}
       <div style={{ position: 'absolute', inset: 0, border: `2px solid ${G}`, opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
-    </div>
+    </Link>
   )
 }
 
-export default function BlogReadPage({ onBack, onNavigate }) {
+export default function BlogReadPage({ post }) {
   const { isMobile, isSmall } = useResponsive()
   const SECTION = 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0'
   // Copy and gallery share one measure, so the text runs edge to edge with the
   // images below it at every width.
   const COLUMN  = { width: '100%', maxWidth: 1240 }
 
+  // Related blogs — same set as the blog grid, minus the one being read.
+  const related = BLOG_POSTS
+    .filter(p => p.slug !== post.slug)
+    .map(p => ({ slug: p.slug, img: p.image, tags: p.tags, title: p.title, desc: p.description, author: p.author, role: p.role, avatar: p.avatar, date: p.dateLabel }))
+
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
       {/* ── Hero — runs under the fixed nav, same as the case study pages ────── */}
       <section style={{ position: 'relative', width: '100%', height: isSmall ? 'calc(clamp(360px, 78vw, 480px) + 106px)' : 'calc(clamp(480px, 42vw, 560px) + 106px)', overflow: 'hidden' }}>
-        <img src={imgHero} alt="Blog hero" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <Image src={post.heroImage} alt="Blog hero" fill priority sizes="100vw" style={{ objectFit: 'cover', display: 'block' }} />
         {/* Veil — dark at the top so the nav has something to sit on, dark at the
             foot so the image blends into the page; keeps the headline legible. */}
         <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${DARK} 0%, rgba(0,7,24,0.55) 22%, rgba(0,7,24,0.55) 55%, rgba(0,7,24,0.85) 100%)` }} />
@@ -118,8 +119,7 @@ export default function BlogReadPage({ onBack, onNavigate }) {
         {/* Overlay content: tags + headline + byline — offset for the nav */}
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', gap: 24, alignItems: 'center', justifyContent: 'center', padding: '106px clamp(20px, 6vw, 100px) 0', boxSizing: 'border-box', textAlign: 'center' }}>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
-            <Tag label="Technology" />
-            <Tag label="Auto" />
+            {post.tags.map(t => <Tag key={t} label={t} />)}
           </div>
           <h1 style={{
             fontFamily: "'Saira Condensed', sans-serif",
@@ -131,14 +131,14 @@ export default function BlogReadPage({ onBack, onNavigate }) {
             maxWidth: 1000,
             margin: 0,
           }}>
-            A relentless pursuit of perfection in product design
+            {post.title}
           </h1>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <img src={imgAvatar} alt="Becky Conner" style={{ width: 30, height: 30, borderRadius: '50%', objectFit: 'cover' }} />
-            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: G, fontWeight: 600 }}>Becky Conner</span>
-            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED }}>Content lead</span>
+            <img src={post.avatar} alt={post.author} style={{ width: 30, height: 30, borderRadius: '50%', objectFit: 'cover' }} />
+            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: G, fontWeight: 600 }}>{post.author}</span>
+            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED }}>{post.role}</span>
             <span style={{ color: DIM }}>&middot;</span>
-            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED }}>Posted 11/12/2025</span>
+            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED }}>{post.dateLabel}</span>
           </div>
         </div>
       </section>
@@ -173,7 +173,7 @@ export default function BlogReadPage({ onBack, onNavigate }) {
           <div style={{ ...COLUMN, display: 'grid', gridTemplateColumns: isSmall ? '1fr' : 'repeat(3, 1fr)', gap: 20 }}>
             {[imgBody1, imgBody2, imgBody3].map((src, i) => (
               <div key={i} className="card-hover" style={{ width: '100%', aspectRatio: '400 / 562', overflow: 'hidden' }}>
-                <img className="img-zoom" src={src} alt={`Blog image ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                <img className="img-zoom" src={src} alt={`Blog image ${i + 1}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
             ))}
           </div>
@@ -206,24 +206,27 @@ export default function BlogReadPage({ onBack, onNavigate }) {
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center', width: '100%', maxWidth: 1240 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, width: '100%' }}>
-              {RELATED.map((b, i) => (
-                <RelatedTile key={i} b={b} onClick={onNavigate ? () => onNavigate('blog') : undefined} />
-              ))}
-            </div>
+            {related.length > 0 && (
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, width: '100%' }}>
+                {related.map(b => (
+                  <RelatedTile key={b.slug} b={b} />
+                ))}
+              </div>
+            )}
 
-            <button
+            <Link
+              href="/blogs"
               className="btn-outline"
-              onClick={onNavigate ? () => onNavigate('blog') : onBack}
               style={{
                 background: 'transparent', border: `1px solid ${G}`,
                 height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
                 fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G,
                 textTransform: 'uppercase', cursor: 'pointer', backdropFilter: 'blur(10px)',
+                textDecoration: 'none',
               }}
             >
               View all blogs
-            </button>
+            </Link>
           </div>
         </section>
 
@@ -239,28 +242,10 @@ export default function BlogReadPage({ onBack, onNavigate }) {
             <span style={{ color: '#fff' }}>you</span>
           </h2>
         </div>
-        <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
-          {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
-              {row.map((lbl, fi) => lbl ? (
-                <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input className="input-glow" placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-                </div>
-              ) : <div key={fi} style={{ flex: 1 }} />)}
-            </div>
-          ))}
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea className="input-glow" rows={6} placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
-          </div>
-          <button className="btn-outline" type="submit" style={{ background: 'transparent', color: '#fff', border: '1px solid #fff', height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
-            Send Message
-          </button>
-        </form>
+        <ContactForm />
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
       </div>
     </div>
   )

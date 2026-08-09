@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
 // Shared breakpoints for the whole site.
@@ -5,9 +7,10 @@ import { useEffect, useState } from 'react'
 export const BP = { mobile: 480, tablet: 1024 }
 
 export default function useResponsive() {
-  const [width, setWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 1440
-  )
+  // Always start at the SSR default so server HTML and the first client render
+  // agree (no hydration mismatch); the effect below sets the real width
+  // immediately after mount.
+  const [width, setWidth] = useState(1440)
 
   useEffect(() => {
     let frame = null

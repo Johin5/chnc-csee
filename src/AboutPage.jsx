@@ -1,5 +1,8 @@
+'use client'
+
 // About Page — built from Figma node 1:841 (Landing Page - Dark-About)
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import useResponsive from './useResponsive'
 
 import Footer from './Footer'
@@ -27,7 +30,7 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
       {/* base */}
       <div style={{ position: 'absolute', inset: 0, background: CARD }} />
       {/* texture bg */}
-      <img src={bg} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+      <Image src={bg} alt="" fill sizes="100vw" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
       {/* dark overlay */}
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.7)' }} />
       {/* text */}
@@ -56,7 +59,7 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
 // ─── About Page ───────────────────────────────────────────────────────────────
 const WORDS = ['Think', 'Believe', 'Create']
 
-export default function AboutPage({ onNavigateHome, onNavigate }) {
+export default function AboutPage() {
   const { isMobile, isSmall } = useResponsive()
   const [wordIdx, setWordIdx] = useState(1) // start on "Believe"
   const [visible, setVisible] = useState(true)
@@ -183,9 +186,7 @@ export default function AboutPage({ onNavigateHome, onNavigate }) {
           {/* Right: Bala polaroid gif */}
           <div style={{ width: isSmall ? '100%' : 732, maxWidth: 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
             <div style={{ position: 'absolute', inset: 0, background: '#ffffff' }} />
-            <img src="/bala-polaroid.gif" alt="Letter from Bala" style={{
-              position: 'absolute', inset: 0,
-              width: '100%', height: '100%',
+            <Image src="/bala-polaroid.gif" alt="Letter from Bala" fill sizes="100vw" style={{
               objectFit: 'cover', transform: 'scale(1.15)', pointerEvents: 'none',
             }} />
           </div>
@@ -250,7 +251,7 @@ export default function AboutPage({ onNavigateHome, onNavigate }) {
                 overflow: 'hidden', flexShrink: 0,
               }}>
                 <div style={{ position: 'absolute', inset: 0, background: CARD }} />
-                <img src={imgValCard1} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+                <Image src={imgValCard1} alt="" fill sizes="100vw" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.7)' }} />
                 <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
                   <div style={{
@@ -288,7 +289,7 @@ export default function AboutPage({ onNavigateHome, onNavigate }) {
         </div>
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

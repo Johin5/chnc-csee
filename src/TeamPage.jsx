@@ -1,7 +1,10 @@
+'use client'
+
 import Footer from './Footer'
 import useResponsive from './useResponsive'
-import { TEAM as MEMBERS } from './teamRoster'
+import { TEAM as MEMBERS } from './lib/teamRoster'
 import TeamMemberCard from './TeamMemberCard'
+import ContactForm from './ContactForm'
 // Team Page — built from Figma node 1:2311 (Landing Page - Dark-Team)
 
 const G      = '#34cc32'
@@ -11,7 +14,7 @@ const MUTED  = 'rgba(255,255,255,0.7)'
 const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
-export default function TeamPage({ onBack, onNavigate }) {
+export default function TeamPage() {
   const { isMobile, isSmall } = useResponsive()
   return (
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
@@ -54,28 +57,10 @@ export default function TeamPage({ onBack, onNavigate }) {
             <span style={{ color: '#fff' }}>you</span>
           </h2>
         </div>
-        <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
-          {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
-              {row.map((lbl, fi) => lbl ? (
-                <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-                </div>
-              ) : (isMobile ? null : <div key={fi} style={{ flex: 1 }} />))}
-            </div>
-          ))}
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
-          </div>
-          <button type="submit" className="btn-outline" style={{ background: 'transparent', color: '#fff', border: '1px solid #fff', height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isSmall ? '100%' : 'auto' }}>
-            Send Message
-          </button>
-        </form>
+        <ContactForm />
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

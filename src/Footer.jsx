@@ -1,8 +1,12 @@
+'use client'
+
+import Link from 'next/link'
 import useResponsive from './useResponsive'
+import { PATH_FOR } from './lib/routes'
 
 // ─── Site footer — single source of truth ─────────────────────────────────────
-// Every page renders <Footer onNavigate={...} />. Edit here only; do not copy
-// this markup into a page.
+// Every page renders <Footer />. Edit here only; do not copy this markup into
+// a page.
 
 const G = '#34cc32'
 const DARK = '#000718'
@@ -82,12 +86,8 @@ export function PoisonCTA({ style }) {
 }
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
-export default function Footer({ onNavigate }) {
+export default function Footer() {
   const { isSmall } = useResponsive()
-  const go = (target) => (e) => {
-    e.preventDefault()
-    if (onNavigate) onNavigate(target)
-  }
 
   return (
     <footer style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', borderTop: '1px solid rgba(255,255,255,0.22)', color: '#fff' }}>
@@ -100,9 +100,9 @@ export default function Footer({ onNavigate }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <p style={colTitle}>Quick links</p>
             {QUICK_LINKS.map(([label, target]) => (
-              <a key={label} href="#" className="footer-link" style={linkStyle} onClick={go(target)}>
+              <Link key={label} href={PATH_FOR[target]} className="footer-link" style={linkStyle}>
                 <span style={{ color: G }}>›</span>{label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -110,9 +110,9 @@ export default function Footer({ onNavigate }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <p style={colTitle}>Legal</p>
             {LEGAL_LINKS.map(l => (
-              <a key={l} href="#" className="footer-link" style={linkStyle} onClick={e => e.preventDefault()}>
+              <span key={l} className="footer-link" style={linkStyle}>
                 <span style={{ color: G }}>›</span>{l}
-              </a>
+              </span>
             ))}
           </div>
 
@@ -125,11 +125,11 @@ export default function Footer({ onNavigate }) {
             </div>
             <div>
               <p style={contactLabel}>Call us</p>
-              <p style={contactText}>+91 9091399139</p>
+              <a href="tel:+919091399139" style={{ ...contactText, display: 'block' }}>+91 9091399139</a>
             </div>
             <div>
               <p style={contactLabel}>Email us</p>
-              <p style={contactText}>letsconnect@convergenseeasia.com</p>
+              <a href="mailto:letsconnect@convergenseeasia.com" style={{ ...contactText, display: 'block' }}>letsconnect@convergenseeasia.com</a>
             </div>
             <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
               {/* Instagram */}

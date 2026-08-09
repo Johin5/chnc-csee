@@ -1,10 +1,8 @@
 // ─── URL map ──────────────────────────────────────────────────────────────────
-// Pages navigate by key — onNavigate('about'), onNavigate('case-studies') — and
-// only this file knows what URL a key lives at. Change a path here and every
-// nav link, footer link and in-page CTA follows.
+// Pages link by key — <Link href={PATH_FOR['about']}> — and only this file
+// knows what URL a key lives at. Change a path here and every nav link, footer
+// link and in-page CTA follows. Server-safe: no hooks, importable from app/.
 
-import { useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { TEAM_GROUPS } from './careersTeams'
 
 // The blog is still a single placeholder article; when real posts land, this
@@ -31,8 +29,9 @@ export const slugify = (s) =>
 export const jobPath = (job) => `/careers/${slugify(job.title)}`
 
 // Roles are defined per team in careersTeams.js; flatten them once so a URL
-// slug can be resolved back to the role a visitor asked for.
-const ALL_JOBS = TEAM_GROUPS.flatMap(g => g.openings.map(o => ({ ...o, team: g.name })))
+// slug can be resolved back to the role a visitor asked for. Exported so
+// careers/[role] can generateStaticParams and sitemap.js can enumerate jobs.
+export const ALL_JOBS = TEAM_GROUPS.flatMap(g => g.openings.map(o => ({ ...o, team: g.name })))
 
 export const findJobBySlug = (slug) =>
   ALL_JOBS.find(j => slugify(j.title) === slug)
@@ -54,10 +53,4 @@ const SECTION_FOR = {
 
 export function keyForPath(pathname) {
   return SECTION_FOR[pathname.split('/')[1] || ''] || 'home'
-}
-
-// Drop-in replacement for the old setPage — pages keep passing page keys.
-export function useNavigateTo() {
-  const navigate = useNavigate()
-  return useCallback((key) => navigate(PATH_FOR[key] || key), [navigate])
 }

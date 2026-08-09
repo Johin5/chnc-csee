@@ -1,9 +1,16 @@
+'use client'
+
 // Mahindra Case Study Page — built from Figma node 1:2843 (Landing Page - Dark-cASE STUDY-mahindra)
 
 import { useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import useResponsive from './useResponsive'
 
 import Footer from './Footer'
+import ContactForm from './ContactForm'
+import { PATH_FOR } from './lib/routes'
 const G      = '#34cc32'
 const DARK   = '#000718'
 const CARD   = '#0f1520'
@@ -46,17 +53,18 @@ const OTHER_CASES = [
 
 // Tile that reads the same as a card on the Case Studies grid: photo, type pill,
 // brand name always on, logo + headline stat revealed on hover.
-function OtherCaseTile({ c, onClick }) {
+function OtherCaseTile({ c, href }) {
   const [hovered, setHovered] = useState(false)
+  const Wrapper = href ? Link : 'div'
   return (
-    <div
+    <Wrapper
+      {...(href ? { href } : {})}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-      style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10', cursor: onClick ? 'pointer' : 'default', background: '#1a2235' }}
+      style={{ position: 'relative', display: 'block', overflow: 'hidden', aspectRatio: '16/10', cursor: href ? 'pointer' : 'default', background: '#1a2235', color: 'inherit', textDecoration: 'none' }}
     >
-      <img src={c.photo} alt={c.name} style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+      <Image src={c.photo} alt={c.name} fill sizes="100vw" style={{
+        objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.6s ease',
       }} />
       <div style={{ position: 'absolute', inset: 0, background: hovered ? 'rgba(0,7,24,0.85)' : 'rgba(0,7,24,0.45)', transition: 'background 0.4s ease' }} />
@@ -98,18 +106,19 @@ function OtherCaseTile({ c, onClick }) {
 
       {/* Green border on hover */}
       <div style={{ position: 'absolute', inset: 0, border: `2px solid ${G}`, opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
-    </div>
+    </Wrapper>
   )
 }
 
-export default function MahindraPage({ onNavigate }) {
+export default function MahindraPage() {
   const { isMobile, isSmall } = useResponsive()
+  const router = useRouter()
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
       {/* ── Hero — runs under the fixed nav, same as the home page video ────── */}
       <section style={{ position: 'relative', width: '100%', height: isSmall ? 'calc(clamp(360px, 78vw, 480px) + 106px)' : 'calc(clamp(480px, 42vw, 560px) + 106px)', overflow: 'hidden' }}>
-        <img src={imgMahindraHero} alt="Mahindra" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <Image src={imgMahindraHero} alt="Mahindra" fill priority sizes="100vw" style={{ objectFit: 'cover', display: 'block' }} />
         {/* Veil — dark at the top so the nav has something to sit on, dark at the
             foot so the image blends into the page; keeps the lockup legible. */}
         <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${DARK} 0%, rgba(0,7,24,0.55) 22%, rgba(0,7,24,0.55) 55%, rgba(0,7,24,0.85) 100%)` }} />
@@ -222,7 +231,7 @@ export default function MahindraPage({ onNavigate }) {
             <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, justifyContent: 'center', width: '100%', alignItems: 'center' }}>
               {[imgGallery1, imgGallery2, imgGallery3].map((src, i) => (
                 <div key={i} className="card-hover" style={{ width: isSmall ? '100%' : 400, maxWidth: 400, height: isSmall ? 'clamp(320px, 80vw, 562px)' : 562, overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={src} alt={`Gallery ${i + 1}`} className="img-zoom" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={src} alt={`Gallery ${i + 1}`} loading="lazy" decoding="async" className="img-zoom" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </div>
               ))}
             </div>
@@ -244,14 +253,14 @@ export default function MahindraPage({ onNavigate }) {
                 <OtherCaseTile
                   key={i}
                   c={c}
-                  onClick={onNavigate ? () => onNavigate('case-studies') : undefined}
+                  href={PATH_FOR['case-studies']}
                 />
               ))}
             </div>
 
             <button
               className="btn-outline"
-              onClick={onNavigate ? () => onNavigate('case-studies') : undefined}
+              onClick={() => router.push(PATH_FOR['case-studies'])}
               style={{
                 background: 'transparent', border: `1px solid ${G}`,
                 height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
@@ -277,28 +286,10 @@ export default function MahindraPage({ onNavigate }) {
             </h2>
           </div>
 
-          <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
-            {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-              <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
-                {row.map((lbl, fi) => lbl ? (
-                  <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                    <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-                  </div>
-                ) : <div key={fi} style={{ flex: 1 }} />)}
-              </div>
-            ))}
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-              <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
-            </div>
-            <button type="submit" className="btn-outline" style={{ background: 'transparent', color: '#fff', border: '1px solid #fff', height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isMobile ? '100%' : undefined }}>
-              Send Message
-            </button>
-          </form>
+          <ContactForm />
         </section>
 
-        <Footer onNavigate={onNavigate} />
+        <Footer />
       </div>
     </div>
   )

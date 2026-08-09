@@ -1,9 +1,16 @@
+'use client'
+
 // Solutions Page — built from Figma node 1:1559 (Landing Page - Dark-Solution)
 import { useState, useEffect, useRef } from 'react'
-import CHNCDashboard from './CHNCDashboard'
+import dynamic from 'next/dynamic'
 import useResponsive from './useResponsive'
+import CHNCPlaceholder from './CHNCPlaceholder'
+import ContactForm from './ContactForm'
 
 import Footer from './Footer'
+
+const CHNCDashboard = dynamic(() => import('./CHNCDashboard'), { ssr: false, loading: () => <CHNCPlaceholder /> })
+
 const G     = '#34cc32'
 const DARK  = '#000718'
 const CARD  = '#0f1520'
@@ -455,7 +462,6 @@ function ReadyToCreate() {
 }
 
 function Contact() {
-  const { isMobile } = useResponsive()
   return (
     <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
@@ -477,33 +483,13 @@ function Contact() {
         </h2>
       </div>
 
-      <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
-        {[
-          ['Your name', 'Contact number'],
-          ['Company name', 'Designation'],
-          ['Your email', null],
-        ].map((row, ri) => (
-          <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
-            {row.map((lbl, fi) => lbl ? (
-              <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-              </div>
-            ) : <div key={fi} style={{ flex: 1 }} />)}
-          </div>
-        ))}
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-          <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
-        </div>
-        <BtnGreen type="submit" style={isMobile ? { width: '100%' } : undefined}>Send Message</BtnGreen>
-      </form>
+      <ContactForm />
     </section>
   )
 }
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
-export default function SolutionsPage({ onNavigate }) {
+export default function SolutionsPage() {
   const [activePill, setActivePill] = useState('CreateIT')
   const activeModule = activePill
 
@@ -515,7 +501,7 @@ export default function SolutionsPage({ onNavigate }) {
       <AllOfThisWithJust />
       <ReadyToCreate />
       <Contact />
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

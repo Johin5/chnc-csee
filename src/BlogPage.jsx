@@ -1,8 +1,14 @@
+'use client'
+
 // Blog Page — built from Figma node 1:2081 (Landing Page - Dark-Blog)
 import { useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 import useResponsive from './useResponsive'
 
 import Footer from './Footer'
+import ContactForm from './ContactForm'
+import { BLOG_POSTS } from './lib/blogPosts'
 const G      = '#34cc32'
 const DARK   = '#000718'
 const CARD   = '#0f1520'
@@ -10,33 +16,19 @@ const MUTED  = 'rgba(255,255,255,0.7)'
 const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
-// ─── Assets ───────────────────────────────────────────────────────────────────
-const imgBlog1      = '/figma/blog/img-mahindra2.jpg'
-const imgBlog2      = '/figma/blog/img-mahindra3.jpg'
-const imgBlog3      = '/figma/blog/img-mahindra4.jpg'
-const imgBlog4      = '/figma/blog/img-mahindra5.jpg'
-const imgAvatar     = '/figma/blog/img-placeholders.png'
-
-const BLOGS = [
-  { img: imgBlog1, tags: [{ label: 'Technology' }, { label: 'Auto' }], title: 'A relentless pursuit of perfection in product design', desc: 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy.', author: 'Becky Conner', role: 'Content lead', date: 'Posted 11/12/2025' },
-  { img: imgBlog2, tags: [{ label: 'Technology' }, { label: 'Auto' }], title: 'A relentless pursuit of perfection in product design', desc: 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy.', author: 'Becky Conner', role: 'Content lead', date: 'Posted 11/12/2025' },
-  { img: imgBlog3, tags: [{ label: 'Technology' }, { label: 'Auto' }], title: 'A relentless pursuit of perfection in product design', desc: 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy.', author: 'Becky Conner', role: 'Content lead', date: 'Posted 11/12/2025' },
-  { img: imgBlog4, tags: [{ label: 'Technology' }, { label: 'Auto' }], title: 'A relentless pursuit of perfection in product design', desc: 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy.', author: 'Becky Conner', role: 'Content lead', date: 'Posted 11/12/2025' },
-]
-
 const FILTERS = ['ALL', 'AUTO', 'FMCG', 'RETAIL', 'FSI', 'OTHERS']
 
-function BlogCard({ img, tags, title, desc, author, role, date, onClick }) {
+function BlogCard({ img, tags, title, desc, author, role, date, href }) {
   const [hovered, setHovered] = useState(false)
   return (
-    <div
+    <Link
+      href={href}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-      style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', cursor: onClick ? 'pointer' : 'default', background: CARD }}
+      style={{ display: 'block', position: 'relative', overflow: 'hidden', aspectRatio: '16/9', cursor: 'pointer', background: CARD, color: 'inherit', textDecoration: 'none' }}
     >
-      <img src={img} alt={title} style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+      <Image src={img} alt={title} fill sizes="100vw" style={{
+        objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)',
         transition: 'transform 0.6s ease',
       }} />
@@ -58,7 +50,7 @@ function BlogCard({ img, tags, title, desc, author, role, date, onClick }) {
               fontFamily: "'Saira Condensed', sans-serif",
               fontSize: 13, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase',
               color: '#fff',
-            }}>{t.label}</span>
+            }}>{t}</span>
           ))}
         </div>
         <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{date}</span>
@@ -112,11 +104,11 @@ function BlogCard({ img, tags, title, desc, author, role, date, onClick }) {
 
       {/* Green border on hover */}
       <div style={{ position: 'absolute', inset: 0, border: `2px solid ${G}`, opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
-    </div>
+    </Link>
   )
 }
 
-export default function BlogPage({ onNavigate }) {
+export default function BlogPage() {
   const [filter, setFilter] = useState('ALL')
   const { isMobile, isSmall } = useResponsive()
 
@@ -166,8 +158,18 @@ export default function BlogPage({ onNavigate }) {
       {/* ── Blog grid ────────────────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, width: '100%' }}>
-          {BLOGS.map((b, i) => (
-            <BlogCard key={i} {...b} onClick={i === 0 ? () => onNavigate('blog-read') : undefined} />
+          {BLOG_POSTS.map(post => (
+            <BlogCard
+              key={post.slug}
+              img={post.image}
+              tags={post.tags}
+              title={post.title}
+              desc={post.description}
+              author={post.author}
+              role={post.role}
+              date={post.dateLabel}
+              href={`/blogs/${post.slug}`}
+            />
           ))}
         </div>
         {/* Load more */}
@@ -190,28 +192,10 @@ export default function BlogPage({ onNavigate }) {
             <span style={{ color: '#fff' }}>you</span>
           </h2>
         </div>
-        <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
-          {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
-              {row.map((lbl, fi) => lbl ? (
-                <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input className="input-glow" placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-                </div>
-              ) : <div key={fi} style={{ flex: 1 }} />)}
-            </div>
-          ))}
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea className="input-glow" rows={6} placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
-          </div>
-          <button className="btn-outline" type="submit" style={{ background: 'transparent', color: '#fff', border: '1px solid #fff', height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isMobile ? '100%' : undefined }}>
-            Send Message
-          </button>
-        </form>
+        <ContactForm />
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

@@ -1,13 +1,17 @@
+'use client'
+
 // Careers Page — built from Figma design
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import useResponsive from './useResponsive'
-import { TEAM } from './teamRoster'
-import { TEAM_GROUPS } from './careersTeams'
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect'
+import { TEAM } from './lib/teamRoster'
+import { TEAM_GROUPS } from './lib/careersTeams'
 import JoinSection from './JoinSection'
 
 import Footer from './Footer'
-import { useNavigate } from 'react-router-dom'
-import { jobPath } from './routes'
+import { jobPath } from './lib/routes'
 import { BtnGreen, BtnOutline, G, DARK, CARD, MUTED, DIM, BORDER } from './careersAtoms'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
@@ -114,7 +118,7 @@ function Hero() {
   // column count has to be solved against whatever size it actually resolves to.
   const wallRef = useRef(null)
   const [box, setBox] = useState({ w: 0, h: 0 })
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = wallRef.current
     if (!el) return
     const measure = () => setBox({ w: el.clientWidth, h: el.clientHeight })
@@ -205,13 +209,13 @@ const OPEN_ROLES = TEAM_GROUPS.flatMap(g => g.openings.map(o => ({ ...o, team: g
 // blur past before they can be read.
 const MARQUEE_SPEED = 55 // px per second
 
-function OpenRoles({ onOpenJob }) {
+function OpenRoles() {
   const trackRef = useRef(null)
   const [duration, setDuration] = useState(0)
 
   // The track holds two copies of the list and the keyframe travels -50%, so
   // one loop covers exactly one copy — hence scrollWidth / 2.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = trackRef.current
     if (!el) return
     const measure = () => setDuration(el.scrollWidth / 2 / MARQUEE_SPEED)
@@ -251,14 +255,14 @@ function OpenRoles({ onOpenJob }) {
         >
           {[...OPEN_ROLES, ...OPEN_ROLES].map((job, i) => (
             <span key={i} style={{ display: 'flex', alignItems: 'center' }}>
-              <span
-                className="marquee-role" onClick={() => onOpenJob(job)}
+              <Link
+                href={jobPath(job)} className="marquee-role"
                 style={{
                   fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
                   fontSize: 'clamp(20px, 3vw, 34px)', textTransform: 'uppercase',
                   letterSpacing: '0.02em', color: '#fff', whiteSpace: 'nowrap',
                 }}
-              >{job.title}</span>
+              >{job.title}</Link>
               <span aria-hidden="true" style={{
                 color: G, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 400,
                 fontSize: 'clamp(20px, 3vw, 34px)', padding: '0 clamp(20px, 3vw, 40px)',
@@ -281,7 +285,7 @@ const byName = Object.fromEntries(TEAM.map(m => [m.name, m]))
 function TeamPhotos({ members }) {
   const gridRef = useRef(null)
   const [box, setBox] = useState({ w: 0, h: 0 })
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = gridRef.current
     if (!el) return
     const measure = () => setBox({ w: el.clientWidth, h: el.clientHeight })
@@ -496,7 +500,7 @@ function WeAreSection() {
         height: isSmall ? 'clamp(300px, 60vw, 785px)' : 785,
         overflow: 'hidden', marginTop: 'clamp(40px, 6vw, 60px)',
       }}>
-        <img src={imgTeam} alt="ConvergenSEE Team" style={{
+        <img src={imgTeam} alt="ConvergenSEE Team" loading="lazy" decoding="async" style={{
           width: '100%', height: '100%', objectFit: 'cover',
           pointerEvents: 'none',
         }} />
@@ -511,23 +515,23 @@ function WeAreSection() {
 
 // ─── Join The Chaos — Contact Form ───────────────────────────────────────────
 // ─── Careers Page ────────────────────────────────────────────────────────────
-export default function CareersPage({ onBack, onNavigate }) {
+export default function CareersPage() {
   const { isSmall } = useResponsive()
   // Every role has its own URL (/careers/copywriter) so an opening can be
   // linked straight from a job post; the detail view is that route's page.
-  const navigate = useNavigate()
-  const openJob = (j) => navigate(jobPath(j))
+  const router = useRouter()
+  const openJob = (j) => router.push(jobPath(j))
 
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
       <Hero />
-      <OpenRoles onOpenJob={openJob} />
+      <OpenRoles />
       <MeetTheTeams onOpenJob={openJob} />
       <WeAreSection />
       <JoinSection />
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

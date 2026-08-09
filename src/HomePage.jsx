@@ -1,50 +1,33 @@
-import { useRef, useState, useEffect, lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate, useNavigationType, useParams } from 'react-router-dom'
-import { PATH_FOR, keyForPath, useNavigateTo, findJobBySlug } from './routes'
+'use client'
+
+// ─── Home page ────────────────────────────────────────────────────────────────
+// Every section of the landing page, extracted from the old App.jsx (which also
+// held the SPA router). Routing now lives in app/; this file is purely the
+// home-page body.
+
+import { useRef, useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import { motion, useScroll, useTransform, useMotionValue, useSpring, animate } from 'framer-motion'
 import CHNCDock from './ui/dock'
 import useResponsive from './useResponsive'
-import { withPose } from './teamRoster'
+import { withPose } from './lib/teamRoster'
 import TeamMemberCard from './TeamMemberCard'
 import Footer from './Footer'
-
+import ContactForm from './ContactForm'
 import CHNCPlaceholder from './CHNCPlaceholder'
 
-// Lazy load heavy components — they load in background while user sees hero/clients
-const CHNCDashboard = lazy(() => import('./CHNCDashboard'))
-const AboutPage = lazy(() => import('./AboutPage'))
-const SolutionsPage = lazy(() => import('./SolutionsPage'))
-const CaseStudiesPage = lazy(() => import('./CaseStudiesPage'))
-const MahindraPage = lazy(() => import('./MahindraPage'))
-const TeamPage = lazy(() => import('./TeamPage'))
-const BlogPage = lazy(() => import('./BlogPage'))
-const BlogReadPage = lazy(() => import('./BlogReadPage'))
-const CareersPage = lazy(() => import('./CareersPage'))
-const WorkPage = lazy(() => import('./WorkPage'))
-const SocialsPage = lazy(() => import('./SocialsPage'))
-const JobPage = lazy(() => import('./JobPage'))
+// The dashboard is a 2,000-line interactive mock with timers and observers —
+// no SEO-relevant text, so it loads client-side only, behind the placeholder.
+const CHNCDashboard = dynamic(() => import('./CHNCDashboard'), { ssr: false, loading: () => <CHNCPlaceholder /> })
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
-const logoC    = '/figma/home/logo-c.svg'
-const logoText = '/figma/home/logo-text.svg'
 const teamPhoto= '/figma/home/img-logo-team1.png'
-const clientLL = '/figma/home/img-ll-logo1.png'
-const clientMG = '/figma/home/img-mg-logo.png'
-const clientMH = '/figma/home/img-mahindra-m.png'
-const clientMC = '/figma/home/img-mind-craft.png'
-const clientFV = '/figma/home/img-flickvid.png'
-const clientAP = '/figma/home/img-aptech-logo.png'
-const clientKT = '/figma/home/img-kotak-mf.png'
-const clientHM = '/figma/home/img-himalaya.png'
 const funnel1  = '/figma/home/funnel1.png'
-const platform = '/figma/home/img-asset11.png'
-const platformSide = '/figma/home/img-asset31.png'
 const realityImg = '/figma/home/reality.png'
 const testiPhoto = '/figma/home/img-image111.png'
 const boardImg = '/figma/home/board.png'
-const imgBlogs   = '/figma/blog/img-mahindra2.jpg'
-const imgSocials = '/creative-1.jpg'
-const imgWork    = '/figma/work/macbook2.png'
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const G = '#34cc32'
@@ -89,94 +72,6 @@ const BtnOutlineGreen = ({ children, style, className, ...props }) => (
     ...style,
   }}>{children}</button>
 )
-
-// ─── Nav ──────────────────────────────────────────────────────────────────────
-function Nav({ activePage = 'home', onNavigate }) {
-  const links = ['Home', 'About us', 'Solution', 'Case Studies', 'Blogs', 'Work', 'Career']
-  const targetFor = (l) => ({ Home: 'home', 'About us': 'about', Solution: 'solutions', 'Case Studies': 'case-studies', Blogs: 'blog', Work: 'work', Career: 'careers' }[l])
-  const { isSmall } = useResponsive()
-  const [open, setOpen] = useState(false)
-  const go = (l) => { onNavigate(targetFor(l)); setOpen(false) }
-  return (
-    <nav style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 300,
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '8px clamp(16px, 5vw, 100px)',
-      background: 'rgba(0,7,24,0.8)', backdropFilter: 'blur(10px)',
-    }}>
-      <div
-        style={{ display: 'flex', alignItems: 'center', gap: 0, height: 24, position: 'relative', width: 176, cursor: 'pointer' }}
-        onClick={() => onNavigate('home')}
-      >
-        <img src={logoC} alt="C" style={{ height: 24, width: 27, objectFit: 'contain' }} />
-        <img src={logoText} alt="ConvergenSEE" style={{ height: 18, width: 146, objectFit: 'contain', marginLeft: 4 }} />
-      </div>
-
-      {!isSmall && (
-        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-          {links.map((l) => {
-            const isActive = activePage === targetFor(l)
-            return (
-              <a
-                key={l}
-                className={isActive ? '' : 'nav-link'}
-                onClick={(e) => { e.preventDefault(); go(l) }}
-                style={{
-                  padding: '10px', fontFamily: "'Saira Condensed', sans-serif",
-                  fontSize: 16, textTransform: 'uppercase', cursor: 'pointer',
-                  textDecoration: 'none',
-                  color: isActive ? G : MUTED,
-                  fontWeight: isActive ? 700 : 400,
-                }}
-              >{l}</a>
-            )
-          })}
-        </div>
-      )}
-
-      {!isSmall && <BtnOutlineGreen>Let's Connect</BtnOutlineGreen>}
-
-      {isSmall && (
-        <button
-          aria-label="Menu"
-          onClick={() => setOpen((o) => !o)}
-          style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 5, padding: 8 }}
-        >
-          {[0, 1, 2].map((i) => (
-            <span key={i} style={{
-              width: 24, height: 2, background: '#fff', display: 'block',
-              transition: 'transform 0.25s ease, opacity 0.25s ease',
-              transform: open ? (i === 0 ? 'translateY(7px) rotate(45deg)' : i === 2 ? 'translateY(-7px) rotate(-45deg)' : 'none') : 'none',
-              opacity: open && i === 1 ? 0 : 1,
-            }} />
-          ))}
-        </button>
-      )}
-
-      {isSmall && open && (
-        <div style={{
-          position: 'absolute', top: '100%', left: 0, right: 0,
-          background: 'rgba(0,7,24,0.97)', backdropFilter: 'blur(10px)',
-          borderTop: `1px solid ${BORDER}`,
-          display: 'flex', flexDirection: 'column', padding: '12px clamp(16px, 5vw, 100px) 24px', gap: 4,
-        }}>
-          {links.map((l) => {
-            const isActive = activePage === targetFor(l)
-            return (
-              <a key={l} onClick={(e) => { e.preventDefault(); go(l) }} style={{
-                padding: '12px 0', fontFamily: "'Saira Condensed', sans-serif",
-                fontSize: 18, textTransform: 'uppercase', cursor: 'pointer', textDecoration: 'none',
-                color: isActive ? G : MUTED, fontWeight: isActive ? 700 : 400,
-                borderBottom: `1px solid ${BORDER}`,
-              }}>{l}</a>
-            )
-          })}
-          <BtnOutlineGreen style={{ marginTop: 14 }}>Let's Connect</BtnOutlineGreen>
-        </div>
-      )}
-    </nav>
-  )
-}
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -291,50 +186,6 @@ function About() {
   )
 }
 
-// ─── Features ─────────────────────────────────────────────────────────────────
-const featuresLeft = [
-  { name: 'CreateIT', desc: 'Design, review and publish creatives across platforms' },
-  { name: 'LocateIT', desc: 'Manage locations, listings and local presence at scale' },
-  { name: 'AigenIT', desc: 'AI agents that automate workflows end to end' },
-  { name: 'SocialiseIT', desc: 'Schedule, publish and track social media content' },
-  { name: 'ScriptIT', desc: 'Generate scripts with AI in your brand voice' },
-  { name: 'InvoiceIT', desc: 'Streamline proposals, invoicing and vendor management' },
-]
-const featuresRight = [
-  { name: 'AmplifyIT', desc: 'Run and optimise paid campaigns across channels' },
-  { name: 'InsightIT', desc: 'Real-time dashboards and performance analytics' },
-  { name: 'InfluenceIT', desc: 'Discover, brief and manage influencer partnerships' },
-  { name: 'SearchIT', desc: 'SEO tools and search visibility management' },
-  { name: 'ConnectIT', desc: 'CRM integrations and customer data pipelines' },
-  { name: 'TrackIT', desc: 'Campaign attribution and conversion tracking' },
-]
-
-function FeatureColumn({ items, align = 'left' }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, width: 260 }}>
-      {items.map((f) => {
-        const split = f.name.replace(/(IT)$/, '|IT').split('|')
-        return (
-          <div key={f.name} style={{
-            background: 'transparent', padding: '20px 22px',
-            border: '1px solid rgba(255,255,255,0.15)',
-            borderLeft: align === 'left' ? `2px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
-            borderRight: align === 'right' ? `2px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
-          }}>
-            <p style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 20, fontWeight: 700,
-              lineHeight: 1, marginBottom: 6, color: '#fff',
-            }}>{split[0]}<span style={{ color: G }}>{split[1]}</span></p>
-            <p style={{
-              fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM, lineHeight: '16px',
-            }}>{f.desc}</p>
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
 // ─── CHNC ─────────────────────────────────────────────────────────────────────
 const chncStats = [
   { num: '200+', label: 'Clients served across industries' },
@@ -354,7 +205,8 @@ const platformFeatures = [
   { title: 'InfluenceIT',             desc: 'Posting isn’t presence. We turn your content into real connection.' },
 ]
 
-function CHNC({ onNavigate }) {
+function CHNC() {
+  const router = useRouter()
   const scrollRef = useRef()
   const { isSmall, isMobile, isTablet, width } = useResponsive()
   const cols = isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'
@@ -597,7 +449,7 @@ function CHNC({ onNavigate }) {
                       </div>
                       {vLink ? (
                         <button
-                          onClick={() => onNavigate && onNavigate('solutions')}
+                          onClick={() => router.push('/solutions')}
                           style={{
                             background: 'transparent', color: G, border: 'none', padding: 0,
                             fontFamily: "'Saira Condensed', sans-serif", fontSize: 15, fontWeight: 700,
@@ -607,7 +459,7 @@ function CHNC({ onNavigate }) {
                         >Learn more →</button>
                       ) : (
                         <button
-                          onClick={() => onNavigate && onNavigate('solutions')}
+                          onClick={() => router.push('/solutions')}
                           style={{
                             background: G, color: DARK, border: 'none',
                             height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
@@ -631,9 +483,7 @@ function CHNC({ onNavigate }) {
                     WebkitBackfaceVisibility: 'hidden',
                   }}
                 >
-                  <Suspense fallback={<CHNCPlaceholder />}>
-                    <CHNCDashboard tilesTrigger={tilesReady} activeModule={activeModule} onModuleChange={setActiveModule} />
-                  </Suspense>
+                  <CHNCDashboard tilesTrigger={tilesReady} activeModule={activeModule} onModuleChange={setActiveModule} />
                 </motion.div>
               </div>
               <motion.div
@@ -764,7 +614,7 @@ function BrandAudit() {
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: isSmall ? 'stretch' : 'flex-end', width: '100%' }}>
-          {['Your name', 'Your name', 'Your name'].map((lbl, i) => (
+          {['Your name', 'Your email', 'Company name'].map((lbl, i) => (
             <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
               <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
               <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
@@ -847,119 +697,11 @@ function Testimonials() {
   )
 }
 
-// ─── Want More ────────────────────────────────────────────────────────────────
-const moreCards = [
-  { img: imgBlogs, label: 'Blogs', desc: 'Insights, trends & thought leadership from our team', page: 'blog' },
-  { img: imgSocials, label: 'Socials', desc: 'Follow our journey across platforms', page: 'socials' },
-  { img: imgWork, label: 'Work', desc: 'Real results for real brands — see what we built', page: 'work' },
-]
-
-function WantMoreCard({ img, label, desc, onClick }) {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-      style={{ position: 'relative', flex: 1, aspectRatio: '4/5', overflow: 'hidden', cursor: 'pointer', background: CARD }}
-    >
-      <img src={img} alt={label} style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
-        transform: hovered ? 'scale(1.06)' : 'scale(1)',
-        transition: 'transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)',
-      }} />
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: hovered ? 'rgba(0,7,24,0.85)' : 'rgba(0,7,24,0.35)',
-        transition: 'background 0.5s ease',
-      }} />
-
-      {/* Centre label — fades on hover */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        opacity: hovered ? 0 : 1,
-        transform: hovered ? 'scale(0.85)' : 'scale(1)',
-        transition: 'opacity 0.5s ease, transform 0.5s ease',
-        pointerEvents: 'none',
-      }}>
-        <p style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800,
-          fontSize: 'clamp(28px, 4vw, 56px)', textTransform: 'uppercase',
-          lineHeight: 1, color: '#fff', margin: 0, letterSpacing: '-0.02em',
-        }}>
-          Our <span style={{ color: G }}>{label}</span>
-        </p>
-      </div>
-
-      {/* Bottom gradient */}
-      <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, height: '50%',
-        background: 'linear-gradient(to top, rgba(0,7,24,0.95) 0%, transparent 100%)',
-        pointerEvents: 'none',
-        opacity: hovered ? 1 : 0,
-        transition: 'opacity 0.4s ease',
-      }} />
-
-      {/* Bottom — slides up on hover */}
-      <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, padding: '28px 24px',
-        transform: hovered ? 'translateY(0)' : 'translateY(100%)',
-        transition: 'transform 0.45s ease',
-      }}>
-        <div style={{ width: hovered ? 40 : 0, height: 2, background: G, marginBottom: 14, transition: 'width 0.35s ease' }} />
-        <p style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 32, fontWeight: 700,
-          color: '#fff', textTransform: 'uppercase', lineHeight: 1, marginBottom: 8,
-        }}>Our <span style={{ color: G }}>{label}</span></p>
-        <p style={{
-          fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED,
-          lineHeight: '20px', marginBottom: 16,
-          opacity: hovered ? 1 : 0,
-          transition: 'opacity 0.35s ease 0.1s',
-        }}>{desc}</p>
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 8,
-          opacity: hovered ? 1 : 0,
-          transition: 'opacity 0.35s ease 0.15s',
-        }}>
-          <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 700, color: G, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Explore</span>
-          <span style={{ color: G, fontSize: 18 }}>→</span>
-        </div>
-      </div>
-
-      {/* Green border on hover */}
-      <div style={{ position: 'absolute', inset: 0, border: `2px solid ${G}`, opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
-    </div>
-  )
-}
-
-function WantMore({ onNavigate }) {
-  const { isMobile } = useResponsive()
-  return (
-    <section id="want-more" style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <SectionLabel>More</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>
-            Want <span style={{ color: G }}>more?</span>
-          </h2>
-        </div>
-        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 8, width: '100%' }}>
-          {moreCards.map((c) => (
-            <WantMoreCard key={c.label} {...c} onClick={c.page ? () => onNavigate(c.page) : undefined} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 // ─── Team ─────────────────────────────────────────────────────────────────────
 // A slice of the real roster for the home-page strip — everyone here has a pose.
 const teamMembers = withPose.slice(0, 12)
 
-function Team({ onNavigate }) {
+function Team() {
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) 0' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 'clamp(40px, 6vw, 80px)', padding: '0 clamp(20px, 6vw, 100px)' }}>
@@ -978,7 +720,15 @@ function Team({ onNavigate }) {
         <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 160, background: 'linear-gradient(to left, #000718 60%, transparent)', pointerEvents: 'none' }} />
       </div>
       <div style={{ textAlign: 'center', marginTop: 40 }}>
-        <BtnOutlineGreen onClick={() => onNavigate('team')}>Meet them all</BtnOutlineGreen>
+        <Link href="/team" className="btn-outline" style={{
+          background: 'transparent', color: '#fff', border: '1px solid #fff',
+          height: 46, padding: '0 20px',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          boxSizing: 'border-box',
+          fontFamily: "'Saira Condensed', sans-serif",
+          fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
+          letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
+        }}>Meet them all</Link>
       </div>
     </section>
   )
@@ -1089,9 +839,9 @@ function AdvisoryBoard() {
   )
 }
 
+
 // ─── Contact ──────────────────────────────────────────────────────────────────
 function Contact() {
-  const { isMobile } = useResponsive()
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
@@ -1101,188 +851,28 @@ function Contact() {
             We will <span style={{ color: G }}>shoot</span> you
           </h2>
         </div>
-        <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%' }} onSubmit={e => e.preventDefault()}>
-          {[
-            [['Your name', 'Contact number']],
-            [['Company name', 'Designation']],
-            [['Your email', null]],
-          ].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
-              {row[0].map((lbl, fi) => lbl ? (
-                <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-                </div>
-              ) : <div key={fi} style={{ flex: 1 }} />)}
-            </div>
-          ))}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%' }} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <BtnGreen type="submit">Send Message</BtnGreen>
-          </div>
-        </form>
+        <ContactForm />
       </div>
     </section>
   )
 }
 
-// ─── App ──────────────────────────────────────────────────────────────────────
-// ─── TEMP DEV TOOL — device preview. Remove before final launch. ───────────────
-const PREVIEW_DEVICES = [
-  { label: 'iPhone', w: 390, h: 844 },
-  { label: 'iPad', w: 820, h: 1180 },
-  { label: 'Air 13" (1280)', w: 1280, h: 800 },
-  { label: 'Air 13" (1440)', w: 1440, h: 900 },
-  { label: 'MBP 14"', w: 1512, h: 982 },
-  { label: 'MBP 16"', w: 1728, h: 1117 },
-]
-
-function DevicePreview() {
-  const { width: screenW } = useResponsive()
-  const [w, setW] = useState(1440)
-  const [h, setH] = useState(900)
-  const [activeLabel, setActiveLabel] = useState('Air 13" (1440)')
-
-  const pick = (d) => { setW(d.w); setH(d.h); setActiveLabel(d.label) }
-  const setCustom = (val) => { setW(val); setActiveLabel('Custom') }
-
-  const TOOLBAR = 92
-  const availW = screenW - 48
-  const availH = (typeof window !== 'undefined' ? window.innerHeight : 900) - TOOLBAR - 48
-  const scale = Math.min(1, availW / w, availH / h)
-
-  return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 100000, background: '#05060a', display: 'flex', flexDirection: 'column' }}>
-      {/* Toolbar */}
-      <div style={{ height: TOOLBAR, flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '0 20px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-          {PREVIEW_DEVICES.map((d) => (
-            <button key={d.label} onClick={() => pick(d)} style={{
-              fontFamily: "'Archivo', sans-serif", fontSize: 13,
-              padding: '6px 12px', cursor: 'pointer',
-              background: activeLabel === d.label ? '#34cc32' : 'transparent',
-              color: activeLabel === d.label ? '#000718' : '#fff',
-              border: `1px solid ${activeLabel === d.label ? '#34cc32' : 'rgba(255,255,255,0.2)'}`,
-            }}>{d.label}</button>
-          ))}
-          <a href={typeof window !== 'undefined' ? window.location.pathname : '/'} style={{ marginLeft: 'auto', fontFamily: "'Archivo', sans-serif", fontSize: 13, padding: '6px 12px', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>✕ Exit preview</a>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <input type="range" min={320} max={1920} step={1} value={w} onChange={(e) => setCustom(Number(e.target.value))} style={{ width: 320, accentColor: '#34cc32' }} />
-          <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#34cc32', fontWeight: 700 }}>{w} × {h}px · {Math.round(scale * 100)}%</span>
-          <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>(drag slider for any width)</span>
-        </div>
-      </div>
-
-      {/* Stage */}
-      <div style={{ flex: 1, overflow: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: 24 }}>
-        <div style={{ width: w * scale, height: h * scale, flexShrink: 0 }}>
-          <iframe
-            title="preview"
-            src={typeof window !== 'undefined' ? window.location.pathname : '/'}
-            style={{
-              width: w, height: h, border: '1px solid rgba(255,255,255,0.2)', background: '#000718',
-              transform: `scale(${scale})`, transformOrigin: 'top left', display: 'block',
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
 
 // The landing page — every section that used to render when page === 'home'.
-function HomePage() {
-  const navTo = useNavigateTo()
+export default function HomePage() {
   return (
     <>
       <Hero />
       <Clients />
       <About />
-      <CHNC onNavigate={navTo} />
+      <CHNC />
       <Impact />
       <BrandAudit />
       <Testimonials />
-      <Team onNavigate={navTo} />
+      <Team />
       <AdvisoryBoard />
       <Contact />
-      <Footer onNavigate={navTo} />
+      <Footer />
     </>
-  )
-}
-
-// A role's own URL — /careers/copywriter — resolved back to its data. An
-// unknown slug (stale link, role filled) falls back to the openings list.
-function JobRoute() {
-  const { role } = useParams()
-  const navigate = useNavigate()
-  const navTo = useNavigateTo()
-  const job = findJobBySlug(role)
-  if (!job) return <Navigate to={PATH_FOR.careers} replace />
-  return <JobPage job={job} onBack={() => navigate(PATH_FOR.careers)} onNavigate={navTo} />
-}
-
-// Landing on a new URL should put you at the top of it, the way clicking a
-// nav link used to. Back and forward are left alone so the browser can restore
-// the scroll position you left — going back to the openings list should drop
-// you at the role you clicked, not the top of the page.
-function ScrollToTop() {
-  const { pathname } = useLocation()
-  const navType = useNavigationType()
-  useEffect(() => {
-    if (navType !== 'POP') window.scrollTo(0, 0)
-  }, [pathname, navType])
-  return null
-}
-
-function Site() {
-  const { pathname } = useLocation()
-  const navTo = useNavigateTo()
-  const goHome = () => navTo('home')
-  const inIframe = typeof window !== 'undefined' && window.self !== window.top
-
-  return (
-    <>
-      <ScrollToTop />
-      {!inIframe && (
-        <a href={`${pathname}?preview`} style={{
-          position: 'fixed', bottom: 16, right: 16, zIndex: 99999,
-          background: '#34cc32', color: '#000718', fontFamily: "'Archivo', sans-serif", fontSize: 13, fontWeight: 700,
-          padding: '10px 14px', borderRadius: 4, boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
-        }}>📱 Preview screen sizes</a>
-      )}
-      <Nav activePage={keyForPath(pathname)} onNavigate={navTo} />
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#000718' }} />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage onNavigateHome={goHome} onNavigate={navTo} />} />
-          <Route path="/solutions" element={<SolutionsPage onNavigate={navTo} />} />
-          <Route path="/case-studies" element={<CaseStudiesPage onNavigate={navTo} />} />
-          <Route path="/case-studies/mahindra" element={<MahindraPage onNavigate={navTo} />} />
-          <Route path="/team" element={<TeamPage onBack={goHome} onNavigate={navTo} />} />
-          <Route path="/blogs" element={<BlogPage onNavigate={navTo} />} />
-          <Route path="/blogs/:slug" element={<BlogReadPage onBack={() => navTo('blog')} onNavigate={navTo} />} />
-          <Route path="/careers" element={<CareersPage onBack={goHome} onNavigate={navTo} />} />
-          <Route path="/careers/:role" element={<JobRoute />} />
-          <Route path="/work" element={<WorkPage onBack={goHome} onNavigate={navTo} />} />
-          <Route path="/socials" element={<SocialsPage onBack={goHome} onNavigate={navTo} />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
-    </>
-  )
-}
-
-export default function App() {
-  const isPreviewShell = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('preview')
-  if (isPreviewShell) return <DevicePreview />
-
-  return (
-    <BrowserRouter>
-      <Site />
-    </BrowserRouter>
   )
 }

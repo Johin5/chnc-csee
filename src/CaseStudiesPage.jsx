@@ -1,8 +1,14 @@
+'use client'
+
 // Case Studies Page — built from Figma node 1:1855 (Landing Page - Dark-cASE STUDY)
 import { useRef, useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 import useResponsive from './useResponsive'
 
 import Footer from './Footer'
+import ContactForm from './ContactForm'
+import { PATH_FOR } from './lib/routes'
 const G     = '#34cc32'
 const DARK  = '#000718'
 const CARD  = '#0f1520'
@@ -63,7 +69,7 @@ const CASES = [
 const INDUSTRIES = ['AUTO', 'ALL', 'FMCG', 'RETAIL', 'FSI', 'OTHERS']
 
 // ─── Components ───────────────────────────────────────────────────────────────
-function CaseCard({ c, onClick }) {
+function CaseCard({ c, href }) {
   const [hovered, setHovered] = useState(false)
   const videoRef = useRef(null)
   // Freeze the clip on the frame under the cursor while the stats are showing
@@ -74,12 +80,13 @@ function CaseCard({ c, onClick }) {
     if (on) v.pause()
     else v.play().catch(() => {})
   }
+  const Wrapper = href ? Link : 'div'
   return (
-    <div
+    <Wrapper
+      {...(href ? { href } : {})}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={onClick}
-      style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', cursor: onClick ? 'pointer' : 'default', background: '#1a2235' }}
+      style={{ position: 'relative', display: 'block', overflow: 'hidden', aspectRatio: '16/9', cursor: href ? 'pointer' : 'default', background: '#1a2235', color: 'inherit', textDecoration: 'none' }}
     >
       {c.video ? (
         <video
@@ -95,8 +102,8 @@ function CaseCard({ c, onClick }) {
           <source src={c.video} type="video/mp4" />
         </video>
       ) : (
-        <img src={c.photo} alt={c.name} style={{
-          position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+        <Image src={c.photo} alt={c.name} fill sizes="100vw" style={{
+          objectFit: 'cover',
           transform: hovered ? 'scale(1.04)' : 'scale(1)',
           transition: 'transform 0.6s ease',
         }} />
@@ -164,11 +171,11 @@ function CaseCard({ c, onClick }) {
 
       {/* Green border on hover */}
       <div style={{ position: 'absolute', inset: 0, border: `2px solid ${G}`, opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none' }} />
-    </div>
+    </Wrapper>
   )
 }
 
-export default function CaseStudiesPage({ onNavigate }) {
+export default function CaseStudiesPage() {
   const { isMobile, isSmall } = useResponsive()
   return (
     <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
@@ -219,7 +226,7 @@ export default function CaseStudiesPage({ onNavigate }) {
               <CaseCard
                 key={i}
                 c={c}
-                onClick={i === 0 && onNavigate ? () => onNavigate('mahindra') : undefined}
+                href={i === 0 ? PATH_FOR['mahindra'] : undefined}
               />
             ))}
           </div>
@@ -256,31 +263,10 @@ export default function CaseStudiesPage({ onNavigate }) {
           </h2>
         </div>
 
-        <form style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }} onSubmit={e => e.preventDefault()}>
-          {[['Your name', 'Contact number'], ['Company name', 'Designation'], ['Your email', null]].map((row, ri) => (
-            <div key={ri} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
-              {row.map((lbl, fi) => lbl ? (
-                <div key={fi} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-                  <input placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-                </div>
-              ) : <div key={fi} style={{ flex: 1 }} />)}
-            </div>
-          ))}
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>Requirements</label>
-            <textarea rows={6} placeholder="Enter here" className="input-glow" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', padding: '13px 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', resize: 'vertical', width: '100%', boxSizing: 'border-box' }} />
-          </div>
-          <button type="submit" className="btn-outline" style={{
-            background: 'transparent', color: '#fff', border: '1px solid #fff',
-            height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
-            fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-            cursor: 'pointer', width: isMobile ? '100%' : 'auto',
-          }}>Send Message</button>
-        </form>
+        <ContactForm />
       </section>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   )
 }

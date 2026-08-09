@@ -1,3 +1,61 @@
+/* ── Fonts (self-hosted, latin subset) ───────────────────────────────────────
+   Family names must stay 'Archivo' / 'Saira Condensed' — hundreds of inline
+   style objects reference them literally. */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('/fonts/archivo-latin-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/saira-condensed-latin-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/saira-condensed-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/saira-condensed-latin-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/saira-condensed-latin-800.woff2') format('woff2');
+}
+
+/* ── Base (was index.html <style>) ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: #000718; color: #fff; font-family: 'Archivo', sans-serif; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+.ticker-wrap { position: relative; overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
+.ticker-track { display: flex; align-items: center; gap: 80px; width: max-content; animation: ticker 20s linear infinite; }
+.ticker-track:hover { animation-play-state: paused; }
+.ticker-item { flex-shrink: 0; display: flex; align-items: center; }
+.ticker-item img { height: 40px; width: auto; max-width: 168px; object-fit: contain; opacity: 0.72; transition: opacity 0.2s ease, transform 0.2s ease; }
+.ticker-item img:hover { opacity: 1; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.chnc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1240px; margin: 0 auto; padding: 0 100px; }
+.stat-card { background: #0f1520; border: 1px solid rgba(52,204,50,0.15); padding: 40px 30px; }
+.stat-num { font-family: 'Saira Condensed', sans-serif; font-size: 56px; font-weight: 800; color: #34cc32; line-height: 1; }
+.stat-label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 8px; }
+
 /* ── Responsive safety net ───────────────────────────────────────────────────── */
 html, body { overflow-x: hidden; max-width: 100%; }
 img, video, svg { max-width: 100%; }
@@ -220,8 +278,8 @@ img, video, svg { max-width: 100%; }
   transform: scale(1.05);
 }
 
-/* Open-positions marquee — reuses the global @keyframes ticker (index.html),
-   which translates a doubled track by -50% for a seamless loop. Duration is set
+/* Open-positions marquee — reuses the global @keyframes ticker above, which
+   translates a doubled track by -50% for a seamless loop. Duration is set
    inline from the measured track width so the speed stays readable at any
    viewport instead of racing on wide screens. */
 .marquee-track {
