@@ -174,7 +174,7 @@ export default function MahindraPage() {
               { num: '2.', text: 'Inconsistent local presence across thousands of agents' },
               { num: '3.', text: 'Data-driven insights revealed key performance metrics, highlighting areas for optimization and growth strategies.' },
             ].map((item, i) => (
-              <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 400, maxWidth: 400, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 400, maxWidth: isSmall ? 'none' : 400, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(36px, 6vw, 50px)', lineHeight: 1, color: G, margin: 0, textTransform: 'uppercase' }}>{item.num}</p>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{item.text}</p>
               </div>
@@ -203,7 +203,7 @@ export default function MahindraPage() {
               { val: '96%',   label: 'Surge in website actions in just 3 months', tag: 'AUTOMOBILE BRAND' },
               { val: '1.3M+', label: 'Fraud attempts tackled and resolved',        tag: 'FINANCE BRAND' },
             ].map((s, i) => (
-              <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 610, maxWidth: 610, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{s.label}</p>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 16, color: G, textTransform: 'uppercase', margin: 0 }}>{s.tag}</p>

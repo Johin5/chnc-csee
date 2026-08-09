@@ -369,12 +369,17 @@ function CHNC() {
       </div>
 
       <div ref={scrollRef} style={{ position: 'relative' }}>
-        <div style={{ height: '100vh', position: 'relative' }}>
+        <div style={{ height: isSmall ? 'auto' : '100vh', position: 'relative' }}>
+          {/* Small screens: no 100vh scroll-pin (the shrunken dashboard left a
+              huge blank gap) — normal flow, with bottom padding reserving room
+              for the absolutely-positioned dock below the dashboard. */}
           <div style={{
-            position: 'sticky', top: 84, height: 'calc(100vh - 220px)',
+            ...(isSmall
+              ? { position: 'relative', paddingTop: 20, paddingBottom: 110 }
+              : { position: 'sticky', top: 84, height: 'calc(100vh - 220px)', paddingTop: '20px' }),
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'flex-start',
-            paddingTop: '20px', overflow: 'visible',
+            overflow: 'visible',
           }}>
             <div style={{ position: 'relative', width: isSmall ? '92%' : dashW, maxWidth: isSmall ? '1060px' : undefined,
               transform: (!isSmall && cardVisible) ? `translateX(${shiftX}px)` : 'translateX(0)',
@@ -455,6 +460,8 @@ function CHNC() {
                             fontFamily: "'Saira Condensed', sans-serif", fontSize: 15, fontWeight: 700,
                             textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer',
                             alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 8,
+                            // Small screens: pad the text link up to a >=44px tap target
+                            ...(isSmall ? { minHeight: 44 } : {}),
                           }}
                         >Learn more →</button>
                       ) : (
@@ -821,7 +828,9 @@ function BoardCard({ member }) {
 }
 
 function AdvisoryBoard() {
-  const { isMobile } = useResponsive()
+  // Stack below 1024px too — three fixed-height portrait cards squeezed into a
+  // tablet width crop the faces badly.
+  const { isSmall } = useResponsive()
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
@@ -831,7 +840,7 @@ function AdvisoryBoard() {
             <span style={{ color: G }}>Advisory </span>board
           </h2>
         </div>
-        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 16, width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 16, width: '100%' }}>
           {boardMembers.map((m, i) => <BoardCard key={i} member={m} />)}
         </div>
       </div>

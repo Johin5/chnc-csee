@@ -297,11 +297,13 @@ function ProjectTile({ project, onClick }) {
 // ─── Case Study Modal ─────────────────────────────────────────────────────────
 function CaseStudyModal({ project, onClose }) {
   const { isMobile, isSmall } = useResponsive()
+  // Fixed nav is 48px tall on small screens, 62px (with 106px page offset) on desktop
+  const navOffset = isSmall ? 48 : 106
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: DARK, overflow: 'auto', fontFamily: "'Archivo', sans-serif", color: '#fff' }}>
 
       {/* Breadcrumb nav — sits just below the main nav */}
-      <div style={{ marginTop: 106, position: 'sticky', top: 106, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px clamp(20px, 6vw, 60px)', background: 'rgba(0,7,24,0.95)', backdropFilter: 'blur(16px)', borderBottom: `1px solid ${BORDER}` }}>
+      <div style={{ marginTop: navOffset, position: 'sticky', top: navOffset, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px clamp(20px, 6vw, 60px)', background: 'rgba(0,7,24,0.95)', backdropFilter: 'blur(16px)', borderBottom: `1px solid ${BORDER}` }}>
         <div
           onClick={onClose}
           style={{ display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED }}
@@ -313,7 +315,7 @@ function CaseStudyModal({ project, onClose }) {
           <span style={{ color: DIM }}>›</span>
           <span style={{ color: '#fff' }}>{project.name}</span>
         </div>
-        <button onClick={onClose} style={{ background: 'none', border: `1px solid ${BORDER}`, color: '#fff', width: 36, height: 36, cursor: 'pointer', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.2s, color 0.2s' }}
+        <button onClick={onClose} style={{ background: 'none', border: `1px solid ${BORDER}`, color: '#fff', width: isSmall ? 42 : 36, height: isSmall ? 42 : 36, flexShrink: 0, cursor: 'pointer', fontSize: isSmall ? 15 : 13, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.2s, color 0.2s' }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = G; e.currentTarget.style.color = G }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = '#fff' }}>✕</button>
       </div>

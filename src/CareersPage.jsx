@@ -324,7 +324,7 @@ function TeamPhotos({ members }) {
 }
 
 function MeetTheTeams({ onOpenJob }) {
-  const { isSmall } = useResponsive()
+  const { isMobile, isSmall } = useResponsive()
   // Index 0 is the "All" tab; every other index is TEAM_GROUPS[active - 1].
   const [active, setActive] = useState(0)
   const group = active ? TEAM_GROUPS[active - 1] : null
@@ -389,7 +389,11 @@ function MeetTheTeams({ onOpenJob }) {
         {openings.length ? (
           <div style={{
             display: 'grid', gap: 'clamp(12px, 1.6vw, 20px)', width: '100%',
-            gridTemplateColumns: isSmall ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+            // minmax(0, …) stops the 5/2 aspect-ratio tiles transferring their
+            // content min-height into a min-width that blows out narrow viewports
+            gridTemplateColumns: isMobile
+              ? 'minmax(0, 1fr)'
+              : isSmall ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, 1fr)',
           }}>
             {openings.map(job => (
               <button

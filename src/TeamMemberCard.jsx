@@ -152,12 +152,12 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
             {bio.map(([label, value], i) => (
               <div key={label} style={{ marginTop: i ? 10 : 0 }}>
                 <p style={{
-                  fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 11,
+                  fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: isSmall ? 12 : 11,
                   textTransform: 'uppercase', letterSpacing: '1.4px', color: G,
                   margin: '0 0 2px',
                 }}>{label}</p>
                 <p style={{
-                  fontFamily: "'Archivo', sans-serif", fontSize: 11.5, lineHeight: 1.4,
+                  fontFamily: "'Archivo', sans-serif", fontSize: isSmall ? 12.5 : 11.5, lineHeight: 1.4,
                   color: 'rgba(255,255,255,0.92)', margin: 0,
                 }}>{value}</p>
               </div>

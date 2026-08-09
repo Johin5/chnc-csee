@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { PATH_FOR, keyForPath } from './lib/routes'
-import useResponsive from './useResponsive'
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
 const logoC    = '/figma/home/logo-c.svg'
@@ -33,7 +32,6 @@ export default function Nav() {
   const links = ['Home', 'About us', 'Solution', 'Case Studies', 'Blogs', 'Work', 'Career']
   const targetFor = (l) => ({ Home: 'home', 'About us': 'about', Solution: 'solutions', 'Case Studies': 'case-studies', Blogs: 'blog', Work: 'work', Career: 'careers' }[l])
   const activePage = keyForPath(usePathname() || '/')
-  const { isSmall } = useResponsive()
   const [open, setOpen] = useState(false)
   return (
     <nav style={{
@@ -51,8 +49,7 @@ export default function Nav() {
         <img src={logoText} alt="ConvergenSEE" style={{ height: 18, width: 146, objectFit: 'contain', marginLeft: 4 }} />
       </Link>
 
-      {!isSmall && (
-        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+      <div className="nav-desktop" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
           {links.map((l) => {
             const isActive = activePage === targetFor(l)
             return (
@@ -70,13 +67,12 @@ export default function Nav() {
               >{l}</Link>
             )
           })}
-        </div>
-      )}
+      </div>
 
-      {!isSmall && <BtnOutlineGreen>Let's Connect</BtnOutlineGreen>}
+      <BtnOutlineGreen className="nav-desktop">Let's Connect</BtnOutlineGreen>
 
-      {isSmall && (
-        <button
+      <button
+          className="nav-mobile"
           aria-label="Menu"
           onClick={() => setOpen((o) => !o)}
           style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 5, padding: 8 }}
@@ -89,11 +85,10 @@ export default function Nav() {
               opacity: open && i === 1 ? 0 : 1,
             }} />
           ))}
-        </button>
-      )}
+      </button>
 
-      {isSmall && open && (
-        <div style={{
+      {open && (
+        <div className="nav-mobile" style={{
           position: 'absolute', top: '100%', left: 0, right: 0,
           background: 'rgba(0,7,24,0.97)', backdropFilter: 'blur(10px)',
           borderTop: `1px solid ${BORDER}`,

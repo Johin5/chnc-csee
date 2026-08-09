@@ -64,6 +64,7 @@ const Pill = ({ label, active, onClick }) => (
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
 function Hero({ active, onSelect }) {
+  const { isSmall } = useResponsive()
   const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AigenIT','SearchIT','InvoiceIT']
 
   return (
@@ -81,7 +82,7 @@ function Hero({ active, onSelect }) {
       {/* headline */}
       <h1 style={{
         fontFamily: "'Saira Condensed', sans-serif",
-        fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
+        fontSize: isSmall ? 'clamp(48px, 12.2vw, 150px)' : 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
         textTransform: 'uppercase', letterSpacing: '-3px',
         margin: 0, whiteSpace: 'nowrap',
       }}>
@@ -196,12 +197,17 @@ const DEFAULT_STEPS = [
 ]
 
 function WorkflowStack({ steps, count }) {
+  const { isSmall } = useResponsive()
   const CARD_H = 68, GAP = 28, SLOT = CARD_H + GAP, PEEK = 18, MAX_VIS = 4
 
   const stackedN = Math.max(0, count - MAX_VIS)
 
+  // In the small-screen column layout, `flex: 1` resolves to a 0-height flex
+  // basis and collapses the stack — give it a fixed height + full width there.
   return (
-    <div style={{ flex: 1, height: 540, position: 'relative', overflow: 'hidden' }}>
+    <div style={isSmall
+      ? { width: '100%', flexShrink: 0, height: 540, position: 'relative', overflow: 'hidden' }
+      : { flex: 1, height: 540, position: 'relative', overflow: 'hidden' }}>
       <style>{`
         @keyframes growW { from { width: 0 } to { width: 50% } }
         @keyframes growH { from { height: 0 } to { height: 100% } }
@@ -256,7 +262,7 @@ function WorkflowStack({ steps, count }) {
               transition: 'background 0.4s ease',
             }}>
               {isStat ? (
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 32, color: G, lineHeight: '36px', margin: 0, textAlign: 'center' }}>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: isSmall ? 24 : 32, color: G, lineHeight: isSmall ? '28px' : '36px', margin: 0, textAlign: 'center' }}>
                   {s.text}
                 </p>
               ) : (

@@ -133,6 +133,7 @@ function PlatformCard({ platform }) {
 }
 
 function PostCard({ post }) {
+  const { isSmall } = useResponsive()
   const [hovered, setHovered] = useState(false)
   const isVideo = post.type === 'video'
   return (
@@ -191,7 +192,7 @@ function PostCard({ post }) {
         background: 'rgba(0,7,24,0.7)', backdropFilter: 'blur(8px)',
         padding: '4px 10px',
       }}>
-        <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 10, fontWeight: 600, color: '#fff' }}>
+        <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: isSmall ? 12 : 10, fontWeight: 600, color: '#fff' }}>
           {post.platform}
         </span>
       </div>

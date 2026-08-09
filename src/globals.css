@@ -56,6 +56,17 @@ button { font-family: inherit; cursor: pointer; }
 .stat-num { font-family: 'Saira Condensed', sans-serif; font-size: 56px; font-weight: 800; color: #34cc32; line-height: 1; }
 .stat-label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 8px; }
 
+/* ── Nav breakpoint ──────────────────────────────────────────────────────────
+   Pure CSS so the server HTML is already correct on phones — no flash of the
+   desktop nav while React hydrates. Matches the BP.tablet (1024px) breakpoint
+   in useResponsive.js. !important because both variants carry inline display
+   styles. */
+.nav-mobile { display: none !important; }
+@media (max-width: 1024px) {
+  .nav-desktop { display: none !important; }
+  .nav-mobile { display: flex !important; }
+}
+
 /* ── Responsive safety net ───────────────────────────────────────────────────── */
 html, body { overflow-x: hidden; max-width: 100%; }
 img, video, svg { max-width: 100%; }

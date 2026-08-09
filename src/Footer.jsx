@@ -88,6 +88,9 @@ export function PoisonCTA({ style }) {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 export default function Footer() {
   const { isSmall } = useResponsive()
+  // On touch screens each link gets vertical padding so tap targets reach
+  // ~32px; the column gap shrinks to compensate, keeping the same rhythm.
+  const tapPad = isSmall ? { paddingTop: 9, paddingBottom: 9 } : null
 
   return (
     <footer style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', borderTop: '1px solid rgba(255,255,255,0.22)', color: '#fff' }}>
@@ -97,10 +100,10 @@ export default function Footer() {
           <PoisonCTA />
 
           {/* Quick Links */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: isSmall ? 2 : 20 }}>
             <p style={colTitle}>Quick links</p>
             {QUICK_LINKS.map(([label, target]) => (
-              <Link key={label} href={PATH_FOR[target]} className="footer-link" style={linkStyle}>
+              <Link key={label} href={PATH_FOR[target]} className="footer-link" style={{ ...linkStyle, ...tapPad }}>
                 <span style={{ color: G }}>›</span>{label}
               </Link>
             ))}
@@ -125,11 +128,11 @@ export default function Footer() {
             </div>
             <div>
               <p style={contactLabel}>Call us</p>
-              <a href="tel:+919091399139" style={{ ...contactText, display: 'block' }}>+91 9091399139</a>
+              <a href="tel:+919091399139" style={{ ...contactText, display: 'block', ...tapPad }}>+91 9091399139</a>
             </div>
             <div>
               <p style={contactLabel}>Email us</p>
-              <a href="mailto:letsconnect@convergenseeasia.com" style={{ ...contactText, display: 'block' }}>letsconnect@convergenseeasia.com</a>
+              <a href="mailto:letsconnect@convergenseeasia.com" style={{ ...contactText, display: 'block', ...tapPad }}>letsconnect@convergenseeasia.com</a>
             </div>
             <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
               {/* Instagram */}

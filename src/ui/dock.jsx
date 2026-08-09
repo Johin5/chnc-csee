@@ -8,6 +8,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
+import useResponsive from '../useResponsive'
 
 const items = [
   'InsightIT', 'LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT',
@@ -30,7 +31,7 @@ const itemVariants = {
   },
 }
 
-function DockItem({ label, mouseX, isActive, onSelect }) {
+function DockItem({ label, mouseX, isActive, onSelect, isSmall }) {
   const ref = useRef(null)
   const [hovered, setHovered] = useState(false)
 
@@ -56,8 +57,10 @@ function DockItem({ label, mouseX, isActive, onSelect }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width,
-        height,
+        // Small screens: no cursor-proximity magnification — fixed size with a
+        // >=44px tap target. Desktop keeps the spring-driven width/height.
+        width: isSmall ? 76 : width,
+        height: isSmall ? 44 : height,
         padding: 0,
         background: isActive ? 'rgba(52,204,50,0.15)' : hovered ? 'rgba(52,204,50,0.1)' : 'rgba(255,255,255,0.03)',
         border: isActive ? '1px solid rgba(52,204,50,0.8)' : hovered ? '1px solid rgba(52,204,50,0.5)' : '1px solid rgba(255,255,255,0.07)',
@@ -93,6 +96,7 @@ export default function CHNCDock({ triggerOpacity, activeModule, onSelect }) {
   const controls = useAnimation()
   const [triggered, setTriggered] = useState(false)
   const mouseX = useMotionValue(Infinity)
+  const { isSmall } = useResponsive()
 
   useEffect(() => {
     if (!triggerOpacity) return
@@ -110,7 +114,7 @@ export default function CHNCDock({ triggerOpacity, activeModule, onSelect }) {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', ...(isSmall ? { maxWidth: '100%', minWidth: 0 } : {}) }}>
 
         {/* Pulse glow on appear */}
         {triggered && <>
@@ -138,16 +142,25 @@ export default function CHNCDock({ triggerOpacity, activeModule, onSelect }) {
             position: 'relative', zIndex: 1,
             display: 'flex',
             alignItems: 'center',
-            gap: 14,
+            gap: isSmall ? 10 : 14,
             background: 'rgba(10,16,28,0.85)',
             border: '1px solid rgba(255,255,255,0.08)',
-            padding: '6px 10px',
+            padding: isSmall ? '8px 10px' : '6px 10px',
             backdropFilter: 'blur(12px)',
             WebkitBackdropFilter: 'blur(12px)',
+            // Small screens: 12 modules can't fit across the viewport, so the
+            // dock rail scrolls sideways instead of bleeding off both edges.
+            ...(isSmall ? {
+              maxWidth: '100%',
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              overscrollBehaviorX: 'contain',
+            } : {}),
           }}
         >
           {items.map((label) => (
-            <DockItem key={label} label={label} mouseX={mouseX} isActive={activeModule === label} onSelect={onSelect} />
+            <DockItem key={label} label={label} mouseX={mouseX} isActive={activeModule === label} onSelect={onSelect} isSmall={isSmall} />
           ))}
         </motion.div>
       </div>

@@ -35,7 +35,7 @@ export default function ContactForm() {
                 style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }}
               />
             </div>
-          ) : <div key={fi} style={{ flex: 1 }} />)}
+          ) : (isMobile ? null : <div key={fi} style={{ flex: 1 }} />))}
         </div>
       ))}
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 10 }}>

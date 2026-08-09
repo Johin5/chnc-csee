@@ -47,7 +47,7 @@ export default function JoinSection({ heading, sub, position }) {
 
       {/* File upload area */}
       <div style={{
-        width: isMobile ? '100%' : 882, maxWidth: 882, border: `1px dashed ${BORDER}`,
+        width: '100%', maxWidth: 882, border: `1px dashed ${BORDER}`,
         padding: 'clamp(20px, 4vw, 30px)', marginTop: 40, boxSizing: 'border-box',
       }}>
         <p style={{

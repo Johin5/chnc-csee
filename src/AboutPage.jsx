@@ -20,10 +20,10 @@ const imgValCard2    = '/figma/about/img-component135.jpg'
 
 // ─── Value card ───────────────────────────────────────────────────────────────
 function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
-  const { isMobile } = useResponsive()
+  const { isSmall } = useResponsive()
   return (
     <div className="card-hover" style={{
-      position: 'relative', width: isMobile ? '100%' : 610, maxWidth: 610, height: isMobile ? 'clamp(200px, 50vw, 300px)' : 300,
+      position: 'relative', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, height: isSmall ? 'clamp(200px, 50vw, 300px)' : 300,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       overflow: 'hidden', flexShrink: 0,
     }}>
@@ -184,7 +184,7 @@ export default function AboutPage() {
           </div>
 
           {/* Right: Bala polaroid gif */}
-          <div style={{ width: isSmall ? '100%' : 732, maxWidth: 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
+          <div style={{ width: isSmall ? '100%' : 732, maxWidth: isSmall ? 'none' : 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
             <div style={{ position: 'absolute', inset: 0, background: '#ffffff' }} />
             <Image src="/bala-polaroid.gif" alt="Letter from Bala" fill sizes="100vw" style={{
               objectFit: 'cover', transform: 'scale(1.15)', pointerEvents: 'none',
@@ -221,7 +221,7 @@ export default function AboutPage() {
 
           {/* 2×2 grid */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 1240, alignItems: 'center' }}>
-            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, width: '100%' }}>
               <ValueCard
                 line1="Walk"
                 line1Green
@@ -237,7 +237,7 @@ export default function AboutPage() {
                 bg={imgValCard2}
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, width: '100%' }}>
               <ValueCard
                 line1="OWN"
                 line1Green
@@ -246,7 +246,7 @@ export default function AboutPage() {
                 bg={imgValCard1}
               />
               <div className="card-hover" style={{
-                position: 'relative', width: isMobile ? '100%' : 610, maxWidth: 610, height: isMobile ? 'clamp(200px, 50vw, 300px)' : 300,
+                position: 'relative', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, height: isSmall ? 'clamp(200px, 50vw, 300px)' : 300,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 overflow: 'hidden', flexShrink: 0,
               }}>
