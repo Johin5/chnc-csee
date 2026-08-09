@@ -1,5 +1,5 @@
 {
-  "name": "framer-preview",
+  "name": "convergensee-website",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,6 +16,7 @@
     "lucide-react": "^0.577.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-router-dom": "^7.18.2",
     "unframer": "^4.1.2",
     "vite": "^8.0.0"
   }

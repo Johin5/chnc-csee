@@ -4,9 +4,10 @@ import useResponsive from './useResponsive'
 import { TEAM } from './teamRoster'
 import { TEAM_GROUPS } from './careersTeams'
 import JoinSection from './JoinSection'
-import JobPage from './JobPage'
 
 import Footer from './Footer'
+import { useNavigate } from 'react-router-dom'
+import { jobPath } from './routes'
 import { BtnGreen, BtnOutline, G, DARK, CARD, MUTED, DIM, BORDER } from './careersAtoms'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
@@ -512,12 +513,10 @@ function WeAreSection() {
 // ─── Careers Page ────────────────────────────────────────────────────────────
 export default function CareersPage({ onBack, onNavigate }) {
   const { isSmall } = useResponsive()
-  // Picking a role swaps the whole page for its detail view (Figma 1:1320) and
-  // returns to the top; going back drops you where the careers page left off.
-  const [job, setJob] = useState(null)
-  const openJob = (j) => { setJob(j); window.scrollTo(0, 0) }
-
-  if (job) return <JobPage job={job} onBack={() => setJob(null)} onNavigate={onNavigate} />
+  // Every role has its own URL (/careers/copywriter) so an opening can be
+  // linked straight from a job post; the detail view is that route's page.
+  const navigate = useNavigate()
+  const openJob = (j) => navigate(jobPath(j))
 
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>

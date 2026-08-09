@@ -1,4 +1,6 @@
 import { useRef, useState, useEffect, lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate, useNavigationType, useParams } from 'react-router-dom'
+import { PATH_FOR, keyForPath, useNavigateTo, findJobBySlug } from './routes'
 import { motion, useScroll, useTransform, useMotionValue, useSpring, animate } from 'framer-motion'
 import CHNCDock from './ui/dock'
 import useResponsive from './useResponsive'
@@ -20,6 +22,7 @@ const BlogReadPage = lazy(() => import('./BlogReadPage'))
 const CareersPage = lazy(() => import('./CareersPage'))
 const WorkPage = lazy(() => import('./WorkPage'))
 const SocialsPage = lazy(() => import('./SocialsPage'))
+const JobPage = lazy(() => import('./JobPage'))
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
 const logoC    = '/figma/home/logo-c.svg'
@@ -1165,7 +1168,7 @@ function DevicePreview() {
               border: `1px solid ${activeLabel === d.label ? '#34cc32' : 'rgba(255,255,255,0.2)'}`,
             }}>{d.label}</button>
           ))}
-          <a href="/" style={{ marginLeft: 'auto', fontFamily: "'Archivo', sans-serif", fontSize: 13, padding: '6px 12px', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>✕ Exit preview</a>
+          <a href={typeof window !== 'undefined' ? window.location.pathname : '/'} style={{ marginLeft: 'auto', fontFamily: "'Archivo', sans-serif", fontSize: 13, padding: '6px 12px', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>✕ Exit preview</a>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <input type="range" min={320} max={1920} step={1} value={w} onChange={(e) => setCustom(Number(e.target.value))} style={{ width: 320, accentColor: '#34cc32' }} />
@@ -1179,7 +1182,7 @@ function DevicePreview() {
         <div style={{ width: w * scale, height: h * scale, flexShrink: 0 }}>
           <iframe
             title="preview"
-            src="/"
+            src={typeof window !== 'undefined' ? window.location.pathname : '/'}
             style={{
               width: w, height: h, border: '1px solid rgba(255,255,255,0.2)', background: '#000718',
               transform: `scale(${scale})`, transformOrigin: 'top left', display: 'block',
@@ -1191,61 +1194,95 @@ function DevicePreview() {
   )
 }
 
-export default function App() {
-  const [page, setPageRaw] = useState('home')
-  const setPage = (p) => { setPageRaw(p); window.scrollTo(0, 0) }
+// The landing page — every section that used to render when page === 'home'.
+function HomePage() {
+  const navTo = useNavigateTo()
+  return (
+    <>
+      <Hero />
+      <Clients />
+      <About />
+      <CHNC onNavigate={navTo} />
+      <Impact />
+      <BrandAudit />
+      <Testimonials />
+      <Team onNavigate={navTo} />
+      <AdvisoryBoard />
+      <Contact />
+      <Footer onNavigate={navTo} />
+    </>
+  )
+}
 
-  const isPreviewShell = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('preview')
+// A role's own URL — /careers/copywriter — resolved back to its data. An
+// unknown slug (stale link, role filled) falls back to the openings list.
+function JobRoute() {
+  const { role } = useParams()
+  const navigate = useNavigate()
+  const navTo = useNavigateTo()
+  const job = findJobBySlug(role)
+  if (!job) return <Navigate to={PATH_FOR.careers} replace />
+  return <JobPage job={job} onBack={() => navigate(PATH_FOR.careers)} onNavigate={navTo} />
+}
+
+// Landing on a new URL should put you at the top of it, the way clicking a
+// nav link used to. Back and forward are left alone so the browser can restore
+// the scroll position you left — going back to the openings list should drop
+// you at the role you clicked, not the top of the page.
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  const navType = useNavigationType()
+  useEffect(() => {
+    if (navType !== 'POP') window.scrollTo(0, 0)
+  }, [pathname, navType])
+  return null
+}
+
+function Site() {
+  const { pathname } = useLocation()
+  const navTo = useNavigateTo()
+  const goHome = () => navTo('home')
   const inIframe = typeof window !== 'undefined' && window.self !== window.top
-  if (isPreviewShell) return <DevicePreview />
 
   return (
     <>
+      <ScrollToTop />
       {!inIframe && (
-        <a href="/?preview" style={{
+        <a href={`${pathname}?preview`} style={{
           position: 'fixed', bottom: 16, right: 16, zIndex: 99999,
           background: '#34cc32', color: '#000718', fontFamily: "'Archivo', sans-serif", fontSize: 13, fontWeight: 700,
           padding: '10px 14px', borderRadius: 4, boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
         }}>📱 Preview screen sizes</a>
       )}
-      <Nav activePage={page} onNavigate={setPage} />
+      <Nav activePage={keyForPath(pathname)} onNavigate={navTo} />
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#000718' }} />}>
-      {page === 'about' ? (
-        <AboutPage onNavigateHome={() => setPage('home')} onNavigate={setPage} />
-      ) : page === 'solutions' ? (
-        <SolutionsPage onNavigate={setPage} />
-      ) : page === 'case-studies' ? (
-        <CaseStudiesPage onNavigate={setPage} />
-      ) : page === 'mahindra' ? (
-        <MahindraPage onNavigate={setPage} />
-      ) : page === 'team' ? (
-        <TeamPage onBack={() => setPage('home')} onNavigate={setPage} />
-      ) : page === 'blog' ? (
-        <BlogPage onNavigate={setPage} />
-      ) : page === 'blog-read' ? (
-        <BlogReadPage onBack={() => setPage('blog')} onNavigate={setPage} />
-      ) : page === 'careers' ? (
-        <CareersPage onBack={() => setPage('home')} onNavigate={setPage} />
-      ) : page === 'work' ? (
-        <WorkPage onBack={() => setPage('home')} onNavigate={setPage} />
-      ) : page === 'socials' ? (
-        <SocialsPage onBack={() => setPage('home')} onNavigate={setPage} />
-      ) : (
-        <>
-          <Hero />
-          <Clients />
-          <About />
-          <CHNC onNavigate={setPage} />
-          <Impact />
-          <BrandAudit />
-          <Testimonials />
-          <Team onNavigate={setPage} />
-          <AdvisoryBoard />
-          <Contact />
-          <Footer onNavigate={setPage} />
-        </>
-      )}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage onNavigateHome={goHome} onNavigate={navTo} />} />
+          <Route path="/solutions" element={<SolutionsPage onNavigate={navTo} />} />
+          <Route path="/case-studies" element={<CaseStudiesPage onNavigate={navTo} />} />
+          <Route path="/case-studies/mahindra" element={<MahindraPage onNavigate={navTo} />} />
+          <Route path="/team" element={<TeamPage onBack={goHome} onNavigate={navTo} />} />
+          <Route path="/blogs" element={<BlogPage onNavigate={navTo} />} />
+          <Route path="/blogs/:slug" element={<BlogReadPage onBack={() => navTo('blog')} onNavigate={navTo} />} />
+          <Route path="/careers" element={<CareersPage onBack={goHome} onNavigate={navTo} />} />
+          <Route path="/careers/:role" element={<JobRoute />} />
+          <Route path="/work" element={<WorkPage onBack={goHome} onNavigate={navTo} />} />
+          <Route path="/socials" element={<SocialsPage onBack={goHome} onNavigate={navTo} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Suspense>
     </>
+  )
+}
+
+export default function App() {
+  const isPreviewShell = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('preview')
+  if (isPreviewShell) return <DevicePreview />
+
+  return (
+    <BrowserRouter>
+      <Site />
+    </BrowserRouter>
   )
 }
