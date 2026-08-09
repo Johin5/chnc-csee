@@ -4,7 +4,7 @@
 import useResponsive from './useResponsive'
 import Footer from './Footer'
 import JoinSection from './JoinSection'
-import { G, CARD, DARK } from './careersAtoms'
+import { G, DARK, BORDER } from './careersAtoms'
 
 // The design bullets each open with a green dot rather than a list marker.
 function Bullet({ children }) {
@@ -26,7 +26,8 @@ function Panel({ title, items }) {
   const { isSmall } = useResponsive()
   return (
     <div style={{
-      background: CARD, width: isSmall ? '100%' : 610, maxWidth: 610,
+      background: 'transparent', border: `2px solid ${BORDER}`,
+      width: isSmall ? '100%' : 610, maxWidth: 610,
       padding: 'clamp(28px, 4vw, 50px)', boxSizing: 'border-box',
       display: 'flex', flexDirection: 'column', gap: 20,
     }}>
