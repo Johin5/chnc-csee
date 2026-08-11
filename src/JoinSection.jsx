@@ -7,7 +7,7 @@ import { useState } from 'react'
 import useResponsive from './useResponsive'
 import { BtnGreen, BtnOutline, InputField, G, DARK, MUTED, DIM, BORDER } from './careersAtoms'
 
-export default function JoinSection({ heading, sub, position }) {
+export default function JoinSection({ heading, sub, position, headingSize }) {
   const { isMobile } = useResponsive()
   const [fileName] = useState('my-cv.pdf')
   const [progress] = useState(72)
@@ -18,7 +18,7 @@ export default function JoinSection({ heading, sub, position }) {
       padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)',
     }}>
       <h2 style={{
-        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
+        fontFamily: "'Saira Condensed', sans-serif", fontSize: headingSize || 'clamp(40px, 8vw, 80px)', fontWeight: 800,
         textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
       }}>
         {heading || (<>

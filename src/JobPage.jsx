@@ -65,11 +65,11 @@ function Panel({ index, title, items }) {
     }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
         <span style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(15px, 1.8vw, 17px)',
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(13px, 1.5vw, 15px)',
           fontWeight: 700, color: DIM, letterSpacing: '0.08em',
         }}>{index}</span>
         <h2 style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(26px, 3.4vw, 32px)',
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(22px, 2.6vw, 26px)',
           fontWeight: 800, textTransform: 'uppercase', color: G, margin: 0, lineHeight: 1.1,
         }}>{title}</h2>
       </div>
@@ -102,7 +102,7 @@ export default function JobPage({ job }) {
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
       {/* ── Hero — the role is the headline, in the site's centered grammar ──── */}
-      <section style={{ padding: 'clamp(120px, 16vw, 180px) clamp(20px, 6vw, 100px) clamp(40px, 6vw, 80px)' }}>
+      <section style={{ padding: 'clamp(110px, 14vw, 150px) clamp(20px, 6vw, 100px) clamp(36px, 5vw, 64px)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, textAlign: 'center' }}>
           <Link
             href="/careers" className="btn-outline"
@@ -124,7 +124,7 @@ export default function JobPage({ job }) {
 
           <h1 style={{
             fontFamily: "'Saira Condensed', sans-serif",
-            fontSize: 'clamp(52px, 9.5vw, 140px)',
+            fontSize: 'clamp(44px, 7.2vw, 104px)',
             fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-2px',
             lineHeight: 0.96, margin: 0, maxWidth: 1100, textAlign: 'center',
           }}>
@@ -169,7 +169,7 @@ export default function JobPage({ job }) {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
               <SectionLabel>The team</SectionLabel>
               <h2 style={{
-                fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)',
+                fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(28px, 3.9vw, 56px)',
                 fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
               }}>
                 <span style={{ color: '#fff' }}>Meet the </span>
@@ -178,8 +178,8 @@ export default function JobPage({ job }) {
               </h2>
             </div>
             <p style={{
-              fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
-              color: MUTED, lineHeight: 1.6, margin: 0, maxWidth: 640, textAlign: 'center',
+              fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(14px, 1.9vw, 17px)',
+              color: MUTED, lineHeight: 1.6, margin: 0, maxWidth: 600, textAlign: 'center',
             }}>{group.blurb}</p>
 
             <div style={{
@@ -220,7 +220,7 @@ export default function JobPage({ job }) {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
             <SectionLabel>Process</SectionLabel>
             <h2 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)',
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(28px, 3.9vw, 56px)',
               fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
             }}>
               <span style={{ color: '#fff' }}>How we </span>
@@ -238,11 +238,11 @@ export default function JobPage({ job }) {
                 display: 'flex', flexDirection: 'column', gap: 12,
               }}>
                 <span style={{
-                  fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 4vw, 48px)',
+                  fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(28px, 3vw, 36px)',
                   fontWeight: 800, color: G, lineHeight: 1,
                 }}>{String(i + 1).padStart(2, '0')}</span>
                 <p style={{
-                  fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(20px, 2.4vw, 24px)',
+                  fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(17px, 2vw, 20px)',
                   fontWeight: 700, textTransform: 'uppercase', color: '#fff', margin: 0, lineHeight: 1.1,
                 }}>{s.title}</p>
                 <p style={{
@@ -258,6 +258,7 @@ export default function JobPage({ job }) {
       {/* ── Apply ───────────────────────────────────────────────────────────── */}
       <div id="apply">
         <JoinSection
+          headingSize="clamp(32px, 4.6vw, 66px)"
           position={job.title}
           sub="Just drop in your CVs below!"
           heading={<>
