@@ -20,6 +20,18 @@ const HIRING_STEPS = [
   { title: 'Offer', desc: 'We move fast. If it’s a yes, you’ll hear within the week.' },
 ]
 
+// The standard section label — small white text over a green underline —
+// used above every section heading across the site.
+const SectionLabel = ({ children }) => (
+  <div style={{
+    display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start',
+    width: 'fit-content', height: 32,
+  }}>
+    <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff', flex: 1, display: 'flex', alignItems: 'center' }}>{children}</span>
+    <div style={{ width: '100%', height: 2, background: G }} />
+  </div>
+)
+
 const chipStyle = {
   display: 'inline-flex', alignItems: 'center', height: 34, padding: '0 14px',
   border: `1px solid ${BORDER}`, color: MUTED,
@@ -46,7 +58,7 @@ function Bullet({ children }) {
 function Panel({ index, title, items }) {
   return (
     <div style={{
-      background: 'transparent', border: `2px solid ${BORDER}`, borderTop: `2px solid ${G}`,
+      background: 'transparent', border: `2px solid ${BORDER}`,
       flex: 1, minWidth: 0,
       padding: 'clamp(28px, 4vw, 50px)', boxSizing: 'border-box',
       display: 'flex', flexDirection: 'column', gap: 20,
@@ -89,20 +101,22 @@ export default function JobPage({ job }) {
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
-      {/* ── Hero — the role is the headline ─────────────────────────────────── */}
+      {/* ── Hero — the role is the headline, in the site's centered grammar ──── */}
       <section style={{ padding: 'clamp(120px, 16vw, 180px) clamp(20px, 6vw, 100px) clamp(40px, 6vw, 80px)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 28 }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, textAlign: 'center' }}>
           <Link
-            href="/careers" className="footer-link"
+            href="/careers" className="btn-outline"
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8, width: 'fit-content',
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 15, fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.04em', color: DIM,
-              textDecoration: 'none', padding: '8px 0',
+              background: 'transparent', border: `1px solid ${G}`, color: G,
+              height: 40, padding: '0 18px', cursor: 'pointer',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              boxSizing: 'border-box', textDecoration: 'none',
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.02em',
             }}
-          ><span style={{ color: G }}>&larr;</span> All openings</Link>
+          >&larr; All openings</Link>
 
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
             <span style={{ ...chipStyle, color: G, borderColor: 'rgba(52,204,50,0.4)' }}>{job.team} team</span>
             <span style={chipStyle}>Mumbai</span>
             <span style={chipStyle}>Full-time</span>
@@ -112,21 +126,21 @@ export default function JobPage({ job }) {
             fontFamily: "'Saira Condensed', sans-serif",
             fontSize: 'clamp(52px, 9.5vw, 140px)',
             fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-2px',
-            lineHeight: 0.96, margin: 0, maxWidth: 1100,
+            lineHeight: 0.96, margin: 0, maxWidth: 1100, textAlign: 'center',
           }}>
             {head && <span style={{ color: '#fff' }}>{head} </span>}
             <span style={{ color: G }}>{tail}</span>
           </h1>
 
           <a
-            href="#apply" className="btn-green"
+            href="#apply" className="btn-outline"
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              width: isMobile ? '100%' : 'fit-content', height: 52, padding: '0 34px',
-              background: G, color: DARK, border: 'none', boxSizing: 'border-box',
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 17, fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.04em', textDecoration: 'none',
-              marginTop: 6,
+              width: isMobile ? '100%' : 'fit-content', height: 46, padding: '0 24px',
+              background: 'transparent', color: G, border: `1px solid ${G}`, boxSizing: 'border-box',
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.02em', textDecoration: 'none',
+              backdropFilter: 'blur(10px)', marginTop: 4,
             }}
           >Apply now &darr;</a>
         </div>
@@ -148,34 +162,29 @@ export default function JobPage({ job }) {
       {group && shownFaces.length > 0 && (
         <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)' }}>
           <div style={{
-            maxWidth: 1240, margin: '0 auto', border: `2px solid ${BORDER}`,
-            padding: 'clamp(28px, 4vw, 50px)', boxSizing: 'border-box',
-            display: 'flex', flexDirection: isSmall ? 'column' : 'row',
-            gap: 'clamp(28px, 4vw, 60px)', alignItems: isSmall ? 'flex-start' : 'center',
+            maxWidth: 1240, margin: '0 auto',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            gap: 'clamp(28px, 4vw, 48px)', textAlign: 'center',
           }}>
-            <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+              <SectionLabel>The team</SectionLabel>
               <h2 style={{
-                fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(30px, 4.5vw, 48px)',
-                fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, margin: 0,
+                fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)',
+                fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
               }}>
                 <span style={{ color: '#fff' }}>Meet the </span>
                 <span style={{ color: G }}>{group.name}</span>
                 <span style={{ color: '#fff' }}> team</span>
               </h2>
-              <p style={{
-                fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
-                color: MUTED, lineHeight: 1.6, margin: 0, maxWidth: 560,
-              }}>{group.blurb}</p>
-              <Link href="/team" className="footer-link" style={{
-                fontFamily: "'Saira Condensed', sans-serif", fontSize: 15, fontWeight: 700,
-                textTransform: 'uppercase', letterSpacing: '0.04em', color: G,
-                textDecoration: 'none', width: 'fit-content', padding: '6px 0',
-              }}>The whole roster &rarr;</Link>
             </div>
+            <p style={{
+              fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
+              color: MUTED, lineHeight: 1.6, margin: 0, maxWidth: 640, textAlign: 'center',
+            }}>{group.blurb}</p>
 
             <div style={{
-              display: 'flex', flexWrap: 'wrap', gap: 8, flexShrink: 0,
-              maxWidth: isSmall ? '100%' : 400,
+              display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center',
+              maxWidth: isSmall ? '100%' : 800,
             }}>
               {shownFaces.map(p => (
                 <div key={p.name} title={`${p.name} — ${p.role}`} style={{ width: isMobile ? 72 : 88, aspectRatio: '640/880', overflow: 'hidden', border: `1px solid ${BORDER}` }}>
@@ -193,22 +202,33 @@ export default function JobPage({ job }) {
                 }}>+{faces.length - shownFaces.length}</div>
               )}
             </div>
+
+            <Link href="/team" className="btn-outline" style={{
+              background: 'transparent', border: `1px solid ${G}`, color: G,
+              height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              boxSizing: 'border-box', textDecoration: 'none',
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.02em', backdropFilter: 'blur(10px)',
+            }}>The whole roster</Link>
           </div>
         </section>
       )}
 
       {/* ── How we hire ─────────────────────────────────────────────────────── */}
       <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 4vw, 48px)' }}>
-          <h2 style={{
-            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(30px, 4.5vw, 48px)',
-            fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, margin: 0,
-          }}>
-            <span style={{ color: '#fff' }}>How we </span>
-            <span style={{ color: G }}>hire</span>
-          </h2>
+        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(28px, 4vw, 48px)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+            <SectionLabel>Process</SectionLabel>
+            <h2 style={{
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)',
+              fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, margin: 0, textAlign: 'center',
+            }}>
+              <span style={{ color: '#fff' }}>How we </span>
+              <span style={{ color: G }}>hire</span>
+            </h2>
+          </div>
           <div style={{
-            display: 'grid',
+            display: 'grid', width: '100%',
             gridTemplateColumns: isMobile ? 'minmax(0, 1fr)' : isSmall ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))',
             gap: 20,
           }}>
