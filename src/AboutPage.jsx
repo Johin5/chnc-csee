@@ -16,8 +16,8 @@ const DIM  = '#666a74'
 const imgTeam        = '/figma/about/img221.png'
 const imgBala        = '/figma/about/img-image6.png'
 const imgValCard1    = '/figma/about/img-component134.jpg'
-const imgValWalk     = '/walk-the-talk.gif'
-const imgValFoolish  = '/be-foolish.gif'
+const imgValWalk     = '/walk-the-talk.mp4'
+const imgValFoolish  = '/be-foolish.mp4'
 
 // ─── Value card ───────────────────────────────────────────────────────────────
 function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
@@ -30,8 +30,12 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
     }}>
       {/* base */}
       <div style={{ position: 'absolute', inset: 0, background: CARD }} />
-      {/* texture bg */}
-      <Image src={bg} alt="" fill sizes="100vw" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
+      {/* texture bg — an .mp4 plays as a muted loop, anything else is a still */}
+      {bg.endsWith('.mp4') ? (
+        <video src={bg} autoPlay muted loop playsInline style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+      ) : (
+        <Image src={bg} alt="" fill sizes="100vw" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
+      )}
       {/* dark overlay */}
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.7)' }} />
       {/* text */}

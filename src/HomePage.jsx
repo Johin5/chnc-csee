@@ -620,9 +620,10 @@ function Impact() {
 }
 
 // ─── Brand Audit (Reality Check) ─────────────────────────────────────────────
-// Every option carries its own reaction gif; picking one swaps the gif on the
-// right. Nothing is selected initially, so the neutral default.gif shows.
-const auditDefaultGif = '/figma/home/oh-gifs/default.gif'
+// Every option carries its own reaction clip (muted looping mp4 — the gif
+// look at a fraction of the size); picking one swaps the clip on the right.
+// Nothing is selected initially, so the neutral default clip shows.
+const auditDefaultGif = '/figma/home/oh-gifs/default.mp4'
 const auditQs = [
   { q: 'Looking for an', qGreen: 'audit?', opts: ['YES', 'NO', 'MAYBE'],
     gifs: ['ooh-wee', 'o-face', 'oh-i-see'] },
@@ -662,17 +663,16 @@ function BrandAudit() {
   const { isSmall } = useResponsive()
   const [selections, setSelections] = useState(auditQs.map(() => null))
   const [gif, setGif] = useState(auditDefaultGif)
-  // Warm the browser cache for every reaction gif so the swap on click is
-  // instant — without this the old gif lingers while the next one downloads.
+  // Warm the browser cache for every reaction clip so the swap on click is
+  // instant — without this the old clip lingers while the next one downloads.
   useEffect(() => {
     auditQs.flatMap(q => q.gifs).forEach(name => {
-      const img = new window.Image()
-      img.src = `/figma/home/oh-gifs/${name}.gif`
+      fetch(`/figma/home/oh-gifs/${name}.mp4`).catch(() => {})
     })
   }, [])
   const handleSelect = (qi, oi) => {
     setSelections(prev => { const next = [...prev]; next[qi] = oi; return next })
-    setGif(`/figma/home/oh-gifs/${auditQs[qi].gifs[oi]}.gif`)
+    setGif(`/figma/home/oh-gifs/${auditQs[qi].gifs[oi]}.mp4`)
   }
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
@@ -700,7 +700,7 @@ function BrandAudit() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', width: isSmall ? '100%' : 410, maxWidth: 410, flexShrink: 0, alignSelf: isSmall ? 'center' : 'auto' }}>
             <div style={{ width: '100%', height: isSmall ? 'clamp(280px, 70vw, 410px)' : 410, boxShadow: '0 4px 65px rgba(43,179,42,0.1)', overflow: 'hidden' }}>
-              <img src={gif} alt="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <video key={gif} src={gif} autoPlay muted loop playsInline aria-label="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24, textAlign: 'center' }}>
               Ready for a <span style={{ color: G }}>Reality</span> check?

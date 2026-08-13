@@ -107,12 +107,19 @@ export default function JobPage({ job }) {
         height: isSmall ? 'calc(clamp(400px, 88vw, 520px) + 106px)' : 'calc(clamp(480px, 42vw, 600px) + 106px)',
         overflow: 'hidden',
       }}>
-        {job.image && (
+        {job.image && (job.image.endsWith('.mp4') ? (
+          <video
+            src={job.image} poster={job.imagePoster}
+            autoPlay muted loop playsInline
+            aria-label={job.imageAlt || `${job.title} at ConvergenSEE`}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        ) : (
           <img
             src={job.image} alt={job.imageAlt || `${job.title} at ConvergenSEE`}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
-        )}
+        ))}
         {/* Veils — dark at the top for the nav, dark at the foot to blend into
             the page; radial pocket keeps the headline legible. Same treatment
             as the blog-read and case-study heroes. */}

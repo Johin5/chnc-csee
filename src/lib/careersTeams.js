@@ -43,10 +43,12 @@ export const TEAM_GROUPS = [
       },
       {
         title: 'Motion Graphics Designer',
-        // Role visual — a wide (16:9) shot used as the page's hero image,
-        // the way case studies open on campaign art. Give any opening an
-        // `image` (+ optional `imageAlt`) and its page opens on it.
-        image: '/careers/motion-graphics-designer-2.gif',
+        // Role visual — a wide (16:9) shot used as the page's hero, the way
+        // case studies open on campaign art. Give any opening an `image`
+        // (+ optional `imageAlt`) and its page opens on it. An .mp4 plays as
+        // a muted loop; `imagePoster` shows while it streams in.
+        image: '/careers/motion-graphics-designer.mp4',
+        imagePoster: '/careers/motion-graphics-designer-poster.jpg',
         imageAlt: 'Racing an office chair past the polaroid wall at ConvergenSEE',
         responsibilities: [
           "Take static concepts into motion for social, film and product work.",
