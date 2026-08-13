@@ -29,8 +29,8 @@ const BtnOutlineGreen = ({ children, style, className, ...props }) => (
 
 // ─── Nav ──────────────────────────────────────────────────────────────────────
 export default function Nav() {
-  const links = ['Home', 'About us', 'Solution', 'Case Studies', 'Blogs', 'Work', 'Career']
-  const targetFor = (l) => ({ Home: 'home', 'About us': 'about', Solution: 'solutions', 'Case Studies': 'case-studies', Blogs: 'blog', Work: 'work', Career: 'careers' }[l])
+  const links = ['Home', 'About us', 'CHNC', 'Case Studies', 'Blogs', 'Work', 'Career']
+  const targetFor = (l) => ({ Home: 'home', 'About us': 'about', CHNC: 'solutions', 'Case Studies': 'case-studies', Blogs: 'blog', Work: 'work', Career: 'careers' }[l])
   const activePage = keyForPath(usePathname() || '/')
   const [open, setOpen] = useState(false)
   return (

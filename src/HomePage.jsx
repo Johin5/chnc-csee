@@ -715,6 +715,11 @@ function BrandAudit() {
 
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 const testiTabs = ['AUTOMOBILE', 'BANKING', 'FMCG', 'RETAIL', 'FSI', 'OTHER']
+const testiStats = [
+  { num: '96%', label: 'Increase in traffic growth' },
+  { num: '10x', label: 'Revenue increase' },
+  { num: '96%', label: 'Increase in sales' },
+]
 
 function Testimonials() {
   const { isSmall } = useResponsive()
@@ -753,6 +758,14 @@ function Testimonials() {
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: '#fff', lineHeight: 1.3, maxWidth: 658 }}>
                 "ConvergenSEE changed the trajectory and <span style={{ color: '#2bb32a' }}>success</span> of my business, and I'm a lifelong user at this point."
               </p>
+              <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
+                {testiStats.map((s) => (
+                  <div key={s.label}>
+                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 700, lineHeight: 1.1 }}>{s.num}</p>
+                    <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
             <div style={{ width: isSmall ? '100%' : 494, height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, position: 'relative', border: `2px solid ${BORDER}`, borderLeft: isSmall ? `2px solid ${BORDER}` : 'none', overflow: 'hidden', flexShrink: 0 }}>
               <img src={testiPhoto} alt="Alina Sharma" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

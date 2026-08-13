@@ -16,7 +16,8 @@ const DIM  = '#666a74'
 const imgTeam        = '/figma/about/img221.png'
 const imgBala        = '/figma/about/img-image6.png'
 const imgValCard1    = '/figma/about/img-component134.jpg'
-const imgValCard2    = '/figma/about/img-component135.jpg'
+const imgValWalk     = '/walk-the-talk.gif'
+const imgValFoolish  = '/be-foolish.gif'
 
 // ─── Value card ───────────────────────────────────────────────────────────────
 function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
@@ -226,14 +227,14 @@ export default function AboutPage() {
                 line1Green
                 line2="the talk"
                 line2Green={false}
-                bg={imgValCard1}
+                bg={imgValWalk}
               />
               <ValueCard
                 line1="Be "
                 line1Green={false}
                 line2="foolish"
                 line2Green
-                bg={imgValCard2}
+                bg={imgValFoolish}
               />
             </div>
             <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, width: '100%' }}>
