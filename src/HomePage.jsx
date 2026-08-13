@@ -662,6 +662,14 @@ function BrandAudit() {
   const { isSmall } = useResponsive()
   const [selections, setSelections] = useState(auditQs.map(() => null))
   const [gif, setGif] = useState(auditDefaultGif)
+  // Warm the browser cache for every reaction gif so the swap on click is
+  // instant — without this the old gif lingers while the next one downloads.
+  useEffect(() => {
+    auditQs.flatMap(q => q.gifs).forEach(name => {
+      const img = new window.Image()
+      img.src = `/figma/home/oh-gifs/${name}.gif`
+    })
+  }, [])
   const handleSelect = (qi, oi) => {
     setSelections(prev => { const next = [...prev]; next[qi] = oi; return next })
     setGif(`/figma/home/oh-gifs/${auditQs[qi].gifs[oi]}.gif`)
