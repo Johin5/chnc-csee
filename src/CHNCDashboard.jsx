@@ -63,7 +63,7 @@ function SearchBar() {
     <div style={{ background: '#fff', border: '1px solid #dee0e7', display: 'flex', gap: 8, alignItems: 'center', padding: '12px 15px', width: 307, flexShrink: 0 }}>
       <div style={{ position: 'relative', width: 16, height: 16, flexShrink: 0 }}>
         <div style={{ position: 'absolute', inset: '12.5%' }}>
-          <img alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={imgVector} />
+          <img loading="lazy" alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={imgVector} />
         </div>
       </div>
       <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 400, color: '#9fa3ac', fontSize: 14, lineHeight: '14px', whiteSpace: 'nowrap' }}>
@@ -79,13 +79,13 @@ function PenIcon() {
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', inset: '66.67% 16.67% 16.67% 16.67%', border: '0.833px solid #000718', borderRadius: 23 }} />
       <div style={{ position: 'absolute', inset: '8.33% 16.67% 33.33% 16.67%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-6.06% -1.95% -4.29% -1.95%', display: 'block', width: '100%', height: '100%' }} src={imgVector204} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-6.06% -1.95% -4.29% -1.95%', display: 'block', width: '100%', height: '100%' }} src={imgVector204} />
       </div>
       <div style={{ position: 'absolute', inset: '33.33% 37.5% 41.67% 37.5%' }}>
-        <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse73} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse73} />
       </div>
       <div style={{ position: 'absolute', bottom: '62.5%', left: '50%', right: '50%', top: '8.33%' }}>
-        <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgVector205} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgVector205} />
       </div>
     </div>
   )
@@ -95,7 +95,7 @@ function PinIcon() {
   return (
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', inset: '16.67% 20.83% 17.16% 20.83%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-3.78% -4.29%', display: 'block', width: '100%', height: '100%' }} src={imgSubtract3} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-3.78% -4.29%', display: 'block', width: '100%', height: '100%' }} src={imgSubtract3} />
       </div>
     </div>
   )
@@ -105,10 +105,10 @@ function Contributors() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', paddingRight: 8 }}>
       <div style={{ background: '#b5e4ca', border: '1.429px solid #fefefe', marginRight: -8, overflow: 'hidden', borderRadius: 30, flexShrink: 0, width: 20, height: 20, position: 'relative' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-33.33% -48.44% -63.62% -48.44%', width: '100%', height: '100%', objectFit: 'cover' }} src={imgCustomer11} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-33.33% -48.44% -63.62% -48.44%', width: '100%', height: '100%', objectFit: 'cover' }} src={imgCustomer11} />
       </div>
       <div style={{ border: '1.469px solid #fefefe', marginRight: -8, position: 'relative', borderRadius: 62.632, flexShrink: 0, width: 24, height: 24, overflow: 'hidden' }}>
-        <img alt="" style={{ position: 'absolute', height: '435.83%', left: '-116.5%', maxWidth: 'none', top: '-81.79%', width: '290.59%' }} src={imgAvatar06} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', height: '435.83%', left: '-116.5%', maxWidth: 'none', top: '-81.79%', width: '290.59%' }} src={imgAvatar06} />
       </div>
     </div>
   )
@@ -175,10 +175,10 @@ function LocationCard({ controls, custom }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: 8 }}>
           <div style={{ background: '#b5e4ca', border: '1.429px solid #fefefe', marginRight: -8, overflow: 'hidden', borderRadius: 30, flexShrink: 0, width: 20, height: 20, position: 'relative' }}>
-            <img alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} src={imgCustomer11} />
+            <img loading="lazy" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} src={imgCustomer11} />
           </div>
           <div style={{ border: '1.469px solid #fefefe', position: 'relative', borderRadius: 62.632, flexShrink: 0, width: 24, height: 24, overflow: 'hidden' }}>
-            <img alt="" style={{ position: 'absolute', height: '435.83%', left: '-116.5%', maxWidth: 'none', top: '-81.79%', width: '290.59%' }} src={imgAvatar06} />
+            <img loading="lazy" alt="" style={{ position: 'absolute', height: '435.83%', left: '-116.5%', maxWidth: 'none', top: '-81.79%', width: '290.59%' }} src={imgAvatar06} />
           </div>
         </div>
         <div style={{ background: '#fff', border: '1px solid #dee0e7', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '8px 15px' }}>
@@ -220,7 +220,7 @@ function SbChevron() {
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', bottom: '37.5%', display: 'flex', alignItems: 'center', justifyContent: 'center', left: '25%', right: '25%', top: '37.5%' }}>
         <div style={{ transform: 'rotate(-90deg) scaleY(-1)', width: 6, height: 12 }}>
-          <img alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={sbChevron} />
+          <img loading="lazy" alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={sbChevron} />
         </div>
       </div>
     </div>
@@ -230,10 +230,10 @@ function IconPin() {
   return (
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', inset: '18.75% 18.75% 10.42% 18.75%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-3.53% -4% -2.72% -4%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse4} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-3.53% -4% -2.72% -4%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse4} />
       </div>
       <div style={{ position: 'absolute', inset: '33.33%' }}>
-        <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse5} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse5} />
       </div>
     </div>
   )
@@ -243,13 +243,13 @@ function IconPen() {
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', inset: '66.67% 16.67% 16.67% 16.67%', border: '0.833px solid #666a74', borderRadius: 23 }} />
       <div style={{ position: 'absolute', inset: '8.33% 16.67% 33.33% 16.67%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-6.06% -1.59% -4.29% -1.59%', display: 'block', width: '100%', height: '100%' }} src={sbVec204} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-6.06% -1.59% -4.29% -1.59%', display: 'block', width: '100%', height: '100%' }} src={sbVec204} />
       </div>
       <div style={{ position: 'absolute', inset: '33.33% 37.5% 41.67% 37.5%' }}>
-        <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse73} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse73} />
       </div>
       <div style={{ position: 'absolute', bottom: '62.5%', left: '50%', right: '50%', top: '8.33%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={sbVec205} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={sbVec205} />
       </div>
     </div>
   )
@@ -258,13 +258,13 @@ function IconQuestion() {
   return (
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', inset: '12.5%' }}>
-        <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse65} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse65} />
       </div>
       <div style={{ position: 'absolute', inset: '72.92% 47.92% 22.92% 47.92%' }}>
-        <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse93} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbEllipse93} />
       </div>
       <div style={{ position: 'absolute', inset: '29.17% 37.5% 33.33% 37.5%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-6.67% -10% 0 -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec123} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-6.67% -10% 0 -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec123} />
       </div>
     </div>
   )
@@ -273,10 +273,10 @@ function IconBook() {
   return (
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', inset: '12.5% 16.67%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-3.33% -3.75%', display: 'block', width: '100%', height: '100%' }} src={sbVec57} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-3.33% -3.75%', display: 'block', width: '100%', height: '100%' }} src={sbVec57} />
       </div>
       <div style={{ position: 'absolute', bottom: '50%', left: '37.5%', right: '37.5%', top: '33.33%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-15% -10% -2.57% -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec55} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-15% -10% -2.57% -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec55} />
       </div>
     </div>
   )
@@ -286,11 +286,11 @@ function IconVideo() {
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', bottom: '29.17%', display: 'flex', alignItems: 'center', justifyContent: 'center', left: '33.33%', right: '25%', top: '29.17%' }}>
         <div style={{ transform: 'rotate(180deg) scaleY(-1)', width: 8.333, height: 8.333 }}>
-          <img alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={sbVec10} />
+          <img loading="lazy" alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={sbVec10} />
         </div>
       </div>
       <div style={{ position: 'absolute', inset: '12.5%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-3.33%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse47} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-3.33%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse47} />
       </div>
     </div>
   )
@@ -299,10 +299,10 @@ function IconAI() {
   return (
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', bottom: '25%', left: '39.58%', right: '35.42%', top: '50%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '2.32% 14.72% 2.32% -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec619} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '2.32% 14.72% 2.32% -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec619} />
       </div>
       <div style={{ position: 'absolute', inset: '14.58% 22.92%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-3.53% -4.62%', display: 'block', width: '100%', height: '100%' }} src={sbRect4243} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-3.53% -4.62%', display: 'block', width: '100%', height: '100%' }} src={sbRect4243} />
       </div>
     </div>
   )
@@ -312,7 +312,7 @@ function IconMessage() {
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', bottom: '25%', left: '16.67%', right: '16.67%', top: '25%', border: '0.833px solid #666a74', borderRadius: 2 }} />
       <div style={{ position: 'absolute', inset: '37.5% 16.67% 45.83% 16.67%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-13.42% -1.68% -7.92% -1.68%', display: 'block', width: '100%', height: '100%' }} src={sbVec3} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-13.42% -1.68% -7.92% -1.68%', display: 'block', width: '100%', height: '100%' }} src={sbVec3} />
       </div>
     </div>
   )
@@ -321,10 +321,10 @@ function IconSearch() {
   return (
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', inset: '20.83% 29.17% 29.17% 20.83%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-5%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse66} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-5%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse66} />
       </div>
       <div style={{ position: 'absolute', inset: '70.83% 16.67% 16.67% 70.83%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-20%', display: 'block', width: '100%', height: '100%' }} src={sbVec109} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-20%', display: 'block', width: '100%', height: '100%' }} src={sbVec109} />
       </div>
     </div>
   )
@@ -334,11 +334,11 @@ function IconNotebook() {
     <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
       <div style={{ position: 'absolute', bottom: '12.5%', left: '25%', right: '20.83%', top: '16.67%', border: '0.833px solid #666a74', borderRadius: 2 }} />
       <div style={{ position: 'absolute', inset: '33.33% 37.5% 58.33% 62.5%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-0.5px -30%', display: 'block', width: '100%', height: '100%' }} src={sbVec58} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-0.5px -30%', display: 'block', width: '100%', height: '100%' }} src={sbVec58} />
       </div>
       {['37.5% 66.67% 62.5% 16.67%','54.17% 66.67% 45.83% 16.67%','70.83% 66.67% 29.17% 16.67%'].map((inset, i) => (
         <div key={i} style={{ position: 'absolute', inset }}>
-          <img alt="" style={{ position: 'absolute', inset: '-0.5px -15%', display: 'block', width: '100%', height: '100%' }} src={sbVec59} />
+          <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-0.5px -15%', display: 'block', width: '100%', height: '100%' }} src={sbVec59} />
         </div>
       ))}
     </div>
@@ -350,11 +350,11 @@ function IconOrder() {
       <div style={{ position: 'absolute', inset: '16.67% 20.83% 12.5% 20.83%', border: '0.833px solid #666a74', borderRadius: 2 }} />
       {['37.5% 37.5% 62.5% 37.5%','54.17% 37.5% 45.83% 37.5%'].map((inset, i) => (
         <div key={i} style={{ position: 'absolute', inset }}>
-          <img alt="" style={{ position: 'absolute', inset: '-0.5px -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec60} />
+          <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-0.5px -10%', display: 'block', width: '100%', height: '100%' }} src={sbVec60} />
         </div>
       ))}
       <div style={{ position: 'absolute', inset: '70.83% 45.83% 29.17% 37.5%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-0.5px -15%', display: 'block', width: '100%', height: '100%' }} src={sbVec59} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-0.5px -15%', display: 'block', width: '100%', height: '100%' }} src={sbVec59} />
       </div>
     </div>
   )
@@ -365,11 +365,11 @@ function IconMoney() {
       <div style={{ position: 'absolute', bottom: '25%', left: '12.5%', right: '12.5%', top: '25%', border: '0.833px solid #666a74', borderRadius: 2 }} />
       {['37.5% 66.67% 62.5% 20.83%','62.5% 20.83% 37.5% 66.67%'].map((inset, i) => (
         <div key={i} style={{ position: 'absolute', inset }}>
-          <img alt="" style={{ position: 'absolute', inset: '-0.5px -20%', display: 'block', width: '100%', height: '100%' }} src={sbVec70} />
+          <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-0.5px -20%', display: 'block', width: '100%', height: '100%' }} src={sbVec70} />
         </div>
       ))}
       <div style={{ position: 'absolute', inset: '41.67%' }}>
-        <img alt="" style={{ position: 'absolute', inset: '-15%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse118} />
+        <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-15%', display: 'block', width: '100%', height: '100%' }} src={sbEllipse118} />
       </div>
     </div>
   )
@@ -411,7 +411,7 @@ function Sidebar({ active }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 15 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', width: 164 }}>
             <div style={{ background: '#fff', overflow: 'hidden', position: 'relative', width: 30, height: 30, flexShrink: 0 }}>
-              <img alt="Mahindra" style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', height: 11.507, width: 25, display: 'block' }} src={sbMahindra} />
+              <img loading="lazy" alt="Mahindra" style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', height: 11.507, width: 25, display: 'block' }} src={sbMahindra} />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, justifyContent: 'center', whiteSpace: 'nowrap', minWidth: 0, flex: '1 0 0' }}>
               <p style={{ fontWeight: 600, lineHeight: '15px', fontSize: 14, color: '#fff' }}>Mahindra &amp; Mah..</p>
@@ -423,7 +423,7 @@ function Sidebar({ active }) {
             {[['45.83%','45.83%','45.83%','45.83%'],['45.83%','70.83%','45.83%','20.83%'],['45.83%','20.83%','45.83%','70.83%']].map((p, i) => (
               <div key={i} style={{ position: 'absolute', top: p[0], right: p[1], bottom: p[2], left: p[3] }}>
                 <div style={{ position: 'absolute', inset: '-50%' }}>
-                  <img alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={sbEllipse206} />
+                  <img loading="lazy" alt="" style={{ display: 'block', width: '100%', height: '100%' }} src={sbEllipse206} />
                 </div>
               </div>
             ))}
@@ -472,7 +472,7 @@ function Sidebar({ active }) {
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ display: 'flex', gap: 2.5, alignItems: 'center' }}>
             <div style={{ height: 17.368, overflow: 'hidden', position: 'relative', width: 19.48, flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbC2D} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={sbC2D} />
             </div>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 14.999, color: '#fff', whiteSpace: 'nowrap' }}>
               <span style={{ fontWeight: 600 }}>Convergen</span>
@@ -499,10 +499,10 @@ function Header() {
       <div style={{ display: 'flex', gap: 20, alignItems: 'center', width: 388 }}>
         <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
           <div style={{ position: 'absolute', inset: '26.67% 18.33%' }}>
-            <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgSubtract} />
+            <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgSubtract} />
           </div>
           <div style={{ position: 'absolute', inset: '16.67% 16.67% 66.67% 66.67%' }}>
-            <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse103} />
+            <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse103} />
           </div>
         </div>
         <SearchBar />
@@ -515,66 +515,66 @@ function Header() {
           {/* Light mode */}
           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
             <div style={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
               <div style={{ position: 'absolute', left: 10, top: 10, width: 20, height: 20 }}>
                 <div style={{ position: 'absolute', inset: '33.33%' }}>
-                  <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse108} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse108} />
                 </div>
               </div>
             </div>
             <div style={{ height: 22.5, width: 1, position: 'relative', flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
             </div>
           </div>
           {/* Bell */}
           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
             <div style={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
               <div style={{ position: 'absolute', left: 10, top: 10, width: 20, height: 20 }}>
                 <div style={{ position: 'absolute', inset: '14.17% 13.21% 22.5% 13.21%' }}>
-                  <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgSubtract1} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgSubtract1} />
                 </div>
                 <div style={{ position: 'absolute', inset: '20.83% 20.83% 62.5% 62.5%' }}>
-                  <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse45} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse45} />
                 </div>
               </div>
             </div>
             <div style={{ height: 22.5, width: 1, position: 'relative', flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
             </div>
           </div>
           {/* Question */}
           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
             <div style={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
               <div style={{ position: 'absolute', left: 10, top: 10, width: 20, height: 20 }}>
                 <div style={{ position: 'absolute', inset: '12.5%' }}>
-                  <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse65} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse65} />
                 </div>
                 <div style={{ position: 'absolute', inset: '72.92% 47.92% 22.92% 47.92%' }}>
-                  <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse93} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse93} />
                 </div>
                 <div style={{ position: 'absolute', inset: '29.17% 37.5% 33.33% 37.5%' }}>
-                  <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgVector123} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgVector123} />
                 </div>
               </div>
             </div>
             <div style={{ height: 22.5, width: 1, position: 'relative', flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
             </div>
           </div>
           {/* Settings */}
           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
             <div style={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgEllipse165} />
               <div style={{ position: 'absolute', left: 10, top: 10, width: 20, height: 20 }}>
                 <div style={{ position: 'absolute', inset: '8.33%' }}>
-                  <img alt="" style={{ position: 'absolute', inset: '-3%', display: 'block', width: '100%', height: '100%' }} src={imgSubtract2} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', inset: '-3%', display: 'block', width: '100%', height: '100%' }} src={imgSubtract2} />
                 </div>
               </div>
             </div>
             <div style={{ height: 22.5, width: 1, position: 'relative', flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', inset: '0 -0.5px', display: 'block', width: '100%', height: '100%' }} src={imgVector907} />
             </div>
           </div>
         </div>
@@ -582,7 +582,7 @@ function Header() {
         {/* User */}
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
           <div style={{ background: '#c5ecfd', overflow: 'hidden', borderRadius: 499.5, flexShrink: 0, width: 30, height: 30, position: 'relative' }}>
-            <img alt="memoji" style={{ position: 'absolute', inset: '-1.67% -6.67% -11.67% -6.67%', width: '100%', height: '100%', objectFit: 'cover' }} src={imgMemoji} />
+            <img loading="lazy" alt="memoji" style={{ position: 'absolute', inset: '-1.67% -6.67% -11.67% -6.67%', width: '100%', height: '100%', objectFit: 'cover' }} src={imgMemoji} />
           </div>
           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, justifyContent: 'center' }}>
@@ -591,7 +591,7 @@ function Header() {
             </div>
             <div style={{ position: 'relative', borderRadius: 15, width: 20, height: 20, flexShrink: 0 }}>
               <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', height: 3, width: 12 }}>
-                <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgVector2} />
+                <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgVector2} />
               </div>
             </div>
           </div>
@@ -710,13 +710,13 @@ function StatTiles({ tiles, controls, tileVariants }) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', height: 83, alignItems: 'flex-end', justifyContent: 'space-between', width: 74 }}>
             <div style={{ position: 'relative', width: 30, height: 30, flexShrink: 0 }}>
-              <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgGroupDuotoneFill} />
+              <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgGroupDuotoneFill} />
             </div>
             <div style={{ border: `1px solid ${tile.growth.startsWith('-') ? '#cc3232' : '#34cc32'}`, display: 'flex', gap: 5, alignItems: 'center', padding: 3 }}>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, lineHeight: '16px', color: tile.growth.startsWith('-') ? '#cc3232' : '#34cc32', fontSize: 12, whiteSpace: 'nowrap' }}>{tile.growth}</p>
               {!tile.growth.startsWith('-') && (
                 <div style={{ height: 7.09, position: 'relative', width: 10.279, flexShrink: 0 }}>
-                  <img alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgArrow} />
+                  <img loading="lazy" alt="" style={{ position: 'absolute', display: 'block', width: '100%', height: '100%' }} src={imgArrow} />
                 </div>
               )}
             </div>
@@ -831,7 +831,7 @@ function SeeAllChevron() {
       <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, lineHeight: '18px', color: '#666a74', fontSize: 14, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>See All</p>
       <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
         <div style={{ position: 'absolute', bottom: '25%', display: 'flex', alignItems: 'center', justifyContent: 'center', left: '37.5%', right: '37.5%', top: '25%' }}>
-          <img alt="" style={{ width: 5, height: 10, display: 'block' }} src={imgVector10} />
+          <img loading="lazy" alt="" style={{ width: 5, height: 10, display: 'block' }} src={imgVector10} />
         </div>
       </div>
     </div>

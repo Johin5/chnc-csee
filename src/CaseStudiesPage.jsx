@@ -137,7 +137,7 @@ function CaseCard({ c, href }) {
         pointerEvents: 'none',
         zIndex: 2,
       }}>
-        <img src={c.logo} alt={c.name} style={{ width: 220, maxWidth: '60%', height: 80, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
+        <img loading="lazy" src={c.logo} alt={c.name} style={{ width: 220, maxWidth: '60%', height: 80, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
       </div>
 
       {/* Bottom gradient */}

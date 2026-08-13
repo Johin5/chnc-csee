@@ -341,7 +341,7 @@ function CaseStudyModal({ project, onClose }) {
 
       {/* Full-bleed hero image */}
       <div style={{ background: CARD }}>
-        <img src={project.img} alt={project.name} style={{ width: '100%', display: 'block', maxHeight: 680, objectFit: 'cover' }} />
+        <img loading="lazy" src={project.img} alt={project.name} style={{ width: '100%', display: 'block', maxHeight: 680, objectFit: 'cover' }} />
       </div>
 
       {/* Sectioned gallery or fallback 2-col grid */}

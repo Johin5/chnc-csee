@@ -85,7 +85,7 @@ function OtherCaseTile({ c, href }) {
         transform: hovered ? 'translateY(-12%) scale(1)' : 'translateY(-12%) scale(0.85)',
         transition: 'opacity 0.5s ease, transform 0.5s ease', pointerEvents: 'none', zIndex: 2,
       }}>
-        <img src={c.logo} alt={c.name} style={{ width: 180, maxWidth: '60%', height: 64, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
+        <img loading="lazy" src={c.logo} alt={c.name} style={{ width: 180, maxWidth: '60%', height: 64, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
       </div>
 
       {/* Bottom gradient */}
@@ -132,10 +132,10 @@ export default function MahindraPage() {
           <div style={{ height: 66, display: 'flex', alignItems: 'center', gap: 25, justifyContent: 'center', flexShrink: 0 }}>
             {/* Both marks sit straight on the photo — no chips. A soft drop
                 shadow keeps their light edges off the light parts of the car. */}
-            <img src={imgConvergenC} alt="ConvergenSEE" style={{ width: 60, height: 53.5, objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
+            <img loading="lazy" src={imgConvergenC} alt="ConvergenSEE" style={{ width: 60, height: 53.5, objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
             {/* x */}
             <span style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 60.4, color: '#2bb32a', letterSpacing: '-1.511px', lineHeight: 1, flexShrink: 0 }}>x</span>
-            <img src={imgMahindraLogo} alt="Mahindra" style={{ height: 52, width: 'auto', objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
+            <img loading="lazy" src={imgMahindraLogo} alt="Mahindra" style={{ height: 52, width: 'auto', objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
           </div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 566, textAlign: 'center', margin: 0 }}>
             Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.

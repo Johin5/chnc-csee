@@ -200,7 +200,7 @@ function About() {
                 style={{ position: 'absolute', left: `${p.left}%`, top: `${p.top}%`, width: `${p.width}%` }}
               >
                 <img
-                  src={p.src} alt={p.name} className="logo-art-float"
+                  src={p.src} alt={p.name} loading="lazy" className="logo-art-float"
                   style={{ width: '100%', height: 'auto', display: 'block', animationDuration: `${3 + (i % 4) * 0.55}s`, animationDelay: `${-i * 0.7}s` }}
                 />
               </motion.div>
@@ -384,8 +384,8 @@ function CHNC() {
       </div>
 
       <div style={{ position: 'relative', height: isSmall ? 240 : 430, maxWidth: 1384, margin: '0 auto', padding: '0 clamp(16px, 3vw, 48px) clamp(20px, 4vw, 48px)', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
-        <img src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
-        <img src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 7, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
+        <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
+        <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 7, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
         <motion.div style={isSmall ? { position: 'relative', zIndex: 1, textAlign: 'center' } : { position: 'relative', zIndex: 1, textAlign: 'center', opacity: chncOpacity, scale: chncScale }}>
           <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(52px, 7.5vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, letterSpacing: '4px', textTransform: 'uppercase', marginTop: 16 }}>
@@ -776,7 +776,7 @@ function Testimonials() {
               </div>
             </div>
             <div style={{ width: isSmall ? '100%' : 494, height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, position: 'relative', border: `2px solid ${BORDER}`, borderLeft: isSmall ? `2px solid ${BORDER}` : 'none', overflow: 'hidden', flexShrink: 0 }}>
-              <img src={testiPhoto} alt="Alina Sharma" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img loading="lazy" src={testiPhoto} alt="Alina Sharma" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,7,24,0) 42%, #000718)' }} />
               <div style={{ position: 'absolute', bottom: 40, left: 38 }}>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24 }}>Alina Sharma</p>
@@ -850,7 +850,7 @@ function BoardCard({ member }) {
     >
       {/* Full image */}
       <img
-        src={member.img}
+        src={member.img} loading="lazy"
         alt={member.name}
         style={{
           width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top',

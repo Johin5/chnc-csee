@@ -68,7 +68,7 @@ export function PoisonCTA({ style }) {
       </p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div style={{ background: '#0e1620', border: `2px solid ${G}`, height: 150, width: '100%', maxWidth: 323, position: 'relative' }}>
-          <img src={memeImg} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
+          <img loading="lazy" src={memeImg} alt="meme" style={{ position: 'absolute', top: -30, left: '50%', transform: 'translateX(-50%)', width: 204, height: 177, objectFit: 'contain', maxWidth: '90%' }} />
           {/* The meme's bottom edge lands 1px inside the bottom border, and a
               positioned child always paints after the parent's border — so his
               coat cut a gap in the green line. Redraw that one edge on top of
@@ -149,7 +149,7 @@ export default function Footer() {
                 <path d="M9 9v4m0-3a2 2 0 0 1 4 0v3" stroke={DIM} strokeWidth="1.2" fill="none"/>
               </svg>
             </div>
-            <img src={partnerImg} alt="Google Partner" style={{ width: 41, height: 39, objectFit: 'contain', marginTop: 20 }} />
+            <img loading="lazy" src={partnerImg} alt="Google Partner" style={{ width: 41, height: 39, objectFit: 'contain', marginTop: 20 }} />
           </div>
         </div>
 

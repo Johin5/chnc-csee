@@ -134,7 +134,7 @@ export default function BlogReadPage({ post }) {
             {post.title}
           </h1>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <img src={post.avatar} alt={post.author} style={{ width: 30, height: 30, borderRadius: '50%', objectFit: 'cover' }} />
+            <img loading="lazy" src={post.avatar} alt={post.author} style={{ width: 30, height: 30, borderRadius: '50%', objectFit: 'cover' }} />
             <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: G, fontWeight: 600 }}>{post.author}</span>
             <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED }}>{post.role}</span>
             <span style={{ color: DIM }}>&middot;</span>
