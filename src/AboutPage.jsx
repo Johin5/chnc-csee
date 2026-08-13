@@ -151,7 +151,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Letter from Bala ────────────────────────────────────────────────── */}
-      <section style={{ background: CARD, paddingLeft: isSmall ? 0 : 100 }}>
+      <section style={{ background: DARK, paddingLeft: isSmall ? 0 : 100 }}>
         <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', alignItems: 'stretch', justifyContent: 'space-between' }}>
           {/* Left: text */}
           <div style={{
@@ -185,9 +185,8 @@ export default function AboutPage() {
 
           {/* Right: Bala polaroid gif */}
           <div style={{ width: isSmall ? '100%' : 732, maxWidth: isSmall ? 'none' : 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
-            <div style={{ position: 'absolute', inset: 0, background: '#ffffff' }} />
             <Image src="/bala-polaroid.gif" alt="Letter from Bala" fill sizes="100vw" style={{
-              objectFit: 'cover', transform: 'scale(1.15)', pointerEvents: 'none',
+              objectFit: 'contain', pointerEvents: 'none',
             }} />
           </div>
         </div>

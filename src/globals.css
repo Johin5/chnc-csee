@@ -51,6 +51,9 @@ button { font-family: inherit; cursor: pointer; }
 .ticker-item img { height: 40px; width: auto; max-width: 168px; object-fit: contain; opacity: 0.72; transition: opacity 0.2s ease, transform 0.2s ease; }
 .ticker-item img:hover { opacity: 1; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.logo-art-float { animation: logo-art-float 3s ease-in-out infinite alternate; }
+@keyframes logo-art-float { from { transform: translateY(-3px); } to { transform: translateY(3px); } }
+@media (prefers-reduced-motion: reduce) { .logo-art-float { animation: none; } }
 .chnc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1240px; margin: 0 auto; padding: 0 100px; }
 .stat-card { background: #0f1520; border: 1px solid rgba(52,204,50,0.15); padding: 40px 30px; }
 .stat-num { font-family: 'Saira Condensed', sans-serif; font-size: 56px; font-weight: 800; color: #34cc32; line-height: 1; }
@@ -319,4 +322,21 @@ img, video, svg { max-width: 100%; }
 }
 .ticker-item:hover img {
   filter: brightness(1.2);
+}
+
+/* Platform-offers feature cards */
+.feature-card {
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.feature-card:hover {
+  border-color: rgba(52, 204, 50, 0.55) !important;
+  background-color: rgba(52, 204, 50, 0.05) !important;
+  box-shadow: 0 0 28px rgba(52, 204, 50, 0.12);
+}
+.feature-icon {
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.feature-card:hover .feature-icon {
+  background-color: rgba(52, 204, 50, 0.18) !important;
+  border-color: rgba(52, 204, 50, 0.6) !important;
 }

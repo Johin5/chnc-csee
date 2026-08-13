@@ -9,7 +9,7 @@ import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import { motion, useScroll, useTransform, useMotionValue, useSpring, animate } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring, animate, useInView } from 'framer-motion'
 import CHNCDock from './ui/dock'
 import useResponsive from './useResponsive'
 import { withPose } from './lib/teamRoster'
@@ -23,9 +23,21 @@ import CHNCPlaceholder from './CHNCPlaceholder'
 const CHNCDashboard = dynamic(() => import('./CHNCDashboard'), { ssr: false, loading: () => <CHNCPlaceholder /> })
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
-const teamPhoto= '/figma/home/img-logo-team1.png'
+// The "We are ConvergenSEE" logo art, split into layers so each person can
+// animate in individually. Positions are % of the 1080×1350 master canvas,
+// measured by pixel-matching each cutout against the delivered composite
+// (Logo Art.png). Array order = z-order, back to front.
+const logoArtPeople = [
+  { src: '/figma/home/logo-art/neha.png',     name: 'Neha',     left: 33.70, top: 11.85, width: 42.50 },
+  { src: '/figma/home/logo-art/vishy.png',    name: 'Vishy',    left: 24.81, top: 11.48, width: 27.04 },
+  { src: '/figma/home/logo-art/archana.png',  name: 'Archana',  left: 6.11,  top: 19.33, width: 31.76 },
+  { src: '/figma/home/logo-art/krish.png',    name: 'Krish',    left: 11.39, top: 33.56, width: 26.94 },
+  { src: '/figma/home/logo-art/rakshita.png', name: 'Rakshita', left: 48.89, top: 59.78, width: 28.80 },
+  { src: '/figma/home/logo-art/akansha.png',  name: 'Akansha',  left: 22.96, top: 46.89, width: 28.98 },
+  { src: '/figma/home/logo-art/kiran.png',    name: 'Kiran',    left: 68.89, top: 13.41, width: 22.31 },
+  { src: '/figma/home/logo-art/bala.png',     name: 'Bala',     left: 32.96, top: 58.15, width: 29.44 },
+]
 const funnel1  = '/figma/home/funnel1.png'
-const realityImg = '/figma/home/reality.png'
 const testiPhoto = '/figma/home/img-image111.png'
 const boardImg = '/figma/home/board.png'
 
@@ -176,10 +188,24 @@ function About() {
           </p>
           <BtnGreen style={{ width: 'fit-content' }}>Meet the team</BtnGreen>
         </div>
-        <div style={{ width: isSmall ? '100%' : 562, maxWidth: 562, height: isSmall ? 'clamp(320px, 80vw, 564px)' : 564, overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <img src={teamPhoto} alt="Team" style={{
-            width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center',
-          }} />
+        <div style={{ width: isSmall ? '100%' : 562, maxWidth: 562, height: isSmall ? 'clamp(320px, 80vw, 564px)' : 564, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ position: 'relative', height: '100%', aspectRatio: '1080 / 1350' }}>
+            {logoArtPeople.map((p, i) => (
+              <motion.div
+                key={p.name}
+                initial={{ opacity: 0, y: 26, scale: 0.7 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ delay: 0.15 + i * 0.09, type: 'spring', duration: 0.6, bounce: 0.35 }}
+                style={{ position: 'absolute', left: `${p.left}%`, top: `${p.top}%`, width: `${p.width}%` }}
+              >
+                <img
+                  src={p.src} alt={p.name} className="logo-art-float"
+                  style={{ width: '100%', height: 'auto', display: 'block', animationDuration: `${3 + (i % 4) * 0.55}s`, animationDelay: `${-i * 0.7}s` }}
+                />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -194,15 +220,15 @@ const chncStats = [
 ]
 
 const platformFeatures = [
-  { title: 'Create Content',          desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'Location Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'AI Agents',               desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'Social Media Management', desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'Generate AI Scripts',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'Proposal Management',     desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'Amplify',                 desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'MessageIT',               desc: 'Posting isn’t presence. We turn your content into real connection.' },
-  { title: 'InfluenceIT',             desc: 'Posting isn’t presence. We turn your content into real connection.' },
+  { title: 'Create Content',          icon: <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" /> },
+  { title: 'Location Management',     icon: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></> },
+  { title: 'AI Agents',               icon: <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" /> },
+  { title: 'Social Media Management', icon: <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" /></> },
+  { title: 'Generate AI Scripts',     icon: <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2Z" /><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" /></> },
+  { title: 'Proposal Management',     icon: <><rect x="8" y="2" width="8" height="4" rx="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="m9 14 2 2 4-4" /></> },
+  { title: 'Amplify',                 icon: <><path d="m3 11 18-5v12L3 14v-3Z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></> },
+  { title: 'MessageIT',               icon: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22l5.9-2Z" /> },
+  { title: 'InfluenceIT',             icon: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></> },
 ]
 
 function CHNC() {
@@ -320,6 +346,7 @@ function CHNC() {
   const xRight = useTransform(flow, [0.10, 1], [0, -360])
   const colX = [xLeft, xMid, xRight]
 
+
   const chncOpacity = useTransform(flow, [0.60, 0.95], [0, 1])
   const chncScale   = useTransform(flow, [0.60, 1],    [0.55, 1])
 
@@ -341,15 +368,15 @@ function CHNC() {
       <div style={{ maxWidth: 1480, margin: '0 auto 60px', padding: '0 clamp(16px, 3vw, 48px)', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 24, width: '100%' }}>
           {platformFeatures.map((f, i) => {
-            const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '22px 30px', display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'flex-start' }
+            const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '24px 26px', minHeight: 104, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 18, boxSizing: 'border-box' }
             const r = Math.floor(i / 3), c = i % 3
             const animStyle = isSmall ? cardStyle : { ...cardStyle, x: colX[c], y: rowY[r], scale: rowS[r], opacity: rowO[r], willChange: 'transform, opacity' }
             return (
-            <motion.div key={f.title} style={animStyle}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 2.4vw, 32px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'rgba(255,255,255,0.7)', lineHeight: '24px', margin: 0, maxWidth: 315 }}>{f.desc}</p>
-              </div>
+            <motion.div key={f.title} className="feature-card" style={animStyle}>
+              <span className="feature-icon" style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 12, background: 'rgba(52,204,50,0.08)', border: '1px solid rgba(52,204,50,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{f.icon}</svg>
+              </span>
+              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 2.2vw, 30px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
             </motion.div>
             )
           })}
@@ -524,6 +551,49 @@ const impacts = [
   { num: '32%',  desc: 'Fraud attempts tackled and resolved', tag: 'Technology Firm' },
 ]
 
+// Slot-machine odometer: each digit is a vertical 0-9 strip that spins through
+// two full loops before settling on its target. Cell height must match the
+// parent's lineHeight so digits sit exactly one glyph tall.
+const SLOT_CELL = 1.1 // em
+
+function SlotDigit({ char, inView, delay }) {
+  const cellStyle = { display: 'block', height: `${SLOT_CELL}em`, lineHeight: `${SLOT_CELL}em` }
+  if (!/\d/.test(char)) {
+    return <span style={{ display: 'inline-block', height: `${SLOT_CELL}em`, lineHeight: `${SLOT_CELL}em` }}>{char}</span>
+  }
+  const rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .concat(Array.from({ length: +char + 1 }, (_, i) => i))
+  // The hidden copy of the final digit sizes the column, so a narrow '1'
+  // doesn't inherit the width of the '0'–'9' strip spinning behind it.
+  return (
+    <span style={{ position: 'relative', display: 'inline-block', overflow: 'hidden', height: `${SLOT_CELL}em`, verticalAlign: 'top' }}>
+      <span style={{ visibility: 'hidden', display: 'block', height: `${SLOT_CELL}em`, lineHeight: `${SLOT_CELL}em` }}>{char}</span>
+      <motion.span
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'block', textAlign: 'center' }}
+        initial={{ y: 0 }}
+        animate={inView ? { y: `-${(rows.length - 1) * SLOT_CELL}em` } : { y: 0 }}
+        transition={{ duration: 1.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {rows.map((n, i) => <span key={i} style={cellStyle}>{n}</span>)}
+      </motion.span>
+    </span>
+  )
+}
+
+function RollingNumber({ value, style }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, amount: 0.6 })
+  return (
+    <p ref={ref} style={{ ...style, lineHeight: SLOT_CELL }} aria-label={value}>
+      <span aria-hidden="true">
+        {value.split('').map((ch, i) => (
+          <SlotDigit key={i} char={ch} inView={inView} delay={i * 0.12} />
+        ))}
+      </span>
+    </p>
+  )
+}
+
 function Impact() {
   const { isMobile } = useResponsive()
   return (
@@ -538,7 +608,7 @@ function Impact() {
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, width: '100%' }}>
           {impacts.map((s) => (
             <div key={s.num} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)' }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 5.3vw, 80px)', fontWeight: 700, color: G, lineHeight: 1.1 }}>{s.num}</p>
+              <RollingNumber value={s.num} style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 5.3vw, 80px)', fontWeight: 700, color: G, lineHeight: 1.1 }} />
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.desc}</p>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 600, color: G, textTransform: 'uppercase', marginTop: 10 }}>{s.tag}</p>
             </div>
@@ -550,11 +620,18 @@ function Impact() {
 }
 
 // ─── Brand Audit (Reality Check) ─────────────────────────────────────────────
+// Every option carries its own reaction gif; picking one swaps the gif on the
+// right. Nothing is selected initially, so the neutral default.gif shows.
+const auditDefaultGif = '/figma/home/oh-gifs/default.gif'
 const auditQs = [
-  { q: 'Looking for an', qGreen: 'audit?', opts: ['YES', 'NO', 'MAYBE'], active: 0 },
-  { q: 'Ready to enhance your', qGreen: 'strategies?', opts: ['JOIN OUR WEBINAR', 'CONTACT US', 'LEARN MORE'], active: 2 },
-  { q: 'Need a', qGreen: 'financial', qEnd: ' review?', opts: ['VIEW OUR SERVICES', 'GET IN TOUCH', 'SCHEDULE A CALL'], active: 1 },
-  { q: 'Curious about our', qGreen: 'process?', opts: ['CHECK OUR CASE STUDIES', 'READ CLIENT TESTIMONIALS', 'EXPLORE OUR METHODS'], active: 2 },
+  { q: 'Looking for an', qGreen: 'audit?', opts: ['YES', 'NO', 'MAYBE'],
+    gifs: ['ooh-wee', 'o-face', 'oh-i-see'] },
+  { q: 'Ready to enhance your', qGreen: 'strategies?', opts: ['JOIN OUR WEBINAR', 'CONTACT US', 'LEARN MORE'],
+    gifs: ['jimbo', 'giphy-3', 'i-see-wow'] },
+  { q: 'Need a', qGreen: 'financial', qEnd: ' review?', opts: ['VIEW OUR SERVICES', 'GET IN TOUCH', 'SCHEDULE A CALL'],
+    gifs: ['matrix-ok', 'oh-snap', 'giphy-4'] },
+  { q: 'Curious about our', qGreen: 'process?', opts: ['CHECK OUR CASE STUDIES', 'READ CLIENT TESTIMONIALS', 'EXPLORE OUR METHODS'],
+    gifs: ['stranger-things', 'tiffany', 'max-stranger'] },
 ]
 
 function QuizPill({ label, isActive, onClick }) {
@@ -583,9 +660,11 @@ function QuizPill({ label, isActive, onClick }) {
 
 function BrandAudit() {
   const { isSmall } = useResponsive()
-  const [selections, setSelections] = useState(auditQs.map(q => q.active))
+  const [selections, setSelections] = useState(auditQs.map(() => null))
+  const [gif, setGif] = useState(auditDefaultGif)
   const handleSelect = (qi, oi) => {
     setSelections(prev => { const next = [...prev]; next[qi] = oi; return next })
+    setGif(`/figma/home/oh-gifs/${auditQs[qi].gifs[oi]}.gif`)
   }
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
@@ -613,7 +692,7 @@ function BrandAudit() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', width: isSmall ? '100%' : 410, maxWidth: 410, flexShrink: 0, alignSelf: isSmall ? 'center' : 'auto' }}>
             <div style={{ width: '100%', height: isSmall ? 'clamp(280px, 70vw, 410px)' : 410, boxShadow: '0 4px 65px rgba(43,179,42,0.1)', overflow: 'hidden' }}>
-              <img src={realityImg} alt="Reality Check" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={gif} alt="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24, textAlign: 'center' }}>
               Ready for a <span style={{ color: G }}>Reality</span> check?
@@ -636,11 +715,6 @@ function BrandAudit() {
 
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 const testiTabs = ['AUTOMOBILE', 'BANKING', 'FMCG', 'RETAIL', 'FSI', 'OTHER']
-const testiStats = [
-  { num: '96%', label: 'Increase in traffic growth' },
-  { num: '10x', label: 'Revenue increase' },
-  { num: '96%', label: 'Increase in sales' },
-]
 
 function Testimonials() {
   const { isSmall } = useResponsive()
@@ -679,14 +753,6 @@ function Testimonials() {
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: '#fff', lineHeight: 1.3, maxWidth: 658 }}>
                 "ConvergenSEE changed the trajectory and <span style={{ color: '#2bb32a' }}>success</span> of my business, and I'm a lifelong user at this point."
               </p>
-              <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
-                {testiStats.map((s) => (
-                  <div key={s.num} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', padding: 10 }}>
-                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 700, lineHeight: 1.1 }}>{s.num}</p>
-                    <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.label}</p>
-                  </div>
-                ))}
-              </div>
             </div>
             <div style={{ width: isSmall ? '100%' : 494, height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, position: 'relative', border: `2px solid ${BORDER}`, borderLeft: isSmall ? `2px solid ${BORDER}` : 'none', overflow: 'hidden', flexShrink: 0 }}>
               <img src={testiPhoto} alt="Alina Sharma" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
