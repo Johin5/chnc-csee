@@ -21,7 +21,7 @@ const QUICK_LINKS = [
   ['Solutions', 'solutions'],
   ['Case Studies', 'case-studies'],
   ['Blogs', 'blog'],
-  ['Work', 'work'],
+  // ['Work', 'work'], // hidden for now — restore when the Work page is ready
   ['Career', 'careers'],
 ]
 
