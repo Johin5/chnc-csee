@@ -185,15 +185,15 @@ function Hero() {
           textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 0.95, margin: 0,
           maxWidth: 1000, textShadow: '0 4px 40px rgba(0,7,24,0.95)',
         }}>
-          <span style={{ color: '#fff' }}>THIS WALL DOESN'T TAKE </span>
-          <span style={{ color: G }}>ANYONE</span>
+          <span style={{ color: '#fff' }}>JOIN THE </span>
+          <span style={{ color: G }}>DREAM TEAM</span>
         </h1>
         <p style={{
           fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
           lineHeight: '24px', maxWidth: 700, margin: 0, textShadow: '0 2px 20px rgba(0,7,24,0.95)',
         }}>
-          {TEAM.length} people made it onto it. Hover any face to meet them — then decide whether
-          yours belongs up there too.
+          Your next opportunity starts here. {TEAM.length} people already made it onto this wall —
+          hover any face to meet them, then decide whether yours belongs up there too.
         </p>
       </div>
     </section>
@@ -380,7 +380,7 @@ function MeetTheTeams({ onOpenJob }) {
             fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(28px, 4vw, 40px)',
             fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.02em',
             lineHeight: 1, color: '#fff', margin: 0,
-          }}>Job Openings</p>
+          }}>Come Build With Us</p>
           <p style={{
             fontFamily: "'Archivo', sans-serif", fontSize: 14, color: G, margin: '8px 0 0',
           }}>{group ? group.name : 'Across every team'}</p>
@@ -493,9 +493,10 @@ function WeAreSection() {
         fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
         lineHeight: '24px', maxWidth: 798, margin: '20px 0 0',
       }}>
-        Discover the power of our secure and rewarding copy. Explore our range of copy and take
-        control of your copy today. Discover the power of our secure and rewarding copy. Explore
-        our range of copy and take control of your copy today. Discover us.
+        We are you, the dreamers who see what could be, the thinkers who question what is, the
+        builders who refuse to settle. We exist in the space between your vision and reality,
+        turning digital problems into opportunities with technology that actually works. We're not
+        your brand. We're your people &mdash; solving, creating, and growing right alongside you.
       </p>
 
       {/* Team photo */}

@@ -65,7 +65,7 @@ const Pill = ({ label, active, onClick }) => (
 // ─── Sections ─────────────────────────────────────────────────────────────────
 function Hero({ active, onSelect }) {
   const { isSmall } = useResponsive()
-  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AigenIT','SearchIT','InvoiceIT']
+  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AigenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT']
 
   return (
     <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', textAlign: 'center', position: 'relative' }}>
@@ -82,13 +82,12 @@ function Hero({ active, onSelect }) {
       {/* headline */}
       <h1 style={{
         fontFamily: "'Saira Condensed', sans-serif",
-        fontSize: isSmall ? 'clamp(48px, 12.2vw, 150px)' : 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
+        fontSize: isSmall ? 'clamp(44px, 11vw, 120px)' : 'clamp(52px, 9vw, 120px)', fontWeight: 800, lineHeight: 1,
         textTransform: 'uppercase', letterSpacing: '-3px',
-        margin: 0, whiteSpace: 'nowrap',
+        margin: 0,
       }}>
-        <span style={{ color: '#fff' }}>ALL IN </span>
-        <span style={{ color: '#fff' }}>ONE </span>
-        <span style={{ color: '#fff' }}>SOLUTION</span>
+        <span style={{ color: '#fff' }}>ALL IN ONE </span>
+        <span style={{ color: G }}>COMMAND CENTRE</span>
       </h1>
 
       {/* module pills */}
@@ -167,25 +166,87 @@ function ContentCreation() {
 
 const MODULE_STEPS = {
   LocateIT: [
-    { bold: 'Create', rest: ' every listing — details, hours and map pin in one form' },
-    { bold: 'Audit', rest: ' at scale — 42,318 checked, strays caught & fixed' },
-    { bold: 'Manage', rest: ' — update once, publish to 312 locations' },
-    { bold: 'Verify', rest: ' every location — submitted → verified, tracked live' },
-    { bold: 'Go live', rest: ' on Google — every branch found, everywhere' },
-    { bold: 'Optimise', rest: ' with ranked, high-impact actions done for you' },
-    { bold: 'Perform', rest: ' — track impressions, actions and mobile share' },
+    { bold: 'Audit', rest: ' listings to find duplicates, wrong entries, and fake listings' },
+    { bold: 'Centralise', rest: ' all store info in one dashboard' },
+    { bold: 'Standardise', rest: ' every listing for accuracy and visibility' },
+    { bold: 'Optimise', rest: ' listings and pages using local SEO best practices' },
     { stat: true, text: '10 stores or 10,000 — one dashboard' },
   ],
+  SearchIT: [
+    { bold: 'Analyse', rest: ' your content to find SEO and GEO gaps' },
+    { bold: 'Audit', rest: ' UI/UX to improve user experience and engagement' },
+    { bold: 'Check', rest: ' your tech stack for crawlability and performance' },
+    { bold: 'Give', rest: ' a clear improvement roadmap' },
+    { bold: 'Track', rest: ' results continuously and adapt strategy' },
+  ],
+  AigenIT: [
+    { bold: 'Enable', rest: ' human-like conversations in multiple languages' },
+    { bold: 'Adapt', rest: ' responses to your brand, industry, and cultural context' },
+    { bold: 'Handle', rest: ' multiple users in real time' },
+    { bold: 'Build', rest: ' intent-led dialogues' },
+    { bold: 'Integrate', rest: ' with CRM, APIs, and dashboards for insights' },
+  ],
   CreateIT: [
-    { bold: 'Plan', rest: ' your content for organic/paid media' },
-    { bold: 'Gather', rest: ' requirements from relevant stakeholders' },
-    { bold: 'Visualise', rest: ' content on the go with generative AI and built-in guardrails' },
-    { bold: 'Write Copy', rest: ' in multiple languages in line with brand tonality' },
-    { bold: 'Create', rest: ' multiple content variations on the fly' },
-    { bold: 'Match', rest: ' brand and stock images with our unique image recognition software' },
-    { bold: 'Bring Life', rest: ' to your content with our design capabilities' },
-    { bold: 'Publish', rest: ' content across platforms and measure performance' },
+    { bold: 'Plan', rest: ' content for paid and organic campaigns' },
+    { bold: 'Collect', rest: ' inputs from stakeholders and lock requirements' },
+    { bold: 'Use', rest: ' AI guardrails to match assets and visualise faster' },
+    { bold: 'Generate', rest: ' multilingual copy and content variations' },
+    { bold: 'Publish', rest: ', collaborate on approvals, and track performance' },
     { stat: true, text: '60% reduction in content creation time' },
+  ],
+  ScriptIT: [
+    { bold: 'Generate', rest: ' scripts and storyboards using AI' },
+    { bold: 'Add', rest: ' shot-by-shot breakdowns with brand nuance' },
+    { bold: 'Reuse', rest: ' proven formats via a script library' },
+    { bold: 'Use', rest: ' smart camera/audio suggestions for better output' },
+    { bold: 'Deliver', rest: ' shoot-ready scripts for faster production' },
+  ],
+  InfluenceIT: [
+    { bold: 'Discover', rest: ' and analyse creators using AI' },
+    { bold: 'Score', rest: ' creator–brand fit and align goals' },
+    { bold: 'Auto-generate', rest: ' scripts and storyboards' },
+    { bold: 'Convert', rest: ' scripts into reels with AI production' },
+    { bold: 'Track', rest: ' ROI live through CHNC dashboards' },
+  ],
+  SocialiseIT: [
+    { bold: 'Plan', rest: ' content across all organic channels' },
+    { bold: 'Publish', rest: ' platform-specific assets' },
+    { bold: 'Manage', rest: ' campaigns, influencer work, and response handling' },
+    { bold: 'Track', rest: ' KPIs through dashboards and reporting' },
+  ],
+  AmplifyIT: [
+    { bold: 'Plan', rest: ' campaigns across paid and organic media' },
+    { bold: 'Gather', rest: ' inputs and requirements across teams' },
+    { bold: 'Create', rest: ' variations and adapt designs quickly' },
+    { bold: 'Publish', rest: ' across channels and measure performance' },
+    { bold: 'Optimise', rest: ' continuously to improve engagement and outcomes' },
+  ],
+  InvoiceIT: [
+    { bold: 'Capture', rest: ' all digital marketing spends in one place' },
+    { bold: 'Automate', rest: ' invoicing and reconciliation' },
+    { bold: 'Match', rest: ' payments to deliverables clearly' },
+    { bold: 'Maintain', rest: ' compliance-ready financial records' },
+    { bold: 'Link', rest: ' spends directly to marketing ROI' },
+  ],
+  InsightIT: [
+    { bold: 'Consolidate', rest: ' data across CHNC modules' },
+    { bold: 'Track', rest: ' spends, performance, and ROI in one view' },
+    { bold: 'Highlight', rest: ' top and underperforming regions, campaigns, and channels' },
+    { bold: 'Add', rest: ' SEO, website, and financial analysis with recommendations' },
+    { bold: 'Deliver', rest: ' dashboards with real-time insights' },
+  ],
+  AdaptIT: [
+    { bold: 'Analyse', rest: ' each market or region for language, culture, and platform norms' },
+    { bold: 'Adapt', rest: ' messaging, visuals, and offers to fit local context' },
+    { bold: 'Localise', rest: ' pricing, formats, and compliance requirements automatically' },
+    { bold: 'Roll out', rest: ' region-specific versions across all active channels' },
+  ],
+  EngageIT: [
+    { bold: 'Track', rest: ' customer touchpoints across every channel in real time' },
+    { bold: 'Trigger', rest: ' personalised follow-ups based on behaviour and intent' },
+    { bold: 'Automate', rest: ' replies, nudges, and re-engagement sequences' },
+    { bold: 'Segment', rest: ' audiences by engagement level and lifecycle stage' },
+    { bold: 'Measure', rest: ' retention, repeat actions, and engagement lift over time' },
   ],
 }
 const DEFAULT_STEPS = [
@@ -377,18 +438,79 @@ function HowWeDoIt({ activeModule }) {
         fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
         lineHeight: '24px', textAlign: 'center', maxWidth: 804,
       }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+        What happens after you choose a module &mdash; step by step.
       </p>
     </section>
   )
 }
 
-function AllOfThisWithJust() {
-  const items = [
+// What each module needs from the brand to get started — shown for whichever
+// module pill is active.
+const FROM_BRAND = {
+  LocateIT: [
+    'Store/location database (addresses, contacts, branches)',
+    'Access to Google Business Profiles / listing platforms',
+    'Brand guidelines for listings & information standardisation',
+  ],
+  SearchIT: [
+    'Website analytics access',
+    'Keyword priorities & business focus areas',
+    'Competitor benchmarks or market context',
+  ],
+  AigenIT: [
+    'Product/service FAQs & knowledge base',
+    'CRM/CMS access for lead or conversation sync',
+    'Language & geography priorities',
+  ],
+  CreateIT: [
     'Brand briefs, objectives & guidelines',
-    'Approved design/tonality references',
-    'Content formats & publishing needs',
-  ]
+    'Approved design references & tone of voice',
+    'Content formats, channels & publishing needs',
+  ],
+  ScriptIT: [
+    'Campaign brief & communication objectives',
+    'Brand tone, messaging & guardrails',
+    'Target platforms, audience & distribution intent',
+  ],
+  InfluenceIT: [
+    'Campaign goals & budgets',
+    'Influencer categories / audience niches',
+    'Brand messaging framework',
+  ],
+  SocialiseIT: [
+    'Brand voice & communication guidelines',
+    'Content calendar priorities / campaign goals',
+    'Access to social handles & ad accounts',
+  ],
+  AmplifyIT: [
+    'Campaign objectives & media budgets',
+    'Audience targeting inputs',
+    'Past campaign performance data (if available)',
+  ],
+  InvoiceIT: [
+    'Campaign spends & invoices',
+    'Budget allocations & approvals',
+    'Compliance / tax requirements',
+  ],
+  InsightIT: [
+    'Access to campaign & performance data sources',
+    'Inputs from marketing / finance / digital teams',
+    'Business objectives & KPIs to track',
+  ],
+  AdaptIT: [
+    'Target markets/regions and priority order',
+    'Existing localised assets (if any) for reference',
+    'Compliance, pricing, or regulatory constraints per market',
+  ],
+  EngageIT: [
+    'Customer database and existing engagement history',
+    'Lifecycle stages and segmentation criteria',
+    'Access to CRM or marketing automation tools',
+  ],
+}
+
+function AllOfThisWithJust({ activeModule }) {
+  const items = FROM_BRAND[activeModule] || FROM_BRAND.CreateIT
   const { isMobile } = useResponsive()
 
   return (
@@ -400,7 +522,7 @@ function AllOfThisWithJust() {
           textTransform: 'uppercase', color: '#fff', margin: 0,
         }}>All of this with just...</h2>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, marginTop: 16 }}>
-          Create Content and get approval in hours, not days.
+          Everything {activeModule || 'CHNC'} needs from your brand to get moving.
         </p>
       </div>
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%', maxWidth: 1240 }}>
@@ -418,10 +540,9 @@ function AllOfThisWithJust() {
 }
 
 const auditQs = [
-  { q: 'Looking for an', qGreen: 'audit?', opts: ['YES', 'NO', 'MAYBE'], active: 0 },
-  { q: 'Ready to enhance your', qGreen: 'strategies?', opts: ['JOIN OUR WEBINAR', 'CONTACT US', 'LEARN MORE'], active: 2 },
-  { q: 'Need a', qGreen: 'financial', qEnd: ' review?', opts: ['VIEW OUR SERVICES', 'GET IN TOUCH', 'SCHEDULE A CALL'], active: 1 },
-  { q: 'Curious about our', qGreen: 'process?', opts: ['CHECK OUR CASE STUDIES', 'READ CLIENT TESTIMONIALS', 'EXPLORE OUR METHODS'], active: 2 },
+  { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'], active: 3 },
+  { q: "What's the main", qGreen: 'issue', qEnd: ' today?', opts: ['LOW LEADS', 'LOW QUALITY', 'INCONSISTENT', 'NOT SURE'], active: 3 },
+  { q: "What's your current", qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'], active: 0 },
 ]
 
 function ReadyToCreate() {
@@ -444,8 +565,8 @@ function ReadyToCreate() {
         fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
         textTransform: 'uppercase', textAlign: 'center', margin: 0,
       }}>
-        <span style={{ color: '#fff' }}>Ready to Create </span>
-        <span style={{ color: G }}>Content</span>
+        <span style={{ color: '#fff' }}>Got a growth </span>
+        <span style={{ color: G }}>question</span>
         <span style={{ color: '#fff' }}>?</span>
       </h2>
 
@@ -504,7 +625,7 @@ export default function SolutionsPage() {
       <Hero active={activePill} onSelect={setActivePill} />
       <ContentCreation />
       <HowWeDoIt activeModule={activeModule} />
-      <AllOfThisWithJust />
+      <AllOfThisWithJust activeModule={activeModule} />
       <ReadyToCreate />
       <Contact />
       <Footer />

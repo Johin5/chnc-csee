@@ -6,7 +6,7 @@ export const SITE_URL = 'https://convergensee.ai'
 export const SITE_NAME = 'ConvergenSEE'
 
 export const DEFAULT_DESCRIPTION =
-  'ConvergenSEE is a Mumbai-based digital marketing agency pairing creative storytelling with CHNC, its always-on brand-health platform, for brands like Mahindra, Axis Bank and SBI.'
+  'ConvergenSEE is a Mumbai-based digital marketing agency pairing creative storytelling with CHNC, its always-on brand-health platform, for brands like Mahindra, Unicorn and SBI.'
 
 // Every page builds its metadata through this so canonical/OG/Twitter stay in
 // lockstep and only genuinely per-page fields are declared at the call site.

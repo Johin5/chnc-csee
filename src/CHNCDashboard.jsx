@@ -388,7 +388,7 @@ const sbMenuItems = [
   { id: 'InvoiceIT',   label: 'InvoiceIT',   Icon: IconOrder },
 ]
 
-function Sidebar({ active }) {
+function Sidebar({ active, org }) {
   return (
     <div style={{
       position: 'absolute', left: 0, top: 0, bottom: 0, width: 256,
@@ -411,11 +411,13 @@ function Sidebar({ active }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 15 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', width: 164 }}>
             <div style={{ background: '#fff', overflow: 'hidden', position: 'relative', width: 30, height: 30, flexShrink: 0 }}>
-              <img loading="lazy" alt="Mahindra" style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', height: 11.507, width: 25, display: 'block' }} src={sbMahindra} />
+              {org
+                ? <p style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Archivo', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: 0.5, color: '#000718' }}>{org.initials}</p>
+                : <img loading="lazy" alt="Mahindra" style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', height: 11.507, width: 25, display: 'block' }} src={sbMahindra} />}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, justifyContent: 'center', whiteSpace: 'nowrap', minWidth: 0, flex: '1 0 0' }}>
-              <p style={{ fontWeight: 600, lineHeight: '15px', fontSize: 14, color: '#fff' }}>Mahindra &amp; Mah..</p>
-              <p style={{ fontWeight: 400, color: '#666a74', fontSize: 10 }}>Automobile Ind</p>
+              <p style={{ fontWeight: 600, lineHeight: '15px', fontSize: 14, color: '#fff' }}>{org ? org.name : <>Mahindra &amp; Mah..</>}</p>
+              <p style={{ fontWeight: 400, color: '#666a74', fontSize: 10 }}>{org ? org.sub : 'Automobile Ind'}</p>
             </div>
           </div>
           {/* Meatballs */}
@@ -1987,6 +1989,591 @@ function InfluenceContent({ controls, tileVariants }) {
   )
 }
 
+// ─── ScriptIT animated walkthrough (Brief → Shoot-ready) ──────────────────────
+// 7-frame product reel: BRIEF → ALIGN → SCRIPT → BREAKDOWN → PREVIEW → APPROVE → CLOSE
+// Fully fictionalized: Horizon Motors campaign, generic initials for staff.
+function StoryArt({ hue = 150, style }) {
+  return (
+    <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 5, background: `linear-gradient(135deg, hsl(${hue}, 36%, 80%), hsl(${hue + 30}, 30%, 56%))`, ...style }}>
+      <svg viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+        <path d="M0 40 h22 v-14 h14 v20 h18 v-26 h16 v22 h20 v-12 h18 v18 h24 v-9 h28" fill="none" stroke="rgba(0,7,24,0.3)" strokeWidth="2" />
+        {[[30, 20], [62, 12], [98, 24], [130, 26], [148, 18]].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r="1.6" fill="rgba(255,255,255,0.85)" />
+        ))}
+        <path d="M0 80 L160 72" stroke="rgba(0,7,24,0.22)" strokeWidth="2" />
+        <path d="M48 68 q6 -11 19 -11 h21 q10 0 17 8 l9 2 q4 1 4 5 v4 h-70 z" fill="rgba(0,7,24,0.42)" />
+        <circle cx="62" cy="80" r="5" fill="rgba(0,7,24,0.55)" />
+        <circle cx="104" cy="80" r="5" fill="rgba(0,7,24,0.55)" />
+        <circle cx="118" cy="70" r="2.2" fill="rgba(255,244,180,0.95)" />
+      </svg>
+    </div>
+  )
+}
+
+function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
+  const G = '#34cc32'
+
+  const [elapsed, setElapsed] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    return () => clearInterval(id)
+  }, [])
+
+  // Frame: 0 idle 1 Brief 2 Align 3 Script 4 Breakdown(hero) 5 Preview(hero) 6 Approve 7 Close
+  const timeline = [0, 500, 4500, 8500, 13500, 18500, 23500, 27500, 31000]
+  const totalDuration = 31000
+  const looped = elapsed % totalDuration
+
+  let frame = 0, t = 0
+  for (let i = timeline.length - 1; i >= 0; i--) {
+    if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
+  }
+
+  const getCursorPos = () => {
+    switch (frame) {
+      case 1:
+        if (t < 900) return [430, 190]
+        if (t < 1900) return [430, 300]
+        if (t < 2700) return [800, 210]
+        return [1010, 450]
+      case 2:
+        if (t < 800) return [980, 130]
+        if (t < 1800) return [420, 230]
+        if (t < 2600) return [700, 290]
+        return [950, 430]
+      case 3:
+        if (t < 900) return [880, 190]
+        if (t < 1700) return [880, 260]
+        if (t < 2600) return [880, 330]
+        if (t < 3400) return [880, 430]
+        return [340, 250]
+      case 4:
+        if (t < 900) return [330, 180]
+        if (t < 1800) return [560, 180]
+        if (t < 2900) return [830, 300]
+        return [830, 400]
+      case 5:
+        if (t < 1000) return [520, 240]
+        if (t < 2200) return [520, 310]
+        if (t < 3400) return [520, 380]
+        return [1030, 140]
+      case 6:
+        if (t < 900) return [400, 150]
+        if (t < 2000) return [900, 250]
+        if (t < 2900) return [1000, 145]
+        return [1030, 420]
+      default: return [400, 240]
+    }
+  }
+  const [cx, cy] = getCursorPos()
+
+  const overlays = [
+    null,
+    { main: 'Step 1. Brief the shot.', sub: 'Idea, platform, deadline — one form.' },
+    { main: 'Step 2. Align before anyone shoots.', sub: 'Questions asked. Answers locked.' },
+    { main: 'Step 3. Scripts, written by dual AI.', sub: 'Two engines. Multiple drafts. Pick one.' },
+    { main: 'Step 4. Scene-by-scene shooting directions.', sub: 'Your creators know exactly what to shoot.' },
+    { main: 'Step 5. AI previews every shot.', sub: 'See the film before the shoot.' },
+    { main: 'Step 6. Approve. Stitch. Deliver.', sub: 'Every stage signed off — nothing off-brand.' },
+    { main: 'Brief in. Shoot-ready out.', sub: 'Scripts, storyboards, shot lists & AI previews — one flow.' },
+  ]
+  const overlay = overlays[frame]
+
+  const crumbs = [
+    '', 'ScriptIT ▸ Create ▸ Create New Shot', 'ScriptIT ▸ Create ▸ Requirements',
+    'ScriptIT ▸ Create ▸ Generate Script', 'ScriptIT ▸ Create ▸ Shot Breakdown',
+    'ScriptIT ▸ Create ▸ Video Generation', 'ScriptIT ▸ Approve ▸ Campaign', 'ScriptIT',
+  ]
+  const crumb = frame === 6 && t > 2400 ? 'ScriptIT ▸ Create ▸ Final Uploads' : crumbs[frame]
+
+  const stepLabels = ['SHOT DETAILS', 'REQUIREMENTS', 'SCRIPT', 'BREAKDOWN', 'VIDEO', 'UPLOAD']
+  const ringPct = frame === 0 ? 0 : frame >= 7 ? 100 : Math.min((frame - 1) * 20 + (frame === 6 && t > 2400 ? 20 : 0), 100)
+  const RING_R = 13, RING_C = 2 * Math.PI * RING_R
+
+  const h3s = { margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }
+  const btnG = { background: G, color: '#000718', fontSize: 10, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', padding: '6px 14px', borderRadius: 3, letterSpacing: 0.5, whiteSpace: 'nowrap' }
+  const btnO = { background: '#fff', color: '#000718', border: '1px solid #dee0e7', fontSize: 10, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', padding: '5px 13px', borderRadius: 3, letterSpacing: 0.5, whiteSpace: 'nowrap' }
+  const pillBase = { fontSize: 9, fontFamily: "'Archivo'", fontWeight: 800, padding: '3px 9px', borderRadius: 10, whiteSpace: 'nowrap' }
+  const lbl = { fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }
+  const th = { fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4, padding: '7px 12px', textAlign: 'left' }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative', height: '100%' }}>
+      <style>{`
+        @keyframes scrFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scrBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes scrPop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes scrToast { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scrWipe { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0% 0); } }
+        @keyframes scrLand { 0% { opacity: 0; transform: translateY(16px) scale(0.96); } 70% { transform: translateY(-2px) scale(1.01); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes scrPulse { 0% { box-shadow: 0 0 0 0 rgba(52,204,50,0.55); } 100% { box-shadow: 0 0 0 14px rgba(52,204,50,0); } }
+        @keyframes scrPlayPulse { 0% { transform: scale(0.6); opacity: 0; } 45% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes scrDrawer { from { transform: translateX(105%); } to { transform: translateX(0); } }
+        @keyframes scrBandUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
+
+      {/* Wizard stepper + ring + Save & Exit */}
+      {frame >= 1 && frame <= 6 && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 24px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', flex: 1, gap: 6 }}>
+            {stepLabels.map((s, i) => {
+              const done = i < frame - 1 || (frame === 6 && t > 2400)
+              const cur = i === frame - 1 && !done
+              return (
+                <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 5, flex: i < 5 ? 1 : 'none', minWidth: 0 }}>
+                  <div style={{ width: 17, height: 17, borderRadius: 9, background: done ? G : '#fff', border: `2px solid ${done || cur ? G : '#dee0e7'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.4s ease' }}>
+                    {done ? <span style={{ color: '#fff', fontSize: 8, fontWeight: 800 }}>✓</span> : <span style={{ color: cur ? G : '#bbb', fontSize: 8, fontWeight: 800 }}>{i + 1}</span>}
+                  </div>
+                  <span style={{ fontSize: 8, fontFamily: "'Archivo'", fontWeight: 700, letterSpacing: 0.3, color: done || cur ? '#000718' : '#9fa3ac', whiteSpace: 'nowrap' }}>{s}</span>
+                  {i < 5 && <div style={{ flex: 1, height: 2, background: done ? G : '#e6e8ee', transition: 'background 0.5s ease', minWidth: 8 }} />}
+                </div>
+              )
+            })}
+          </div>
+          <span style={{ fontSize: 8, fontFamily: "'Archivo'", color: '#9fa3ac', whiteSpace: 'nowrap' }}>Last saved just now</span>
+          <svg width="34" height="34" style={{ flexShrink: 0 }}>
+            <circle cx="17" cy="17" r={RING_R} stroke="#e6e8ee" strokeWidth="3.5" fill="none" />
+            <circle cx="17" cy="17" r={RING_R} stroke={G} strokeWidth="3.5" fill="none" strokeLinecap="round"
+              strokeDasharray={RING_C} strokeDashoffset={RING_C * (1 - ringPct / 100)}
+              transform="rotate(-90 17 17)" style={{ transition: 'stroke-dashoffset 0.9s cubic-bezier(0.25,0.1,0.25,1)' }} />
+            <text x="17" y="20.5" textAnchor="middle" fontSize="8.5" fontWeight="800" fontFamily="Archivo" fill="#000718">{ringPct}</text>
+          </svg>
+          <div style={btnG}>Save &amp; Exit</div>
+        </div>
+      )}
+
+      {/* Cursor */}
+      {frame > 0 && frame <= 6 && (
+        <div style={{
+          position: 'absolute', left: cx, top: cy, zIndex: 200,
+          transition: 'left 0.9s cubic-bezier(0.25,0.1,0.25,1), top 0.9s cubic-bezier(0.25,0.1,0.25,1)',
+          pointerEvents: 'none',
+        }}>
+          <svg width="16" height="22" viewBox="0 0 14 19" fill="none">
+            <path d="M0 0V18L4.5 13.5L8 19L10 18L6.5 12.5H13L0 0Z" fill="#000" stroke="#fff" strokeWidth="1" />
+          </svg>
+        </div>
+      )}
+
+      {/* Success toast (Frame 2) */}
+      {frame === 2 && t > 1600 && (
+        <div style={{ position: 'absolute', right: 18, bottom: 52, zIndex: 150, background: '#fff', border: `1px solid ${G}`, borderLeft: `4px solid ${G}`, boxShadow: '0 8px 24px rgba(0,0,0,0.18)', padding: '8px 14px', borderRadius: 4, animation: 'scrToast 0.45s cubic-bezier(0.25,0.1,0.25,1)', opacity: t > 3400 ? 0 : 1, transition: 'opacity 0.4s ease' }}>
+          <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo'", fontWeight: 700, color: '#1b5e20' }}>Success!</p>
+          <p style={{ margin: '2px 0 0', fontSize: 10, fontFamily: "'Archivo'", color: '#555' }}>Question saved successfully.</p>
+        </div>
+      )}
+
+      {/* Content area */}
+      <div style={{ flex: 1, padding: '10px 24px', overflow: 'hidden', position: 'relative' }}>
+
+        {frame > 0 && frame < 7 && (
+          <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo'", color: '#9fa3ac', fontWeight: 600 }}>
+            {crumb.split('▸').map((c, i, a) => (
+              <span key={i} style={{ color: i === a.length - 1 ? G : '#9fa3ac' }}>{c}{i < a.length - 1 ? ' ▸ ' : ''}</span>
+            ))}
+          </p>
+        )}
+
+        {/* FRAME 1 — BRIEF: Shot Details form fills itself */}
+        {frame === 1 && (() => {
+          const title = 'Horizon Motors — Festive Drive Reel'.slice(0, Math.max(0, Math.floor(t / 35)))
+          const titleDone = t > 1250
+          const idea = '30s festive reel: family homecoming, city lights, the new SUV'.slice(0, Math.max(0, Math.floor((t - 1100) / 20)))
+          const ideaDone = t > 2350
+          const chip = (on, label, at) => (
+            <span key={label} style={{
+              ...pillBase, fontSize: 10, padding: '5px 12px', borderRadius: 14,
+              background: on && t > at ? '#e8fde8' : '#f5f6f8',
+              border: `1px solid ${on && t > at ? G : '#dee0e7'}`,
+              color: on && t > at ? '#1b5e20' : '#666',
+              fontWeight: on && t > at ? 800 : 600,
+              animation: on && t > at ? 'scrPop 0.45s ease' : 'none',
+            }}>{label}</span>
+          )
+          const pressed = t > 3300 && t < 3700
+          return (
+            <div key="s1" style={{ animation: 'scrFadeUp 0.6s ease' }}>
+              <h3 style={{ ...h3s, marginBottom: 12 }}>Create New Shot — Shot Details</h3>
+              <div style={{ display: 'flex', gap: 18 }}>
+                <div style={{ flex: 1.25, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div>
+                    <label style={lbl}>Shot Project Title</label>
+                    <div style={{ border: `1.5px solid ${titleDone ? G : '#dee0e7'}`, padding: '9px 12px', fontSize: 12.5, fontFamily: "'Archivo'", color: '#333', borderRadius: 2, transition: 'border-color 0.5s ease', minHeight: 17 }}>
+                      {title}{!titleDone && <span style={{ animation: 'scrBlink 0.8s infinite', color: G }}>|</span>}
+                    </div>
+                  </div>
+                  <div>
+                    <label style={lbl}>Describe Your Idea</label>
+                    <div style={{ border: `1.5px solid ${ideaDone ? G : '#dee0e7'}`, padding: '9px 12px', fontSize: 11.5, fontFamily: "'Archivo'", color: '#333', borderRadius: 2, minHeight: 50, lineHeight: '17px', transition: 'border-color 0.5s ease' }}>
+                      {idea}{t > 1100 && !ideaDone && <span style={{ animation: 'scrBlink 0.8s infinite', color: G }}>|</span>}
+                    </div>
+                  </div>
+                  <div style={{ opacity: t > 2600 ? 1 : 0, transform: t > 2600 ? 'translateY(0)' : 'translateY(8px)', transition: 'all 0.5s ease' }}>
+                    <label style={lbl}>Schedule</label>
+                    <div style={{ border: `1.5px solid ${G}`, padding: '9px 12px', fontSize: 12, fontFamily: "'Archivo'", color: '#333', borderRadius: 2 }}>01 Oct 2025 → 14 Oct 2025</div>
+                  </div>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div>
+                    <label style={lbl}>Platform</label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {chip(false, 'Google', 0)}{chip(true, 'Instagram', 1700)}{chip(false, 'LinkedIn', 0)}
+                    </div>
+                  </div>
+                  <div>
+                    <label style={lbl}>Media</label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {chip(false, 'Image', 0)}{chip(true, 'Video', 2000)}
+                    </div>
+                  </div>
+                  <div>
+                    <label style={lbl}>Region</label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {chip(true, 'PAN India', 2300)}{chip(false, 'By State', 0)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 16 }}>
+                <span style={{ fontSize: 9, fontFamily: "'Archivo'", color: '#9fa3ac' }}>Draft auto-saved</span>
+                <div style={{ ...btnG, padding: '7px 26px', background: t > 2900 ? G : '#f0f0f0', color: t > 2900 ? '#000718' : '#bbb', transform: pressed ? 'scale(0.93)' : 'scale(1)', transition: 'all 0.2s ease' }}>Next</div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 2 — ALIGN: Requirements Q&A */}
+        {frame === 2 && (() => {
+          const rows = [
+            ['When is this campaign?', 'A. Sharma', 'AS', 1400, 'Diwali week — 18–23 Oct, PAN India'],
+            ['Which SUV variant do we feature?', 'R. V.', 'RV', 2400, 'Top trim — city + highway shots'],
+            ['Any brand lines to include?', 'A. Sharma', 'AS', 3100, '“Lights on. Horizon on.”'],
+          ]
+          return (
+            <div key="s2" style={{ animation: 'scrFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <h3 style={h3s}>Requirements — Shot Questions &amp; Answers</h3>
+                <div style={btnG}>Assign Questions</div>
+              </div>
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee' }}>
+                  <div style={{ ...th, flex: 1.6 }}>Question</div><div style={{ ...th, width: 130 }}>Assigned To</div><div style={{ ...th, width: 150 }}>Status</div>
+                </div>
+                {rows.map(([q, who, ini, at, ans], i) => {
+                  const answered = t >= at
+                  const show = t > 300 + i * 300
+                  return (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', borderBottom: i < 2 ? '1px solid #f2f2f2' : 'none', opacity: show ? 1 : 0, transform: show ? 'translateX(0)' : 'translateX(-14px)', transition: 'all 0.5s ease', padding: '9px 0' }}>
+                      <div style={{ flex: 1.6, padding: '0 12px' }}>
+                        <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>{q}</p>
+                        {answered && <p style={{ margin: '3px 0 0', fontSize: 10, fontFamily: "'Archivo'", color: '#1b5e20', animation: 'scrFadeUp 0.4s ease' }}>{ans}</p>}
+                      </div>
+                      <div style={{ width: 130, padding: '0 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <div style={{ width: 20, height: 20, borderRadius: 10, background: '#e0e7ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 7, fontWeight: 800, color: '#4453c9', flexShrink: 0 }}>{ini}</div>
+                        <span style={{ fontSize: 10.5, fontFamily: "'Archivo'", color: '#555', whiteSpace: 'nowrap' }}>{who}</span>
+                      </div>
+                      <div style={{ width: 150, padding: '0 12px' }}>
+                        {answered
+                          ? <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20', animation: 'scrPop 0.4s ease' }}>Answered ✓</span>
+                          : <span style={{ ...pillBase, background: '#f5f6f8', color: '#9fa3ac' }}>Waiting for answer</span>}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 3 — SCRIPT: dual-AI script generation */}
+        {frame === 3 && (() => {
+          const prompt = 'A festive homecoming that ends at the new Horizon SUV.'.slice(0, Math.max(0, Math.floor((t - 2000) / 18)))
+          const promptDone = t > 3000
+          const pressed = t > 3100 && t < 3400
+          const dets = [['Genre', 'Festive', 200], ['Duration', '30 secs', 500], ['Language', 'English + Hindi', 800], ['No. of Scripts', '2', 1100], ['Location', 'Showroom', 1500], ['Time of Day', 'Evening', 1700]]
+          const provs = [['OpenAI', 1300], ['Gemini 3 Pro', 1600], ['Perplexity Sonar', null]]
+          const cards = [['The Homecoming Drive', 'Script via OpenAI', 3600], ['Lights On', 'Script via Gemini 3 Pro', 4100]]
+          return (
+            <div key="s3" style={{ animation: 'scrFadeUp 0.6s ease', display: 'flex', gap: 16 }}>
+              <div style={{ flex: 1.35, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <h3 style={h3s}>Generate Script</h3>
+                {t <= 3600 && (
+                  <div style={{ flex: 1, minHeight: 200, border: '1.5px dashed #dee0e7', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", color: '#9fa3ac' }}>Waiting for magic ✦</p>
+                  </div>
+                )}
+                {cards.map(([cTitle, via, at]) => t > at && (
+                  <div key={cTitle} style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: '11px 14px', animation: 'scrLand 0.55s cubic-bezier(0.25,0.1,0.25,1)', boxShadow: '0 4px 14px rgba(0,0,0,0.07)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 3 }}>
+                      <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo'", fontWeight: 700, color: '#000718' }}>{cTitle}</p>
+                      <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20' }}>Completed</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: 9.5, fontFamily: "'Archivo'", color: '#9fa3ac' }}>{via} · ENGLISH | 30 SECS | INTERIOR | EVENING</p>
+                    <div style={{ display: 'flex', gap: 8, marginTop: 9 }}>
+                      <div style={btnO}>Preview</div>
+                      <div style={btnG}>Send for Approval</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: 12 }}>
+                <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }}>Enter Details</p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 10 }}>
+                  {dets.map(([l, v, at]) => (
+                    <div key={l} style={{ opacity: t > at ? 1 : 0, transform: t > at ? 'translateY(0)' : 'translateY(6px)', transition: 'all 0.4s ease' }}>
+                      <label style={{ ...lbl, marginBottom: 3, fontSize: 9 }}>{l}</label>
+                      <div style={{ border: `1.5px solid ${t > at + 250 ? G : '#dee0e7'}`, padding: '5px 9px', fontSize: 10.5, fontFamily: "'Archivo'", color: '#333', borderRadius: 2, transition: 'border-color 0.4s ease', whiteSpace: 'nowrap', overflow: 'hidden' }}>{v}</div>
+                    </div>
+                  ))}
+                </div>
+                <label style={{ ...lbl, marginBottom: 5, fontSize: 9 }}>AI Providers</label>
+                <div style={{ display: 'flex', gap: 12, marginBottom: 10, flexWrap: 'wrap' }}>
+                  {provs.map(([p, at]) => {
+                    const checked = at !== null && t > at
+                    return (
+                      <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 5, opacity: checked ? 1 : 0.45, transition: 'opacity 0.4s ease' }}>
+                        <div style={{ width: 13, height: 13, borderRadius: 3, border: `2px solid ${checked ? G : '#ccc'}`, background: checked ? G : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.35s ease' }}>
+                          {checked && <span style={{ color: '#fff', fontSize: 8, fontWeight: 800 }}>✓</span>}
+                        </div>
+                        <span style={{ fontSize: 10, fontFamily: "'Archivo'", color: '#333', whiteSpace: 'nowrap' }}>{p}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+                <label style={{ ...lbl, marginBottom: 3, fontSize: 9 }}>Script Prompt</label>
+                <div style={{ border: `1.5px solid ${promptDone ? G : '#dee0e7'}`, padding: '7px 10px', fontSize: 10.5, fontFamily: "'Archivo'", color: '#333', borderRadius: 2, minHeight: 28, lineHeight: '15px', transition: 'border-color 0.4s ease', marginBottom: 12 }}>
+                  {prompt}{t > 2000 && !promptDone && <span style={{ animation: 'scrBlink 0.8s infinite', color: G }}>|</span>}
+                </div>
+                <div style={{ ...btnG, textAlign: 'center', padding: '8px 0', transform: pressed ? 'scale(0.96)' : 'scale(1)', transition: 'transform 0.15s ease', animation: t > 3100 && t < 3900 ? 'scrPulse 0.7s ease-out' : 'none' }}>Generate</div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 4 — BREAKDOWN (hero #1): screenplay + storyboard + shot table drawer */}
+        {frame === 4 && (
+          <div key="s4" style={{ animation: 'scrFadeUp 0.6s ease', position: 'relative', height: 430, overflow: 'hidden' }}>
+            <h3 style={{ ...h3s, marginBottom: 12 }}>Shot Breakdown</h3>
+            <div style={{ width: '52%', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <p style={{ flex: 1, margin: 0, fontSize: 11.5, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>The Homecoming Drive — Shot Breakdown</p>
+                <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20' }}>Approved</span>
+                <span style={{ fontSize: 10, fontFamily: "'Archivo'", color: G, fontWeight: 700, whiteSpace: 'nowrap' }}>View breakdown →</span>
+              </div>
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, opacity: 0.55 }}>
+                <p style={{ flex: 1, margin: 0, fontSize: 11.5, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>Lights On — Shot Breakdown</p>
+                <span style={{ ...pillBase, background: '#fff3e0', color: '#e65100' }}>Requested</span>
+              </div>
+            </div>
+            {t > 600 && (
+              <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 660, background: '#fff', borderLeft: `2px solid ${G}`, boxShadow: '-16px 0 40px rgba(0,0,0,0.14)', borderRadius: '6px 0 0 6px', padding: '13px 18px', animation: 'scrDrawer 0.7s cubic-bezier(0.25,0.1,0.25,1)', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 9 }}>
+                  <p style={{ margin: 0, fontSize: 13, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', color: '#000718' }}>The Homecoming Drive — Breakdown</p>
+                  <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20' }}>Approved</span>
+                </div>
+                {t > 1300 && (
+                  <div style={{ animation: 'scrWipe 0.7s ease forwards', background: '#fafbfc', border: '1px solid #eee', borderRadius: 4, padding: '9px 14px', fontFamily: "'Courier New', monospace", marginBottom: 9 }}>
+                    <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: '#000718' }}>INT. HORIZON SHOWROOM — EVENING</p>
+                    <p style={{ margin: '5px 0 0', fontSize: 10, color: '#444', lineHeight: '14px' }}>City lights bloom beyond the glass. A family crosses the floor toward the new SUV.</p>
+                    <p style={{ margin: '5px 0 0', fontSize: 10, color: '#444', textAlign: 'center', fontWeight: 700 }}>MEERA</p>
+                    <p style={{ margin: '1px 0 0', fontSize: 10, color: '#444', textAlign: 'center' }}>“This Diwali… we drive home.”</p>
+                  </div>
+                )}
+                {t > 2200 && (
+                  <div style={{ display: 'flex', gap: 10, marginBottom: 9, animation: 'scrPop 0.5s ease', alignItems: 'center' }}>
+                    <StoryArt hue={150} style={{ width: 148, height: 80, flexShrink: 0 }} />
+                    <div>
+                      <p style={{ margin: '0 0 3px', fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }}>Storyboard — Frame 01</p>
+                      <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo'", color: '#555', lineHeight: '14px' }}>Family enters frame left; SUV reveal far right — lights up on the beat.</p>
+                    </div>
+                  </div>
+                )}
+                {t > 2900 && (
+                  <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                    <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee' }}>
+                      <div style={{ ...th, width: 42, padding: '6px 10px' }}>Shot</div><div style={{ ...th, width: 92, padding: '6px 10px' }}>Type</div><div style={{ ...th, flex: 1.5, padding: '6px 10px' }}>Camera</div><div style={{ ...th, flex: 1, padding: '6px 10px' }}>Notes</div>
+                    </div>
+                    {[
+                      ['01', 'Medium Wide', 'Tracking lateral move — smartphone: gimbal or stable handheld walk', 'Cover the full action in one 8–12s pass.'],
+                      ['02', 'Close-Up', 'Static on tripod — focus on hands & diya', 'Hold 3s. Cut on the smile.'],
+                      ['03', 'Tracking', 'Slow push-in to the SUV reveal', 'Headlights on at the final beat.'],
+                    ].map((r, i) => {
+                      const show = t > 3100 + i * 320
+                      return (
+                        <div key={i} style={{ display: 'flex', borderBottom: i < 2 ? '1px solid #f2f2f2' : 'none', opacity: show ? 1 : 0, transform: show ? 'translateX(0)' : 'translateX(-12px)', transition: 'all 0.45s ease' }}>
+                          <div style={{ width: 42, padding: '6px 10px', fontSize: 10.5, fontFamily: "'Archivo'", fontWeight: 700, color: '#000718' }}>{r[0]}</div>
+                          <div style={{ width: 92, padding: '6px 10px', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>{r[1]}</div>
+                          <div style={{ flex: 1.5, padding: '6px 10px', fontSize: 9.5, fontFamily: "'Archivo'", color: '#555', lineHeight: '13px' }}>{r[2]}</div>
+                          <div style={{ flex: 1, padding: '6px 10px', fontSize: 9.5, fontFamily: "'Archivo'", color: '#555', lineHeight: '13px' }}>{r[3]}</div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* FRAME 5 — PREVIEW (hero #2): AI previews per shot */}
+        {frame === 5 && (() => {
+          const shots = [
+            ['Shot 1', 'Wide', 150, 700],
+            ['Shot 2', 'Close-Up', 195, 1600],
+            ['Shot 3', 'Tracking', 225, 2500],
+          ]
+          return (
+            <div key="s5" style={{ animation: 'scrFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <h3 style={h3s}>Video Generation — Scene 1</h3>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <span style={{ ...pillBase, background: '#f5f6f8', border: '1px solid #dee0e7', color: '#555', fontWeight: 700 }}>16:9</span>
+                  <div style={btnG}>Generate Videos</div>
+                </div>
+              </div>
+              <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Courier New', monospace", fontWeight: 700, color: '#555' }}>INT. HORIZON SHOWROOM — EVENING</p>
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee', alignItems: 'center' }}>
+                  <div style={{ ...th, width: 120 }}>Shot</div><div style={{ ...th, width: 162 }}>Preview</div><div style={{ ...th, width: 150 }}>Status</div><div style={{ ...th, flex: 1 }}></div>
+                </div>
+                {shots.map(([label, type, hue, at], i) => {
+                  const ready = t > at + 350
+                  return (
+                    <div key={label} style={{ display: 'flex', alignItems: 'center', borderBottom: i < 2 ? '1px solid #f2f2f2' : 'none', padding: '7px 0' }}>
+                      <div style={{ width: 120, padding: '0 12px' }}>
+                        <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", fontWeight: 700, color: '#000718' }}>{label}</p>
+                        <p style={{ margin: '2px 0 0', fontSize: 9.5, fontFamily: "'Archivo'", color: '#9fa3ac' }}>{type}</p>
+                      </div>
+                      <div style={{ width: 162, padding: '0 12px' }}>
+                        <div style={{ position: 'relative', width: 138, height: 62 }}>
+                          {t > at
+                            ? (
+                              <>
+                                <StoryArt hue={hue} style={{ position: 'absolute', inset: 0, animation: 'scrPop 0.5s ease' }} />
+                                {i === 0 && t > 3400 && (
+                                  <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', width: 26, height: 26, borderRadius: 13, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.25)', animation: 'scrPlayPulse 0.9s ease' }}>
+                                    <svg width="9" height="10" viewBox="0 0 9 10"><path d="M0 0 L9 5 L0 10 Z" fill="#000718" /></svg>
+                                  </div>
+                                )}
+                              </>
+                            )
+                            : (
+                              <div style={{ position: 'absolute', inset: 0, borderRadius: 5, border: '1.5px dashed #dee0e7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <span style={{ fontSize: 8, fontFamily: "'Archivo'", color: '#bbb' }}>Queued</span>
+                              </div>
+                            )}
+                        </div>
+                      </div>
+                      <div style={{ width: 150, padding: '0 12px' }}>
+                        {ready
+                          ? <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20', animation: 'scrPop 0.4s ease' }}>Completed</span>
+                          : <span style={{ ...pillBase, background: '#f5f6f8', color: '#9fa3ac' }}>Ready to generate</span>}
+                      </div>
+                      <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', padding: '0 12px' }}>
+                        {ready && <div style={{ ...btnG, animation: 'scrFadeUp 0.4s ease' }}>Send for Approval</div>}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 6 — APPROVE & DELIVER */}
+        {frame === 6 && (() => {
+          const tabs = ['SCRIPTS', 'REQUIREMENTS', 'SHOTS BREAKDOWN', 'GENERATED VIDEOS', 'FINAL UPLOADS']
+          const cut = t > 2400
+          const activeTab = cut ? 'FINAL UPLOADS' : 'SCRIPTS'
+          const arts = [
+            ['The Homecoming Drive — Script', 'ENGLISH | 30 SECS | INTERIOR | EVENING', 400],
+            ['Shot Q&A — 3 answered', 'Requirements locked before the shoot', 850],
+            ['Scene 1 — Shot Breakdown', '3 shots · storyboard attached', 1300],
+            ['Shot Previews ×3', 'AI previews · 16:9', 1750],
+          ]
+          return (
+            <div key="s6" style={{ animation: 'scrFadeUp 0.6s ease' }}>
+              <h3 style={{ ...h3s, marginBottom: 10 }}>Approve — Festive Drive Campaign</h3>
+              <div style={{ display: 'flex', gap: 16, borderBottom: '1px solid #dee0e7', marginBottom: 10 }}>
+                {tabs.map(tab => (
+                  <span key={tab} style={{ fontSize: 9.5, fontFamily: "'Archivo'", fontWeight: 700, color: tab === activeTab ? G : '#9fa3ac', borderBottom: tab === activeTab ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 6, whiteSpace: 'nowrap', transition: 'all 0.3s ease' }}>{tab}</span>
+                ))}
+              </div>
+              {!cut ? (
+                <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                  {arts.map(([label, sub, at], i) => (
+                    <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 14px', borderBottom: i < 3 ? '1px solid #f2f2f2' : 'none' }}>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", fontWeight: 600, color: '#333' }}>{label}</p>
+                        <p style={{ margin: '2px 0 0', fontSize: 9.5, fontFamily: "'Archivo'", color: '#9fa3ac' }}>{sub}</p>
+                      </div>
+                      {t > at
+                        ? <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20', animation: 'scrPop 0.4s ease' }}>Approved</span>
+                        : <span style={{ ...pillBase, background: '#fff3e0', color: '#e65100' }}>Requested</span>}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ animation: 'scrFadeUp 0.5s ease' }}>
+                  <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: 14, display: 'flex', alignItems: 'center', gap: 14 }}>
+                    <StoryArt hue={260} style={{ width: 120, height: 64, flexShrink: 0 }} />
+                    <div style={{ flex: 1 }}>
+                      <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo'", fontWeight: 700, color: '#000718' }}>Festive Drive — Final</p>
+                      <p style={{ margin: '3px 0 0', fontSize: 9.5, fontFamily: "'Archivo'", color: '#9fa3ac' }}>Stitched from 3 approved shots · 30 secs · 16:9</p>
+                    </div>
+                    <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20', animation: 'scrPop 0.45s ease' }}>Generated</span>
+                    <div style={btnO}>Preview</div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 14 }}>
+                    <div style={{ ...btnG, padding: '7px 26px', background: t > 3000 ? G : '#f0f0f0', color: t > 3000 ? '#000718' : '#bbb', transform: t > 3400 && t < 3800 ? 'scale(0.93)' : 'scale(1)', transition: 'all 0.2s ease' }}>Finish</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 7 — CLOSE */}
+        {frame === 7 && (
+          <div key="s7" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center', animation: 'scrFadeUp 0.7s ease' }}>
+            <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
+              Brief in. <span style={{ color: G }}>Shoot-ready</span> out.
+            </p>
+            <p style={{ fontFamily: "'Archivo'", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>Scripts, storyboards, shot lists &amp; AI previews — one flow.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontFamily: "'Saira Condensed'", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>ScriptIT</span>
+              <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
+              <span style={{ fontFamily: "'Archivo'", fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 0 — idle */}
+        {frame === 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
+            <div style={{ animation: 'scrFadeUp 0.5s ease' }}>
+              <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>ScriptIT</p>
+              <p style={{ fontFamily: "'Archivo'", fontSize: 12, color: '#666', margin: 0 }}>Brief to shoot-ready video — one flow</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Lower-third overlay band */}
+      {overlay && (
+        <div key={`band-${frame}`} style={{
+          background: 'rgba(0,7,24,0.95)', borderTop: `2px solid ${G}`, padding: '11px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          animation: 'scrBandUp 0.5s ease',
+        }}>
+          <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo'", fontWeight: 700, color: '#fff' }}>{overlay.main}</p>
+          <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo'", color: G, fontWeight: 500 }}>{overlay.sub}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── ScriptIT content ─────────────────────────────────────────────────────────
 function ScriptContent({ controls, tileVariants }) {
   return (
@@ -2016,6 +2603,492 @@ function ScriptContent({ controls, tileVariants }) {
           { isPen: true, label: 'Thar YouTube Bumper', sub: 'Reviewer: Dev P.' },
         ]} />
       </div>
+    </div>
+  )
+}
+
+// ─── AigenIT animated walkthrough (AI voice agents) ───────────────────────────
+// 5-frame product video: BUILD → GROUND → TEST LIVE → CAPTURE → CLOSE
+// Anonymized per brief: agent = Asha (ConvergenSEE), fictional masked leads.
+function AigenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
+  const G = '#34cc32'
+
+  const [elapsed, setElapsed] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    return () => clearInterval(id)
+  }, [])
+
+  // Frame: 0 idle  1 Build(6s)  2 Ground(7s)  3 Test(8s hero)  4 Capture(7s)  5 Close(4s)
+  const timeline = [0, 500, 6500, 13500, 21500, 28500]
+  const totalDuration = 32500
+  const looped = elapsed % totalDuration
+
+  let frame = 0, t = 0
+  for (let i = timeline.length - 1; i >= 0; i--) {
+    if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
+  }
+
+  const getCursorPos = () => {
+    switch (frame) {
+      case 1:
+        if (t < 1300) return [400, 150]
+        if (t < 2500) return [400, 225]
+        if (t < 4700) return [430, 330]
+        return [880, 210]
+      case 2:
+        if (t < 1300) return [300, 190]
+        if (t < 2100) return [300, 320]
+        if (t < 2500) return [330, 415]
+        if (t < 3500) return [790, 140]
+        if (t < 4700) return [700, 270]
+        if (t < 5700) return [800, 400]
+        return [960, 460]
+      case 3:
+        if (t < 900) return [1020, 165]
+        if (t < 2100) return [950, 262]
+        if (t < 3400) return [840, 250]
+        return [930, 500]
+      case 4:
+        if (t < 1400) return [300, 150]
+        if (t < 2800) return [850, 250]
+        return [880, 380]
+      default: return [400, 240]
+    }
+  }
+  const [cx, cy] = getCursorPos()
+
+  const overlays = [
+    null,
+    { main: 'Step 1. Build your voice agent.', sub: 'Name it. Brief it. Brand it.' },
+    { main: 'Step 2. Ground it in your knowledge.', sub: 'Your docs in. Guesswork out.' },
+    { main: 'Step 3. Talk to it — right now.', sub: 'Live voice test, before it ever takes a call.' },
+    { main: 'Step 4. Every call becomes a lead.', sub: 'Name, phone, email — delivered instantly.' },
+    { main: 'Every call answered. Every lead captured.', sub: 'AI voice agents — inbound, outbound, and on your website.' },
+  ]
+  const overlay = overlays[frame]
+  const progressLabels = ['BUILD', 'GROUND', 'TEST', 'CAPTURE']
+  const crumbs = [
+    '', 'AIgenIT ▸ Create', 'AIgenIT ▸ Create ▸ Knowledge & Voice',
+    'AIgenIT ▸ Manage', 'AIgenIT ▸ InsightIT ▸ Leads', 'AIgenIT',
+  ]
+
+  const AGENT_NAME = 'Asha — ConvergenSEE Assistant'
+  const AGENT_DESC = 'Inbound concierge for calls & website'
+  const INSTR = 'Always start with “Thank you for calling ConvergenSEE. This is Asha. How may I help you today?”'
+
+  const fieldLabel = { fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo'", fontWeight: 600, display: 'block', marginBottom: 4 }
+  const fieldBox = ok => ({ border: `1.5px solid ${ok ? G : '#dee0e7'}`, padding: '8px 12px', fontSize: 12, fontFamily: "'Archivo'", color: '#333', borderRadius: 2, transition: 'border-color 0.5s ease' })
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative', height: '100%' }}>
+      <style>{`
+        @keyframes agFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes agBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes agPop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes agDrop { 0% { transform: translateY(-26px) scale(0.7); opacity: 0; } 70% { transform: translateY(3px) scale(1.05); opacity: 1; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+        @keyframes agPress { 0% { transform: scale(1); } 40% { transform: scale(0.93); } 100% { transform: scale(1); } }
+        @keyframes agPulseOnce { 0% { box-shadow: 0 0 0 0 rgba(52,204,50,0.5); } 100% { box-shadow: 0 0 0 12px rgba(52,204,50,0); } }
+        @keyframes agSlideIn { from { transform: translateX(105%); } to { transform: translateX(0); } }
+        @keyframes agWave { 0%,100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+        @keyframes agGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        @keyframes agBandUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
+
+      {/* Progress bar */}
+      <div style={{ display: 'flex', gap: 0, padding: '14px 24px 0' }}>
+        {progressLabels.map((l, i) => {
+          const done = (frame - 1) > i || frame === 5
+          const cur = (frame - 1) === i && frame !== 5
+          return (
+            <div key={l} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+              <div style={{ height: 3, width: '100%', background: (done || cur) ? G : '#dee0e7', borderRadius: 2, transition: 'background 0.6s ease', opacity: cur ? 0.5 : 1 }} />
+              <span style={{ fontSize: 8, fontFamily: "'Archivo'", color: (done || cur) ? G : '#9fa3ac', fontWeight: done ? 700 : 400, transition: 'all 0.3s ease' }}>{l}</span>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Cursor */}
+      {frame > 0 && frame <= 4 && (
+        <div style={{
+          position: 'absolute', left: cx, top: cy, zIndex: 300,
+          transition: 'left 0.9s cubic-bezier(0.25,0.1,0.25,1), top 0.9s cubic-bezier(0.25,0.1,0.25,1)',
+          pointerEvents: 'none',
+        }}>
+          <svg width="16" height="22" viewBox="0 0 14 19" fill="none">
+            <path d="M0 0V18L4.5 13.5L8 19L10 18L6.5 12.5H13L0 0Z" fill="#000" stroke="#fff" strokeWidth="1" />
+          </svg>
+        </div>
+      )}
+
+      {/* Content area */}
+      <div style={{ flex: 1, minHeight: 480, padding: '12px 24px', overflow: 'hidden', position: 'relative' }}>
+
+        {frame > 0 && frame < 5 && (
+          <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo'", color: '#9fa3ac', fontWeight: 600 }}>
+            {crumbs[frame].split('▸').map((c, i, a) => (
+              <span key={i} style={{ color: i === a.length - 1 ? G : '#9fa3ac' }}>{c}{i < a.length - 1 ? ' ▸ ' : ''}</span>
+            ))}
+          </p>
+        )}
+
+        {/* FRAME 1 — BUILD: Create AI Agent */}
+        {frame === 1 && (() => {
+          const name = AGENT_NAME.slice(0, Math.max(0, Math.floor(t / 40)))
+          const nameDone = t > AGENT_NAME.length * 40
+          const desc = t > 1400 ? AGENT_DESC.slice(0, Math.max(0, Math.floor((t - 1400) / 22))) : ''
+          const descDone = t > 1400 + AGENT_DESC.length * 22
+          const instr = t > 2600 ? INSTR.slice(0, Math.max(0, Math.floor((t - 2600) / 20))) : ''
+          const instrDone = t > 2600 + INSTR.length * 20
+          return (
+            <div key="a1" style={{ animation: 'agFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Create AI Agent</h3>
+                <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', padding: '6px 16px', borderRadius: 3, letterSpacing: 0.5 }}>Create New</div>
+              </div>
+              <div style={{ display: 'flex', gap: 20 }}>
+                {/* Left: identity fields */}
+                <div style={{ flex: 1.4, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div>
+                    <label style={fieldLabel}>AI Agent Name</label>
+                    <div style={fieldBox(nameDone)}>{name}{!nameDone && <span style={{ animation: 'agBlink 0.8s infinite', color: G }}>|</span>}</div>
+                  </div>
+                  <div style={{ opacity: t > 1400 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Description</label>
+                    <div style={fieldBox(descDone)}>{desc}{t > 1400 && !descDone && <span style={{ animation: 'agBlink 0.8s infinite', color: G }}>|</span>}</div>
+                  </div>
+                  <div style={{ opacity: t > 2600 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Instructions</label>
+                    <div style={{ ...fieldBox(instrDone), minHeight: 60, lineHeight: '18px' }}>{instr}{t > 2600 && !instrDone && <span style={{ animation: 'agBlink 0.8s infinite', color: G }}>|</span>}</div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, opacity: instrDone ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+                    <span style={{ background: '#f5f6f8', border: '1px solid #dee0e7', color: '#666', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 600, padding: '4px 10px', borderRadius: 12 }}>Conversation starter set</span>
+                    <span style={{ background: '#f5f6f8', border: '1px solid #dee0e7', color: '#666', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 600, padding: '4px 10px', borderRadius: 12 }}>Allowed domains: convergensee.ai</span>
+                  </div>
+                </div>
+                {/* Right: logo upload zone */}
+                <div style={{ flex: 1 }}>
+                  <label style={fieldLabel}>Logo</label>
+                  <div style={{ border: `1.5px dashed ${t > 4800 ? G : '#c9cdd4'}`, borderRadius: 6, height: 150, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, transition: 'border-color 0.5s ease', background: t > 4800 ? 'rgba(52,204,50,0.04)' : '#fafbfc' }}>
+                    {t > 4800 ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, animation: 'agDrop 0.6s ease' }}>
+                        <div style={{ width: 34, height: 34, borderRadius: 8, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 18, color: '#000718' }}>A</div>
+                        <div>
+                          <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo'", fontWeight: 700, color: '#333' }}>asha-logo.svg</p>
+                          <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo'", color: G, fontWeight: 700 }}>✓ Uploaded</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="#9fa3ac" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /><path d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2" stroke="#9fa3ac" strokeWidth="1.6" strokeLinecap="round" /></svg>
+                        <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo'", color: '#9fa3ac' }}>Drop your logo here</p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 2 — GROUND: Knowledge base + voice settings */}
+        {frame === 2 && (() => {
+          const caps = ['Use Voice Chat', 'Speech to Text', 'Text to Speech', 'Ask Mobile Number']
+          const temp = Math.round(easeOut((t - 2600) / 800) * 30)
+          return (
+            <div key="a2" style={{ animation: 'agFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Knowledge & Voice</h3>
+              </div>
+              <div style={{ display: 'flex', gap: 20 }}>
+                {/* Left: knowledge base + model + gender */}
+                <div style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div>
+                    <label style={fieldLabel}>Knowledge Base</label>
+                    <div style={{ border: `1.5px dashed ${t > 400 ? G : '#c9cdd4'}`, borderRadius: 6, height: 78, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.5s ease', background: t > 400 ? 'rgba(52,204,50,0.04)' : '#fafbfc' }}>
+                      {t > 400 ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, animation: 'agDrop 0.6s ease' }}>
+                          <div style={{ width: 30, height: 36, borderRadius: 4, background: '#fff', border: '1px solid #dee0e7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontFamily: "'Archivo'", fontWeight: 800, color: '#c62828' }}>PDF</div>
+                          <div>
+                            <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo'", fontWeight: 700, color: '#333' }}>convergensee-knowledge.pdf</p>
+                            <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo'", color: G, fontWeight: 700 }}>✓ Indexed — 34 pages</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo'", color: '#9fa3ac' }}>Drop PDF / docx to ground your agent</p>
+                      )}
+                    </div>
+                  </div>
+                  <div style={{ opacity: t > 1400 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Realtime Voice Model</label>
+                    <div style={{ ...fieldBox(t > 1600), display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>{t > 1600 ? 'Realtime v2 — Multilingual' : 'Select model'}</span>
+                      <span style={{ color: '#9fa3ac', fontSize: 9 }}>▾</span>
+                    </div>
+                  </div>
+                  <div style={{ opacity: t > 2000 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Voice Gender</label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {['Female', 'Male'].map((g, i) => {
+                        const sel = i === 0 && t > 2200
+                        return <span key={g} style={{ background: sel ? '#e8fde8' : '#f5f6f8', border: `1px solid ${sel ? G : '#dee0e7'}`, color: sel ? '#1b5e20' : '#666', fontSize: 11, fontFamily: "'Archivo'", fontWeight: sel ? 700 : 500, padding: '5px 14px', borderRadius: 14, transition: 'all 0.4s ease', animation: sel ? 'agPop 0.45s ease' : 'none' }}>{g}{sel ? ' ✓' : ''}</span>
+                      })}
+                    </div>
+                  </div>
+                </div>
+                {/* Right: temperature + capabilities + notifications + save */}
+                <div style={{ flex: 1.2, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div style={{ opacity: t > 2600 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <label style={{ ...fieldLabel, marginBottom: 0 }}>Temperature</label>
+                      <span style={{ fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: G }}>{Math.max(0, temp)}%</span>
+                    </div>
+                    <div style={{ height: 6, background: '#eef0f3', borderRadius: 3, position: 'relative' }}>
+                      <div style={{ height: '100%', width: `${Math.max(0, temp) / 30 * 30}%`, background: G, borderRadius: 3 }} />
+                      <div style={{ position: 'absolute', top: '50%', left: `${Math.max(0, temp) / 30 * 30}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: 7, background: '#fff', border: `2.5px solid ${G}`, boxShadow: '0 1px 4px rgba(0,0,0,0.2)' }} />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={fieldLabel}>Capabilities</label>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                      {caps.map((c, i) => {
+                        const checked = t > 3600 + i * 220
+                        return (
+                          <div key={c} style={{ display: 'flex', alignItems: 'center', gap: 7, opacity: checked ? 1 : 0.35, transition: 'opacity 0.4s ease' }}>
+                            <div style={{ width: 14, height: 14, borderRadius: 3, border: `2px solid ${checked ? G : '#c9cdd4'}`, background: checked ? G : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: checked ? 'agPop 0.4s ease' : 'none', flexShrink: 0 }}>
+                              {checked && <span style={{ color: '#fff', fontSize: 8, fontWeight: 800 }}>✓</span>}
+                            </div>
+                            <span style={{ fontSize: 11, fontFamily: "'Archivo'", color: '#333' }}>{c}</span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                  <div style={{ opacity: t > 4800 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Leads Notification Sent To</label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {['Email', 'SMS', 'WhatsApp'].map((n, i) => {
+                        const sel = i === 2 && t > 5100
+                        return <span key={n} style={{ background: sel ? '#e8fde8' : '#f5f6f8', border: `1px solid ${sel ? G : '#dee0e7'}`, color: sel ? '#1b5e20' : '#666', fontSize: 11, fontFamily: "'Archivo'", fontWeight: sel ? 700 : 500, padding: '5px 14px', borderRadius: 14, transition: 'all 0.4s ease', animation: sel ? 'agPop 0.45s ease' : 'none' }}>{n}{sel ? ' ✓' : ''}</span>
+                      })}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10, marginTop: 2 }}>
+                    {t > 6200 && <span style={{ fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: G, animation: 'agFadeUp 0.4s ease' }}>✓ Agent saved</span>}
+                    <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', padding: '8px 26px', borderRadius: 3, letterSpacing: 0.5, animation: t > 5800 ? 'agPress 0.45s ease, agPulseOnce 0.7s ease 0.2s' : 'none' }}>Save</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 3 — TEST LIVE: Manage + voice drawer (hero) */}
+        {frame === 3 && (() => {
+          const menuItems = ['Code', 'Edit', 'Image Tagging', 'Deactivate', "Let's Play", "Let's Play (Real Time)", "Let's Play All"]
+          const menuOpen = t > 900 && t < 2100
+          const drawerOpen = t > 2300
+          const bubbles = [
+            { who: 'agent', text: 'Thank you for calling ConvergenSEE. This is Asha. How may I help you today?', at: 3000, ts: '00:02' },
+            { who: 'user', text: 'I’d like to book a consultation.', at: 4600, ts: '00:07' },
+            { who: 'agent', text: 'Of course! Weekday or weekend — and what’s the best number to reach you on?', at: 5800, ts: '00:11' },
+          ]
+          return (
+            <div key="a3" style={{ animation: 'agFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Manage AI Agents</h3>
+              </div>
+              {/* Agent table */}
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', background: '#f5f6f8', padding: '8px 14px' }}>
+                  {[['Agent', 2.2], ['Model', 1], ['Status', 0.9], ['Rating', 0.9], ['Actions', 0.6]].map(([h, f]) => (
+                    <span key={h} style={{ flex: f, fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }}>{h}</span>
+                  ))}
+                </div>
+                {[
+                  { name: AGENT_NAME, sub: AGENT_DESC, model: 'OpenAI', status: 'Active', rating: '4.8', hot: true },
+                  { name: 'Kiran — Outbound Follow-ups', sub: 'Callback & reminder agent', model: 'Gemini', status: 'Draft', rating: '—', hot: false },
+                ].map((r, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', padding: '10px 14px', borderTop: '1px solid #f0f0f0', background: r.hot && t > 600 ? 'rgba(52,204,50,0.05)' : '#fff', transition: 'background 0.5s ease' }}>
+                    <div style={{ flex: 2.2, display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <div style={{ width: 26, height: 26, borderRadius: 13, background: r.hot ? G : '#eef0f3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 12, color: r.hot ? '#000718' : '#9fa3ac', flexShrink: 0 }}>{r.name[0]}</div>
+                      <div>
+                        <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo'", fontWeight: 700, color: '#333' }}>{r.name}</p>
+                        <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo'", color: '#9fa3ac' }}>{r.sub}</p>
+                      </div>
+                    </div>
+                    <span style={{ flex: 1, fontSize: 11, fontFamily: "'Archivo'", color: '#666' }}>{r.model}</span>
+                    <div style={{ flex: 0.9 }}>
+                      <span style={{ background: r.status === 'Active' ? '#e8fde8' : '#f5f6f8', border: `1px solid ${r.status === 'Active' ? G : '#dee0e7'}`, color: r.status === 'Active' ? '#1b5e20' : '#9fa3ac', fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, padding: '3px 10px', borderRadius: 10 }}>{r.status}</span>
+                    </div>
+                    <span style={{ flex: 0.9, fontSize: 11, fontFamily: "'Archivo'", color: '#f2a33c', fontWeight: 700 }}>{r.rating !== '—' ? '★ ' + r.rating : '—'}</span>
+                    <span style={{ flex: 0.6, fontSize: 14, color: '#666', fontWeight: 700, letterSpacing: 1 }}>⋯</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Actions menu */}
+              {menuOpen && (
+                <div style={{ position: 'absolute', right: 90, top: 105, width: 185, background: '#fff', border: '1px solid #dee0e7', borderRadius: 6, boxShadow: '0 10px 30px rgba(0,0,0,0.14)', zIndex: 150, overflow: 'hidden', animation: 'agFadeUp 0.3s ease' }}>
+                  {menuItems.map((m, i) => {
+                    const hl = m === "Let's Play (Real Time)" && t > 1600
+                    return (
+                      <div key={m} style={{ padding: '7px 14px', fontSize: 11, fontFamily: "'Archivo'", fontWeight: hl ? 700 : 400, color: hl ? '#000718' : '#333', background: hl ? G : '#fff', borderTop: i ? '1px solid #f5f6f8' : 'none', transition: 'background 0.3s ease' }}>{m}</div>
+                    )
+                  })}
+                </div>
+              )}
+
+              {/* Dim + AI AGENT VOICE drawer */}
+              {drawerOpen && (
+                <>
+                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.14)', zIndex: 180, animation: 'agFadeUp 0.5s ease' }} />
+                  <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 330, background: '#fff', borderLeft: '1px solid #dee0e7', boxShadow: '-14px 0 40px rgba(0,7,24,0.18)', zIndex: 200, display: 'flex', flexDirection: 'column', animation: 'agSlideIn 0.55s cubic-bezier(0.25,0.1,0.25,1)' }}>
+                    <div style={{ background: '#000718', padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: 12, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: 0.8 }}>AI Agent Voice</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: G }}>
+                        <span style={{ width: 7, height: 7, borderRadius: 4, background: G, animation: 'agBlink 1.2s ease infinite' }} />LIVE
+                      </span>
+                    </div>
+                    <div style={{ flex: 1, padding: 14, display: 'flex', flexDirection: 'column', gap: 10, overflow: 'hidden' }}>
+                      {bubbles.map((b, i) => t > b.at && (
+                        <div key={i} style={{ alignSelf: b.who === 'agent' ? 'flex-start' : 'flex-end', maxWidth: '86%', animation: 'agFadeUp 0.5s ease' }}>
+                          <div style={{ background: b.who === 'agent' ? '#f5f6f8' : '#e8fde8', border: `1px solid ${b.who === 'agent' ? '#dee0e7' : G}`, borderRadius: b.who === 'agent' ? '10px 10px 10px 2px' : '10px 10px 2px 10px', padding: '8px 11px', fontSize: 10.5, fontFamily: "'Archivo'", color: '#333', lineHeight: '15px' }}>{b.text}</div>
+                          <p style={{ margin: '3px 2px 0', fontSize: 8, fontFamily: "'Archivo'", color: '#9fa3ac', textAlign: b.who === 'agent' ? 'left' : 'right' }}>{b.who === 'agent' ? 'Asha · ' + b.ts : 'Caller · ' + b.ts}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ borderTop: '1px solid #dee0e7', padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#f5f6f8', border: '1px solid #dee0e7', borderRadius: 16, padding: '7px 14px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 2.5, height: 14 }}>
+                          {[0, 1, 2, 3, 4].map(i => (
+                            <span key={i} style={{ width: 3, height: 14, borderRadius: 2, background: G, transformOrigin: 'center', animation: `agWave 0.9s ease ${i * 0.12}s infinite` }} />
+                          ))}
+                        </div>
+                        <span style={{ fontSize: 10, fontFamily: "'Archivo'", color: '#666' }}><span style={{ fontWeight: 700, color: '#333' }}>voice</span> Listening…</span>
+                      </div>
+                      <div style={{ alignSelf: 'center', border: '1.5px solid #e05252', color: '#e05252', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, padding: '5px 18px', borderRadius: 14 }}>Stop session</div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 4 — CAPTURE: InsightIT dashboard + Leads */}
+        {frame === 4 && (() => {
+          const tiles = [
+            { label: '# of Conversations', v: 1284 },
+            { label: '# of Leads', v: 342 },
+            { label: 'Phone Shared', v: 236 },
+            { label: 'Email Shared', v: 118 },
+          ]
+          const bars = [34, 48, 41, 62, 55, 74, 68, 88, 79, 96, 90, 108]
+          const leads = [
+            ['Riya S.', '98104 21xx7', 'riya.s@example.com', '2:14 PM'],
+            ['Arjun M.', '99230 84xx2', 'arjun.m@example.com', '1:47 PM'],
+            ['Meera K.', '98671 05xx9', 'meera.k@example.com', '12:32 PM'],
+            ['Dev P.', '91760 43xx5', 'dev.p@example.com', '11:58 AM'],
+          ]
+          return (
+            <div key="a4" style={{ animation: 'agFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed'", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>InsightIT — Voice Agent</h3>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <span style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 600, padding: '5px 12px', borderRadius: 14 }}>Agent: Asha ▾</span>
+                  <span style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 600, padding: '5px 12px', borderRadius: 14 }}>01 Jul – 17 Aug ▾</span>
+                </div>
+              </div>
+              {/* KPI tiles */}
+              <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                {tiles.map((tile, i) => (
+                  <div key={tile.label} style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 14px', background: '#fff' }}>
+                    <p style={{ margin: '0 0 3px', fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.3 }}>{tile.label}</p>
+                    <p style={{ margin: 0, fontSize: 24, fontFamily: "'Saira Condensed'", fontWeight: 800, color: i === 1 ? G : '#000718', lineHeight: 1 }}>{formatIN(easeOut((t - i * 150) / 1700) * tile.v)}</p>
+                  </div>
+                ))}
+                <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 14px', background: '#fff' }}>
+                  <p style={{ margin: '0 0 3px', fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.3 }}>My Feedback</p>
+                  <p style={{ margin: 0, fontSize: 24, fontFamily: "'Saira Condensed'", fontWeight: 800, color: '#f2a33c', lineHeight: 1 }}>{(easeOut(t / 1700) * 4.8).toFixed(1)}<span style={{ fontSize: 15 }}> ★</span></p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 12 }}>
+                {/* Conversations bar chart */}
+                <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: 14, background: '#fff' }}>
+                  <p style={{ margin: '0 0 10px', fontSize: 10, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase' }}>Conversations by Date</p>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 7, height: 130 }}>
+                    {bars.map((h, i) => t > 1200 && (
+                      <div key={i} style={{ flex: 1, height: h, background: i === bars.length - 1 ? G : 'rgba(52,204,50,0.35)', borderRadius: '3px 3px 0 0', transformOrigin: 'bottom', animation: `agGrow 0.7s ease forwards ${i * 80}ms`, transform: 'scaleY(0)' }} />
+                    ))}
+                  </div>
+                </div>
+                {/* Leads table */}
+                <div style={{ flex: 1.25, border: '1px solid #dee0e7', borderRadius: 6, padding: 14, background: '#fff', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', gap: 16, borderBottom: '1px solid #eef0f3', marginBottom: 8 }}>
+                    {['Conversation', 'Leads'].map((tab, i) => (
+                      <span key={tab} style={{ fontSize: 10, fontFamily: "'Saira Condensed'", fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, color: i === 1 ? '#000718' : '#9fa3ac', paddingBottom: 6, borderBottom: i === 1 ? `2px solid ${G}` : '2px solid transparent' }}>{tab}</span>
+                    ))}
+                  </div>
+                  {leads.map((l, i) => t > 2600 + i * 320 && (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', padding: '6px 2px', borderBottom: '1px solid #f5f6f8', animation: 'agFadeUp 0.5s ease' }}>
+                      <div style={{ width: 20, height: 20, borderRadius: 10, background: '#eef0f3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontFamily: "'Archivo'", fontWeight: 800, color: '#666', marginRight: 8, flexShrink: 0 }}>{l[0][0]}</div>
+                      <span style={{ flex: 1, fontSize: 10.5, fontFamily: "'Archivo'", fontWeight: 700, color: '#333' }}>{l[0]}</span>
+                      <span style={{ flex: 1.1, fontSize: 10, fontFamily: "'Archivo'", color: '#666' }}>{l[1]}</span>
+                      <span style={{ flex: 1.5, fontSize: 10, fontFamily: "'Archivo'", color: '#666' }}>{l[2]}</span>
+                      <span style={{ fontSize: 9, fontFamily: "'Archivo'", color: '#9fa3ac' }}>{l[3]}</span>
+                    </div>
+                  ))}
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 'auto', paddingTop: 10 }}>
+                    <span style={{ fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase' }}>Notified via</span>
+                    {['Email', 'SMS', 'WhatsApp'].map(n => (
+                      <span key={n} style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 9, fontFamily: "'Archivo'", fontWeight: 700, padding: '3px 10px', borderRadius: 10, animation: t > 5200 ? 'agPulseOnce 0.7s ease' : 'none' }}>{n} ✓</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 5 — CLOSE */}
+        {frame === 5 && (
+          <div key="a5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center', animation: 'agFadeUp 0.7s ease' }}>
+            <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
+              Every call <span style={{ color: G }}>answered</span>.<br />Every lead <span style={{ color: G }}>captured</span>.
+            </p>
+            <p style={{ fontFamily: "'Archivo'", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>AI voice agents — inbound, outbound, and on your website.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontFamily: "'Saira Condensed'", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>AIgenIT</span>
+              <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
+              <span style={{ fontFamily: "'Archivo'", fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 0 — idle */}
+        {frame === 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center' }}>
+            <div style={{ animation: 'agFadeUp 0.5s ease' }}>
+              <p style={{ fontFamily: "'Saira Condensed'", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>AIgenIT</p>
+              <p style={{ fontFamily: "'Archivo'", fontSize: 12, color: '#666', margin: 0 }}>AI voice agents for calls & websites</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Lower-third overlay band — full width, sharp corners, 2px green top rule */}
+      {overlay && (
+        <div key={`band-${frame}`} style={{
+          background: 'rgba(0,7,24,0.95)', borderTop: `2px solid ${G}`, padding: '11px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          animation: 'agBandUp 0.5s ease',
+        }}>
+          <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo'", fontWeight: 700, color: '#fff' }}>{overlay.main}</p>
+          <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo'", color: G, fontWeight: 500 }}>{overlay.sub}</p>
+        </div>
+      )}
     </div>
   )
 }
@@ -2161,7 +3234,7 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
     <div ref={containerRef} style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative', background: '#f9f9fd', borderRadius: 8 }}>
       <div style={{ width: 1440, height: 930, transform: `scale(${scale})`, transformOrigin: 'top left', position: 'relative', background: '#f9f9fd' }}>
 
-        <Sidebar active={activeModule} />
+        <Sidebar active={activeModule} org={activeModule === 'ScriptIT' && showWorkflow ? { initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' } : undefined} />
         <Header />
 
         {/* Main content */}
@@ -2211,8 +3284,10 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
             {activeModule === 'CreateIT' && !showWorkflow && <CreateStandardContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'SocialiseIT' && <SocialiseContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InfluenceIT' && <InfluenceContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'ScriptIT'    && <ScriptContent    controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'AigenIT'     && <AigenContent     controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'ScriptIT' && !showWorkflow && <ScriptContent controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'AigenIT' && showWorkflow && <AigenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'AigenIT' && !showWorkflow && <AigenContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'SearchIT'    && <SearchContent    controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InvoiceIT'   && <InvoiceContent   controls={controls} tileVariants={tileVariants} />}
             {(activeModule === 'InsightIT' || !['LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AigenIT','SearchIT','InvoiceIT'].includes(activeModule)) &&

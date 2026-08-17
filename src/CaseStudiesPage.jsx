@@ -18,11 +18,11 @@ const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Figma assets ─────────────────────────────────────────────────────────────
 const imgMahindraPhoto   = '/figma/case-study/img-mahindra2.png'
-const imgAxisPhoto       = '/figma/case-study/img-mahindra4.jpg'
+const imgUnicornPhoto    = '/unicorn-poster.jpg'
 const imgSBIPhoto        = '/figma/case-study/img-mahindra3.jpg'
 const imgLACPhoto        = '/figma/case-study/img-mahindra5.jpg'
 const imgMahindraLogo    = '/mahindra-logo.png'
-const imgAxisLogo        = '/axis-bank-logo.png'
+const imgUnicornLogo     = '/unicorn-logo.png'
 const imgSBILogo         = '/sbi-logo.png'
 const imgLACLogo         = '/figma/case-study/img-image30.png'
 
@@ -35,21 +35,23 @@ const CASES = [
     logoBg: '#fff',
     logo: '/mahindra-logo.png',
     name: 'Mahindra & Mahindra',
-    type: 'Content creation',
-    stats: [{ val: '96%', label: 'Surge in website actions' }, { val: '10x', label: 'Revenue increase' }, { val: '96%', label: 'Increase in sales' }],
+    type: 'Hyperlocal presence',
+    stats: [{ val: '125%', label: 'Increase in customer engagement' }, { val: '7.5L+', label: 'Leads at an average of ₹55 per lead' }, { val: '12,000+', label: 'Vehicles sold' }],
   },
   {
-    photo: imgAxisPhoto,
-    video: '/axis-bank.mp4',
-    poster: '/axis-bank-poster.jpg',
-    logoBg: '#ae285d',
-    logo: '/axis-bank-logo.png',
-    name: 'Axis bank',
-    type: 'Location pages',
+    photo: imgUnicornPhoto,
+    video: '/unicorn.mp4',
+    poster: '/unicorn-poster.jpg',
+    logoBg: '#fff',
+    logo: '/unicorn-logo.png',
+    name: 'Unicorn',
+    type: 'Performance marketing',
     stats: [{ val: '96%', label: 'Surge in website actions' }, { val: '10x', label: 'Revenue increase' }, { val: '96%', label: 'Increase in sales' }],
   },
   {
     photo: imgSBIPhoto,
+    video: '/sbi.mp4',
+    poster: '/sbi-poster.jpg',
     logoBg: '#292075',
     logo: '/sbi-logo.png',
     name: 'SBI',
@@ -58,6 +60,8 @@ const CASES = [
   },
   {
     photo: imgLACPhoto,
+    video: '/love-and-cheesecake.mp4',
+    poster: '/love-and-cheesecake-poster.jpg',
     logoBg: '#fffef2',
     logo: '/lc-logo.webp',
     name: 'Love & Cheesecake',
@@ -186,16 +190,17 @@ export default function CaseStudiesPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
               fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
+              fontSize: 'clamp(44px, 9vw, 110px)', fontWeight: 800, lineHeight: 1,
               textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
-              whiteSpace: 'nowrap',
+              maxWidth: 1100,
             }}>
-              <span style={{ color: '#fff' }}>WE </span>
-              <span style={{ color: G }}>DARE </span>
-              <span style={{ color: '#fff' }}>YOU</span>
+              <span style={{ color: '#fff' }}>THE WORK WE </span>
+              <span style={{ color: G }}>LOVE </span>
+              <span style={{ color: '#fff' }}>TO TALK ABOUT.</span>
             </h1>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
-              Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
+              Real brands. Real challenges. Real impact. A look at the moments where our thinking
+              met execution and delivered something worth sharing!
             </p>
           </div>
 

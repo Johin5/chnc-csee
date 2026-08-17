@@ -20,7 +20,7 @@ const imgValWalk     = '/walk-the-talk.mp4'
 const imgValFoolish  = '/be-foolish.mp4'
 
 // ─── Value card ───────────────────────────────────────────────────────────────
-function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
+function ValueCard({ line1, line1Green, line2, line2Green, bg, desc }) {
   const { isSmall } = useResponsive()
   return (
     <div className="card-hover" style={{
@@ -55,6 +55,12 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg }) {
           }}>
             {line2}
           </div>
+        )}
+        {desc && (
+          <p style={{
+            fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(13px, 1.6vw, 16px)', color: MUTED,
+            lineHeight: 1.5, maxWidth: 460, margin: '14px auto 0', padding: '0 20px',
+          }}>{desc}</p>
         )}
       </div>
     </div>
@@ -148,9 +154,11 @@ export default function AboutPage() {
             fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
             lineHeight: '24px', maxWidth: 798, textShadow: '0 1px 12px rgba(0,0,0,0.8)',
           }}>
-            Discover the power of our secure and rewarding copy. Explore our range of copy and take
-            control of your copy today. Discover the power of our secure and rewarding copy. Explore
-            our range of copy and take control of your copy today. Discover us.
+            A team of thinkers, doers, and opportunity creators who genuinely care about the brands
+            we work with. We're a Martech brand that believes technology should solve real problems.
+            We research relentlessly, think deeply, and build with love because that's the only way
+            we know how to work. From strategy to execution, we're right there with you &mdash; your
+            people, your partners, making things happen together!
           </p>
         </div>
       </section>
@@ -179,12 +187,19 @@ export default function AboutPage() {
               fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
               color: MUTED, lineHeight: '24px',
             }}>
-              Discover the power of our secure and rewarding copy. Explore our range of copy and
-              take control of your copy today. Discover the power of our secure and rewarding copy.
-              Explore our range of copy and take control of your copy today. Discover the power of
-              our secure and rewarding copy. Explore our range of copy and take control of your copy
-              today. Discover the power of our secure and rewarding copy. Explore our range of copy
-              and take control of your copy today.
+              When we started ConvergenSEE, we set out to solve a problem we saw across the
+              industry: marketing had become fragmented. Brands were working across multiple tools,
+              platforms, and vendors, yet still unable to answer the one question that matters most
+              &mdash; is this creating real business opportunity? Creativity, technology, and
+              insight were operating in isolation, and that disconnect was costing brands time,
+              money, and opportunity. ConvergenSEE was built to change that. As a MarTech platform,
+              we bring creativity, technology, and intelligence together into a single system
+              &mdash; one designed to help brands move faster and make decisions with confidence.
+              We believe marketing alone does not create growth; growth comes from understanding an
+              audience deeply and executing with precision. That belief is the foundation this
+              brand is built on, and it is what every person here works toward &mdash; not
+              marketing outputs, but real, measurable opportunity for the brands, and the
+              businesses, we serve.
             </p>
           </div>
 
@@ -232,6 +247,7 @@ export default function AboutPage() {
                 line2="the talk"
                 line2Green={false}
                 bg={imgValWalk}
+                desc="We don't just talk growth, we build it. Every promise we make to a brand is one we hold ourselves to first."
               />
               <ValueCard
                 line1="Be "
@@ -239,6 +255,7 @@ export default function AboutPage() {
                 line2="foolish"
                 line2Green
                 bg={imgValFoolish}
+                desc="The best ideas rarely look safe at first. We'd rather take the leap than play it safe and watch someone else take the opportunity!"
               />
             </div>
             <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, width: '100%' }}>
@@ -248,6 +265,7 @@ export default function AboutPage() {
                 line2=" IT"
                 line2Green={false}
                 bg={imgValCard1}
+                desc="No passing the buck, no waiting to be told. If it's on our plate, we see it through — start to finish."
               />
               <div className="card-hover" style={{
                 position: 'relative', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, height: isSmall ? 'clamp(200px, 50vw, 300px)' : 300,
@@ -266,6 +284,10 @@ export default function AboutPage() {
                     fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 700,
                     lineHeight: 1.05, textTransform: 'uppercase', color: G,
                   }}>CHNC</div>
+                  <p style={{
+                    fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(13px, 1.6vw, 16px)', color: MUTED,
+                    lineHeight: 1.5, maxWidth: 460, margin: '14px auto 0', padding: '0 20px',
+                  }}>Every gap is a chance waiting to be taken.</p>
                 </div>
               </div>
             </div>

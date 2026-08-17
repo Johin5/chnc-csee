@@ -29,21 +29,21 @@ const imgGallery3      = '/figma/case-study-mahindra/img-image113.jpg'
 // ─── Other case studies — same set as the Case Studies grid, minus Mahindra ───
 const OTHER_CASES = [
   {
-    photo: '/figma/case-study/img-mahindra4.jpg',
-    logo:  '/axis-bank-logo.png',
-    name:  'Axis Bank',
-    type:  'Location pages',
+    photo: '/unicorn-poster.jpg',
+    logo:  '/unicorn-logo.png',
+    name:  'Unicorn',
+    type:  'Performance marketing',
     stat:  { val: '96%', label: 'Surge in website actions' },
   },
   {
-    photo: '/figma/case-study/img-mahindra3.jpg',
+    photo: '/sbi-poster.jpg',
     logo:  '/sbi-logo.png',
     name:  'SBI',
     type:  'Content creation',
     stat:  { val: '10x', label: 'Revenue increase' },
   },
   {
-    photo: '/figma/case-study/img-mahindra5.jpg',
+    photo: '/love-and-cheesecake-poster.jpg',
     logo:  '/lc-logo.webp',
     name:  'Love & Cheesecake',
     type:  'Location pages',
@@ -138,7 +138,8 @@ export default function MahindraPage() {
             <img loading="lazy" src={imgMahindraLogo} alt="Mahindra" style={{ height: 52, width: 'auto', objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
           </div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 566, textAlign: 'center', margin: 0 }}>
-            Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.
+            Helping one of India's largest automobile brands win locally through hyperlocal presence
+            &mdash; dealer-specific advertising across 585+ locations.
           </p>
         </div>
       </section>
@@ -151,9 +152,9 @@ export default function MahindraPage() {
           {/* Top stats row */}
           <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, alignItems: isMobile ? 'stretch' : 'flex-start', width: '100%', justifyContent: 'center' }}>
             {[
-              { val: '96%',   label: 'Surge in website actions in just 3 months' },
-              { val: '1.3M+', label: 'Fraud attempts tackled and resolved' },
-              { val: '203K+', label: 'Spike in online reviews in 8 months' },
+              { val: '125%',    label: 'Increase in customer engagement' },
+              { val: '7.5L+',   label: 'Leads generated at an average cost of ₹55 per lead' },
+              { val: '12,000+', label: 'Vehicles sold' },
             ].map((s, i) => (
               <div key={i} style={{ width: isMobile ? '100%' : 300, maxWidth: 300, padding: 'clamp(20px, 4vw, 30px)', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
@@ -170,9 +171,9 @@ export default function MahindraPage() {
           </h2>
           <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: 'stretch', width: '100%', justifyContent: 'center' }}>
             {[
-              { num: '1.', text: 'Data-driven insights revealed key performance metrics, highlighting areas for optimization and growth strategies.' },
-              { num: '2.', text: 'Inconsistent local presence across thousands of agents' },
-              { num: '3.', text: 'Data-driven insights revealed key performance metrics, highlighting areas for optimization and growth strategies.' },
+              { num: '1.', text: 'With 585+ dealer locations across the country, the brand ran largely on one national voice in its advertising.' },
+              { num: '2.', text: "There was an opportunity to bring each dealership's advertising closer to its own local audience." },
+              { num: '3.', text: 'Local relevance had to work at scale — creative, targeting, and handles for every single dealership.' },
             ].map((item, i) => (
               <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 400, maxWidth: isSmall ? 'none' : 400, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(36px, 6vw, 50px)', lineHeight: 1, color: G, margin: 0, textTransform: 'uppercase' }}>{item.num}</p>
@@ -189,9 +190,9 @@ export default function MahindraPage() {
           </h2>
           <div style={{ width: isSmall ? '100%' : 786, maxWidth: 786, display: 'flex', flexDirection: 'column', gap: 20 }}>
             {[
-              'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.',
-              'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.',
-              'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.',
+              "ConvergenSEE built and ran hyperlocal, dealer-specific advertising — matching creative and targeting to each dealership's ideal local audience, at scale, across 585+ locations.",
+              'Produced 3,000+ hyperlocal creatives every month tailored to local context instead of one national campaign, and built 2,500+ localised, dealer-specific ads targeting the ideal audience around each dealership.',
+              'Managed 200+ dealer handles across Facebook & Instagram and 1,000+ Mahindra & dealer touchpoints, running the program continuously over 30 months (Jun 2020 – Dec 2022).',
             ].map((text, i) => (
               <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '30px', margin: 0 }}>
                 <span style={{ color: G }}>🟢</span> {text}
@@ -200,8 +201,8 @@ export default function MahindraPage() {
           </div>
           <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: 'stretch', width: '100%', justifyContent: 'center' }}>
             {[
-              { val: '96%',   label: 'Surge in website actions in just 3 months', tag: 'AUTOMOBILE BRAND' },
-              { val: '1.3M+', label: 'Fraud attempts tackled and resolved',        tag: 'FINANCE BRAND' },
+              { val: '75%',    label: 'Increase in website visits — with 65% more phone calls and 40% more direction requests', tag: 'HYPERLOCAL PRESENCE' },
+              { val: '3,000+', label: 'Hyperlocal creatives produced every month, tailored to local context', tag: 'CREATIVE AT SCALE' },
             ].map((s, i) => (
               <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>

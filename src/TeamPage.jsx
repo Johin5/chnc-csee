@@ -31,7 +31,9 @@ export default function TeamPage() {
           <span style={{ color: G }}>TEAM</span>
         </h1>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
-          Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
+          We are you, the dreamers who see what could be, the thinkers who question what is, the
+          builders who refuse to settle. We're not your brand. We're your people &mdash; solving,
+          creating, and growing right alongside you.
         </p>
       </section>
 

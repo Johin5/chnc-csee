@@ -125,11 +125,11 @@ function Hero() {
             whiteSpace: 'nowrap', textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
           }}>
             <span style={{ color: '#fff' }}>We </span>
-            <span style={{ color: G }}>DARE </span>
+            <span style={{ color: G }}>ARE </span>
             <span style={{ color: '#fff' }}>You</span>
           </h1>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 8, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
-            Discover the power of our secure and rewarding copy. Explore our range of copy.
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 8, maxWidth: 640, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
+            Think of us as the part of your team you haven't met yet. We share your ambition, carry your goals, and stay through the messy middle where real growth happens. Every opportunity we find, we build together.
           </p>
         </div>
         <BtnGreen>Take the CHNC</BtnGreen>
@@ -184,9 +184,18 @@ function About() {
             </h2>
           </div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, maxWidth: 531 }}>
-            Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.
+            We are you, the dreamers who see what could be, the thinkers who question what is, the builders who refuse to settle. We exist in the space between your vision and reality, turning digital problems into opportunities with technology that actually works. We're not your brand. We're your people &mdash; solving, creating, and growing right alongside you.
           </p>
-          <BtnGreen style={{ width: 'fit-content' }}>Meet the team</BtnGreen>
+          <Link href="/team" className="btn-outline" style={{
+            width: 'fit-content',
+            background: 'transparent', color: '#fff', border: '1px solid #fff',
+            height: 46, padding: '0 20px',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            boxSizing: 'border-box',
+            fontFamily: "'Saira Condensed', sans-serif",
+            fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
+            letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
+          }}>Meet the team</Link>
         </div>
         <div style={{ width: isSmall ? '100%' : 562, maxWidth: 562, height: isSmall ? 'clamp(320px, 80vw, 564px)' : 564, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ position: 'relative', height: '100%', aspectRatio: '1080 / 1350' }}>
@@ -220,15 +229,26 @@ const chncStats = [
 ]
 
 const platformFeatures = [
-  { title: 'Create Content',          icon: <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" /> },
-  { title: 'Location Management',     icon: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></> },
-  { title: 'AI Agents',               icon: <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" /> },
-  { title: 'Social Media Management', icon: <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" /></> },
-  { title: 'Generate AI Scripts',     icon: <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2Z" /><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" /></> },
-  { title: 'Proposal Management',     icon: <><rect x="8" y="2" width="8" height="4" rx="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="m9 14 2 2 4-4" /></> },
-  { title: 'Amplify',                 icon: <><path d="m3 11 18-5v12L3 14v-3Z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></> },
-  { title: 'MessageIT',               icon: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22l5.9-2Z" /> },
-  { title: 'InfluenceIT',             icon: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></> },
+  { title: 'Location Presence Management', icon: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>,
+    desc: "Manages your brand's presence across maps, listings, and local discovery platforms. Solves inconsistent information, low visibility, and lost walk-in opportunities." },
+  { title: 'Performance Marketing', icon: <><path d="m3 11 18-5v12L3 14v-3Z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></>,
+    desc: 'Plans and optimises paid campaigns across digital platforms to drive measurable growth. Solves wasted media spend, poor lead quality, and lack of performance accountability.' },
+  { title: 'Social Media Management', icon: <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" /></>,
+    desc: "Runs your brand's ongoing social presence through structured content and engagement. Solves irregular posting, weak recall, and disconnected audience relationships." },
+  { title: 'Content Creation', icon: <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" />,
+    desc: 'Produces consistent creative assets designed for ads, social, and digital channels. Solves content fatigue, production delays, and inconsistent brand communication.' },
+  { title: 'AI Conversation & Automation', icon: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22l5.9-2Z" />,
+    desc: 'Deploys AI voice and chat agents that interact, assist, and qualify customers instantly. Solves slow response times, manpower dependency, and missed customer enquiries.' },
+  { title: 'SEO + AEO + GEO Optimisation', icon: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></>,
+    desc: "Improves your brand's visibility across search engines and generative discovery platforms. Solves low organic traffic, poor discoverability, and over-reliance on paid media." },
+  { title: 'Influencer Marketing', icon: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></>,
+    desc: 'Connects your brand with relevant creators to produce authentic, audience-led content. Solves credibility gaps, low engagement, and difficulty reaching new communities.' },
+  { title: 'Creative Production & Script Development', icon: <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2Z" /><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" /></>,
+    desc: 'Develops structured storytelling and performance scripts for campaigns and videos. Solves weak messaging, low viewer retention, and unclear communication.' },
+  { title: 'Invoice Management', icon: <><rect x="8" y="2" width="8" height="4" rx="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="m9 14 2 2 4-4" /></>,
+    desc: 'Centralises marketing invoices, spends, and vendor billing into one organised system. Solves financial confusion, reconciliation delays, and lack of spend visibility.' },
+  { title: 'Analytics', icon: <><path d="M3 3v18h18" /><path d="M7 15v3M12 10v8M17 6v12" /></>,
+    desc: 'Transforms campaign and customer data into actionable business intelligence. Solves fragmented reporting, unclear performance understanding, and slow decision-making.' },
 ]
 
 function CHNC() {
@@ -274,18 +294,18 @@ function CHNC() {
   const lockedDock    = useMotionValue(0)
 
   const MODULE_INFO = {
-    InsightIT: { title: 'InsightIT', desc: 'Real-time dashboards, performance analytics and reporting that help you make data-driven decisions across all campaigns.' },
-    LocateIT: { title: 'LocateIT', desc: 'Manage locations, listings and local presence at scale. Drive foot traffic with hyperlocal marketing.' },
+    InsightIT: { title: 'InsightIT', desc: "Gives your brand clarity on what's working and what to do next." },
+    LocateIT: { title: 'LocateIT', desc: 'Helps your brand get discovered in the moments that matter.' },
     CreateIT: { title: 'CreateIT', desc: 'Gives your brand a steady flow of high-quality creatives at scale.', stats: [{ num: '42%', label: 'reduction in time for creative delivery' }, { num: '50%', label: 'reduction in time to market' }] },
-    AmplifyIT: { title: 'AmplifyIT', desc: 'Run and optimise paid campaigns across channels. Maximise ROI with intelligent budget allocation.' },
-    SocialiseIT: { title: 'SocialiseIT', desc: 'Schedule, publish and track social media content. Turn posting into meaningful audience engagement.' },
-    InfluenceIT: { title: 'InfluenceIT', desc: 'Discover, brief and manage influencer partnerships from micro to mega tier across categories.' },
-    ScriptIT: { title: 'ScriptIT', desc: 'Generate scripts with AI in your brand voice. Create compelling copy in multiple languages and tonalities.' },
-    AigenIT: { title: 'AigenIT', desc: 'AI agents that automate workflows end to end. From content generation to campaign optimisation.' },
-    SearchIT: { title: 'SearchIT', desc: 'SEO tools and search visibility management. Dominate organic rankings with data-driven strategies.' },
-    InvoiceIT: { title: 'InvoiceIT', desc: 'Streamline proposals, invoicing and vendor management. One platform for all financial workflows.' },
-    AdaptIT: { title: 'AdaptIT', desc: 'Localise and adapt campaigns for every market. Tailor content to regions, languages and audiences at scale.' },
-    EngageIT: { title: 'EngageIT', desc: 'Build lasting customer relationships across channels. Automate journeys, conversations and retention.' },
+    AmplifyIT: { title: 'AmplifyIT', desc: 'Turns your marketing spend into real demand and better leads.' },
+    SocialiseIT: { title: 'SocialiseIT', desc: 'Keeps your brand visible, familiar, and remembered every day.' },
+    InfluenceIT: { title: 'InfluenceIT', desc: 'Builds trust and traction through creators your audience already follows.' },
+    ScriptIT: { title: 'ScriptIT', desc: 'Gives your brand scripts that hold attention and drive response.' },
+    AigenIT: { title: 'AigenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.' },
+    SearchIT: { title: 'SearchIT', desc: 'Brings in high-intent customers who are ready to take action.' },
+    InvoiceIT: { title: 'InvoiceIT', desc: "Keeps your brand's spends, billing, and tracking clean and organised." },
+    AdaptIT: { title: 'AdaptIT', desc: "Reshapes your brand's content to fit every platform it lands on." },
+    EngageIT: { title: 'EngageIT', desc: 'Gives your brand messaging that speaks to each customer personally.' },
   }
 
   useEffect(() => {
@@ -336,9 +356,11 @@ function CHNC() {
   const yBot = useTransform(flow, [0.10, 0.82], [0, 120])
   const sBot = useTransform(flow, [0.10, 0.82], [1, 0.45])
   const oBot = useTransform(flow, [0.40, 0.76], [1, 0])
-  const rowY = [yTop, yMid, yBot]
-  const rowS = [sTop, sMid, sBot]
-  const rowO = [oTop, oMid, oBot]
+  // Ten cards make a fourth row; it sits nearest the funnel so it shares the
+  // bottom row's timing.
+  const rowY = [yTop, yMid, yBot, yBot]
+  const rowS = [sTop, sMid, sBot, sBot]
+  const rowO = [oTop, oMid, oBot, oBot]
 
   // Columns converge toward the centre (the funnel neck).
   const xLeft  = useTransform(flow, [0.10, 1], [0, 360])
@@ -354,13 +376,16 @@ function CHNC() {
     <section style={{ paddingTop: 0, marginTop: -60, background: DARK }}>
       {/* Section title + CHNC heading above dashboard */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, paddingTop: 80, marginBottom: 20, padding: '80px 20px 0' }}>
-        <SectionLabel>Features &amp; Modules</SectionLabel>
+        <SectionLabel>Meet CHNC</SectionLabel>
         <h2 style={{
           fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800,
           textTransform: 'uppercase', lineHeight: 1, textAlign: 'center',
         }}>
-          What platform <span style={{ color: G }}>offers?</span>
+          What's inside <span style={{ color: G }}>CHNC?</span>
         </h2>
+        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, textAlign: 'center', maxWidth: 640, margin: 0 }}>
+          Built to find the gaps, connect the dots, and turn every opportunity into something your brand can actually own.
+        </p>
       </div>
 
       <div ref={flowRef}>
@@ -368,15 +393,18 @@ function CHNC() {
       <div style={{ maxWidth: 1480, margin: '0 auto 60px', padding: '0 clamp(16px, 3vw, 48px)', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 24, width: '100%' }}>
           {platformFeatures.map((f, i) => {
-            const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '24px 26px', minHeight: 104, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 18, boxSizing: 'border-box' }
+            const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '24px 26px', minHeight: 104, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14, boxSizing: 'border-box' }
             const r = Math.floor(i / 3), c = i % 3
             const animStyle = isSmall ? cardStyle : { ...cardStyle, x: colX[c], y: rowY[r], scale: rowS[r], opacity: rowO[r], willChange: 'transform, opacity' }
             return (
             <motion.div key={f.title} className="feature-card" style={animStyle}>
-              <span className="feature-icon" style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 12, background: 'rgba(52,204,50,0.08)', border: '1px solid rgba(52,204,50,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{f.icon}</svg>
-              </span>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 2.2vw, 30px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 18 }}>
+                <span className="feature-icon" style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 12, background: 'rgba(52,204,50,0.08)', border: '1px solid rgba(52,204,50,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{f.icon}</svg>
+                </span>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(20px, 1.9vw, 26px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
+              </div>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED, lineHeight: '21px', margin: 0 }}>{f.desc}</p>
             </motion.div>
             )
           })}
@@ -545,10 +573,10 @@ function CHNC() {
 
 // ─── Impact ───────────────────────────────────────────────────────────────────
 const impacts = [
-  { num: '96%',  desc: 'Surge in website actions in just 3 months', tag: 'Automobile Brand' },
-  { num: '1.3M+', desc: 'Fraud attempts tackled and resolved', tag: 'Finance Brand' },
-  { num: '203K+', desc: 'Spike in online reviews in 8 months', tag: 'FMCG Brand' },
-  { num: '32%',  desc: 'Fraud attempts tackled and resolved', tag: 'Technology Firm' },
+  { num: '1.3M+', desc: 'Local business locations managed globally' },
+  { num: '110K+', desc: 'Business locations managed in India alone' },
+  { num: '300+',  desc: 'Global enterprise brands managed across industries' },
+  { num: '50%',   desc: 'Cut in go-to-market time' },
 ]
 
 // Slot-machine odometer: each digit is a vertical 0-9 strip that spins through
@@ -600,9 +628,9 @@ function Impact() {
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <SectionLabel>Impact we made</SectionLabel>
+          <SectionLabel>Impact</SectionLabel>
           <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
-            Our <span style={{ color: G }}>impact</span>
+            Impact we have <span style={{ color: G }}>built</span>
           </h2>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, width: '100%' }}>
@@ -610,7 +638,7 @@ function Impact() {
             <div key={s.num} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)' }}>
               <RollingNumber value={s.num} style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 5.3vw, 80px)', fontWeight: 700, color: G, lineHeight: 1.1 }} />
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.desc}</p>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 600, color: G, textTransform: 'uppercase', marginTop: 10 }}>{s.tag}</p>
+              {s.tag && <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 600, color: G, textTransform: 'uppercase', marginTop: 10 }}>{s.tag}</p>}
             </div>
           ))}
         </div>
@@ -625,14 +653,12 @@ function Impact() {
 // Nothing is selected initially, so the neutral default clip shows.
 const auditDefaultGif = '/figma/home/oh-gifs/default.mp4'
 const auditQs = [
-  { q: 'Looking for an', qGreen: 'audit?', opts: ['YES', 'NO', 'MAYBE'],
-    gifs: ['ooh-wee', 'o-face', 'oh-i-see'] },
-  { q: 'Ready to enhance your', qGreen: 'strategies?', opts: ['JOIN OUR WEBINAR', 'CONTACT US', 'LEARN MORE'],
-    gifs: ['jimbo', 'giphy-3', 'i-see-wow'] },
-  { q: 'Need a', qGreen: 'financial', qEnd: ' review?', opts: ['VIEW OUR SERVICES', 'GET IN TOUCH', 'SCHEDULE A CALL'],
-    gifs: ['matrix-ok', 'oh-snap', 'giphy-4'] },
-  { q: 'Curious about our', qGreen: 'process?', opts: ['CHECK OUR CASE STUDIES', 'READ CLIENT TESTIMONIALS', 'EXPLORE OUR METHODS'],
-    gifs: ['stranger-things', 'tiffany', 'max-stranger'] },
+  { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'],
+    gifs: ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'] },
+  { q: "What's the main", qGreen: 'issue', qEnd: ' today?', opts: ['LOW LEADS', 'LOW QUALITY', 'INCONSISTENT', 'NOT SURE'],
+    gifs: ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'] },
+  { q: "What's your current", qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'],
+    gifs: ['giphy-4', 'stranger-things', 'tiffany', 'max-stranger'] },
 ]
 
 function QuizPill({ label, isActive, onClick }) {
@@ -678,9 +704,9 @@ function BrandAudit() {
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <SectionLabel>Brand audit</SectionLabel>
+          <SectionLabel>Take the CHNC</SectionLabel>
           <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
-            Want a <span style={{ color: G }}>brand audit?</span>
+            Find your next <span style={{ color: G }}>opportunity</span>
           </h2>
         </div>
         <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', width: '100%' }}>
@@ -736,8 +762,8 @@ function Testimonials() {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, color: G, textAlign: 'center' }}>
-            Testimonials
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+            Brands who took the <span style={{ color: G }}>CHNC</span>
           </h2>
         </div>
         <div style={{ display: 'flex', gap: 'clamp(8px, 1.5vw, 20px)', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -919,13 +945,16 @@ function AdvisoryBoard() {
   // tablet width crop the faces badly.
   const { isSmall } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+    <section id="advisory-board" style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <SectionLabel>Board</SectionLabel>
+          <SectionLabel>Advisory Board</SectionLabel>
           <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
-            <span style={{ color: G }}>Advisory </span>board
+            People who built <span style={{ color: G }}>CHNC</span> with us
           </h2>
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, textAlign: 'center', maxWidth: 798, margin: 0 }}>
+            CHNC was shaped by people who've built and scaled brands in the real world. Our advisory board has helped ConvergenSEE stay clear on direction and stronger in thinking. Their guidance has influenced how we build systems, execute, and measure impact. Even today, they continue to shape how CHNC grows.
+          </p>
         </div>
         <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 16, width: '100%' }}>
           {boardMembers.map((m, i) => <BoardCard key={i} member={m} />)}
@@ -939,7 +968,7 @@ function AdvisoryBoard() {
 // ─── Contact ──────────────────────────────────────────────────────────────────
 function Contact() {
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+    <section id="contact" style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Connect with us</SectionLabel>

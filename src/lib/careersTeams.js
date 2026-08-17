@@ -5,11 +5,10 @@
 // `openings` is the live vacancy list for that team and the single source for
 // the marquee above it — add a role here and it appears in both places.
 //
-// PLACEHOLDER CONTENT: the blurbs are written to the brand voice but are not
-// approved copy, and the groupings below were inferred from job titles — the
-// ones worth a second look are Digital Strategy (performance, SEO, ORM and
-// analytics folded together) and Production (built around Aayush's "Creative
-// Production" title). Correct any name into the right list and the UI follows.
+// Blurbs are the approved department copy from the Aug 2026 website content
+// doc (all except Production, which the doc doesn't cover). The groupings were
+// inferred from job titles — correct any name into the right list and the UI
+// follows.
 
 export const TEAM_GROUPS = [
   {
@@ -62,7 +61,7 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: 'Ideas get born, torn apart, and rebuilt here — usually before lunch. Design, 3D, motion and copy sit in one room so nothing leaves the floor half-thought.',
+    blurb: 'We think as far as we can for your brand. Bold ideas, sharp execution, and the creativity to make you stand out. Then we bring it all to life with care and precision.',
     members: [
       'Ashwin Kurup', 'Rakshita Srivastava', 'Charvak Heramb', 'Aastha Goyal',
       'Alen Sam', 'Bhoomi Jain', 'Ganesh Yedala', 'Mahek Kankaria',
@@ -86,7 +85,7 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: 'The reason everything ships on time and nothing falls through a crack. Timelines, budgets, vendors, escalations — they hold the whole machine together.',
+    blurb: "We work with brands every single day to make sure everything runs smoothly. Communication, execution, support — we're the ones making sure you always feel taken care of.",
     members: [
       'Hemant Tambewagh', 'Palak Kothari', 'Rakshit Bangera',
       'Rohan Kharwar', 'Tanvi Jadhav', 'Vikrant Shedge',
@@ -95,7 +94,7 @@ export const TEAM_GROUPS = [
   {
     name: 'People Experience',
     openings: [],
-    blurb: 'Hiring, onboarding, birthdays, blow-ups and everything in between. If working here feels like it does, this is who to blame.',
+    blurb: 'We make sure people have a great time. Our job is helping brands perform while keeping the human experience at the center. Results matter, but so does how people feel along the way!',
     members: ['Minakshi Chaugule', 'Shailesh Nair'],
   },
   {
@@ -128,14 +127,14 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: 'Performance, SEO, ORM and the numbers behind all of it. They decide where the money goes and then prove it was the right call.',
+    blurb: 'The thinkers who never stop running. We research, we dig, we question everything to understand how to make your brand bigger, better, and sharper online.',
     members: [
       'Johin Jose', 'Vidhyondra Bansode', 'Bhawani Singh Bhati',
       'Ransley Moraes', 'Akansha Gwari',
     ],
   },
   {
-    name: 'Sales',
+    name: 'Business Development',
     openings: [
       {
         title: 'Business Development Manager',
@@ -151,7 +150,7 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: 'First conversation, hardest questions. They bring the briefs in and set the expectation everyone else has to beat.',
+    blurb: "We partner with brands who want to make a difference. Not everyone is a fit, and that's okay. We're here for the ones ready to do real work and create real impact.",
     members: [
       'Anand Radhakrishnan', 'Karan Khanna', 'Angel Chaturvedi',
       'Avinab Saha', 'Reetu Sonar', 'Archana Vaghela', 'Ria Mitra',
@@ -174,13 +173,13 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: 'The people clients call first and trust most. Half translator, half air-traffic control, permanently three steps ahead.',
+    blurb: "Your daily champions. We bridge your vision and our execution, managing every detail so nothing slips through the cracks. We're here to make sure you're heard, and your goals are met.",
     members: ['Sakina Jaliwala', 'Deeksha Dinesh', 'Krish Daiya', 'Raj Patil'],
   },
   {
     name: 'Executive Office',
     openings: [],
-    blurb: 'Where the long bets get made. Less about approving decks, more about deciding what the next five years look like.',
+    blurb: 'We set the vision and keep ConvergenSEE true to who we are. Our job is steering the ship — making sure we grow without losing what makes us, us.',
     members: [
       'Balaji Jagannathan', 'Viswanathan Kalyanasundaram',
       'Neha Malhotra', 'Vikas Shinde',
@@ -203,7 +202,7 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: 'They build the brands other people end up copying — positioning, identity, and the stubborn insistence on saying something true.',
+    blurb: "We're building ConvergenSEE from the ground up. Every campaign we run, every story we tell teaches us something new — and we bring those lessons straight to you.",
     members: ['Kiran Mulchandani', 'Adheet Shetty', 'Eshaan Sharma'],
   },
   {
@@ -223,7 +222,7 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: 'Creators, campaigns and the messy real work of making a partnership feel like it was never bought.',
+    blurb: 'We connect brands with voices that matter. Real partnerships, authentic conversations, and influencers who actually align with what you stand for. Relationships over transactions, always.',
     members: ['Aayush Soni', 'Saanjali Agarwal'],
   },
   {

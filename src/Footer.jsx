@@ -15,14 +15,25 @@ const DIM = '#666a74'
 const memeImg = '/figma/home/img-meme1.png'
 const partnerImg = '/figma/home/img-partner-rgb1.png'
 
-const QUICK_LINKS = [
-  ['Home', 'home'],
-  ['About us', 'about'],
-  ['Solutions', 'solutions'],
-  ['Case Studies', 'case-studies'],
-  ['Blogs', 'blog'],
-  // ['Work', 'work'], // hidden for now — restore when the Work page is ready
-  ['Career', 'careers'],
+// Grouped nav columns per the Aug 2026 content doc. Entries are either a
+// PATH_FOR key or a raw href (anchors / mailto). "Newsletter" from the doc is
+// left out until there's a destination for it.
+const LINK_COLS = [
+  { title: 'Company', links: [
+    ['About', { key: 'about' }],
+    ['Team', { key: 'team' }],
+    ['Advisory Board', { href: '/#advisory-board' }],
+    ['Careers', { key: 'careers' }],
+  ]},
+  { title: 'Solutions', links: [
+    ['Solutions', { key: 'solutions' }],
+    ['Modules', { href: '/solutions' }],
+    ['Case Studies', { key: 'case-studies' }],
+  ]},
+  { title: 'Resources', links: [
+    ['Blogs', { key: 'blog' }],
+    ['Socials', { key: 'socials' }],
+  ]},
 ]
 
 const LEGAL_LINKS = ['Terms of Use', 'Privacy Policy']
@@ -99,15 +110,17 @@ export default function Footer() {
           {/* Poison */}
           <PoisonCTA />
 
-          {/* Quick Links */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: isSmall ? 2 : 20 }}>
-            <p style={colTitle}>Quick links</p>
-            {QUICK_LINKS.map(([label, target]) => (
-              <Link key={label} href={PATH_FOR[target]} className="footer-link" style={{ ...linkStyle, ...tapPad }}>
-                <span style={{ color: G }}>›</span>{label}
-              </Link>
-            ))}
-          </div>
+          {/* Nav columns — Company / Solutions / Resources */}
+          {LINK_COLS.map(col => (
+            <div key={col.title} style={{ display: 'flex', flexDirection: 'column', gap: isSmall ? 2 : 20 }}>
+              <p style={colTitle}>{col.title}</p>
+              {col.links.map(([label, target]) => (
+                <Link key={label} href={target.key ? PATH_FOR[target.key] : target.href} className="footer-link" style={{ ...linkStyle, ...tapPad }}>
+                  <span style={{ color: G }}>›</span>{label}
+                </Link>
+              ))}
+            </div>
+          ))}
 
           {/* Legal */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -121,7 +134,13 @@ export default function Footer() {
 
           {/* Contact */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={colTitle}>Connect with us</p>
+            <p style={colTitle}>Contact</p>
+            <Link href="/#contact" className="footer-link" style={{ ...linkStyle, ...tapPad }}>
+              <span style={{ color: G }}>›</span>Contact Us
+            </Link>
+            <a href="mailto:hello@convergensee.ai?subject=Book%20a%20call" className="footer-link" style={{ ...linkStyle, ...tapPad }}>
+              <span style={{ color: G }}>›</span>Book a Call
+            </a>
             <div>
               <p style={contactLabel}>Address</p>
               <p style={{ ...contactText, maxWidth: 277 }}>A 303, Supreme Business Park, Hirandani Gardens, Powai, Mumbai, Maharashtra, 400076</p>
@@ -132,22 +151,26 @@ export default function Footer() {
             </div>
             <div>
               <p style={contactLabel}>Email us</p>
-              <a href="mailto:letsconnect@convergenseeasia.com" style={{ ...contactText, display: 'block', ...tapPad }}>letsconnect@convergenseeasia.com</a>
+              <a href="mailto:hello@convergensee.ai" style={{ ...contactText, display: 'block', ...tapPad }}>hello@convergensee.ai</a>
             </div>
             <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
               {/* Instagram */}
-              <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="4" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="9" cy="9" r="3" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="13" cy="5" r="1" fill={DIM}/>
-              </svg>
+              <a href="https://instagram.com/convergensee" target="_blank" rel="noopener noreferrer" aria-label="ConvergenSEE on Instagram" style={{ display: 'inline-flex' }}>
+                <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
+                  <rect x="2" y="2" width="14" height="14" rx="4" stroke={DIM} strokeWidth="1.5" fill="none"/>
+                  <circle cx="9" cy="9" r="3" stroke={DIM} strokeWidth="1.5" fill="none"/>
+                  <circle cx="13" cy="5" r="1" fill={DIM}/>
+                </svg>
+              </a>
               {/* LinkedIn */}
-              <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
-                <rect x="2" y="2" width="14" height="14" rx="2" stroke={DIM} strokeWidth="1.5" fill="none"/>
-                <circle cx="6" cy="7" r="1" fill={DIM}/>
-                <rect x="5.5" y="9" width="1" height="4" fill={DIM}/>
-                <path d="M9 9v4m0-3a2 2 0 0 1 4 0v3" stroke={DIM} strokeWidth="1.2" fill="none"/>
-              </svg>
+              <a href="https://linkedin.com/company/convergensee" target="_blank" rel="noopener noreferrer" aria-label="ConvergenSEE on LinkedIn" style={{ display: 'inline-flex' }}>
+                <svg className="social-icon" width="26" height="26" viewBox="0 0 18 18" fill="none">
+                  <rect x="2" y="2" width="14" height="14" rx="2" stroke={DIM} strokeWidth="1.5" fill="none"/>
+                  <circle cx="6" cy="7" r="1" fill={DIM}/>
+                  <rect x="5.5" y="9" width="1" height="4" fill={DIM}/>
+                  <path d="M9 9v4m0-3a2 2 0 0 1 4 0v3" stroke={DIM} strokeWidth="1.2" fill="none"/>
+                </svg>
+              </a>
             </div>
             <img loading="lazy" src={partnerImg} alt="Google Partner" style={{ width: 41, height: 39, objectFit: 'contain', marginTop: 20 }} />
           </div>
