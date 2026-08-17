@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import useResponsive from './useResponsive'
 import Footer from './Footer'
+import { NAV_H } from './theme'
 
 const G = '#34cc32'
 const DARK = '#000718'
@@ -91,7 +92,7 @@ function PlatformCard({ platform }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        flex: 1, padding: '36px 28px',
+        flex: 1, padding: 'clamp(20px, 4vw, 30px)',
         display: 'flex', flexDirection: 'column', gap: 20,
         textDecoration: 'none', cursor: 'pointer',
         border: `1px solid ${hovered ? G : BORDER}`,
@@ -106,7 +107,7 @@ function PlatformCard({ platform }) {
         <div style={{
           background: hovered ? G : 'transparent',
           border: `1px solid ${hovered ? G : BORDER}`,
-          padding: '6px 14px',
+          padding: '5px 12px',
           transition: 'all 0.3s ease',
         }}>
           <span style={{
@@ -117,7 +118,7 @@ function PlatformCard({ platform }) {
         </div>
       </div>
       <div>
-        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 24, fontWeight: 700, color: '#fff', margin: 0, textTransform: 'uppercase' }}>
+        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 28, fontWeight: 700, lineHeight: 1.1, color: '#fff', margin: 0, textTransform: 'uppercase' }}>
           {platform.name}
         </p>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: DIM, margin: '4px 0 0' }}>
@@ -190,7 +191,7 @@ function PostCard({ post }) {
       <div style={{
         position: 'absolute', top: 12, left: 12,
         background: 'rgba(0,7,24,0.7)', backdropFilter: 'blur(8px)',
-        padding: '4px 10px',
+        padding: '5px 12px',
       }}>
         <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: isSmall ? 12 : 10, fontWeight: 600, color: '#fff' }}>
           {post.platform}
@@ -200,7 +201,7 @@ function PostCard({ post }) {
       {/* Caption — appears on hover */}
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
-        padding: 16,
+        padding: 20,
         background: 'linear-gradient(to top, rgba(0,7,24,0.95) 0%, transparent 100%)',
         opacity: hovered ? 1 : 0,
         transform: hovered ? 'translateY(0)' : 'translateY(8px)',
@@ -231,10 +232,10 @@ export default function SocialsPage() {
   const filtered = filter === 'ALL' ? POSTS : POSTS.filter(p => p.platform.toUpperCase() === filter)
 
   return (
-    <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
+    <div style={{ background: DARK, minHeight: '100vh', paddingTop: isSmall ? NAV_H.small : NAV_H.desktop, color: '#fff' }}>
 
       {/* Hero */}
-      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 100, alignItems: 'center', textAlign: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center', textAlign: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
@@ -246,7 +247,7 @@ export default function SocialsPage() {
               <span style={{ color: '#fff' }}>OUR </span>
               <span style={{ color: G }}>SOCIALS</span>
             </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 600, margin: 0 }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 600, margin: 0 }}>
               Follow us across platforms. We share insights, behind-the-scenes, campaigns, and the occasional meme.
             </p>
           </div>
@@ -254,9 +255,11 @@ export default function SocialsPage() {
       </section>
 
       {/* Platform cards */}
-      <section style={{ padding: 'clamp(56px, 8vw, 80px) clamp(20px, 6vw, 100px)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSmall ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 8 }}>
-          {PLATFORMS.map(p => <PlatformCard key={p.name} platform={p} />)}
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSmall ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 8 }}>
+            {PLATFORMS.map(p => <PlatformCard key={p.name} platform={p} />)}
+          </div>
         </div>
       </section>
 
@@ -265,7 +268,7 @@ export default function SocialsPage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
           <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', justifyContent: 'space-between', alignItems: isSmall ? 'flex-start' : 'center', gap: isSmall ? 24 : 0 }}>
             <h2 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(32px, 6vw, 48px)', fontWeight: 800,
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
               textTransform: 'uppercase', lineHeight: 1, margin: 0,
             }}>
               Latest <span style={{ color: G }}>posts</span>
@@ -278,9 +281,9 @@ export default function SocialsPage() {
                   style={{
                     background: f === filter ? 'transparent' : CARD,
                     border: f === filter ? `1px solid ${G}` : `1px solid transparent`,
-                    padding: '10px 16px',
+                    height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
                     fontFamily: "'Saira Condensed', sans-serif",
-                    fontSize: 14, fontWeight: f === filter ? 700 : 500,
+                    fontSize: 16, fontWeight: f === filter ? 700 : 500,
                     color: f === filter ? G : DIM,
                     textTransform: 'uppercase', cursor: 'pointer',
                     transition: 'all 0.2s ease',
@@ -290,8 +293,10 @@ export default function SocialsPage() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSmall ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 4 }}>
-            {filtered.map((post, i) => <PostCard key={i} post={post} />)}
+          <div style={{ maxWidth: 1240, margin: '0 auto', width: '100%' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSmall ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 8 }}>
+              {filtered.map((post, i) => <PostCard key={i} post={post} />)}
+            </div>
           </div>
         </div>
       </section>

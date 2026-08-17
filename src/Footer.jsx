@@ -106,7 +106,7 @@ export default function Footer() {
   return (
     <footer style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', borderTop: '1px solid rgba(255,255,255,0.22)', color: '#fff' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 48 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(40px, 6vw, 144px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'flex-start' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(24px, 3vw, 48px)', alignItems: 'flex-start', justifyContent: isSmall ? 'center' : 'space-between' }}>
           {/* Poison */}
           <PoisonCTA />
 

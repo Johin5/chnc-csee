@@ -55,8 +55,8 @@ export default function CHNCPlaceholder() {
             {/* Tabs */}
             <div style={{ display: 'flex', gap: 16, borderBottom: '1px solid #dee0e7', paddingBottom: 8 }}>
               <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 600, color: '#000718', borderBottom: '2px solid #000718', paddingBottom: 6 }}>Overview</div>
-              <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 500, color: '#999' }}>Analytics</div>
-              <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 500, color: '#999' }}>Reports</div>
+              <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 500, color: '#666a74' }}>Analytics</div>
+              <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 500, color: '#666a74' }}>Reports</div>
             </div>
 
             {/* Stat cards */}

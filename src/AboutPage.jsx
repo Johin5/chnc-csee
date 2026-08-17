@@ -164,15 +164,15 @@ export default function AboutPage() {
       </section>
 
       {/* ── Letter from Bala ────────────────────────────────────────────────── */}
-      <section style={{ background: DARK, paddingLeft: isSmall ? 0 : 100 }}>
+      <section style={{ background: DARK, paddingLeft: isSmall ? 0 : 'clamp(20px, 6vw, 100px)' }}>
         <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', alignItems: 'stretch', justifyContent: 'space-between' }}>
           {/* Left: text */}
           <div style={{
             display: 'flex', flexDirection: 'column', gap: 30,
-            justifyContent: 'center', paddingTop: 80, paddingBottom: 80,
+            justifyContent: 'center', paddingTop: 'clamp(56px, 8vw, 100px)', paddingBottom: 'clamp(56px, 8vw, 100px)',
             paddingLeft: isSmall ? 'clamp(20px, 6vw, 100px)' : 0,
             paddingRight: isSmall ? 'clamp(20px, 6vw, 100px)' : 60,
-            flexShrink: 0, maxWidth: isSmall ? '100%' : 538,
+            flex: isSmall ? undefined : 1, maxWidth: isSmall ? '100%' : 800,
           }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{
@@ -213,18 +213,18 @@ export default function AboutPage() {
       </section>
 
       {/* ── Core Values ─────────────────────────────────────────────────────── */}
-      <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+      <section style={{ background: DARK, padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
           {/* Heading */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
             <div style={{
-              border: `1px solid ${G}`, padding: '5px 10px',
+              border: `1px solid ${G}`, padding: '5px 12px',
               backdropFilter: 'blur(10px)',
             }}>
               <span style={{
-                fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 600,
-                color: '#fff', letterSpacing: '0.04em',
+                fontFamily: "'Archivo', sans-serif", fontSize: 16,
+                color: '#fff',
               }}>VALUES</span>
             </div>
             <h2 style={{
@@ -296,7 +296,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Join the Chaos ───────────────────────────────────────────────────── */}
-      <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', textAlign: 'center' }}>
+      <section style={{ background: DARK, padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', textAlign: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <h2 style={{
             fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,

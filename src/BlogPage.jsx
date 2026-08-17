@@ -5,10 +5,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import useResponsive from './useResponsive'
+import SectionLabel from './SectionLabel'
 
 import Footer from './Footer'
 import ContactForm from './ContactForm'
 import { BLOG_POSTS } from './lib/blogPosts'
+import { NAV_H } from './theme'
 const G      = '#34cc32'
 const DARK   = '#000718'
 const CARD   = '#0f1520'
@@ -67,7 +69,7 @@ function BlogCard({ img, tags, title, desc, author, role, date, href }) {
       }}>
         <p style={{
           fontFamily: "'Saira Condensed', sans-serif",
-          fontWeight: 800, fontSize: 'clamp(20px, 2.5vw, 36px)',
+          fontWeight: 800, fontSize: 'clamp(22px, 3vw, 42px)',
           textTransform: 'uppercase', lineHeight: 1.1,
           color: '#fff', margin: 0,
         }}>{title}</p>
@@ -88,7 +90,7 @@ function BlogCard({ img, tags, title, desc, author, role, date, href }) {
         transform: hovered ? 'translateY(0)' : 'translateY(100%)',
         transition: 'transform 0.45s ease',
       }}>
-        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 24, fontWeight: 700, color: '#fff', textTransform: 'uppercase', lineHeight: 1.1, marginBottom: 8 }}>{title}</p>
+        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 22, fontWeight: 700, color: '#fff', textTransform: 'uppercase', lineHeight: 1.1, marginBottom: 8 }}>{title}</p>
         <p style={{
           fontFamily: "'Archivo', sans-serif", fontSize: 13, color: MUTED, lineHeight: '18px', marginBottom: 12,
           opacity: hovered ? 1 : 0,
@@ -113,10 +115,10 @@ export default function BlogPage() {
   const { isMobile, isSmall } = useResponsive()
 
   return (
-    <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
+    <div style={{ background: DARK, minHeight: '100vh', paddingTop: isSmall ? NAV_H.small : NAV_H.desktop, color: '#fff' }}>
 
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
-      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 100px)', alignItems: 'center', textAlign: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center', textAlign: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
@@ -129,7 +131,7 @@ export default function BlogPage() {
               <span style={{ color: G }}>DARE </span>
               <span style={{ color: '#fff' }}>YOU</span>
             </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 798, margin: 0 }}>
               Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
             </p>
           </div>
@@ -174,7 +176,7 @@ export default function BlogPage() {
         </div>
         {/* Load more */}
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>
-          <button className="btn-outline" style={{ background: CARD, border: `1px solid ${G}`, height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', cursor: 'pointer' }}>
+          <button className="btn-outline" style={{ background: CARD, border: `1px solid ${G}`, height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer' }}>
             Load More
           </button>
         </div>
@@ -183,9 +185,7 @@ export default function BlogPage() {
       {/* ── Contact ──────────────────────────────────────────────────────────── */}
       <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 10, paddingTop: 5, borderBottom: `2px solid ${G}` }}>
-            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff' }}>Connect with us</span>
-          </div>
+          <SectionLabel>Connect with us</SectionLabel>
           <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1, textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
             <span style={{ color: '#fff' }}>We will </span>
             <span style={{ color: G }}>shoot </span>

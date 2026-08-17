@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import useResponsive from './useResponsive'
+import SectionLabel from './SectionLabel'
 
 import Footer from './Footer'
 import ContactForm from './ContactForm'
@@ -126,6 +127,7 @@ export default function BlogReadPage({ post }) {
             fontWeight: 800,
             fontSize: 'clamp(36px, 6vw, 72px)',
             lineHeight: 1,
+            letterSpacing: '-1px',
             textTransform: 'uppercase',
             color: '#fff',
             maxWidth: 1000,
@@ -153,14 +155,14 @@ export default function BlogReadPage({ post }) {
               <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 <h2 style={{
                   fontFamily: "'Saira Condensed', sans-serif",
-                  fontWeight: 700,
+                  fontWeight: 800,
                   fontSize: 'clamp(28px, 4vw, 40px)',
                   lineHeight: 1.1,
                   color: '#fff',
                   textTransform: 'uppercase',
                   margin: 0,
                 }}>{heading}</h2>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: '30px', margin: 0 }}>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.6, margin: 0 }}>
                   {LOREM_LONG}
                 </p>
               </div>
@@ -170,7 +172,7 @@ export default function BlogReadPage({ post }) {
 
         {/* ── Gallery — same three-up treatment as the case study gallery ────── */}
         <section style={{ padding: SECTION, width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-          <div style={{ ...COLUMN, display: 'grid', gridTemplateColumns: isSmall ? '1fr' : 'repeat(3, 1fr)', gap: 20 }}>
+          <div style={{ ...COLUMN, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isSmall ? '1fr 1fr' : '1fr 1fr 1fr', gap: 20 }}>
             {[imgBody1, imgBody2, imgBody3].map((src, i) => (
               <div key={i} className="card-hover" style={{ width: '100%', aspectRatio: '400 / 562', overflow: 'hidden' }}>
                 <img className="img-zoom" src={src} alt={`Blog image ${i + 1}`} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -183,7 +185,7 @@ export default function BlogReadPage({ post }) {
         <section style={{ padding: SECTION, width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ ...COLUMN, display: 'flex', flexDirection: 'column', gap: 20 }}>
             {Array.from({ length: 8 }).map((_, i) => (
-              <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: '30px', margin: 0 }}>
+              <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.6, margin: 0 }}>
                 {LOREM_LONG}
               </p>
             ))}
@@ -195,8 +197,8 @@ export default function BlogReadPage({ post }) {
           <h2 style={{
             fontFamily: "'Saira Condensed', sans-serif",
             fontWeight: 800,
-            fontSize: 'clamp(36px, 7vw, 80px)',
-            lineHeight: 1.05,
+            fontSize: 'clamp(40px, 8vw, 80px)',
+            lineHeight: 1,
             color: '#fff',
             textTransform: 'uppercase',
             textAlign: 'center',
@@ -221,7 +223,7 @@ export default function BlogReadPage({ post }) {
                 background: 'transparent', border: `1px solid ${G}`,
                 height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
                 fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G,
-                textTransform: 'uppercase', cursor: 'pointer', backdropFilter: 'blur(10px)',
+                textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
                 textDecoration: 'none',
               }}
             >
@@ -233,9 +235,7 @@ export default function BlogReadPage({ post }) {
       {/* ── Contact: "We will shoot you" ───────────────────────────────────── */}
       <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 10, paddingTop: 5, borderBottom: `2px solid ${G}` }}>
-            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff' }}>Connect with us</span>
-          </div>
+          <SectionLabel>Connect with us</SectionLabel>
           <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1, textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
             <span style={{ color: '#fff' }}>We will </span>
             <span style={{ color: G }}>shoot </span>

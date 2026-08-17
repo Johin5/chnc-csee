@@ -28,7 +28,7 @@ export default function JoinSection({ heading, sub, position, headingSize }) {
       </h2>
       {sub && (
         <p style={{
-          fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff',
+          fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
           lineHeight: '24px', margin: '30px 0 0', textAlign: 'center',
         }}>{sub}</p>
       )}
@@ -51,7 +51,7 @@ export default function JoinSection({ heading, sub, position, headingSize }) {
         padding: 'clamp(20px, 4vw, 30px)', marginTop: 40, boxSizing: 'border-box',
       }}>
         <p style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 24, fontWeight: 600,
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 24, fontWeight: 700,
           color: '#fff', textTransform: 'uppercase', margin: 0,
         }}>UPLOAD FILES</p>
         <p style={{
@@ -122,7 +122,7 @@ export default function JoinSection({ heading, sub, position, headingSize }) {
 
       {/* Send message */}
       <div style={{ marginTop: 40, width: isMobile ? '100%' : 'auto', maxWidth: 882 }}>
-        <BtnGreen style={{ height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontSize: 18, width: isMobile ? '100%' : 'auto' }}>SEND MESSAGE</BtnGreen>
+        <BtnGreen style={{ height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontSize: 16, width: isMobile ? '100%' : 'auto' }}>SEND MESSAGE</BtnGreen>
       </div>
     </section>
   )

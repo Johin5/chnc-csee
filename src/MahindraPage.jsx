@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import useResponsive from './useResponsive'
+import SectionLabel from './SectionLabel'
 
 import Footer from './Footer'
 import ContactForm from './ContactForm'
@@ -72,7 +73,7 @@ function OtherCaseTile({ c, href }) {
       {/* Type tag */}
       <div style={{ position: 'absolute', top: 16, right: 16, zIndex: 3 }}>
         <span style={{
-          display: 'inline-flex', alignItems: 'center', height: 28, padding: '0 12px',
+          display: 'inline-flex', alignItems: 'center', height: 30, padding: '0 14px',
           border: `2px solid ${BORDER}`, fontFamily: "'Saira Condensed', sans-serif",
           fontSize: 12, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#fff',
         }}>{c.type}</span>
@@ -134,7 +135,7 @@ export default function MahindraPage() {
                 shadow keeps their light edges off the light parts of the car. */}
             <img loading="lazy" src={imgConvergenC} alt="ConvergenSEE" style={{ width: 60, height: 53.5, objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
             {/* x */}
-            <span style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 60.4, color: '#2bb32a', letterSpacing: '-1.511px', lineHeight: 1, flexShrink: 0 }}>x</span>
+            <span style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 60.4, color: '#34cc32', letterSpacing: '-1.511px', lineHeight: 1, flexShrink: 0 }}>x</span>
             <img loading="lazy" src={imgMahindraLogo} alt="Mahindra" style={{ height: 52, width: 'auto', objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
           </div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 566, textAlign: 'center', margin: 0 }}>
@@ -150,15 +151,15 @@ export default function MahindraPage() {
         <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
           {/* Top stats row */}
-          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, alignItems: isMobile ? 'stretch' : 'flex-start', width: '100%', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, alignItems: 'stretch', width: '100%', justifyContent: 'center' }}>
             {[
               { val: '125%',    label: 'Increase in customer engagement' },
               { val: '7.5L+',   label: 'Leads generated at an average cost of ₹55 per lead' },
               { val: '12,000+', label: 'Vehicles sold' },
             ].map((s, i) => (
-              <div key={i} style={{ width: isMobile ? '100%' : 300, maxWidth: 300, padding: 'clamp(20px, 4vw, 30px)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{s.label}</p>
+              <div key={i} style={{ border: `2px solid ${BORDER}`, width: isMobile ? '100%' : 300, maxWidth: 300, padding: 'clamp(20px, 4vw, 30px)', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: '24px', margin: 0 }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -177,7 +178,7 @@ export default function MahindraPage() {
             ].map((item, i) => (
               <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 400, maxWidth: isSmall ? 'none' : 400, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(36px, 6vw, 50px)', lineHeight: 1, color: G, margin: 0, textTransform: 'uppercase' }}>{item.num}</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{item.text}</p>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: '24px', margin: 0 }}>{item.text}</p>
               </div>
             ))}
           </div>
@@ -194,7 +195,7 @@ export default function MahindraPage() {
               'Produced 3,000+ hyperlocal creatives every month tailored to local context instead of one national campaign, and built 2,500+ localised, dealer-specific ads targeting the ideal audience around each dealership.',
               'Managed 200+ dealer handles across Facebook & Instagram and 1,000+ Mahindra & dealer touchpoints, running the program continuously over 30 months (Jun 2020 – Dec 2022).',
             ].map((text, i) => (
-              <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '30px', margin: 0 }}>
+              <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.6, margin: 0 }}>
                 <span style={{ color: G }}>🟢</span> {text}
               </p>
             ))}
@@ -205,8 +206,8 @@ export default function MahindraPage() {
               { val: '3,000+', label: 'Hyperlocal creatives produced every month, tailored to local context', tag: 'CREATIVE AT SCALE' },
             ].map((s, i) => (
               <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', margin: 0 }}>{s.label}</p>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(48px, 8vw, 80px)', lineHeight: 1.1, color: G, margin: 0, textTransform: 'uppercase' }}>{s.val}</p>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: '24px', margin: 0 }}>{s.label}</p>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 16, color: G, textTransform: 'uppercase', margin: 0 }}>{s.tag}</p>
               </div>
             ))}
@@ -221,10 +222,10 @@ export default function MahindraPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center', width: '100%' }}>
             {/* Arrows above images, right-aligned to match right edge of 3rd image */}
             <div style={{ display: 'flex', gap: 10, alignSelf: 'flex-end' }}>
-              <div className="arrow-btn" style={{ width: 40, height: 40, borderRadius: 999, background: CARD, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <div className="arrow-btn" style={{ width: 40, height: 40, borderRadius: '50%', background: CARD, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                 <span style={{ color: '#fff', fontSize: 18, lineHeight: 1 }}>‹</span>
               </div>
-              <div className="arrow-btn" style={{ width: 40, height: 40, borderRadius: 999, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <div className="arrow-btn" style={{ width: 40, height: 40, borderRadius: '50%', background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                 <span style={{ color: DARK, fontSize: 18, lineHeight: 1 }}>›</span>
               </div>
             </div>
@@ -241,7 +242,7 @@ export default function MahindraPage() {
 
         {/* ── Other brands ──────────────────────────────────────────────────── */}
         <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(36px, 7vw, 80px)', lineHeight: 1.05, color: '#fff', textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(40px, 8vw, 80px)', lineHeight: 1, color: '#fff', textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
             Check out the awesomeeeeee stuff we've done for{' '}
             <span style={{ color: G }}>other brands</span>
           </h2>
@@ -266,7 +267,7 @@ export default function MahindraPage() {
                 background: 'transparent', border: `1px solid ${G}`,
                 height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
                 fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G,
-                textTransform: 'uppercase', cursor: 'pointer', backdropFilter: 'blur(10px)',
+                textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
               }}
             >
               View all case studies
@@ -277,9 +278,7 @@ export default function MahindraPage() {
         {/* ── Contact: "We will shoot you" ────────────────────────────────────── */}
         <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 10, paddingTop: 5, borderBottom: `2px solid ${G}` }}>
-              <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff' }}>Connect with us</span>
-            </div>
+            <SectionLabel>Connect with us</SectionLabel>
             <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1, textTransform: 'uppercase', textAlign: 'center', margin: 0 }}>
               <span style={{ color: '#fff' }}>We will </span>
               <span style={{ color: G }}>shoot </span>

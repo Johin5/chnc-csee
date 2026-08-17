@@ -5,10 +5,12 @@ import { useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import useResponsive from './useResponsive'
+import SectionLabel from './SectionLabel'
 
 import Footer from './Footer'
 import ContactForm from './ContactForm'
 import { PATH_FOR } from './lib/routes'
+import { NAV_H } from './theme'
 const G     = '#34cc32'
 const DARK  = '#000718'
 const CARD  = '#0f1520'
@@ -157,7 +159,7 @@ function CaseCard({ c, href }) {
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0, padding: 24, zIndex: 2,
       }}>
-        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 26, fontWeight: 700, color: '#fff', textTransform: 'uppercase', lineHeight: 1, marginBottom: hovered ? 14 : 0 }}>{c.name}</p>
+        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 28, fontWeight: 700, color: '#fff', textTransform: 'uppercase', lineHeight: 1, marginBottom: hovered ? 14 : 0 }}>{c.name}</p>
         <div style={{
           display: 'flex', gap: 20,
           maxHeight: hovered ? 200 : 0, overflow: 'hidden',
@@ -182,15 +184,15 @@ function CaseCard({ c, href }) {
 export default function CaseStudiesPage() {
   const { isMobile, isSmall } = useResponsive()
   return (
-    <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
+    <div style={{ background: DARK, minHeight: '100vh', paddingTop: isSmall ? NAV_H.small : NAV_H.desktop, color: '#fff' }}>
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(56px, 8vw, 100px)', alignItems: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center', textAlign: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
               fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 'clamp(44px, 9vw, 110px)', fontWeight: 800, lineHeight: 1,
+              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
               textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
               maxWidth: 1100,
             }}>
@@ -198,7 +200,7 @@ export default function CaseStudiesPage() {
               <span style={{ color: G }}>LOVE </span>
               <span style={{ color: '#fff' }}>TO TALK ABOUT.</span>
             </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: '24px', maxWidth: 798, margin: 0 }}>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 798, margin: 0 }}>
               Real brands. Real challenges. Real impact. A look at the moments where our thinking
               met execution and delivered something worth sharing!
             </p>
@@ -242,21 +244,16 @@ export default function CaseStudiesPage() {
             background: 'transparent', border: `1px solid ${G}`,
             height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
             fontSize: 16, fontWeight: 700, color: G,
-            textTransform: 'uppercase', cursor: 'pointer',
+            textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer',
             backdropFilter: 'blur(10px)',
           }}>LOAD MORE</button>
         </div>
       </section>
 
       {/* ── Contact: "We will shoot you" ───────────────────────────────────── */}
-      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+      <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            paddingBottom: 10, paddingTop: 5, borderBottom: `2px solid ${G}`,
-          }}>
-            <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff' }}>Connect with us</span>
-          </div>
+          <SectionLabel>Connect with us</SectionLabel>
           <h2 style={{
             fontFamily: "'Saira Condensed', sans-serif",
             fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,

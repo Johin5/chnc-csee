@@ -63,7 +63,7 @@ export default function ContactForm() {
             className="btn-outline"
             type="submit"
             disabled={pending}
-            style={{ background: 'transparent', color: '#fff', border: '1px solid #fff', height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer', width: isMobile ? '100%' : 'auto', opacity: pending ? 0.6 : 1 }}
+            style={{ background: 'transparent', color: '#fff', border: '1px solid #fff', height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer', width: isMobile ? '100%' : 'auto', opacity: pending ? 0.6 : 1 }}
           >
             {pending ? 'Sending…' : 'Send Message'}
           </button>

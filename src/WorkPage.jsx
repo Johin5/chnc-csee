@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import useResponsive from './useResponsive'
 import Footer from './Footer'
+import { NAV_H } from './theme'
 
 const G      = '#34cc32'
 const DARK   = '#000718'
@@ -168,7 +169,7 @@ function PlatformTile({ name }) {
       style={{
         border: `1px solid ${hovered ? G : BORDER}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '40px 20px', cursor: 'default',
+        padding: 'clamp(24px, 4vw, 40px) 20px', cursor: 'default',
         transition: 'border-color 0.25s ease',
       }}
     >
@@ -207,7 +208,7 @@ function BrandTile({ project, onClick }) {
         transition: 'background 0.4s ease',
       }} />
       <div style={{ position: 'absolute', top: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div style={{ background: 'rgba(255,255,255,0.95)', padding: '5px 12px', fontFamily: "'Archivo', sans-serif", fontSize: 12, fontWeight: 600, color: '#000' }}>{project.category}</div>
+        <div style={{ background: 'rgba(255,255,255,0.95)', padding: '5px 12px', fontFamily: "'Archivo', sans-serif", fontSize: 12, fontWeight: 600, color: '#000', letterSpacing: '0.5px' }}>{project.category}</div>
         <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>/{project.year}</span>
       </div>
 
@@ -225,7 +226,7 @@ function BrandTile({ project, onClick }) {
         <p style={{
           fontFamily: "'Saira Condensed', sans-serif",
           fontWeight: 800, fontSize: 'clamp(22px, 3vw, 42px)',
-          textTransform: 'uppercase', lineHeight: 1,
+          textTransform: 'uppercase', lineHeight: 1.1,
           color: '#fff', letterSpacing: '-0.01em', margin: 0,
         }}>{project.name}</p>
       </div>
@@ -279,12 +280,12 @@ function ProjectTile({ project, onClick }) {
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.25)', opacity: hovered ? 1 : 0, transition: 'opacity 0.4s ease' }} />
       <div style={{ position: 'absolute', top: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ background: 'rgba(255,255,255,0.95)', padding: '5px 12px', fontFamily: "'Archivo', sans-serif", fontSize: 12, fontWeight: 600, color: '#000', letterSpacing: '0.5px' }}>{project.category}</div>
-        <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>/{project.year}</span>
+        <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>/{project.year}</span>
       </div>
       <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20 }}>
         <p style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 32, fontWeight: 700, color: '#fff',
-          textTransform: 'uppercase', lineHeight: 1,
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 28, fontWeight: 700, color: '#fff',
+          textTransform: 'uppercase', lineHeight: 1.1,
           transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
           transition: 'transform 0.35s ease',
         }}>{project.name}.</p>
@@ -297,8 +298,7 @@ function ProjectTile({ project, onClick }) {
 // ─── Case Study Modal ─────────────────────────────────────────────────────────
 function CaseStudyModal({ project, onClose }) {
   const { isMobile, isSmall } = useResponsive()
-  // Fixed nav is 48px tall on small screens, 62px (with 106px page offset) on desktop
-  const navOffset = isSmall ? 48 : 106
+  const navOffset = isSmall ? NAV_H.small : NAV_H.desktop
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: DARK, overflow: 'auto', fontFamily: "'Archivo', sans-serif", color: '#fff' }}>
 
@@ -322,7 +322,7 @@ function CaseStudyModal({ project, onClose }) {
 
       {/* Service header */}
       <div style={{ padding: 'clamp(40px, 6vw, 60px) clamp(20px, 6vw, 60px) clamp(32px, 5vw, 48px)', borderBottom: `1px solid ${BORDER}`, display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'center', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 'clamp(32px, 6vw, 56px)', lineHeight: 1.05, color: '#fff', margin: 0 }}>
+        <h1 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-1px', fontSize: 'clamp(32px, 6vw, 56px)', lineHeight: 1, color: '#fff', margin: 0 }}>
           {project.name}
         </h1>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED, lineHeight: '24px', margin: 0, maxWidth: 640 }}>
@@ -331,7 +331,7 @@ function CaseStudyModal({ project, onClose }) {
         {project.sections && (
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center', marginTop: 4 }}>
             {project.sections.map((sec, i) => (
-              <span key={i} style={{ border: `1px solid ${BORDER}`, padding: '6px 14px', fontFamily: "'Archivo', sans-serif", fontSize: 13, color: MUTED }}>
+              <span key={i} style={{ border: `1px solid ${BORDER}`, padding: '5px 12px', fontFamily: "'Archivo', sans-serif", fontSize: 13, color: MUTED }}>
                 {sec.label}
               </span>
             ))}
@@ -376,7 +376,7 @@ function CaseStudyModal({ project, onClose }) {
 
       {/* Reels & Shorts */}
       <div style={{ padding: 'clamp(32px, 5vw, 48px) clamp(20px, 6vw, 60px)', borderTop: `1px solid ${BORDER}`, display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(22px, 4vw, 30px)', color: '#fff', textTransform: 'uppercase', margin: 0 }}>Reels & Shorts</h2>
+        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(22px, 4vw, 30px)', color: '#fff', textTransform: 'uppercase', margin: 0 }}>Reels & Shorts</h2>
         <div style={{ display: 'flex', gap: 8, flexWrap: isSmall ? 'wrap' : 'nowrap' }}>
           {(project.reels || [project.img, project.imgs[0], project.imgs[1] || project.img, project.img]).map((src, i) => {
             const isVideo = src.endsWith('.mp4')
@@ -407,17 +407,17 @@ function CaseStudyModal({ project, onClose }) {
 
 // ─── WorkPage ─────────────────────────────────────────────────────────────────
 export default function WorkPage() {
-  const { isMobile } = useResponsive()
+  const { isMobile, isSmall } = useResponsive()
   const [tab, setTab] = useState('chnc')
   const [modal, setModal] = useState(null)
 
   const projects = tab === 'chnc' ? CHNC_PROJECTS : BRAND_PROJECTS
 
   return (
-    <div style={{ background: DARK, minHeight: '100vh', paddingTop: 106, color: '#fff' }}>
+    <div style={{ background: DARK, minHeight: '100vh', paddingTop: isSmall ? NAV_H.small : NAV_H.desktop, color: '#fff' }}>
 
       {/* Hero */}
-      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(48px, 8vw, 100px)', alignItems: 'center' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center', textAlign: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
             <h1 style={{
@@ -457,13 +457,15 @@ export default function WorkPage() {
       </section>
 
       {/* Project grid */}
-      <div style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) clamp(72px, 10vw, 120px)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8 }}>
-          {projects.map((p) => (
-            tab === 'brand'
-              ? <BrandTile key={p.name} project={p} onClick={setModal} />
-              : <ProjectTile key={p.name} project={p} onClick={setModal} />
-          ))}
+      <div style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8 }}>
+            {projects.map((p) => (
+              tab === 'brand'
+                ? <BrandTile key={p.name} project={p} onClick={setModal} />
+                : <ProjectTile key={p.name} project={p} onClick={setModal} />
+            ))}
+          </div>
         </div>
       </div>
 

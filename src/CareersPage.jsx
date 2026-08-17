@@ -13,6 +13,7 @@ import JoinSection from './JoinSection'
 import Footer from './Footer'
 import { jobPath } from './lib/routes'
 import { BtnGreen, BtnOutline, G, DARK, CARD, MUTED, DIM, BORDER } from './careersAtoms'
+import { NAV_H } from './theme'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
 const imgTeam        = '/figma/careers-01/221.png'
@@ -94,9 +95,6 @@ const GAP = 2
 // ~1.15 the tiles stop reading as portraits, so that is the ceiling.
 const MAX_RATIO   = 0.75   // upright rectangles, near the 3:4 of the source crops
 const FACE_ANCHOR = '50% 15%'
-// The nav is a 46px button between 8px paddings — the wall starts right under
-// it rather than under the legacy 106px nav allowance.
-const NAV_H = { desktop: 62, small: 56 }
 
 // Biggest tiles that still fit the whole roster inside the frame as complete
 // rows — nobody half-cropped by the top or bottom edge of the hero. Fewer
@@ -181,8 +179,8 @@ function Hero() {
         padding: `${isSmall ? NAV_H.small : NAV_H.desktop}px clamp(20px, 6vw, 100px) 0`,
       }}>
         <h1 style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(44px, 9vw, 110px)', fontWeight: 800,
-          textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 0.95, margin: 0,
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
+          textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1, margin: 0,
           maxWidth: 1000, textShadow: '0 4px 40px rgba(0,7,24,0.95)',
         }}>
           <span style={{ color: '#fff' }}>JOIN THE </span>
@@ -190,7 +188,7 @@ function Hero() {
         </h1>
         <p style={{
           fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
-          lineHeight: '24px', maxWidth: 700, margin: 0, textShadow: '0 2px 20px rgba(0,7,24,0.95)',
+          lineHeight: 1.5, maxWidth: 700, margin: 0, textShadow: '0 2px 20px rgba(0,7,24,0.95)',
         }}>
           Your next opportunity starts here. {TEAM.length} people already made it onto this wall —
           hover any face to meet them, then decide whether yours belongs up there too.
@@ -229,15 +227,14 @@ function OpenRoles() {
     <section style={{
       position: 'relative', overflow: 'hidden',
       borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`,
-      background: '#050d1e', padding: '20px 0',
-      marginBottom: 'clamp(56px, 8vw, 100px)',
+      background: '#050d1e', padding: 'clamp(12px, 2vw, 20px) 0',
     }}>
       {/* Fixed label — the roles scroll behind it, and the veil it sits on
           fades them out rather than letting them collide with the words. */}
       <div style={{
         position: 'absolute', left: 0, top: 0, bottom: 0, zIndex: 2,
         display: 'flex', alignItems: 'center',
-        padding: '0 clamp(64px, 9vw, 140px) 0 clamp(16px, 3vw, 48px)',
+        padding: '0 clamp(64px, 9vw, 140px) 0 clamp(20px, 6vw, 100px)',
         background: `linear-gradient(to right, #050d1e 0%, #050d1e 82%, rgba(5,13,30,0.7) 92%, rgba(5,13,30,0) 100%)`,
         pointerEvents: 'none',
       }}>
@@ -337,8 +334,8 @@ function MeetTheTeams({ onOpenJob }) {
 
   return (
     <section style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 40,
-      padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(40px, 6vw, 80px)',
+      padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)',
     }}>
       <h2 style={{
         fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
@@ -372,7 +369,7 @@ function MeetTheTeams({ onOpenJob }) {
           landscape tiles, above the team the roles belong to */}
       <div style={{
         width: '100%', maxWidth: 1240, border: `2px solid ${BORDER}`,
-        padding: 'clamp(28px, 4vw, 50px)', boxSizing: 'border-box',
+        padding: 'clamp(24px, 4vw, 50px)', boxSizing: 'border-box',
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(24px, 3vw, 36px)',
       }}>
         <div style={{ textAlign: 'center' }}>
@@ -388,7 +385,7 @@ function MeetTheTeams({ onOpenJob }) {
 
         {openings.length ? (
           <div style={{
-            display: 'grid', gap: 'clamp(12px, 1.6vw, 20px)', width: '100%',
+            display: 'grid', gap: 20, width: '100%',
             // minmax(0, …) stops the 5/2 aspect-ratio tiles transferring their
             // content min-height into a min-width that blows out narrow viewports
             gridTemplateColumns: isMobile
@@ -479,19 +476,19 @@ function WeAreSection() {
   return (
     <section style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
-      paddingTop: 'clamp(56px, 8vw, 100px)', padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0',
+      padding: '0 clamp(20px, 6vw, 100px) 0',
       textAlign: 'center',
     }}>
       <h2 style={{
         fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
-        textTransform: 'uppercase', lineHeight: 1, margin: 0,
+        lineHeight: 1, margin: 0,
       }}>
         <span style={{ color: '#fff' }}>WE ARE </span>
-        <span style={{ color: G }}>CONVERGENSEE</span>
+        <span style={{ color: G }}>ConvergenSEE</span>
       </h2>
       <p style={{
         fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
-        lineHeight: '24px', maxWidth: 798, margin: '20px 0 0',
+        lineHeight: 1.5, maxWidth: 798, margin: '20px 0 0',
       }}>
         We are you, the dreamers who see what could be, the thinkers who question what is, the
         builders who refuse to settle. We exist in the space between your vision and reality,

@@ -135,7 +135,7 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
 
       {/* text overlay */}
       <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, padding: '28px 24px',
+        position: 'absolute', bottom: 0, left: 0, right: 0, padding: 24,
         pointerEvents: 'none',
         transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
         transition: 'transform 0.35s ease',
@@ -158,7 +158,7 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
                 }}>{label}</p>
                 <p style={{
                   fontFamily: "'Archivo', sans-serif", fontSize: isSmall ? 12.5 : 11.5, lineHeight: 1.4,
-                  color: 'rgba(255,255,255,0.92)', margin: 0,
+                  color: 'rgba(255,255,255,0.7)', margin: 0,
                 }}>{value}</p>
               </div>
             ))}

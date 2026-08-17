@@ -13,6 +13,7 @@ import TeamMemberCard from './TeamMemberCard'
 import { TEAM_GROUPS } from './lib/careersTeams'
 import { TEAM } from './lib/teamRoster'
 import { G, DARK, MUTED, BORDER } from './careersAtoms'
+import SectionLabel from './SectionLabel'
 
 // PLACEHOLDER COPY — drafted to brand voice, not approved. Swap freely.
 const HIRING_STEPS = [
@@ -21,17 +22,6 @@ const HIRING_STEPS = [
   { num: '03', title: 'Craft task', desc: 'A short exercise close to the real work — never free work we ship.' },
   { num: '04', title: 'Offer', desc: 'We move fast. If it’s a yes, you’ll hear within the week.' },
 ]
-
-// The standard section label used above every heading across the site.
-const SectionLabel = ({ children }) => (
-  <div style={{
-    display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start',
-    width: 'fit-content', height: 32,
-  }}>
-    <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff', flex: 1, display: 'flex', alignItems: 'center' }}>{children}</span>
-    <div style={{ width: '100%', height: 2, background: G }} />
-  </div>
-)
 
 // Tag pill — same object as the tags on the blog and case-study tiles.
 function Tag({ label }) {
@@ -57,7 +47,7 @@ function Bullet({ children }) {
         flexShrink: 0, marginTop: 11,
       }} />
       <span style={{
-        fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(16px, 2vw, 18px)',
+        fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
         lineHeight: '30px', color: '#fff',
       }}>{children}</span>
     </li>
@@ -153,6 +143,7 @@ export default function JobPage({ job }) {
             fontFamily: "'Saira Condensed', sans-serif",
             fontWeight: 800,
             fontSize: 'clamp(36px, 6vw, 72px)',
+            letterSpacing: '-1px',
             lineHeight: 1,
             textTransform: 'uppercase',
             color: '#fff',
@@ -167,7 +158,7 @@ export default function JobPage({ job }) {
             href="#apply" className="btn-outline"
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              width: isMobile ? '100%' : 'fit-content', height: 46, padding: '0 24px',
+              width: isMobile ? '100%' : 'fit-content', height: 46, padding: '0 20px',
               background: 'rgba(0,7,24,0.4)', color: '#fff', border: '1px solid #fff', boxSizing: 'border-box',
               fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.02em', textDecoration: 'none',
@@ -178,7 +169,7 @@ export default function JobPage({ job }) {
       </section>
 
       {/* ── The brief — responsibilities / requirements, split reading block ── */}
-      <section style={{ padding: 'clamp(48px, 7vw, 88px) clamp(20px, 6vw, 100px)' }}>
+      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
         <div style={{
           maxWidth: 1240, margin: '0 auto',
           display: 'flex', flexDirection: isSmall ? 'column' : 'row',
@@ -199,12 +190,12 @@ export default function JobPage({ job }) {
         <section style={{ background: DARK, padding: '0 0 clamp(56px, 8vw, 100px)' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 'clamp(24px, 4vw, 40px)', padding: '0 clamp(20px, 6vw, 100px)' }}>
             <SectionLabel>Team</SectionLabel>
-            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center', margin: 0 }}>
+            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center', margin: 0 }}>
               Meet the <span style={{ color: G }}>{group.name}</span> team
             </h2>
             <p style={{
               fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
-              color: MUTED, lineHeight: 1.6, margin: '10px 0 0', maxWidth: 640, textAlign: 'center',
+              color: MUTED, lineHeight: 1.5, margin: '10px 0 0', maxWidth: 640, textAlign: 'center',
             }}>{group.blurb}</p>
           </div>
           <div style={{ position: 'relative' }}>
@@ -229,11 +220,11 @@ export default function JobPage({ job }) {
       )}
 
       {/* ── How we hire — numbered step cards ───────────────────────────────── */}
-      <section style={{ background: DARK, padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)' }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 5vw, 56px)', alignItems: 'center' }}>
+      <section style={{ background: DARK, padding: '0 clamp(20px, 6vw, 100px)' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
             <SectionLabel>Process</SectionLabel>
-            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center', margin: 0 }}>
+            <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center', margin: 0 }}>
               How we <span style={{ color: G }}>hire</span>
             </h2>
           </div>
@@ -244,7 +235,7 @@ export default function JobPage({ job }) {
           }}>
             {HIRING_STEPS.map((s) => (
               <div key={s.num} style={{
-                border: `2px solid ${BORDER}`, padding: 'clamp(20px, 3vw, 30px)',
+                border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)',
                 display: 'flex', flexDirection: 'column', gap: 12,
               }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(32px, 3.4vw, 44px)', fontWeight: 800, color: G, lineHeight: 1, margin: 0 }}>{s.num}</p>

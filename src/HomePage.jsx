@@ -17,6 +17,7 @@ import TeamMemberCard from './TeamMemberCard'
 import Footer from './Footer'
 import ContactForm from './ContactForm'
 import CHNCPlaceholder from './CHNCPlaceholder'
+import SectionLabel from './SectionLabel'
 
 // The dashboard is a 2,000-line interactive mock with timers and observers —
 // no SEO-relevant text, so it loads client-side only, behind the placeholder.
@@ -48,16 +49,6 @@ const CARD = '#0f1520'
 const MUTED = 'rgba(255,255,255,0.7)'
 const DIM = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
-
-const SectionLabel = ({ children }) => (
-  <div style={{
-    display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start',
-    width: 'fit-content', height: 32,
-  }}>
-    <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: '#fff', flex: 1, display: 'flex', alignItems: 'center' }}>{children}</span>
-    <div style={{ width: '100%', height: 2, background: G }} />
-  </div>
-)
 
 const BtnGreen = ({ children, style, className, ...props }) => (
   <button {...props} className={`btn-outline ${className || ''}`} style={{
@@ -120,7 +111,7 @@ function Hero() {
       <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 40 }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h1 style={{
-            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(46px, 10vw, 150px)', fontWeight: 800,
+            fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
             textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1,
             whiteSpace: 'nowrap', textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
           }}>
@@ -128,7 +119,7 @@ function Hero() {
             <span style={{ color: G }}>ARE </span>
             <span style={{ color: '#fff' }}>You</span>
           </h1>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 8, maxWidth: 640, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', marginTop: 8, maxWidth: 640, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
             Think of us as the part of your team you haven't met yet. We share your ambition, carry your goals, and stay through the messy middle where real growth happens. Every opportunity we find, we build together.
           </p>
         </div>
@@ -152,8 +143,8 @@ const tickerLogos = [...clientLogos, ...clientLogos]
 
 function Clients() {
   return (
-    <section style={{ background: DARK, padding: '56px 24px', borderTop: `1px solid ${BORDER}` }}>
-      <div className="ticker-wrap" style={{ maxWidth: 1152, margin: '0 auto' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', borderTop: `1px solid ${BORDER}` }}>
+      <div className="ticker-wrap" style={{ maxWidth: 1240, margin: '0 auto' }}>
         <div className="ticker-track">
           {tickerLogos.map((logo, i) => (
             <div className="ticker-item" key={`${logo.src}-${i}`}>
@@ -170,16 +161,16 @@ function Clients() {
 function About() {
   const { isSmall } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: isSmall ? 'column' : 'row', alignItems: 'center', justifyContent: 'space-between', gap: 40 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 30, width: isSmall ? '100%' : 'auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <SectionLabel>About</SectionLabel>
             <h2 style={{
-              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800,
-              textTransform: 'uppercase', lineHeight: 1, color: '#fff',
+              fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
+              lineHeight: 1, color: '#fff',
             }}>
-              We are<br />
+              WE ARE<br />
               Convergen<span style={{ color: G }}>SEE</span>
             </h2>
           </div>
@@ -262,6 +253,7 @@ function CHNC() {
   // content clipped) and the left card always has room. At 1512px this resolves to
   // the original 1060px width + 230px shift, so wide screens look unchanged.
   const dashW = Math.min(1060, width - 360)   // leave ~360px for the left info card
+  const dashH = Math.round(dashW * 930 / 1440) // rendered dashboard height (aspect 1440/930)
   const shiftX = Math.round((width - dashW) / 2 + 4)
 
   const { scrollYProgress } = useScroll({
@@ -373,12 +365,12 @@ function CHNC() {
   const chncScale   = useTransform(flow, [0.60, 1],    [0.55, 1])
 
   return (
-    <section style={{ paddingTop: 0, marginTop: -60, background: DARK }}>
+    <section style={{ paddingTop: 0, background: DARK }}>
       {/* Section title + CHNC heading above dashboard */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, paddingTop: 80, marginBottom: 20, padding: '80px 20px 0' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
         <SectionLabel>Meet CHNC</SectionLabel>
         <h2 style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800,
+          fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
           textTransform: 'uppercase', lineHeight: 1, textAlign: 'center',
         }}>
           What's inside <span style={{ color: G }}>CHNC?</span>
@@ -411,11 +403,11 @@ function CHNC() {
         </div>
       </div>
 
-      <div style={{ position: 'relative', height: isSmall ? 240 : 430, maxWidth: 1384, margin: '0 auto', padding: '0 clamp(16px, 3vw, 48px) clamp(20px, 4vw, 48px)', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', height: isSmall ? 240 : 430, maxWidth: 1240, margin: '0 auto', padding: '0 clamp(20px, 6vw, 100px) clamp(20px, 4vw, 48px)', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
         <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
         <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 7, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
         <motion.div style={isSmall ? { position: 'relative', zIndex: 1, textAlign: 'center' } : { position: 'relative', zIndex: 1, textAlign: 'center', opacity: chncOpacity, scale: chncScale }}>
-          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(52px, 7.5vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: '50px' }}>CHNC</div>
+          <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(52px, 7.5vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: 1 }}>CHNC</div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, letterSpacing: '4px', textTransform: 'uppercase', marginTop: 16 }}>
             The Opportunity Creators
           </p>
@@ -424,14 +416,17 @@ function CHNC() {
       </div>
 
       <div ref={scrollRef} style={{ position: 'relative' }}>
-        <div style={{ height: isSmall ? 'auto' : '100vh', position: 'relative' }}>
+        {/* Stage height caps at the dashboard's rendered height + dock + pin
+            runway: on tall screens the raw 100vh left a huge empty band
+            between the dock and the next section. */}
+        <div style={{ height: isSmall ? 'auto' : `min(100vh, ${dashH + 250}px)`, position: 'relative' }}>
           {/* Small screens: no 100vh scroll-pin (the shrunken dashboard left a
               huge blank gap) — normal flow, with bottom padding reserving room
               for the absolutely-positioned dock below the dashboard. */}
           <div style={{
             ...(isSmall
               ? { position: 'relative', paddingTop: 20, paddingBottom: 110 }
-              : { position: 'sticky', top: 84, height: 'calc(100vh - 220px)', paddingTop: '20px' }),
+              : { position: 'sticky', top: 84, height: `min(calc(100vh - 220px), ${dashH + 20}px)`, paddingTop: '20px' }),
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'flex-start',
             overflow: 'visible',
@@ -499,7 +494,7 @@ function CHNC() {
                                   color: G, lineHeight: 1, marginBottom: 4,
                                 }}>{s.num}</p>
                                 <p style={{
-                                  fontFamily: "'Archivo', sans-serif", fontSize: 13, color: 'rgba(255,255,255,0.6)',
+                                  fontFamily: "'Archivo', sans-serif", fontSize: 12, color: 'rgba(255,255,255,0.6)',
                                   lineHeight: '18px',
                                 }}>{s.label}</p>
                               </div>
@@ -625,18 +620,18 @@ function RollingNumber({ value, style }) {
 function Impact() {
   const { isMobile } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Impact</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Impact we have <span style={{ color: G }}>built</span>
           </h2>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, width: '100%' }}>
           {impacts.map((s) => (
             <div key={s.num} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)' }}>
-              <RollingNumber value={s.num} style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 5.3vw, 80px)', fontWeight: 700, color: G, lineHeight: 1.1 }} />
+              <RollingNumber value={s.num} style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 5.3vw, 80px)', fontWeight: 800, color: G, lineHeight: 1.1 }} />
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.desc}</p>
               {s.tag && <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 600, color: G, textTransform: 'uppercase', marginTop: 10 }}>{s.tag}</p>}
             </div>
@@ -701,11 +696,11 @@ function BrandAudit() {
     setGif(`/figma/home/oh-gifs/${auditQs[qi].gifs[oi]}.mp4`)
   }
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Take the CHNC</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Find your next <span style={{ color: G }}>opportunity</span>
           </h2>
         </div>
@@ -758,11 +753,11 @@ const testiStats = [
 function Testimonials() {
   const { isSmall } = useResponsive()
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Testimonials</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Brands who took the <span style={{ color: G }}>CHNC</span>
           </h2>
         </div>
@@ -778,8 +773,8 @@ function Testimonials() {
         </div>
         <div style={{ width: '100%' }}>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginBottom: 20 }}>
-            <button style={{ width: 40, height: 40, borderRadius: 40, background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 18 }}>‹</button>
-            <button style={{ width: 40, height: 40, borderRadius: 40, background: G, border: 'none', color: DARK, fontSize: 18 }}>›</button>
+            <button style={{ width: 40, height: 40, borderRadius: '50%', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 18 }}>‹</button>
+            <button style={{ width: 40, height: 40, borderRadius: '50%', background: G, border: 'none', color: DARK, fontSize: 18 }}>›</button>
           </div>
           <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', width: '100%' }}>
             <div style={{
@@ -790,13 +785,13 @@ function Testimonials() {
               justifyContent: 'space-between', gap: 30, minHeight: isSmall ? 'auto' : 505,
             }}>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: '#fff', lineHeight: 1.3, maxWidth: 658 }}>
-                "ConvergenSEE changed the trajectory and <span style={{ color: '#2bb32a' }}>success</span> of my business, and I'm a lifelong user at this point."
+                "ConvergenSEE changed the trajectory and <span style={{ color: '#34cc32' }}>success</span> of my business, and I'm a lifelong user at this point."
               </p>
               <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
                 {testiStats.map((s) => (
                   <div key={s.label}>
-                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 700, lineHeight: 1.1 }}>{s.num}</p>
-                    <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.label}</p>
+                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 800, lineHeight: 1.1 }}>{s.num}</p>
+                    <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -823,10 +818,10 @@ const teamMembers = withPose.slice(0, 12)
 
 function Team() {
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) 0' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) 0 0' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 'clamp(40px, 6vw, 80px)', padding: '0 clamp(20px, 6vw, 100px)' }}>
         <SectionLabel>Team</SectionLabel>
-        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 7vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+        <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
           Meet the <span style={{ color: G }}>opportunity creators!</span>
         </h2>
       </div>
@@ -949,14 +944,14 @@ function AdvisoryBoard() {
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Advisory Board</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             People who built <span style={{ color: G }}>CHNC</span> with us
           </h2>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, textAlign: 'center', maxWidth: 798, margin: 0 }}>
             CHNC was shaped by people who've built and scaled brands in the real world. Our advisory board has helped ConvergenSEE stay clear on direction and stronger in thinking. Their guidance has influenced how we build systems, execute, and measure impact. Even today, they continue to shape how CHNC grows.
           </p>
         </div>
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 16, width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, width: '100%' }}>
           {boardMembers.map((m, i) => <BoardCard key={i} member={m} />)}
         </div>
       </div>
@@ -968,11 +963,11 @@ function AdvisoryBoard() {
 // ─── Contact ──────────────────────────────────────────────────────────────────
 function Contact() {
   return (
-    <section id="contact" style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
+    <section id="contact" style={{ background: DARK, padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <SectionLabel>Connect with us</SectionLabel>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(34px, 5.3vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             We will <span style={{ color: G }}>shoot</span> you
           </h2>
         </div>
