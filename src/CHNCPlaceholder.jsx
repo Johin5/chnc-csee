@@ -20,7 +20,7 @@ export default function CHNCPlaceholder() {
             <div style={{ height: 28, background: G, borderRadius: 0, padding: '6px 12px', marginTop: 4 }}>
               <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 600, color: '#000718' }}>InsightIT</div>
             </div>
-            {['LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT', 'InfluenceIT', 'ScriptIT', 'AigenIT', 'SearchIT', 'InvoiceIT'].map(name => (
+            {['LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT', 'InfluenceIT', 'ScriptIT', 'AIGenIT', 'SearchIT', 'InvoiceIT'].map(name => (
               <div key={name} style={{ height: 28, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
                 <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 10, fontWeight: 500, color: '#666a74' }}>{name}</div>
               </div>

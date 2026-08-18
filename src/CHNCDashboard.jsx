@@ -383,7 +383,7 @@ const sbMenuItems = [
   { id: 'SocialiseIT', label: 'SocialiseIT', Icon: IconMessage },
   { id: 'InfluenceIT', label: 'InfluenceIT', Icon: IconBook },
   { id: 'ScriptIT',    label: 'ScriptIT',    Icon: IconVideo },
-  { id: 'AigenIT',     label: 'AigenIT',     Icon: IconAI },
+  { id: 'AIGenIT',     label: 'AIGenIT',     Icon: IconAI },
   { id: 'SearchIT',    label: 'SearchIT',    Icon: IconSearch },
   { id: 'InvoiceIT',   label: 'InvoiceIT',   Icon: IconOrder },
 ]
@@ -668,8 +668,8 @@ const MODULES = {
       { label: 'Avg Days',     value: '4.2',  growth: '-18.2%' },
     ],
   },
-  AigenIT: {
-    title: 'AigenIT',
+  AIGenIT: {
+    title: 'AIGenIT',
     tiles: [
       { label: 'Generated',    value: '2,140', growth: '+44.2%' },
       { label: 'Quality Score',value: '91%',   growth: '+6.8%' },
@@ -2548,10 +2548,10 @@ function ScriptContent({ controls, tileVariants }) {
   )
 }
 
-// ─── AigenIT animated walkthrough (AI voice agents) ───────────────────────────
+// ─── AIGenIT animated walkthrough (AI voice agents) ───────────────────────────
 // 5-frame product video: BUILD → GROUND → TEST LIVE → CAPTURE → CLOSE
 // Anonymized per brief: agent = Asha (ConvergenSEE), fictional masked leads.
-function AigenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
+function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   const G = '#34cc32'
 
   const [elapsed, setElapsed] = useState(0)
@@ -2594,8 +2594,8 @@ function AigenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   const overlay = overlays[frame]
   const progressLabels = ['BUILD', 'GROUND', 'TEST', 'CAPTURE']
   const crumbs = [
-    '', 'AIgenIT ▸ Create', 'AIgenIT ▸ Create ▸ Knowledge & Voice',
-    'AIgenIT ▸ Manage', 'AIgenIT ▸ InsightIT ▸ Leads', 'AIgenIT',
+    '', 'AIGenIT ▸ Create', 'AIGenIT ▸ Create ▸ Knowledge & Voice',
+    'AIGenIT ▸ Manage', 'AIGenIT ▸ InsightIT ▸ Leads', 'AIGenIT',
   ]
 
   const AGENT_NAME = 'Asha — ConvergenSEE Assistant'
@@ -2989,7 +2989,7 @@ function AigenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
             </p>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>AI voice agents — inbound, outbound, and on your website.</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>AIgenIT</span>
+              <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>AIGenIT</span>
               <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
               <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
             </div>
@@ -3000,7 +3000,7 @@ function AigenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
         {frame === 0 && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center' }}>
             <div style={{ animation: 'agFadeUp 0.5s ease' }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>AIgenIT</p>
+              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>AIGenIT</p>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>AI voice agents for calls & websites</p>
             </div>
           </div>
@@ -3022,11 +3022,11 @@ function AigenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   )
 }
 
-// ─── AigenIT content ──────────────────────────────────────────────────────────
-function AigenContent({ controls, tileVariants }) {
+// ─── AIGenIT content ──────────────────────────────────────────────────────────
+function AIGenContent({ controls, tileVariants }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
-      <StatTiles tiles={MODULES.AigenIT.tiles} controls={controls} tileVariants={tileVariants} />
+      <StatTiles tiles={MODULES.AIGenIT.tiles} controls={controls} tileVariants={tileVariants} />
       <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
         <CTACard headline="Generate on-brand AI content at scale!" sub="Copy, captions, scripts and product descriptions — all AI-drafted, human-approved." cta="Generate" controls={controls} custom={0} />
         <ChartCard title="Generation by Type" controls={controls} custom={1}>
@@ -3178,11 +3178,11 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
               </div>
               <div style={{ background: '#34cc32', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px 15px' }}>
                 <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
-                    {[['4px','4px','4px','4px'],['4px','4px','11.33px','4px'],['4px','11.33px','4px','4px'],['11.33px','11.33px','4px','4px']].map(([t,r,b,l], i) => (
-                      <div key={i} style={{ position: 'absolute', top: t, right: r, bottom: b, left: l, border: '1px solid #000718', borderRadius: 0.667, width: 4.667, height: 4.667 }} />
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+                    {[[1.1, 1.1], [12.1, 1.1], [1.1, 12.1], [12.1, 12.1]].map(([x, y], i) => (
+                      <rect key={i} x={x} y={y} width="6.8" height="6.8" rx="0.7" stroke="#000718" strokeWidth="1.4" />
                     ))}
-                  </div>
+                  </svg>
                   <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, lineHeight: '20px', color: '#000718', fontSize: 14, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Configure</p>
                 </div>
               </div>
@@ -3215,11 +3215,11 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
             {activeModule === 'InfluenceIT' && <InfluenceContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
             {activeModule === 'ScriptIT' && !showWorkflow && <ScriptContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'AigenIT' && showWorkflow && <AigenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
-            {activeModule === 'AigenIT' && !showWorkflow && <AigenContent controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'AIGenIT' && showWorkflow && <AIGenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'AIGenIT' && !showWorkflow && <AIGenContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'SearchIT'    && <SearchContent    controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InvoiceIT'   && <InvoiceContent   controls={controls} tileVariants={tileVariants} />}
-            {(activeModule === 'InsightIT' || !['LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AigenIT','SearchIT','InvoiceIT'].includes(activeModule)) &&
+            {(activeModule === 'InsightIT' || !['LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT'].includes(activeModule)) &&
               <InsightContent controls={controls} tileVariants={tileVariants} />}
           </div>
         </div>

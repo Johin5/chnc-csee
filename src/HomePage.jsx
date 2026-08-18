@@ -293,7 +293,7 @@ function CHNC() {
     SocialiseIT: { title: 'SocialiseIT', desc: 'Keeps your brand visible, familiar, and remembered every day.' },
     InfluenceIT: { title: 'InfluenceIT', desc: 'Builds trust and traction through creators your audience already follows.' },
     ScriptIT: { title: 'ScriptIT', desc: 'Gives your brand scripts that hold attention and drive response.' },
-    AigenIT: { title: 'AigenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.' },
+    AIGenIT: { title: 'AIGenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.' },
     SearchIT: { title: 'SearchIT', desc: 'Brings in high-intent customers who are ready to take action.' },
     InvoiceIT: { title: 'InvoiceIT', desc: "Keeps your brand's spends, billing, and tracking clean and organised." },
     AdaptIT: { title: 'AdaptIT', desc: "Reshapes your brand's content to fit every platform it lands on." },

@@ -153,7 +153,7 @@ const BRAND_PROJECTS = [
 
 const PLATFORM_SERVICES = [
   'InsightIT', 'LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT',
-  'InfluenceIT', 'ScriptIT', 'AigenIT', 'SearchIT', 'InvoiceIT',
+  'InfluenceIT', 'ScriptIT', 'AIGenIT', 'SearchIT', 'InvoiceIT',
 ]
 
 const TABS = ['CHNC PLATFORM', 'BRAND WORK']

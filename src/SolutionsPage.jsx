@@ -67,7 +67,7 @@ const Pill = ({ label, active, onClick }) => (
 // ─── Sections ─────────────────────────────────────────────────────────────────
 function Hero({ active, onSelect }) {
   const { isSmall } = useResponsive()
-  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AigenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT']
+  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT']
 
   return (
     <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', textAlign: 'center', position: 'relative' }}>
@@ -181,7 +181,7 @@ const MODULE_STEPS = {
     { bold: 'Give', rest: ' a clear improvement roadmap' },
     { bold: 'Track', rest: ' results continuously and adapt strategy' },
   ],
-  AigenIT: [
+  AIGenIT: [
     { bold: 'Enable', rest: ' human-like conversations in multiple languages' },
     { bold: 'Adapt', rest: ' responses to your brand, industry, and cultural context' },
     { bold: 'Handle', rest: ' multiple users in real time' },
@@ -459,7 +459,7 @@ const FROM_BRAND = {
     'Keyword priorities & business focus areas',
     'Competitor benchmarks or market context',
   ],
-  AigenIT: [
+  AIGenIT: [
     'Product/service FAQs & knowledge base',
     'CRM/CMS access for lead or conversation sync',
     'Language & geography priorities',
@@ -541,16 +541,28 @@ function AllOfThisWithJust({ activeModule }) {
   )
 }
 
+// Same quiz data as the home page form (src/HomePage.jsx BrandAudit): every
+// option carries its own reaction clip; picking one swaps the clip on the right.
+const auditDefaultGif = '/figma/home/oh-gifs/default.mp4'
 const auditQs = [
-  { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'], active: 3 },
-  { q: "What's the main", qGreen: 'issue', qEnd: ' today?', opts: ['LOW LEADS', 'LOW QUALITY', 'INCONSISTENT', 'NOT SURE'], active: 3 },
-  { q: "What's your current", qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'], active: 0 },
+  { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'],
+    gifs: ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'] },
+  { q: "What's the main", qGreen: 'issue', qEnd: ' today?', opts: ['LOW LEADS', 'LOW QUALITY', 'INCONSISTENT', 'NOT SURE'],
+    gifs: ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'] },
+  { q: "What's your current", qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'],
+    gifs: ['giphy-4', 'stranger-things', 'tiffany', 'max-stranger'] },
 ]
 
 function ReadyToCreate() {
-  const [selections, setSelections] = useState(
-    auditQs.map(q => q.active)
-  )
+  const { isSmall } = useResponsive()
+  const [selections, setSelections] = useState(auditQs.map(() => null))
+  const [gif, setGif] = useState(auditDefaultGif)
+  // Warm the browser cache for every reaction clip so the swap on click is instant.
+  useEffect(() => {
+    auditQs.flatMap(q => q.gifs).forEach(name => {
+      fetch(`/figma/home/oh-gifs/${name}.mp4`).catch(() => {})
+    })
+  }, [])
 
   const handleSelect = (qi, oi) => {
     setSelections(prev => {
@@ -558,6 +570,7 @@ function ReadyToCreate() {
       next[qi] = oi
       return next
     })
+    setGif(`/figma/home/oh-gifs/${auditQs[qi].gifs[oi]}.mp4`)
   }
 
   return (
@@ -572,19 +585,40 @@ function ReadyToCreate() {
         <span style={{ color: '#fff' }}>?</span>
       </h2>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
-        {auditQs.map((q, qi) => (
-          <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'center' }}>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, textAlign: 'center' }}>
-              {q.q} <span style={{ color: G }}>{q.qGreen}</span>{q.qEnd || ''}
-            </p>
-            <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
-              {q.opts.map((opt, oi) => (
-                <BtnOutline key={oi} active={oi === selections[qi]} onClick={() => handleSelect(qi, oi)}>{opt}</BtnOutline>
-              ))}
-            </div>
+      <div style={{ maxWidth: 1240, width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 40, flexShrink: 0 }}>
+            {auditQs.map((q, qi) => (
+              <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 18, color: '#fff', margin: 0 }}>
+                  {q.q} <span style={{ color: G }}>{q.qGreen}</span>{q.qEnd || ''}
+                </p>
+                <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+                  {q.opts.map((opt, oi) => (
+                    <BtnOutline key={oi} active={oi === selections[qi]} onClick={() => handleSelect(qi, oi)}>{opt}</BtnOutline>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', width: isSmall ? '100%' : 410, maxWidth: 410, flexShrink: 0, alignSelf: isSmall ? 'center' : 'auto' }}>
+            <div style={{ width: '100%', height: isSmall ? 'clamp(280px, 70vw, 410px)' : 410, boxShadow: '0 4px 65px rgba(43,179,42,0.1)', overflow: 'hidden' }}>
+              <video key={gif} src={gif} autoPlay muted loop playsInline aria-label="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24, textAlign: 'center', margin: 0 }}>
+              Ready for a <span style={{ color: G }}>Reality</span> check?
+            </p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: isSmall ? 'stretch' : 'flex-end', width: '100%' }}>
+          {['Your name', 'Your email', 'Company name'].map((lbl, i) => (
+            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
+              <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
+            </div>
+          ))}
+          <BtnGreen style={isSmall ? { width: '100%' } : undefined}>Know More</BtnGreen>
+        </div>
       </div>
     </section>
   )
