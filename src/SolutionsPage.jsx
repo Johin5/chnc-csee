@@ -1,7 +1,7 @@
 'use client'
 
 // Solutions Page — built from Figma node 1:1559 (Landing Page - Dark-Solution)
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import useResponsive from './useResponsive'
 import { NAV_H } from './theme'
@@ -211,10 +211,11 @@ const MODULE_STEPS = {
     { bold: 'Track', rest: ' ROI live through CHNC dashboards' },
   ],
   SocialiseIT: [
-    { bold: 'Plan', rest: ' content across all organic channels' },
-    { bold: 'Publish', rest: ' platform-specific assets' },
-    { bold: 'Manage', rest: ' campaigns, influencer work, and response handling' },
-    { bold: 'Track', rest: ' KPIs through dashboards and reporting' },
+    { bold: 'Pick', rest: ' every location page — one selection' },
+    { bold: 'Compose', rest: ' once — approved creative, caption, live preview' },
+    { bold: 'Schedule', rest: ' one post to every page, same moment' },
+    { bold: 'Measure', rest: ' Facebook + Instagram in one dashboard' },
+    { stat: true, text: 'One post → every page. Zero rogue posts' },
   ],
   AmplifyIT: [
     { bold: 'Plan', rest: ' campaigns across paid and organic media' },
@@ -231,11 +232,11 @@ const MODULE_STEPS = {
     { bold: 'Link', rest: ' spends directly to marketing ROI' },
   ],
   InsightIT: [
-    { bold: 'Consolidate', rest: ' data across CHNC modules' },
-    { bold: 'Track', rest: ' spends, performance, and ROI in one view' },
-    { bold: 'Highlight', rest: ' top and underperforming regions, campaigns, and channels' },
-    { bold: 'Add', rest: ' SEO, website, and financial analysis with recommendations' },
-    { bold: 'Deliver', rest: ' dashboards with real-time insights' },
+    { bold: 'Consolidate', rest: ' every module into one global view — budget, spend, regions' },
+    { bold: 'Measure', rest: ' local presence — visibility, accuracy, reviews by region' },
+    { bold: 'Track', rest: ' social and paid — reach, CPL, and leads, platform by platform' },
+    { bold: 'Reveal', rest: ' what happens on your pages — sessions, conversions, peak hours' },
+    { bold: 'Export', rest: ' everything — all locations, any period, one click' },
   ],
   AdaptIT: [
     { bold: 'Analyse', rest: ' each market or region for language, culture, and platform norms' },
@@ -258,6 +259,27 @@ const DEFAULT_STEPS = [
   { bold: 'Optimise', rest: ' continuously for maximum performance' },
   { stat: true, text: 'Measurable results from day one' },
 ]
+
+// For modules with a dashboard reel: how many rail boxes are visible during each
+// reel frame (index = frame reported by CHNCDashboard). Keeps the rail locked to
+// the reel's own timeline — including its loop restarts. Modules absent here
+// have static dashboard content and use the fixed fallback cadence instead.
+const REEL_FRAME_STEPS = {
+  // Overview  LPM  Social  Perf  LPG  Export  Close
+  InsightIT: [1, 2, 3, 3, 4, 5, 5],
+  // idle  Brief  Generate  Approve  Adapt  Copy  Merge  Publish  done
+  CreateIT: [0, 2, 3, 3, 3, 4, 4, 5, 6],
+  // idle  Create  Audit  Manage  Verify  GoLive  Optimise  Perform  Close
+  LocateIT: [0, 0, 1, 2, 3, 3, 4, 4, 5, 5],
+  // idle  Brief  Align  Script  Breakdown  Preview  Approve  Close
+  ScriptIT: [0, 1, 1, 2, 3, 4, 5, 5, 5],
+  // idle  Build  Ground  Test  Capture  Close
+  AIGenIT: [0, 1, 2, 4, 5, 5],
+  // idle  Pick  Compose  Schedule  Measure  Close
+  SocialiseIT: [0, 1, 2, 3, 4, 5],
+  // idle  Platform  Objective  AdSet  Ad  Manage  Insight  Close
+  AmplifyIT: [0, 1, 2, 2, 3, 4, 5, 5],
+}
 
 function WorkflowStack({ steps, count }) {
   const { isSmall } = useResponsive()
@@ -361,15 +383,15 @@ function WorkflowStack({ steps, count }) {
               </div>
             )}
 
-            {/* Connector line — between all visible non-stacked cards */}
-            {visible && !stacked && i < steps.length - 1 && !steps[i].stat && (
+            {/* Connector line — drawn only once the NEXT card starts revealing */}
+            {i + 1 < count && !stacked && i < steps.length - 1 && !steps[i].stat && (
               <div key={`conn-${i}`} style={{
                 position: 'absolute', top: CARD_H, left: '50%',
                 transform: 'translateX(-50%)',
                 width: 1.5, height: GAP,
                 background: G,
                 clipPath: 'inset(0 0 100% 0)',
-                animation: `revealConn 0.3s ease forwards 0.95s`,
+                animation: `revealConn 0.3s ease forwards`,
                 pointerEvents: 'none',
               }} />
             )}
@@ -399,21 +421,45 @@ function HowWeDoIt({ activeModule }) {
     return () => observer.disconnect()
   }, [])
 
+  // Reel-driven modules: the dashboard reel reports its frame and the rail
+  // follows it. When one frame reveals several boxes, stagger them 600ms apart;
+  // a target lower than the current count means the reel looped — snap back.
+  const railTarget = useRef(0)
+  const railStagger = useRef(null)
+  const frameMap = REEL_FRAME_STEPS[activeModule]
+  const handleFrame = useCallback(frame => {
+    const map = REEL_FRAME_STEPS[activeModule]
+    if (!map) return
+    const target = map[Math.min(frame, map.length - 1)]
+    railTarget.current = target
+    clearInterval(railStagger.current)
+    setStepCount(c => (target < c ? target : c < target ? c + 1 : c))
+    railStagger.current = setInterval(() => {
+      setStepCount(c => (c < railTarget.current ? c + 1 : c))
+    }, 600)
+  }, [activeModule])
+  useEffect(() => () => clearInterval(railStagger.current), [])
+
+  // Static modules (no reel) fall back to a fixed reveal cadence once in view
   useEffect(() => {
-    if (!inView) return
+    if (frameMap) return
+    clearInterval(railStagger.current)
+    railTarget.current = 0
     setStepCount(0)
-    // Variable durations per frame (ms): Brief, Generate, Approve, Adapt, Copy, Merge, Publish, stat
+    if (!inView) return
+    // Per-step reveal durations (ms); falls back to 3000 past the end
     const durations = [3000, 4000, 3500, 3000, 4000, 3000, 3500, 2000]
     let c = 0
+    let timer
     const advance = () => {
       c++
       if (c > steps.length) return
       setStepCount(c)
-      setTimeout(advance, durations[c] || 3000)
+      timer = setTimeout(advance, durations[c] || 3000)
     }
-    const firstTimer = setTimeout(advance, durations[0] || 3000)
-    return () => clearTimeout(firstTimer)
-  }, [steps, inView])
+    timer = setTimeout(advance, durations[0] || 3000)
+    return () => clearTimeout(timer)
+  }, [steps, inView, frameMap])
 
   return (
     <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
@@ -429,7 +475,7 @@ function HowWeDoIt({ activeModule }) {
       <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 50, alignItems: 'center', width: '100%', maxWidth: 1240 }}>
         {/* CHNC Dashboard */}
         <div ref={dashRef} style={{ width: isSmall ? '100%' : 836, maxWidth: 836, height: isSmall ? 'clamp(300px, 60vw, 540px)' : 540, flexShrink: 0, borderRadius: 8, overflow: 'hidden', boxShadow: '0 0 0 1px rgba(52,204,50,0.2), 0 20px 60px rgba(0,0,0,0.6)' }}>
-          <CHNCDashboard tilesTrigger={true} activeModule={activeModule} onModuleChange={() => {}} stepCount={stepCount} showWorkflow={true} />
+          <CHNCDashboard tilesTrigger={true} activeModule={activeModule} onModuleChange={() => {}} stepCount={stepCount} showWorkflow={true} onFrame={handleFrame} />
         </div>
 
         {/* Workflow node canvas — Android recents stacking */}

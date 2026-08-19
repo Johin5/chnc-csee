@@ -91,7 +91,9 @@ export default function AboutPage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────────── */}
       <section style={{
-        position: 'relative', height: '100vh', display: 'flex',
+        // 100vh isn't compensated by the laptop-scale body zoom — divide by --pz
+        // so the hero still covers the full screen on 1025–1727px viewports.
+        position: 'relative', height: 'calc(100vh / var(--pz, 1))', display: 'flex',
         alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden', textAlign: 'center',
         background: DARK, padding: '0 20px',

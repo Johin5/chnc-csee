@@ -109,6 +109,21 @@ function fitWall(w, h, n, maxRatio = MAX_RATIO) {
   return { cols: 30, rows: Math.ceil(n / 30) }
 }
 
+// The hero wall doesn't need every face — one row fewer than a full-roster
+// fit, with the columns re-solved against the taller tiles, gives a wall of
+// noticeably bigger portraits that still fills the frame edge to edge in
+// complete rows. Whoever doesn't get a seat simply isn't on the hero.
+function fitTrimmedWall(w, h, n) {
+  const full = fitWall(w, h, n)
+  const rows = Math.max(1, full.rows - 1)
+  const th = (h - GAP * (rows - 1)) / rows
+  for (let cols = 1; cols <= 30; cols++) {
+    const tw = (w - GAP * (cols - 1)) / cols
+    if (tw / th <= MAX_RATIO) return { cols, rows }
+  }
+  return { cols: 30, rows }
+}
+
 function Hero() {
   const { isSmall } = useResponsive()
 
@@ -127,10 +142,12 @@ function Hero() {
   }, [])
 
   const { cols, rows } = box.w && box.h
-    ? fitWall(box.w, box.h, TEAM.length)
+    ? fitTrimmedWall(box.w, box.h, TEAM.length)
     : { cols: 0, rows: 0 }
-  const remainder = cols ? TEAM.length % cols : 0
-  const lastRowStart = TEAM.length - remainder
+  // Exactly as many faces as the trimmed grid seats — no leftover short row.
+  const shown = Math.min(TEAM.length, cols * rows)
+  const remainder = cols ? shown % cols : 0
+  const lastRowStart = shown - remainder
 
   return (
     <section style={{
@@ -151,7 +168,7 @@ function Hero() {
         gridTemplateRows: rows ? `repeat(${rows}, 1fr)` : '1fr',
         visibility: cols ? 'visible' : 'hidden',
       }}>
-        {TEAM.map((m, i) => (
+        {TEAM.slice(0, shown).map((m, i) => (
           <FaceTile
             key={m.name} member={m}
             // centre the final short row
@@ -190,7 +207,7 @@ function Hero() {
           fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
           lineHeight: 1.5, maxWidth: 700, margin: 0, textShadow: '0 2px 20px rgba(0,7,24,0.95)',
         }}>
-          Your next opportunity starts here. {TEAM.length} people already made it onto this wall —
+          Your next opportunity starts here. {TEAM.length} people already made it onto the team —
           hover any face to meet them, then decide whether yours belongs up there too.
         </p>
       </div>

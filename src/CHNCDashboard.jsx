@@ -375,6 +375,25 @@ function IconMoney() {
   )
 }
 
+function IconGlobe() {
+  return (
+    <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
+      <div style={{ position: 'absolute', inset: '12.5%', border: '0.833px solid #666a74', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', left: '12.5%', right: '12.5%', top: '50%', borderTop: '0.833px solid #666a74' }} />
+      <div style={{ position: 'absolute', left: '35%', right: '35%', top: '12.5%', bottom: '12.5%', border: '0.833px solid #666a74', borderRadius: '50%' }} />
+    </div>
+  )
+}
+function IconPulseRing() {
+  return (
+    <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
+      <div style={{ position: 'absolute', inset: '12.5%', border: '0.833px solid #666a74', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', inset: '31%', border: '0.833px solid #666a74', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', inset: '45%', background: '#666a74', borderRadius: '50%' }} />
+    </div>
+  )
+}
+
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
 const sbMenuItems = [
   { id: 'LocateIT',    label: 'LocateIT',    Icon: IconPin },
@@ -386,9 +405,11 @@ const sbMenuItems = [
   { id: 'AIGenIT',     label: 'AIGenIT',     Icon: IconAI },
   { id: 'SearchIT',    label: 'SearchIT',    Icon: IconSearch },
   { id: 'InvoiceIT',   label: 'InvoiceIT',   Icon: IconOrder },
+  { id: 'AdaptIT',     label: 'AdaptIT',     Icon: IconGlobe },
+  { id: 'EngageIT',    label: 'EngageIT',    Icon: IconPulseRing },
 ]
 
-function Sidebar({ active, org }) {
+function Sidebar({ active, org, insightSub }) {
   return (
     <div style={{
       position: 'absolute', left: 0, top: 0, bottom: 0, width: 256,
@@ -444,6 +465,14 @@ function Sidebar({ active, org }) {
           </div>
         </div>
 
+        {/* Global InsightIT sub-item (shown while the InsightIT reel plays) */}
+        {insightSub && active === 'InsightIT' && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 15px 6px 45px', flexShrink: 0 }}>
+            <div style={{ width: 5, height: 5, borderRadius: 3, background: '#34cc32', flexShrink: 0 }} />
+            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 12.5, color: '#34cc32', whiteSpace: 'nowrap' }}>Global InsightIT</p>
+          </div>
+        )}
+
         {/* Other menu items */}
         {sbMenuItems.map(({ id, label, Icon }) => {
           const isActive = active === id
@@ -460,7 +489,7 @@ function Sidebar({ active, org }) {
       </div>
 
       {/* Ad / upgrade section */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center', justifyContent: 'center', padding: '42px 20px', flexShrink: 0 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center', justifyContent: 'center', padding: '20px 20px', flexShrink: 0 }}>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 300, lineHeight: '16px', color: 'rgba(255,255,255,0.7)', fontSize: 12, textAlign: 'center', letterSpacing: -0.36, width: 216 }}>
           Let&apos;s create campaign for your brand!
         </p>
@@ -583,13 +612,13 @@ function Header() {
 
         {/* User */}
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
-          <div style={{ background: '#c5ecfd', overflow: 'hidden', borderRadius: 499.5, flexShrink: 0, width: 30, height: 30, position: 'relative' }}>
-            <img loading="lazy" alt="memoji" style={{ position: 'absolute', inset: '-1.67% -6.67% -11.67% -6.67%', width: '100%', height: '100%', objectFit: 'cover' }} src={imgMemoji} />
+          <div style={{ background: '#c5ecfd', overflow: 'hidden', borderRadius: 499.5, flexShrink: 0, width: 30, height: 30, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <p style={{ margin: 0, fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: 0.3, color: '#000718' }}>AS</p>
           </div>
           <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, justifyContent: 'center' }}>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 400, color: '#000718', fontSize: 14, textAlign: 'center', whiteSpace: 'nowrap', lineHeight: 'normal' }}>Sledge Hammer</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 300, color: '#666a74', fontSize: 10, textAlign: 'center', whiteSpace: 'nowrap', lineHeight: 'normal' }}>sledge@gmail.com</p>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 400, color: '#000718', fontSize: 14, textAlign: 'center', whiteSpace: 'nowrap', lineHeight: 'normal' }}>A. Sharma</p>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 300, color: '#666a74', fontSize: 10, textAlign: 'center', whiteSpace: 'nowrap', lineHeight: 'normal' }}>a.sharma@convergensee.ai</p>
             </div>
             <div style={{ position: 'relative', borderRadius: 15, width: 20, height: 20, flexShrink: 0 }}>
               <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', height: 3, width: 12 }}>
@@ -693,6 +722,24 @@ const MODULES = {
       { label: 'Paid',          value: '71',   growth: '+9.8%' },
       { label: 'Overdue',       value: '6',    growth: '-25.0%' },
       { label: 'This Month',    value: '₹8.4L',growth: '+17.2%' },
+    ],
+  },
+  AdaptIT: {
+    title: 'AdaptIT',
+    tiles: [
+      { label: 'Markets Live',     value: '12',   growth: '+20.0%' },
+      { label: 'Languages',        value: '9',    growth: '+28.6%' },
+      { label: 'Localised Assets', value: '248',  growth: '+31.4%' },
+      { label: 'Compliance Pass',  value: '98%',  growth: '+2.1%' },
+    ],
+  },
+  EngageIT: {
+    title: 'EngageIT',
+    tiles: [
+      { label: 'Active Journeys',  value: '16',    growth: '+23.1%' },
+      { label: 'Messages Sent',    value: '42K',   growth: '+18.4%' },
+      { label: 'Re-engaged',       value: '3,120', growth: '+26.7%' },
+      { label: 'Retention Lift',   value: '14%',   growth: '+9.2%' },
     ],
   },
 }
@@ -875,6 +922,689 @@ function InsightContent({ controls, tileVariants }) {
   )
 }
 
+// ─── Global InsightIT reel helpers ────────────────────────────────────────────
+function InsSpark({ on, color }) {
+  return (
+    <svg width="58" height="24" viewBox="0 0 58 24" style={{ flexShrink: 0 }}>
+      <polyline points="1,19 10,14 19,16 28,9 37,12 46,6 57,9" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" pathLength="1"
+        style={{ strokeDasharray: 1, strokeDashoffset: on ? 0 : 1, transition: 'stroke-dashoffset 0.9s ease-out 0.15s' }} />
+    </svg>
+  )
+}
+
+function InsKpi({ label, value, chip, color, on }) {
+  return (
+    <div style={{ flex: 1, background: '#fff', border: '1px solid #dee0e7', borderTop: `3px solid ${color}`, borderRadius: 6, padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, opacity: on ? 1 : 0, transform: on ? 'translateY(0)' : 'translateY(10px)', transition: 'all 0.45s ease' }}>
+      <div style={{ minWidth: 0 }}>
+        <p style={{ margin: 0, fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.5, whiteSpace: 'nowrap' }}>{label}</p>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+          <p style={{ margin: 0, fontSize: 21, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>{value}</p>
+          <span style={{ fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: chip.startsWith('-') ? '#cc3232' : '#1b5e20', whiteSpace: 'nowrap' }}>{chip.startsWith('-') ? chip : `${chip} ↑`}</span>
+        </div>
+      </div>
+      <InsSpark on={on} color={color} />
+    </div>
+  )
+}
+
+function InsVerdict({ region, verdict, metric, tone, on }) {
+  const tones = {
+    good: ['#e8fde8', '#1b5e20', '#34cc32'],
+    bad: ['#fdecec', '#b71c1c', '#cc3232'],
+    info: ['#e8f1fd', '#1450a3', '#3b82f6'],
+    warn: ['#fff3e0', '#e65100', '#f59e0b'],
+  }
+  const [bg, fg, bd] = tones[tone] || tones.good
+  return (
+    <div style={{ flex: 1, background: '#fff', border: '1px solid #dee0e7', borderLeft: `4px solid ${bd}`, borderRadius: 6, padding: '7px 12px', minWidth: 0, opacity: on ? 1 : 0, transform: on ? 'scale(1)' : 'scale(0.9)', transition: 'all 0.4s cubic-bezier(0.34,1.4,0.64,1)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6 }}>
+        <p style={{ margin: 0, fontSize: 14, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>{region}</p>
+        <span style={{ fontSize: 7.5, fontFamily: "'Archivo', sans-serif", fontWeight: 800, background: bg, color: fg, padding: '2px 7px', borderRadius: 9, whiteSpace: 'nowrap', letterSpacing: 0.3 }}>{verdict}</span>
+      </div>
+      {metric && <p style={{ margin: '2px 0 0', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#666a74', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{metric}</p>}
+    </div>
+  )
+}
+
+function InsRing({ on, value = 78, size = 88 }) {
+  const r = size / 2 - 7, c = 2 * Math.PI * r, ctr = size / 2
+  return (
+    <svg width={size} height={size}>
+      <circle cx={ctr} cy={ctr} r={r} stroke="#e6e8ee" strokeWidth={size >= 80 ? 8 : 6} fill="none" />
+      <circle cx={ctr} cy={ctr} r={r} stroke="#34cc32" strokeWidth={size >= 80 ? 8 : 6} fill="none" strokeLinecap="round"
+        strokeDasharray={c} strokeDashoffset={on ? c * (1 - value / 100) : c}
+        transform={`rotate(-90 ${ctr} ${ctr})`} style={{ transition: 'stroke-dashoffset 1.1s cubic-bezier(0.25,0.1,0.25,1)' }} />
+      <text x={ctr} y={ctr + (size >= 80 ? 1 : 4)} textAnchor="middle" fontSize={size >= 80 ? 18 : 13} fontWeight="800" fontFamily="'Saira Condensed', sans-serif" fill="#000718">{value}</text>
+      {size >= 80 && <text x={ctr} y={ctr + 13} textAnchor="middle" fontSize="7" fontWeight="700" fontFamily="Archivo" fill="#9fa3ac">/ 100</text>}
+    </svg>
+  )
+}
+
+function InsGauge({ on, value = 42 }) {
+  const deg = -90 + ((value + 100) / 200) * 180
+  const frac = (value + 100) / 200
+  return (
+    <svg width="150" height="93" viewBox="0 0 150 93">
+      <path d="M 15 80 A 60 60 0 0 1 135 80" fill="none" stroke="#e6e8ee" strokeWidth="11" strokeLinecap="round" />
+      <path d="M 15 80 A 60 60 0 0 1 135 80" fill="none" stroke="#34cc32" strokeWidth="11" strokeLinecap="round" pathLength="1"
+        style={{ strokeDasharray: 1, strokeDashoffset: on ? 1 - frac : 1, transition: 'stroke-dashoffset 1s cubic-bezier(0.22,1,0.36,1)' }} />
+      <g style={{ transform: `rotate(${on ? deg : -90}deg)`, transformOrigin: '75px 80px', transition: 'transform 1s cubic-bezier(0.22,1,0.36,1)' }}>
+        <line x1="75" y1="80" x2="75" y2="32" stroke="#000718" strokeWidth="3" strokeLinecap="round" />
+      </g>
+      <circle cx="75" cy="80" r="5" fill="#000718" />
+    </svg>
+  )
+}
+
+// Rough India silhouette as a twinkle-in dot scatter (x%, y%)
+const INS_DOTS = [
+  [38, 4], [34, 9], [42, 10], [30, 15], [37, 15], [45, 16], [26, 21], [33, 21], [41, 22], [49, 22],
+  [57, 24], [65, 25], [74, 24], [82, 22], [88, 26], [20, 28], [28, 28], [36, 29], [44, 30], [52, 31],
+  [62, 31], [71, 32], [15, 36], [24, 36], [33, 37], [42, 38], [51, 39], [60, 40], [20, 44], [30, 45],
+  [40, 46], [50, 47], [27, 53], [36, 54], [46, 55], [33, 62], [42, 63], [38, 71], [45, 72], [41, 80], [44, 88],
+]
+function InsDotMap({ on, h = 140, w = 210 }) {
+  return (
+    <div style={{ position: 'relative', width: w, height: h, margin: '2px auto 0' }}>
+      {on && INS_DOTS.map(([x, y], i) => (
+        <span key={i} style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, width: 6, height: 6, borderRadius: 3, background: i % 3 === 0 ? 'rgba(52,204,50,0.4)' : '#34cc32', animation: 'insPop 0.5s ease both', animationDelay: `${i * 30}ms` }} />
+      ))}
+    </div>
+  )
+}
+
+function InsBars({ data, on, h = 140, color = '#34cc32', stagger = 60, gap = 8 }) {
+  const max = Math.max(...data.map(d => d.v))
+  const hasLabels = data.some(d => d.l)
+  const hasVals = data.some(d => d.t)
+  const barArea = h - (hasLabels ? 13 : 0) - (hasVals ? 13 : 0)
+  return (
+    <div style={{ display: 'flex', gap, alignItems: 'flex-end', height: h, width: '100%' }}>
+      {data.map((d, i) => (
+        <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, minWidth: 0 }}>
+          {hasVals && <p style={{ margin: 0, fontSize: 7.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#9fa3ac', whiteSpace: 'nowrap', opacity: on ? 1 : 0, transition: `opacity 0.4s ease ${i * stagger + 350}ms` }}>{d.t}</p>}
+          <div style={{ width: '100%', height: barArea, display: 'flex', alignItems: 'flex-end' }}>
+            <div style={{ width: '100%', height: Math.max(3, Math.round((d.v / max) * barArea)), background: d.c || color, borderRadius: '2px 2px 0 0', transform: on ? 'scaleY(1)' : 'scaleY(0)', transformOrigin: 'bottom', transition: `transform 0.6s cubic-bezier(0.25,0.1,0.25,1) ${i * stagger}ms` }} />
+          </div>
+          {hasLabels && <p style={{ margin: 0, fontSize: 7.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#9fa3ac', whiteSpace: 'nowrap' }}>{d.l}</p>}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function InsLine({ on, h = 96 }) {
+  return (
+    <svg width="100%" height={h} viewBox="0 0 300 96" preserveAspectRatio="none">
+      <polyline points="2,78 30,66 60,72 90,52 120,58 150,40 180,46 210,30 240,36 270,20 298,26" fill="none" stroke="#34cc32" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" pathLength="1"
+        style={{ strokeDasharray: 1, strokeDashoffset: on ? 0 : 1, transition: 'stroke-dashoffset 1.1s ease-out' }} />
+    </svg>
+  )
+}
+
+function InsArea({ on, h = 90 }) {
+  return (
+    <svg width="100%" height={h} viewBox="0 0 300 90" preserveAspectRatio="none"
+      style={{ clipPath: on ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)', transition: 'clip-path 1s ease-out' }}>
+      <path d="M0,80 C30,74 45,70 70,64 C95,58 110,60 130,50 C150,40 165,26 190,20 C215,14 230,24 250,34 C270,44 285,60 300,66 L300,90 L0,90 Z" fill="rgba(52,204,50,0.25)" stroke="#34cc32" strokeWidth="2" />
+    </svg>
+  )
+}
+
+// ─── Global InsightIT animated walkthrough (analytics reel) ───────────────────
+// 7-frame product reel: OVERVIEW → LPM → SOCIAL → PERFORMANCE → LPG → EXPORT → CLOSE.
+// Fictionalized per the reel rules: Horizon Motors / A. Sharma / swapped figures only.
+function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+  const G = '#34cc32'
+  const SA = "'Saira Condensed', sans-serif", AR = "'Archivo', sans-serif"
+
+  const [elapsed, setElapsed] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    return () => clearInterval(id)
+  }, [])
+
+  // Frame: 0 Overview 1 LPM 2 Social 3 Performance 4 LPG 5 Export 6 Close
+  const timeline = [0, 2500, 5000, 7500, 10000, 12000, 13500]
+  const totalDuration = 15000
+  const looped = elapsed % totalDuration
+
+  let frame = 0, t = 0
+  for (let i = timeline.length - 1; i >= 0; i--) {
+    if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
+  }
+
+  useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
+
+  const ease = x => 1 - Math.pow(1 - x, 3)
+  const cnt = (tt, at, dur, target) => tt <= at ? 0 : tt >= at + dur ? target : target * ease((tt - at) / dur)
+  const inr = n => {
+    n = Math.max(0, Math.round(n))
+    const s = String(n)
+    if (s.length <= 3) return s
+    const l3 = s.slice(-3)
+    let r = s.slice(0, -3)
+    const p = []
+    while (r.length > 2) { p.unshift(r.slice(-2)); r = r.slice(0, -2) }
+    if (r) p.unshift(r)
+    return p.join(',') + ',' + l3
+  }
+
+  // Tab strip — the sliding underline is the transition device between frames
+  const TABS = [['OVERVIEW', 54], ['LPM', 30], ['SOCIAL MEDIA', 74], ['PERFORMANCE MARKETING', 120], ['LPG', 30]]
+  const TAB_GAP = 26
+  const activeTab = [0, 1, 2, 3, 4, 0, 0][frame]
+  const tabOffsets = []
+  let tacc = 0
+  for (const [, w] of TABS) { tabOffsets.push(tacc); tacc += w + TAB_GAP }
+
+  // Cursor rides the tab strip: glides to the next tab and clicks as the underline slides
+  const cursorScript = {
+    0: { path: [[0, 430, 200], [900, 430, 330], [1600, 99, 62]], clicks: [2150] },
+    1: { path: [[0, 99, 62], [500, 300, 140], [1100, 640, 330], [1700, 177, 62]], clicks: [2150] },
+    2: { path: [[0, 177, 62], [500, 172, 96], [1600, 300, 62]], clicks: [1250, 2150] },
+    3: { path: [[0, 300, 62], [500, 480, 300], [1250, 85, 96], [1950, 401, 62]], clicks: [1700, 2200] },
+    4: { path: [[0, 401, 62], [400, 560, 280], [1250, 31, 62]], clicks: [1700] },
+    5: { path: [[0, 31, 62], [250, 1052, 18]], clicks: [640] },
+  }
+  const seg = cursorScript[frame]
+  let cx = 430, cy = 200
+  if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
+  const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  const overlays = [
+    { main: 'Every module reports here.', sub: 'Budget, spend, regions — one global view.' },
+    { main: 'Local presence, at a glance.', sub: 'Visibility. Accuracy. Reviews. Region by region.' },
+    { main: 'Every page, every platform.', sub: 'Facebook + Instagram — measured together.' },
+    { main: 'Every rupee of paid media.', sub: 'Meta and Google — CPL and leads by region.' },
+    { main: 'And what happens on your pages.', sub: 'Sessions, conversions, peak hours — by region.' },
+    { main: 'One filter. One export. Everything.', sub: 'All locations, any period — one click.' },
+    { main: 'Every module. Every metric. One InsightIT.', sub: 'The observability layer of CHNC.' },
+  ]
+  const overlay = overlays[frame]
+
+  const exportPress = frame === 5 && t > 640 && t < 1000
+
+  const cardS = { background: '#fff', border: '1px solid #dee0e7', borderRadius: 6 }
+  const cardT = { margin: 0, fontSize: 10, fontFamily: SA, fontWeight: 700, color: '#000718', textTransform: 'uppercase', letterSpacing: 0.5 }
+  const tiny = { margin: 0, fontSize: 8.5, fontFamily: AR, color: '#9fa3ac', fontWeight: 600 }
+  const thS = { margin: 0, fontSize: 8.5, fontFamily: AR, fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4, padding: '5px 14px' }
+  const pillBase = { fontSize: 8.5, fontFamily: AR, fontWeight: 800, padding: '3px 8px', borderRadius: 10, whiteSpace: 'nowrap' }
+  const btnG = { background: G, color: '#000718', fontSize: 10, fontFamily: SA, fontWeight: 700, textTransform: 'uppercase', padding: '6px 14px', borderRadius: 0, letterSpacing: 0.5, whiteSpace: 'nowrap' }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative' }}>
+      <style>{`
+        @keyframes insFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes insPop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes insToast { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes insBandUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes insClick { 0% { transform: scale(0.25); opacity: 0.9; } 100% { transform: scale(1.3); opacity: 0; } }
+        @keyframes insPulse { 0% { box-shadow: 0 0 0 0 rgba(52,204,50,0.55); } 100% { box-shadow: 0 0 0 14px rgba(52,204,50,0); } }
+        @keyframes insTile { from { opacity: 0; transform: scale(1.16); } to { opacity: 1; transform: scale(1); } }
+        @keyframes insPull { from { opacity: 0.3; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+      `}</style>
+
+      {/* Persistent header — greeting + control strip (the visual constant) */}
+      {frame <= 5 && (
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '2px 4px 0' }}>
+          <div>
+            <p style={{ margin: 0, fontSize: 17, fontFamily: SA, fontWeight: 700, color: '#000718', letterSpacing: 0.3 }}>HELLO, A. SHARMA</p>
+            <div style={{ display: 'flex', gap: 6, marginTop: 3 }}>
+              {['All business assets ▾', 'All ad accounts ▾'].map(c => (
+                <span key={c} style={{ fontSize: 8.5, fontFamily: AR, fontWeight: 600, color: '#666a74', border: '1px solid #dee0e7', borderRadius: 10, padding: '2px 8px', background: '#fff', whiteSpace: 'nowrap' }}>{c}</span>
+              ))}
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            {['ALL LOCATIONS ▾', 'Lifetime ▾'].map(c => (
+              <span key={c} style={{ fontSize: 9, fontFamily: AR, fontWeight: 700, color: '#000718', border: '1px solid #dee0e7', borderRadius: 0, padding: '5px 10px', background: '#fff', whiteSpace: 'nowrap' }}>{c}</span>
+            ))}
+            <div style={{ ...btnG, transform: exportPress ? 'scale(0.9)' : 'scale(1)', transition: 'transform 0.18s ease', animation: frame === 5 && t > 640 && t < 1400 ? 'insPulse 0.7s ease-out' : 'none' }}>EXPORT ALL</div>
+          </div>
+        </div>
+      )}
+
+      {/* Report chip (Frame 5) */}
+      {frame === 5 && t > 1000 && (
+        <div style={{ position: 'absolute', right: 4, top: 40, zIndex: 150, background: '#fff', border: `1px solid ${G}`, borderLeft: `4px solid ${G}`, boxShadow: '0 8px 24px rgba(0,0,0,0.16)', padding: '7px 12px', borderRadius: 4, animation: 'insToast 0.45s cubic-bezier(0.25,0.1,0.25,1)', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 13 }}>📄</span>
+          <div>
+            <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 700, color: '#000718' }}>ConvergenSEE — Global Insights</p>
+            <p style={{ margin: '1px 0 0', fontSize: 8.5, fontFamily: AR, color: '#1b5e20' }}>Aug 2026 · All locations · PDF ✓</p>
+          </div>
+        </div>
+      )}
+
+      {/* Tab strip with sliding underline */}
+      {frame <= 5 && (
+        <div style={{ position: 'relative', display: 'flex', gap: TAB_GAP, padding: '10px 4px 0', borderBottom: '1px solid #e6e8ee', marginTop: 4 }}>
+          {TABS.map(([lab, w], i) => (
+            <div key={lab} style={{ width: w, display: 'flex', justifyContent: 'center', paddingBottom: 7 }}>
+              <p style={{ margin: 0, fontSize: 12.5, fontFamily: SA, fontWeight: 600, textTransform: 'uppercase', whiteSpace: 'nowrap', color: i === activeTab ? '#000718' : '#9fa3ac', transition: 'color 0.35s ease' }}>{lab}</p>
+            </div>
+          ))}
+          <div style={{ position: 'absolute', bottom: -1, height: 2.5, background: G, left: 4 + tabOffsets[activeTab], width: TABS[activeTab][1], transition: 'left 0.45s cubic-bezier(0.25,0.1,0.25,1), width 0.45s cubic-bezier(0.25,0.1,0.25,1)', borderRadius: 2 }} />
+        </div>
+      )}
+
+      {/* Cursor */}
+      {frame <= 5 && (
+        <div style={{
+          position: 'absolute', left: cx, top: cy, zIndex: 200,
+          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          pointerEvents: 'none',
+        }}>
+          {cursorClick !== undefined && (
+            <span key={cursorClick} style={{ position: 'absolute', left: -15, top: -15, width: 30, height: 30, borderRadius: '50%', border: `2.5px solid ${G}`, animation: 'insClick 0.5s ease-out forwards' }} />
+          )}
+          <svg width="16" height="22" viewBox="0 0 14 19" fill="none">
+            <path d="M0 0V18L4.5 13.5L8 19L10 18L6.5 12.5H13L0 0Z" fill="#000" stroke="#fff" strokeWidth="1" />
+          </svg>
+        </div>
+      )}
+
+      {/* Content area */}
+      <div style={{ height: 470, padding: '10px 4px 0', position: 'relative', overflow: 'hidden' }}>
+
+        {/* FRAME 0 — GLOBAL OVERVIEW (hero beat #1) */}
+        {frame === 0 && (() => {
+          const alloc = cnt(t, 150, 900, 120)
+          const spent = cnt(t, 300, 900, 96.42)
+          const months = [['Sep', 5.8], ['Oct', 6.4], ['Nov', 7.2], ['Dec', 7.9], ['Jan', 7.4], ['Feb', 8.1], ['Mar', 8.6], ['Apr', 8.2], ['May', 9.0], ['Jun', 9.4], ['Jul', 9.8], ['Aug', 8.6]]
+          const rows = [
+            ['HM Mumbai Central', '8,412', '5,204', '3,988', '1,242', '31.1%'],
+            ['HM Pune West', '6,930', '4,466', '3,105', '958', '30.8%'],
+            ['HM Ahmedabad', '5,872', '3,610', '2,644', '801', '30.3%'],
+            ['HM Delhi South', '5,214', '3,182', '2,310', '676', '29.3%'],
+            ['HM Bengaluru North', '4,466', '2,872', '1,988', '552', '27.8%'],
+          ]
+          return (
+            <div key="f0" style={{ animation: 'insFadeUp 0.5s ease', display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {[['BUDGET ALLOCATED', alloc, '#1b5e20', '#e8fde8', G, 'LIFETIME'], ['BUDGET SPENT', spent, '#b71c1c', '#fdecec', '#cc3232', '80.4% USED']].map(([lab, v, col, bg, bd, tag]) => (
+                  <div key={lab} style={{ flex: 1, background: bg, border: `1px solid ${bd}`, borderLeft: `4px solid ${bd}`, borderRadius: 6, padding: '10px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div>
+                      <p style={{ margin: 0, fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.5 }}>{lab}</p>
+                      <p style={{ margin: '2px 0 0', fontSize: 26, fontFamily: SA, fontWeight: 700, color: col, lineHeight: 1.1 }}>₹{v.toFixed(2)} <span style={{ fontSize: 13 }}>lacs</span></p>
+                    </div>
+                    <span style={{ ...pillBase, background: '#fff', color: col, border: `1px solid ${bd}` }}>{tag}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ ...cardS, padding: '10px 14px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                  <p style={cardT}>TOTAL AMOUNT SPENT</p>
+                  <p style={{ ...tiny, fontSize: 8 }}>total amount ▾ · Maximum</p>
+                </div>
+                <InsBars on={t > 450} h={132} data={months.map(([l, v]) => ({ l, v, t: v.toFixed(1) }))} />
+              </div>
+              <div style={{ ...cardS, padding: '8px 0 2px', flex: 1, overflow: 'hidden' }}>
+                <p style={{ ...cardT, padding: '0 14px 6px' }}>BEST PERFORMING REGION</p>
+                <div style={{ display: 'flex', background: '#fafbfc', borderTop: '1px solid #f2f2f2', borderBottom: '1px solid #f2f2f2' }}>
+                  {['RO', 'LEADS', 'CALLS', 'ENQUIRY', 'BOOKING', 'E2B %'].map((hd, i) => (
+                    <p key={hd} style={{ ...thS, flex: i === 0 ? 2 : 1, textAlign: i === 0 ? 'left' : 'right' }}>{hd}</p>
+                  ))}
+                </div>
+                {rows.map((r, i) => {
+                  const show = t > 750 + i * 130
+                  return (
+                    <div key={r[0]} style={{ display: 'flex', alignItems: 'center', padding: '4.5px 0', borderBottom: i < 4 ? '1px solid #f6f6f8' : 'none', opacity: show ? 1 : 0, transform: show ? 'translateX(0)' : 'translateX(-12px)', transition: 'all 0.45s ease' }}>
+                      {r.map((cell, j) => (
+                        <p key={j} style={{ margin: 0, flex: j === 0 ? 2 : 1, padding: '0 14px', fontSize: 10.5, fontFamily: AR, fontWeight: j === 0 ? 700 : 500, color: j === 0 ? '#000718' : j === 5 ? '#1b5e20' : '#555', textAlign: j === 0 ? 'left' : 'right', whiteSpace: 'nowrap' }}>{cell}</p>
+                      ))}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 1 — LOCAL (LPM) */}
+        {frame === 1 && (() => {
+          const kpis = [
+            ['LOCATIONS', inr(cnt(t, 150, 800, 42318)), '+2.4%', G, 150],
+            ['VISIBILITY', cnt(t, 250, 800, 84.1).toFixed(1) + '%', '+21.01%', '#3b82f6', 250],
+            ['ACCURACY', cnt(t, 350, 800, 92.4).toFixed(1) + '%', '+4.6%', '#8b5cf6', 350],
+            ['REVIEWS', cnt(t, 450, 800, 4.6).toFixed(1) + '★', '+0.2', '#f59e0b', 450],
+          ]
+          const verdicts = [
+            ['Southwest', 'BEST PERFORMING REGION', 'Follower Growth +21.01%', 'good', 650],
+            ['Northeast', 'UNDERPERFORMING', 'Engagement 21.6% ↓', 'bad', 850],
+            ['West', 'FASTEST GROWING', '+9.3% / month', 'info', 1050],
+          ]
+          return (
+            <div key="f1" style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {kpis.map(([lab, val, chip, col, at]) => <InsKpi key={lab} label={lab} value={val} chip={chip} color={col} on={t > at} />)}
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {verdicts.map(([rg, vd, met, tone, at]) => <InsVerdict key={rg} region={rg} verdict={vd} metric={met} tone={tone} on={t > at} />)}
+              </div>
+              <div style={{ display: 'flex', gap: 10, flex: 1, minHeight: 0 }}>
+                <div style={{ ...cardS, width: 316, padding: '10px 14px', display: 'flex', gap: 14 }}>
+                  <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                    <p style={cardT}>OVERALL HYGIENE</p>
+                    <div style={{ marginTop: 6 }}><InsRing on={t > 800} value={78} /></div>
+                    <p style={{ ...tiny, fontSize: 8, marginTop: 2, letterSpacing: 0.5 }}>VAC SCORE · <span style={{ color: '#1b5e20', fontWeight: 800 }}>GOOD</span></p>
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 8, minWidth: 0 }}>
+                    {[['Business name', 98], ['Address', 94], ['Website', 88], ['Phone', 91]].map(([lab, v], i) => (
+                      <div key={lab}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                          <span style={{ ...tiny, fontSize: 8.5 }}>{lab}</span>
+                          <span style={{ ...tiny, fontSize: 8.5, color: '#1b5e20', fontWeight: 800 }}>{v}%</span>
+                        </div>
+                        <div style={{ background: '#eceef2', height: 4, borderRadius: 2 }}>
+                          <div style={{ background: G, height: '100%', borderRadius: 2, width: `${v}%`, transform: t > 900 + i * 90 ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.6s ease-out' }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ ...cardS, width: 260, padding: '10px 14px', textAlign: 'center' }}>
+                  <p style={cardT}>REVIEW NET PROMOTER SCORE</p>
+                  <div style={{ marginTop: 8 }}><InsGauge on={t > 900} value={42} /></div>
+                  <p style={{ margin: '2px 0 0', fontSize: 13, fontFamily: SA, fontWeight: 700, color: '#1b5e20' }}>+42 · POSITIVE</p>
+                </div>
+                <div style={{ ...cardS, flex: 1, padding: '10px 14px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <p style={cardT}>REVIEWS BY LOCATION</p>
+                    <span style={{ ...tiny, fontSize: 8 }}>Last 30 days</span>
+                  </div>
+                  <InsDotMap on={t > 900} h={150} w={220} />
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 2 — SOCIAL (Overview → Instagram cut) */}
+        {frame === 2 && (() => {
+          const ig = t > 1400
+          const tb = t - 1400
+          const regions = [
+            ['Maharashtra', 'BEST PERFORMING', 'Impressions 5,58,30,392', 'good', 200],
+            ['Bihar', 'UNDERPERFORMING', 'Engagement 1.2% ↓', 'bad', 350],
+            ['Karnataka', 'MOST ENGAGING', 'CTR 4.8%', 'info', 500],
+            ['Assam', 'LOWEST REACH', 'Impressions 8,12,440', 'warn', 650],
+          ]
+          const states = [['MH', 558], ['GJ', 402], ['KA', 361], ['DL', 328], ['TN', 296], ['UP', 268], ['WB', 224], ['RJ', 196], ['MP', 173], ['KL', 148]]
+          const igStats = [
+            ['LIKES', inr(cnt(tb, 100, 650, 48973))],
+            ['COMMENTS', inr(cnt(tb, 180, 650, 3750))],
+            ['SHARES', inr(cnt(tb, 260, 650, 1279))],
+            ['REACH', inr(cnt(tb, 340, 650, 642180))],
+          ]
+          return (
+            <div key="f2" style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
+              <div style={{ display: 'flex', gap: 18, borderBottom: '1px solid #eceef2', paddingBottom: 5 }}>
+                {['OVERVIEW', 'FACEBOOK', 'INSTAGRAM'].map(st => {
+                  const on = ig ? st === 'INSTAGRAM' : st === 'OVERVIEW'
+                  return <span key={st} style={{ fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: on ? G : '#9fa3ac', borderBottom: on ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 4, transition: 'all 0.3s ease' }}>{st}</span>
+                })}
+              </div>
+              {!ig ? (
+                <>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    {regions.map(([rg, vd, met, tone, at]) => <InsVerdict key={rg} region={rg} verdict={vd} metric={met} tone={tone} on={t > at} />)}
+                  </div>
+                  <div style={{ ...cardS, flex: 1, padding: '10px 14px' }}>
+                    <p style={cardT}>REACH BY REGION</p>
+                    <div style={{ marginTop: 6 }}>
+                      <InsBars on={t > 350} h={250} data={states.map(([l, v]) => ({ l, v, t: (v / 100).toFixed(1) + 'Cr' }))} />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div key="ig" style={{ animation: 'insFadeUp 0.4s ease', display: 'flex', flexDirection: 'column', gap: 10, flex: 1, minHeight: 0 }}>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    {igStats.map(([lab, val]) => (
+                      <div key={lab} style={{ flex: 1, ...cardS, padding: '9px 12px' }}>
+                        <p style={{ ...tiny, textTransform: 'uppercase', letterSpacing: 0.5 }}>{lab}</p>
+                        <p style={{ margin: '1px 0 2px', fontSize: 20, fontFamily: SA, fontWeight: 700, color: '#000718' }}>{val}</p>
+                        <span style={{ fontSize: 8.5, fontFamily: AR, fontWeight: 700, color: '#1b5e20' }}>+21.01% ↑</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ ...cardS, flex: 1, padding: '10px 14px', minHeight: 0 }}>
+                    <p style={cardT}>ENGAGEMENT OVERTIME</p>
+                    <div style={{ marginTop: 8 }}><InsLine on={tb > 250} h={150} /></div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 3 — PAID (Performance Marketing) */}
+        {frame === 3 && (() => {
+          const meta = t > 1800
+          const cpl = [['DEL', 612], ['MUM', 548], ['BLR', 495], ['PUN', 448], ['AMD', 396], ['JPR', 342], ['IND', 298]]
+          const leads = [['Maharashtra', 55538, 850], ['Gujarat', 24917, 1000], ['Delhi', 19258, 1150], ['Karnataka', 16842, 1300], ['Tamil Nadu', 12406, 1450]]
+          return (
+            <div key="f3" style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%', position: 'relative' }}>
+              <div style={{ display: 'flex', gap: 18, borderBottom: '1px solid #eceef2', paddingBottom: 5 }}>
+                {['OVERVIEW', 'META', 'GOOGLE'].map(st => {
+                  const on = meta ? st === 'META' : st === 'OVERVIEW'
+                  return <span key={st} style={{ fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: on ? G : '#9fa3ac', borderBottom: on ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 4, transition: 'all 0.3s ease' }}>{st}</span>
+                })}
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {[['BUDGET ALLOCATED', '₹120.00 lacs', '#1b5e20', '#e8fde8', G, 150], ['BUDGET SPENT', '₹96.42 lacs', '#b71c1c', '#fdecec', '#cc3232', 300]].map(([lab, v, col, bg, bd, at]) => (
+                  <div key={lab} style={{ width: 190, background: bg, border: `1px solid ${bd}`, borderRadius: 6, padding: '8px 12px', opacity: t > at ? 1 : 0, transform: t > at ? 'scale(1)' : 'scale(0.92)', transition: 'all 0.4s ease' }}>
+                    <p style={{ ...tiny, fontSize: 8, textTransform: 'uppercase', letterSpacing: 0.4 }}>{lab}</p>
+                    <p style={{ margin: '1px 0 0', fontSize: 17, fontFamily: SA, fontWeight: 700, color: col }}>{v}</p>
+                  </div>
+                ))}
+                <div style={{ ...cardS, flex: 1, padding: '6px 0 2px' }}>
+                  <p style={{ ...cardT, padding: '0 12px 3px' }}>BEST PERFORMING REGION</p>
+                  {[['Maharashtra', '55,538 leads', 'CPL ₹389'], ['Gujarat', '24,917 leads', 'CPL ₹412'], ['Delhi', '19,258 leads', 'CPL ₹451']].map(([rg, ld, cp], i) => {
+                    const show = t > 450 + i * 130
+                    return (
+                      <div key={rg} style={{ display: 'flex', justifyContent: 'space-between', padding: '2.5px 12px', opacity: show ? 1 : 0, transform: show ? 'translateX(0)' : 'translateX(-10px)', transition: 'all 0.4s ease' }}>
+                        <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 700, color: '#000718', width: 120 }}>{i + 1}. {rg}</p>
+                        <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 600, color: '#555' }}>{ld}</p>
+                        <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 700, color: '#7c3aed' }}>{cp}</p>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 10, flex: 1, minHeight: 0 }}>
+                <div style={{ ...cardS, flex: 1.15, padding: '10px 14px' }}>
+                  <p style={cardT}>CPL BY REGION <span style={{ fontSize: 8, color: '#9fa3ac', fontFamily: AR, fontWeight: 600, textTransform: 'none' }}>(highest → lowest)</span></p>
+                  <div style={{ marginTop: 6 }}>
+                    <InsBars on={t > 550} h={190} color="#8b5cf6" data={cpl.map(([l, v]) => ({ l, v, t: '₹' + v }))} />
+                  </div>
+                </div>
+                <div style={{ ...cardS, flex: 1, padding: '8px 0' }}>
+                  <p style={{ ...cardT, padding: '0 14px 4px' }}>TOP REGION BY LEADS</p>
+                  {leads.map(([rg, v, at], i) => {
+                    const show = t > at
+                    return (
+                      <div key={rg} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 14px', opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(8px)', transition: 'all 0.4s ease' }}>
+                        <span style={{ width: 16, height: 16, borderRadius: 8, background: i === 0 ? G : '#eceef2', color: i === 0 ? '#fff' : '#666', fontSize: 8, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: AR, flexShrink: 0 }}>{i + 1}</span>
+                        <p style={{ margin: 0, flex: 1, fontSize: 10.5, fontFamily: AR, fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>{rg}</p>
+                        <div style={{ width: 130, background: '#eceef2', height: 5, borderRadius: 3 }}>
+                          <div style={{ height: '100%', borderRadius: 3, background: G, width: `${Math.round((v / 55538) * 100)}%`, transform: show ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.6s ease-out' }} />
+                        </div>
+                        <p style={{ margin: 0, width: 52, textAlign: 'right', fontSize: 10.5, fontFamily: AR, fontWeight: 700, color: '#1b5e20' }}>{inr(v)}</p>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              {meta && (
+                <div style={{ position: 'absolute', right: 0, bottom: 0, width: 300, background: '#fff', border: `1px solid ${G}`, borderRadius: 6, boxShadow: '0 12px 30px rgba(0,0,0,0.18)', padding: '10px 14px', animation: 'insToast 0.4s ease', zIndex: 60 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={cardT}>META — SNAPSHOT</p>
+                    <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20' }}>LIVE</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
+                    {[['IMPRESSIONS', '1,86,42,310'], ['LEADS', '4,312'], ['CPL', '₹432']].map(([lab, v]) => (
+                      <div key={lab} style={{ flex: 1 }}>
+                        <p style={{ ...tiny, fontSize: 7 }}>{lab}</p>
+                        <p style={{ margin: 0, fontSize: 12, fontFamily: SA, fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>{v}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 4 — WEB (LPG) */}
+        {frame === 4 && (() => {
+          const kpis = [
+            ['USERS', '1.54M', '+21.01%', G, 100],
+            ['SESSIONS', '2.1M', '+18.4%', '#3b82f6', 190],
+            ['CONVERSIONS', '18.4K', '+12.9%', '#8b5cf6', 280],
+            ['AVG DURATION', '3.8 min', '+0.4', '#f59e0b', 370],
+          ]
+          const zones = [
+            ['South', 'TOP REGION BY TRAFFIC', '9,84,210 sessions', 'good', 450],
+            ['West', 'LOWEST TRAFFIC', '2,10,884 sessions', 'bad', 560],
+            ['East', 'MOST CONVERSIONS', '6,412 conversions', 'info', 670],
+            ['North', 'HIGH TRAFFIC · LOW CONV.', 'CVR 0.4%', 'warn', 780],
+          ]
+          const strip = [['ENGAGEMENT RATE', 64.2, '%'], ['SCROLL RATE', 71.8, '%'], ['PAGES / SESSION', 4.2, ''], ['CTR', 2.9, '%'], ['BOUNCE RATE', 38.4, '%']]
+          const sessions = [['S', 84], ['SW', 71], ['W', 38], ['N', 64], ['NE', 29], ['E', 57], ['C', 46]]
+          return (
+            <div key="f4" style={{ display: 'flex', flexDirection: 'column', gap: 8, height: '100%' }}>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {kpis.map(([lab, val, chip, col, at]) => <InsKpi key={lab} label={lab} value={val} chip={chip} color={col} on={t > at} />)}
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {zones.map(([rg, vd, met, tone, at]) => <InsVerdict key={rg} region={rg} verdict={vd} metric={met} tone={tone} on={t > at} />)}
+              </div>
+              <div style={{ ...cardS, display: 'flex', alignItems: 'stretch', padding: '6px 0' }}>
+                {strip.map(([lab, v, u], i) => (
+                  <div key={lab} style={{ flex: 1, textAlign: 'center', borderRight: i < 4 ? '1px solid #f0f1f4' : 'none', padding: '2px 6px' }}>
+                    <p style={{ ...tiny, fontSize: 7.5, textTransform: 'uppercase', letterSpacing: 0.4 }}>{lab}</p>
+                    <p style={{ margin: '1px 0 0', fontSize: 15, fontFamily: SA, fontWeight: 700, color: '#000718' }}>{cnt(t, 600 + i * 80, 550, v).toFixed(1)}{u}</p>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 10, flex: 1, minHeight: 0 }}>
+                <div style={{ ...cardS, flex: 1.25, padding: '8px 12px' }}>
+                  <p style={cardT}>TRAFFIC BY ZONES</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ flex: 1 }}><InsDotMap on={t > 650} h={118} w={150} /></div>
+                    <div style={{ width: 118, display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0 }}>
+                      {[['South', 92], ['North', 74], ['East', 58], ['West', 31]].map(([z, v], i) => (
+                        <div key={z}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 1 }}>
+                            <span style={{ ...tiny, fontSize: 8 }}>{z}</span>
+                            <span style={{ ...tiny, fontSize: 8, color: '#1b5e20', fontWeight: 800 }}>{v}%</span>
+                          </div>
+                          <div style={{ background: '#eceef2', height: 4, borderRadius: 2 }}>
+                            <div style={{ background: G, height: '100%', borderRadius: 2, width: `${v}%`, transform: t > 800 + i * 80 ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.55s ease-out' }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ ...cardS, flex: 1, padding: '8px 12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <p style={cardT}>SESSIONS BY REGION</p>
+                    <span style={{ ...tiny, fontSize: 7.5 }}>1 WEEK · SESSIONS</span>
+                  </div>
+                  <div style={{ marginTop: 4 }}>
+                    <InsBars on={t > 750} h={118} stagger={70} data={sessions.map(([l, v]) => ({ l, v, t: '' }))} />
+                  </div>
+                </div>
+                <div style={{ ...cardS, flex: 1, padding: '8px 12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <p style={cardT}>PEAK VISIT TIME</p>
+                    <span style={{ ...tiny, fontSize: 7.5, color: '#1b5e20', fontWeight: 800 }}>REGION FOCUS · SOUTHWEST ▾</span>
+                  </div>
+                  <div style={{ marginTop: 6 }}><InsArea on={t > 800} h={96} /></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+                    <span style={{ ...tiny, fontSize: 8 }}>Avg time 3.8 min</span>
+                    <span style={{ ...tiny, fontSize: 8 }}>Peak 7–9 PM</span>
+                    <span style={{ ...tiny, fontSize: 8 }}>Bounce 38.4%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 5 — EXPORT (hero beat #2 — the pull-back) */}
+        {frame === 5 && (
+          <div key="f5" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 780, background: '#fff', border: '1px solid #dee0e7', borderRadius: 10, boxShadow: '0 24px 60px rgba(0,7,24,0.14)', padding: 14, animation: 'insPull 0.7s cubic-bezier(0.25,0.1,0.25,1)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 10, borderBottom: '1px solid #f0f1f4' }}>
+                {['#ff5f57', '#febc2e', '#28c840'].map(c => <span key={c} style={{ width: 8, height: 8, borderRadius: 4, background: c }} />)}
+                <p style={{ margin: '0 0 0 6px', fontSize: 10.5, fontFamily: AR, fontWeight: 700, color: '#000718' }}>Global InsightIT — one dashboard</p>
+                <span style={{ ...tiny, fontSize: 8.5, marginLeft: 'auto' }}>ALL LOCATIONS · Lifetime</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 10 }}>
+                {[
+                  ['OVERVIEW', 0, <InsBars key="b" on h={54} gap={4} stagger={0} data={[4.2, 5.1, 4.8, 6.2, 5.6, 6.8, 7.4].map(v => ({ l: '', v, t: '' }))} />],
+                  ['LPM', 1, <div key="r" style={{ display: 'flex', justifyContent: 'center' }}><InsRing on value={78} size={56} /></div>],
+                  ['SOCIAL MEDIA', 2, <InsLine key="l" on h={54} />],
+                  ['PERFORMANCE MARKETING', 3, <InsBars key="p" on h={54} gap={4} stagger={0} color="#8b5cf6" data={[612, 548, 495, 448, 396, 342].map(v => ({ l: '', v, t: '' }))} />],
+                  ['LPG', 4, <InsArea key="a" on h={54} />],
+                ].map(([lab, i, viz]) => (
+                  <div key={lab} style={{ border: '1px solid #e6e8ee', borderRadius: 6, padding: '8px 10px', background: '#fdfdfe', animation: 'insTile 0.5s cubic-bezier(0.25,0.1,0.25,1) both', animationDelay: `${i * 70}ms` }}>
+                    <p style={{ ...tiny, fontSize: 7.5, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 5, fontWeight: 800 }}>{lab}</p>
+                    {viz}
+                  </div>
+                ))}
+                <div style={{ border: `1px solid ${G}`, background: '#e8fde8', borderRadius: 6, padding: '8px 10px', animation: 'insTile 0.5s cubic-bezier(0.25,0.1,0.25,1) both', animationDelay: '350ms', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 3 }}>
+                  <p style={{ margin: 0, fontSize: 12, fontFamily: SA, fontWeight: 800, color: '#1b5e20', textTransform: 'uppercase', letterSpacing: 0.5 }}>5 modules · 1 report</p>
+                  <p style={{ ...tiny, fontSize: 8, color: '#1b5e20' }}>Aug 2026 · All locations · PDF</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 6 — CLOSE */}
+        {frame === 6 && (
+          <div key="f6" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center', animation: 'insFadeUp 0.7s ease' }}>
+            <p style={{ fontFamily: SA, fontWeight: 800, fontSize: 30, color: '#000718', textTransform: 'uppercase', margin: '0 0 4px', lineHeight: 1.08 }}>
+              Every module. Every metric. <span style={{ color: G }}>One InsightIT.</span>
+            </p>
+            <p style={{ fontFamily: AR, fontSize: 12.5, color: G, fontWeight: 600, margin: '8px 0 16px' }}>The observability layer of CHNC.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+              <span style={{ fontFamily: SA, fontWeight: 900, fontSize: 26, color: G, letterSpacing: 1 }}>InsightIT</span>
+              <span style={{ width: 1, height: 20, background: '#dee0e7' }} />
+              <span style={{ fontFamily: AR, fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
+            </div>
+            <p style={{ fontFamily: AR, fontSize: 9, color: '#9fa3ac', margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: 1 }}>InsightIT inside every one</p>
+            <div style={{ display: 'flex', gap: 16 }}>
+              {['LocateIT', 'SocialiseIT', 'AmplifyIT', 'CreateIT', 'ScriptIT', 'AIGenIT'].map((m, i) => (
+                <div key={m} style={{ display: 'flex', alignItems: 'center', gap: 5, animation: 'insPop 0.45s ease both', animationDelay: `${200 + i * 110}ms` }}>
+                  <span style={{ width: 6, height: 6, borderRadius: 3, background: G }} />
+                  <span style={{ fontFamily: SA, fontWeight: 600, fontSize: 12, color: '#666a74' }}>{m}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Lower-third overlay band */}
+      {overlay && (
+        <div key={`band-${frame}`} style={{
+          background: 'rgba(0,7,24,0.95)', borderTop: `2px solid ${G}`, padding: '11px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          animation: 'insBandUp 0.5s ease',
+        }}>
+          <p style={{ margin: 0, fontSize: 13, fontFamily: AR, fontWeight: 700, color: '#fff' }}>{overlay.main}</p>
+          <p style={{ margin: 0, fontSize: 10, fontFamily: AR, color: G, fontWeight: 500 }}>{overlay.sub}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── LocateIT content (GBP Listings) ─────────────────────────────────────────
 function LocateContent({ controls, tileVariants }) {
   return (
@@ -987,7 +1717,7 @@ function CreateStandardContent({ controls, tileVariants }) {
 }
 
 // ─── CreateIT content (Creative Production) ───────────────────────────────────
-function CreateContent({ controls, tileVariants, stepCount = 0 }) {
+function CreateContent({ controls, tileVariants, stepCount = 0, onFrame }) {
   const G = '#34cc32'
 
   // Self-contained timer: total elapsed ms since mount
@@ -1011,6 +1741,8 @@ function CreateContent({ controls, tileVariants, stepCount = 0 }) {
   for (let i = timeline.length - 1; i >= 0; i--) {
     if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
   }
+
+  useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
 
   const copyText = 'Celebrating the spirit of freedom! 🇮🇳 Happy Independence Day to every Indian heart.'
 
@@ -1355,7 +2087,7 @@ function formatIN(n) {
 }
 const easeOut = p => 1 - Math.pow(1 - Math.max(0, Math.min(1, p)), 2)
 
-function LocateWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
+function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
   const G = '#34cc32'
   const cardBg = 'linear-gradient(135deg, #cfe9d6, #b7dccf)'
 
@@ -1374,6 +2106,8 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   for (let i = timeline.length - 1; i >= 0; i--) {
     if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
   }
+
+  useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
 
   // Cursor — rides each action. Per frame: path = [switchTime, x, y] waypoints timed so the
   // 0.65s glide lands ON the element as its action fires; clicks pulse a ring at the tip.
@@ -1479,7 +2213,7 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
             <div key="l1" style={{ animation: 'locFadeUp 0.6s ease' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                 <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Create / Edit Listing</h3>
-                <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 16px', borderRadius: 3, letterSpacing: 0.5 }}>Save</div>
+                <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 16px', borderRadius: 0, letterSpacing: 0.5 }}>Save</div>
               </div>
               <div style={{ display: 'flex', gap: 18 }}>
                 {/* Left: fields */}
@@ -1599,7 +2333,7 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
                 })}
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10 }}>
-                <div style={{ background: t > 2600 ? G : '#f0f0f0', color: t > 2600 ? '#000' : '#bbb', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 18px', borderRadius: 3, letterSpacing: 0.5, transition: 'all 0.4s ease' }}>Finish</div>
+                <div style={{ background: t > 2600 ? G : '#f0f0f0', color: t > 2600 ? '#000' : '#bbb', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 18px', borderRadius: 0, letterSpacing: 0.5, transition: 'all 0.4s ease' }}>Finish</div>
               </div>
             </div>
           )
@@ -1970,7 +2704,7 @@ function StoryArt({ hue = 150, style }) {
   )
 }
 
-function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
+function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
   const G = '#34cc32'
 
   const [elapsed, setElapsed] = useState(0)
@@ -1988,6 +2722,8 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   for (let i = timeline.length - 1; i >= 0; i--) {
     if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
   }
+
+  useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
 
   // Cursor — rides each action. Per frame: path = [switchTime, x, y] waypoints timed so the
   // 0.65s glide lands ON the element as its action fires; clicks pulse a ring at the tip.
@@ -2028,8 +2764,8 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   const RING_R = 13, RING_C = 2 * Math.PI * RING_R
 
   const h3s = { margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }
-  const btnG = { background: G, color: '#000718', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 14px', borderRadius: 3, letterSpacing: 0.5, whiteSpace: 'nowrap' }
-  const btnO = { background: '#fff', color: '#000718', border: '1px solid #dee0e7', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '5px 13px', borderRadius: 3, letterSpacing: 0.5, whiteSpace: 'nowrap' }
+  const btnG = { background: G, color: '#000718', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 14px', borderRadius: 0, letterSpacing: 0.5, whiteSpace: 'nowrap' }
+  const btnO = { background: '#fff', color: '#000718', border: '1px solid #dee0e7', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '5px 13px', borderRadius: 0, letterSpacing: 0.5, whiteSpace: 'nowrap' }
   const pillBase = { fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 800, padding: '3px 9px', borderRadius: 10, whiteSpace: 'nowrap' }
   const lbl = { fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 4 }
   const th = { fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4, padding: '7px 12px', textAlign: 'left' }
@@ -2551,7 +3287,7 @@ function ScriptContent({ controls, tileVariants }) {
 // ─── AIGenIT animated walkthrough (AI voice agents) ───────────────────────────
 // 5-frame product video: BUILD → GROUND → TEST LIVE → CAPTURE → CLOSE
 // Anonymized per brief: agent = Asha (ConvergenSEE), fictional masked leads.
-function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
+function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
   const G = '#34cc32'
 
   const [elapsed, setElapsed] = useState(0)
@@ -2569,6 +3305,8 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   for (let i = timeline.length - 1; i >= 0; i--) {
     if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
   }
+
+  useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
 
   // Cursor — rides each action. Per frame: path = [switchTime, x, y] waypoints timed so the
   // 0.65s glide lands ON the element as its action fires; clicks pulse a ring at the tip.
@@ -2674,7 +3412,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
             <div key="a1" style={{ animation: 'agFadeUp 0.6s ease' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
                 <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Create AI Agent</h3>
-                <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 16px', borderRadius: 3, letterSpacing: 0.5 }}>Create New</div>
+                <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 16px', borderRadius: 0, letterSpacing: 0.5 }}>Create New</div>
               </div>
               <div style={{ display: 'flex', gap: 20 }}>
                 {/* Left: identity fields */}
@@ -2805,7 +3543,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10, marginTop: 2 }}>
                     {t > 6200 && <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: G, animation: 'agFadeUp 0.4s ease' }}>✓ Agent saved</span>}
-                    <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '8px 26px', borderRadius: 3, letterSpacing: 0.5, animation: t > 5800 ? 'agPress 0.45s ease, agPulseOnce 0.7s ease 0.2s' : 'none' }}>Save</div>
+                    <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '8px 26px', borderRadius: 0, letterSpacing: 0.5, animation: t > 5800 ? 'agPress 0.45s ease, agPulseOnce 0.7s ease 0.2s' : 'none' }}>Save</div>
                   </div>
                 </div>
               </div>
@@ -3022,6 +3760,571 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0 }) {
   )
 }
 
+// ─── SocialiseIT animated walkthrough (One brand, every page) ─────────────────
+// 6-frame product reel: PICK PAGES → COMPOSE → SCHEDULE & PUBLISH → MEASURE → CLOSE
+// Fictionalized per brief: ConvergenSEE pages + Horizon Motors placeholder creative only.
+function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+  const G = '#34cc32'
+
+  const [elapsed, setElapsed] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    return () => clearInterval(id)
+  }, [])
+
+  // Frame: 0 idle  1 Pick pages(6.5s)  2 Compose(9s)  3 Schedule & publish(8.5s hero)  4 Measure(8s)  5 Close(4s)
+  const timeline = [0, 500, 7000, 16000, 24500, 32500]
+  const totalDuration = 36500
+  const looped = elapsed % totalDuration
+
+  let frame = 0, t = 0
+  for (let i = timeline.length - 1; i >= 0; i--) {
+    if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
+  }
+
+  useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
+
+  const PAGES = ['Powai', 'Bandra', 'Andheri', 'Thane']
+  const CAPTION = 'Every road, lit. Festive offers at your nearest ConvergenSEE showroom ✨ #FestiveDrive'
+
+  // Cursor — rides each action; waypoints timed so the 0.65s glide lands ON the
+  // element as its action fires; clicks pulse a ring at the tip.
+  const cursorScript = {
+    1: { path: [[0, 200, 110], [500, 105, 165], [1400, 90, 238], [2100, 260, 238], [2700, 430, 238], [3200, 120, 270], [4000, 320, 305], [5000, 596, 350]], clicks: [800, 2150, 2550, 2950, 3450, 5600] },
+    2: { path: [[0, 130, 110], [500, 100, 150], [1200, 210, 215], [2300, 210, 300], [5300, 860, 220]], clicks: [600, 1750, 2850] },
+    3: { path: [[0, 90, 118], [900, 340, 160], [1800, 1020, 122], [3000, 1050, 430]], clicks: [700, 1500, 2600] },
+    4: { path: [[0, 330, 68], [800, 150, 130], [2000, 260, 250], [3400, 640, 250], [4700, 980, 250], [6000, 420, 400]], clicks: [500] },
+  }
+  const seg = cursorScript[frame]
+  let cx = 400, cy = 240
+  if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
+  const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  const overlays = [
+    null,
+    { main: 'Step 1. Pick every page — at once.', sub: 'All your locations. One selection.' },
+    { main: 'Step 2. Compose once, on-brand.', sub: 'Approved creative. Approved caption. Live preview.' },
+    { main: 'Step 3. Schedule to every page.', sub: 'One click → 4 pages, same moment, same brand.' },
+    { main: 'Step 4. Every page, one dashboard.', sub: 'Facebook + Instagram — measured together.' },
+    { main: 'One brand. Every page. Zero rogue posts.', sub: "Central control of every location's Facebook & Instagram." },
+  ]
+  const overlay = overlays[frame]
+  const progressLabels = ['PICK PAGES', 'COMPOSE', 'SCHEDULE', 'MEASURE']
+  const crumbs = [
+    '', 'SocialiseIT ▸ Content ▸ Create Post', 'SocialiseIT ▸ Content ▸ Create Post',
+    'SocialiseIT ▸ Content ▸ Create Post', 'SocialiseIT ▸ InsightIT ▸ Instagram', 'SocialiseIT',
+  ]
+
+  const fieldLabel = { fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 4 }
+
+  // Wizard stepper ring: 20% on step 1, 75% on step 2, completes to 100% at publish
+  const ringPct =
+    frame === 1 ? Math.round(easeOut(t / 800) * 20)
+    : frame === 2 ? Math.round(20 + easeOut(t / 900) * 55)
+    : frame === 3 ? (t < 2600 ? 75 : Math.round(75 + easeOut((t - 2600) / 900) * 25))
+    : 0
+
+  const igGlyph = (s, c) => (
+    <svg width={s} height={s} viewBox="0 0 16 16" style={{ flexShrink: 0 }}>
+      <rect x="1.2" y="1.2" width="13.6" height="13.6" rx="4" fill="none" stroke={c} strokeWidth="1.5" />
+      <circle cx="8" cy="8" r="3.1" fill="none" stroke={c} strokeWidth="1.5" />
+      <circle cx="12" cy="4" r="1" fill={c} />
+    </svg>
+  )
+
+  // Stylized placeholder creative — fictional Horizon Motors, never real art
+  const horizonArt = h => (
+    <div style={{ position: 'relative', width: '100%', height: h, background: 'linear-gradient(160deg, #0b1230 0%, #000718 55%, #04210a 100%)', overflow: 'hidden' }}>
+      {[[12, 18, 5], [30, 8, 3], [55, 14, 4], [78, 10, 3], [90, 22, 5], [68, 26, 3], [20, 30, 3]].map(([x, y, r], i) => (
+        <span key={i} style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, width: r * 2, height: r * 2, borderRadius: '50%', background: i % 2 ? 'rgba(52,204,50,0.55)' : 'rgba(255,214,90,0.5)', filter: 'blur(1px)' }} />
+      ))}
+      <div style={{ position: 'absolute', left: '-10%', right: '-10%', bottom: '-30%', height: '65%', background: 'linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.14))' }} />
+      <div style={{ position: 'absolute', left: '50%', bottom: 0, width: 3, height: '34%', background: G, transform: 'translateX(-50%)', opacity: 0.75 }} />
+      <svg viewBox="0 0 120 40" style={{ position: 'absolute', left: '50%', bottom: '14%', width: '44%', transform: 'translateX(-50%)' }}>
+        <path d="M10 32 Q14 20 30 18 L44 10 Q60 4 78 10 L92 18 Q108 20 112 30 L112 34 L10 34 Z" fill="#0d1520" stroke="rgba(255,255,255,0.35)" strokeWidth="1" />
+        <circle cx="34" cy="34" r="5" fill="#0d1520" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" />
+        <circle cx="88" cy="34" r="5" fill="#0d1520" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" />
+        <circle cx="103" cy="24" r="2.4" fill="#ffd65a" opacity="0.95" />
+        <circle cx="19" cy="24" r="2.4" fill="#ffd65a" opacity="0.95" />
+      </svg>
+      <p style={{ position: 'absolute', top: '9%', left: 0, right: 0, margin: 0, textAlign: 'center', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, letterSpacing: 2.5, color: '#fff', fontSize: Math.max(10, h * 0.085) }}>HORIZON MOTORS</p>
+      <p style={{ position: 'absolute', top: '26%', left: 0, right: 0, margin: 0, textAlign: 'center', fontFamily: "'Archivo', sans-serif", fontWeight: 600, letterSpacing: 1.4, color: G, fontSize: Math.max(6, h * 0.05), textTransform: 'uppercase' }}>Festive Drive Offers</p>
+    </div>
+  )
+
+  // Wizard chrome — % ring + 2-step stepper + SAVE & EXIT
+  const wizChrome = step => (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
+          <svg width="40" height="40" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="16.5" fill="none" stroke="#eef0f3" strokeWidth="4" />
+            <circle cx="20" cy="20" r="16.5" fill="none" stroke={G} strokeWidth="4" pathLength="100"
+              strokeDasharray={`${ringPct} ${100 - ringPct}`} strokeDashoffset="25" strokeLinecap="round"
+              style={{ transition: 'stroke-dasharray 0.3s linear' }} />
+          </svg>
+          <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 800, color: '#000718' }}>{ringPct}%</span>
+        </div>
+        {[['1', 'SELECT PLATFORM'], ['2', 'CREATE POST']].map(([n, l], i) => {
+          const activeStep = i + 1 === step
+          const done = i + 1 < step
+          return (
+            <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+              {i === 1 && <span style={{ width: 26, height: 1.5, background: step === 2 ? G : '#dee0e7' }} />}
+              <span style={{ width: 18, height: 18, borderRadius: 9, background: done ? G : activeStep ? '#000718' : '#eef0f3', color: done || activeStep ? '#fff' : '#9fa3ac', fontSize: 9, fontWeight: 800, fontFamily: "'Archivo', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{done ? '✓' : n}</span>
+              <span style={{ fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, letterSpacing: 0.6, color: activeStep ? '#000718' : done ? G : '#9fa3ac' }}>{l}</span>
+            </div>
+          )
+        })}
+      </div>
+      <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 14px', borderRadius: 0, letterSpacing: 0.5 }}>Save &amp; Exit</div>
+    </div>
+  )
+
+  // Per-page mini post card for the frame-3 fan-out
+  const postCard = (page, stamped) => (
+    <div style={{ border: '1px solid #dee0e7', borderRadius: 6, background: '#fff', overflow: 'hidden', position: 'relative' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 9px' }}>
+        <span style={{ width: 18, height: 18, borderRadius: 9, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 800, color: '#000718', flexShrink: 0 }}>C</span>
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <p style={{ margin: 0, fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333', whiteSpace: 'nowrap' }}>convergensee.{page.toLowerCase()}</p>
+          <p style={{ margin: 0, fontSize: 7, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>{page}, Mumbai</p>
+        </div>
+        {igGlyph(9, '#c13584')}
+      </div>
+      {horizonArt(96)}
+      <p style={{ margin: 0, padding: '5px 9px 2px', fontSize: 7.5, fontFamily: "'Archivo', sans-serif", color: '#333', lineHeight: '11px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}><b>convergensee.{page.toLowerCase()}</b> {CAPTION}</p>
+      <p style={{ margin: 0, padding: '0 9px 7px', fontSize: 7, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>18/08/2026 · 15:55</p>
+      {stamped && (
+        <span style={{ position: 'absolute', top: 8, right: 8, background: G, color: '#000718', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 800, padding: '3px 9px', borderRadius: 9, animation: 'socStamp 0.5s ease both', textTransform: 'uppercase', letterSpacing: 0.4 }}>Scheduled ✓</span>
+      )}
+    </div>
+  )
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative', height: '100%' }}>
+      <style>{`
+        @keyframes socFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes socBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes socPop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes socDrop { 0% { transform: translateY(-26px) scale(0.7); opacity: 0; } 70% { transform: translateY(3px) scale(1.05); opacity: 1; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+        @keyframes socPress { 0% { transform: scale(1); } 40% { transform: scale(0.93); } 100% { transform: scale(1); } }
+        @keyframes socPulseOnce { 0% { box-shadow: 0 0 0 0 rgba(52,204,50,0.5); } 100% { box-shadow: 0 0 0 12px rgba(52,204,50,0); } }
+        @keyframes socGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        @keyframes socLand { 0% { opacity: 0; transform: translateX(-30px) translateY(10px) scale(0.92); } 70% { transform: translateX(2px) translateY(-2px) scale(1.01); } 100% { opacity: 1; transform: translateX(0) translateY(0) scale(1); } }
+        @keyframes socStamp { 0% { transform: scale(2.2) rotate(-14deg); opacity: 0; } 55% { transform: scale(0.92) rotate(-4deg); opacity: 1; } 100% { transform: scale(1) rotate(-4deg); opacity: 1; } }
+        @keyframes socDraw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+        @keyframes socSpark { from { stroke-dashoffset: 120; } to { stroke-dashoffset: 0; } }
+        @keyframes socBandUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes socClick { 0% { transform: scale(0.25); opacity: 0.9; } 100% { transform: scale(1.3); opacity: 0; } }
+      `}</style>
+
+      {/* Progress bar */}
+      <div style={{ display: 'flex', gap: 0, padding: '14px 24px 0' }}>
+        {progressLabels.map((l, i) => {
+          const done = (frame - 1) > i || frame === 5
+          const cur = (frame - 1) === i && frame !== 5
+          return (
+            <div key={l} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+              <div style={{ height: 3, width: '100%', background: (done || cur) ? G : '#dee0e7', borderRadius: 2, transition: 'background 0.6s ease', opacity: cur ? 0.5 : 1 }} />
+              <span style={{ fontSize: 8, fontFamily: "'Archivo', sans-serif", color: (done || cur) ? G : '#9fa3ac', fontWeight: done ? 700 : 400, transition: 'all 0.3s ease' }}>{l}</span>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Cursor */}
+      {frame > 0 && frame <= 4 && (
+        <div style={{
+          position: 'absolute', left: cx, top: cy, zIndex: 300,
+          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          pointerEvents: 'none',
+        }}>
+          {cursorClick !== undefined && (
+            <span key={cursorClick} style={{ position: 'absolute', left: -15, top: -15, width: 30, height: 30, borderRadius: '50%', border: `2.5px solid ${G}`, animation: 'socClick 0.5s ease-out forwards' }} />
+          )}
+          <svg width="16" height="22" viewBox="0 0 14 19" fill="none">
+            <path d="M0 0V18L4.5 13.5L8 19L10 18L6.5 12.5H13L0 0Z" fill="#000" stroke="#fff" strokeWidth="1" />
+          </svg>
+        </div>
+      )}
+
+      {/* Content area */}
+      <div style={{ flex: 1, minHeight: 480, padding: '12px 24px', overflow: 'hidden', position: 'relative' }}>
+
+        {frame > 0 && frame < 5 && (
+          <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac', fontWeight: 600 }}>
+            {crumbs[frame].split('▸').map((c, i, a) => (
+              <span key={i} style={{ color: i === a.length - 1 ? G : '#9fa3ac' }}>{c}{i < a.length - 1 ? ' ▸ ' : ''}</span>
+            ))}
+          </p>
+        )}
+
+        {/* FRAME 1 — PICK PAGES: step 1 SELECT PLATFORM */}
+        {frame === 1 && (() => {
+          const tileTicked = t > 800
+          const chipAt = [2100, 2500, 2900, 3400]
+          const helperHot = t > 4300
+          const nextPressed = t > 5600
+          return (
+            <div key="s1" style={{ animation: 'socFadeUp 0.6s ease' }}>
+              {wizChrome(1)}
+              <div style={{ display: 'flex', gap: 24 }}>
+                <div style={{ flex: 1.45, minWidth: 0 }}>
+                  <h3 style={{ margin: '0 0 10px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Create Post</h3>
+                  <label style={fieldLabel}>Content type</label>
+                  <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
+                    {[['Create Post', true], ['Create Reel', false], ['Create Story', false]].map(([l, avail]) => {
+                      const sel = avail && tileTicked
+                      return (
+                        <div key={l} style={{ flex: 1, border: `1.5px solid ${sel ? G : '#dee0e7'}`, borderRadius: 6, padding: '13px 10px', background: sel ? 'rgba(52,204,50,0.06)' : '#fff', opacity: avail ? 1 : 0.55, position: 'relative', transition: 'all 0.4s ease' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div style={{ width: 16, height: 16, borderRadius: 8, border: `2px solid ${sel ? G : '#c9cdd4'}`, background: sel ? G : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: sel ? 'socPop 0.4s ease' : 'none', flexShrink: 0 }}>
+                              {sel && <span style={{ color: '#fff', fontSize: 9, fontWeight: 800 }}>✓</span>}
+                            </div>
+                            <span style={{ fontSize: 12, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333', whiteSpace: 'nowrap' }}>{l}</span>
+                          </div>
+                          {!avail && <span style={{ position: 'absolute', top: -7, right: 8, background: '#f2a33c', color: '#fff', fontSize: 7, fontFamily: "'Archivo', sans-serif", fontWeight: 800, padding: '2px 7px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: 0.4 }}>Coming soon</span>}
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <label style={fieldLabel}>Business assets</label>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12, minHeight: 60 }}>
+                    {PAGES.map((p, i) => t > chipAt[i] && (
+                      <span key={p} style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '6px 13px', borderRadius: 15, animation: 'socPop 0.45s ease', alignSelf: 'flex-start' }}>ConvergenSEE — {p} ✓</span>
+                    ))}
+                    {t <= chipAt[0] && <span style={{ border: '1.5px dashed #c9cdd4', color: '#9fa3ac', fontSize: 11, fontFamily: "'Archivo', sans-serif", padding: '6px 13px', borderRadius: 15, alignSelf: 'flex-start' }}>Select pages…</span>}
+                  </div>
+                  <p style={{ margin: '0 0 18px', fontSize: 10.5, fontFamily: "'Archivo', sans-serif", lineHeight: '16px', color: helperHot ? '#1b5e20' : '#9fa3ac', background: helperHot ? 'rgba(52,204,50,0.12)' : 'transparent', borderLeft: helperHot ? `3px solid ${G}` : '3px solid transparent', padding: '5px 8px', transition: 'all 0.5s ease', fontWeight: helperHot ? 600 : 400 }}>
+                    The post is published to all selected pages (and their linked Instagram accounts). The first selection drives the preview.
+                  </p>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '8px 30px', borderRadius: 0, letterSpacing: 0.5, animation: nextPressed ? 'socPress 0.45s ease, socPulseOnce 0.7s ease 0.2s' : 'none' }}>Next</div>
+                  </div>
+                </div>
+                {/* Preview panel — skeleton until compose */}
+                <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 14px', borderBottom: '1px solid #eef0f3' }}>
+                    <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.5 }}>Instagram feed preview</span>
+                    <span style={{ background: '#fdf3e0', border: '1px solid #f2a33c', color: '#a86a10', fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 800, padding: '2.5px 9px', borderRadius: 9, textTransform: 'uppercase', letterSpacing: 0.4 }}>Unpublished</span>
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10, padding: 18 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ width: 26, height: 26, borderRadius: 13, background: '#eef0f3', flexShrink: 0 }} />
+                      <span style={{ width: 110, height: 8, borderRadius: 4, background: '#eef0f3' }} />
+                    </div>
+                    <div style={{ width: '100%', height: 180, borderRadius: 4, background: '#f5f6f8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#c9cdd4' }}>{t > chipAt[0] ? 'Preview follows your first selection' : 'Select a page to preview'}</span>
+                    </div>
+                    <span style={{ width: '85%', height: 7, borderRadius: 4, background: '#eef0f3' }} />
+                    <span style={{ width: '60%', height: 7, borderRadius: 4, background: '#eef0f3' }} />
+                  </div>
+                  <div style={{ borderTop: '1px solid #eef0f3', padding: '7px 14px', fontSize: 8.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Last saved · just now</div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 2 — COMPOSE: step 2 CREATE POST, live IG preview builds */}
+        {frame === 2 && (() => {
+          const acctAt = [400, 650, 900, 1150]
+          const mediaIn = t > 1800
+          const typed = t > 2800 ? CAPTION.slice(0, Math.max(0, Math.floor((t - 2800) / 24))) : ''
+          const captionDone = t > 2800 + CAPTION.length * 24
+          const postToDone = t > 1400
+          const mediaDone = t > 2400
+          const sec = (label, done) => (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 5 }}>
+              <div style={{ width: 13, height: 13, borderRadius: 7, border: `2px solid ${done ? G : '#c9cdd4'}`, background: done ? G : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: done ? 'socPop 0.4s ease' : 'none', flexShrink: 0 }}>
+                {done && <span style={{ color: '#fff', fontSize: 7, fontWeight: 800 }}>✓</span>}
+              </div>
+              <span style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.4 }}>{label}</span>
+            </div>
+          )
+          return (
+            <div key="s2" style={{ animation: 'socFadeUp 0.6s ease' }}>
+              {wizChrome(2)}
+              <div style={{ display: 'flex', gap: 24 }}>
+                <div style={{ flex: 1.45, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div>
+                    {sec('Post to — Instagram accounts', postToDone)}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, border: `1.5px solid ${postToDone ? G : '#dee0e7'}`, borderRadius: 4, padding: '7px 9px', transition: 'border-color 0.5s ease', minHeight: 32 }}>
+                      {PAGES.map((p, i) => t > acctAt[i] && (
+                        <span key={p} style={{ display: 'flex', alignItems: 'center', gap: 5, background: '#f5f6f8', border: '1px solid #dee0e7', color: '#333', fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 600, padding: '3px 9px', borderRadius: 11, animation: 'socPop 0.4s ease' }}>{igGlyph(9, '#c13584')}@convergensee.{p.toLowerCase()}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    {sec('Media', mediaDone)}
+                    <div style={{ border: `1.5px dashed ${mediaIn ? G : '#c9cdd4'}`, borderRadius: 6, minHeight: 54, display: 'flex', alignItems: 'center', justifyContent: mediaIn ? 'flex-start' : 'center', padding: '7px 12px', background: mediaIn ? 'rgba(52,204,50,0.04)' : '#fafbfc', transition: 'all 0.5s ease' }}>
+                      {mediaIn ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, animation: 'socDrop 0.6s ease' }}>
+                          <div style={{ width: 46, height: 38, borderRadius: 3, overflow: 'hidden', flexShrink: 0 }}>{horizonArt(38)}</div>
+                          <div>
+                            <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>festive-drive-post.png</p>
+                            <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo', sans-serif", color: G, fontWeight: 700 }}>✓ 1080 × 1350 · ready</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Add photo or video</p>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    {sec('Caption', captionDone)}
+                    <div style={{ border: `1.5px solid ${captionDone ? G : '#dee0e7'}`, borderRadius: 4, padding: '8px 11px', minHeight: 56, fontSize: 11.5, fontFamily: "'Archivo', sans-serif", color: '#333', lineHeight: '17px', transition: 'border-color 0.5s ease' }}>
+                      {typed}{t > 2800 && !captionDone && <span style={{ animation: 'socBlink 0.8s infinite', color: G }}>|</span>}
+                    </div>
+                    <div style={{ display: 'flex', gap: 12, marginTop: 5, alignItems: 'center' }}>
+                      {['#', '☺', '📍', '@'].map(ic => (
+                        <span key={ic} style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 700 }}>{ic}</span>
+                      ))}
+                      <span style={{ marginLeft: 'auto', fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Customise per platform · off</span>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '8px 26px', borderRadius: 0, letterSpacing: 0.5 }}>Publish</div>
+                  </div>
+                </div>
+                {/* Live IG feed preview — builds header → image → caption */}
+                <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 14px', borderBottom: '1px solid #eef0f3' }}>
+                    <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.5 }}>Instagram feed preview</span>
+                    <span style={{ background: '#fdf3e0', border: '1px solid #f2a33c', color: '#a86a10', fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 800, padding: '2.5px 9px', borderRadius: 9, textTransform: 'uppercase', letterSpacing: 0.4 }}>Unpublished</span>
+                  </div>
+                  <div style={{ flex: 1, padding: 14 }}>
+                    {t > 600 && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, animation: 'socFadeUp 0.45s ease' }}>
+                        <span style={{ width: 26, height: 26, borderRadius: 13, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 800, color: '#000718', flexShrink: 0 }}>C</span>
+                        <div>
+                          <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>convergensee.powai</p>
+                          <p style={{ margin: 0, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Powai, Mumbai</p>
+                        </div>
+                        <span style={{ marginLeft: 'auto', color: '#9fa3ac', fontSize: 12, fontWeight: 700, letterSpacing: 1 }}>⋯</span>
+                      </div>
+                    )}
+                    {t > 1800
+                      ? <div style={{ animation: 'socFadeUp 0.5s ease', borderRadius: 4, overflow: 'hidden' }}>{horizonArt(178)}</div>
+                      : <div style={{ width: '100%', height: 178, borderRadius: 4, background: '#f5f6f8' }} />}
+                    <div style={{ display: 'flex', gap: 12, padding: '8px 2px 4px', color: '#333', fontSize: 13 }}>
+                      <span>♡</span><span>💬</span><span>➤</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#333', lineHeight: '15px' }}>
+                      <b>convergensee.powai</b> {typed}
+                    </p>
+                  </div>
+                  <div style={{ borderTop: '1px solid #eef0f3', padding: '7px 14px', fontSize: 8.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Last saved · just now</div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 3 — SCHEDULE & PUBLISH: hero one→many fan-out */}
+        {frame === 3 && (() => {
+          const togOn = t > 700
+          const rowIn = t > 1500
+          const pubPressed = t > 2600
+          const fanned = t > 3200
+          const cardAt = [3200, 3550, 3900, 4250]
+          const stampAt = [4900, 5250, 5600, 5950]
+          return (
+            <div key="s3" style={{ animation: 'socFadeUp 0.6s ease' }}>
+              {wizChrome(2)}
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, background: '#fff', padding: '10px 14px', marginBottom: 14 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <span style={{ fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>Scheduling</span>
+                  <div style={{ width: 34, height: 18, borderRadius: 9, background: togOn ? G : '#dee0e7', position: 'relative', transition: 'background 0.35s ease', flexShrink: 0 }}>
+                    <span style={{ position: 'absolute', top: 2, left: togOn ? 18 : 2, width: 14, height: 14, borderRadius: 7, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.25)', transition: 'left 0.35s cubic-bezier(0.25,0.1,0.25,1)' }} />
+                  </div>
+                  <span style={{ fontSize: 9.5, fontFamily: "'Archivo', sans-serif", color: togOn ? G : '#9fa3ac', fontWeight: 700, transition: 'color 0.3s ease' }}>{togOn ? 'On — publish at a set time' : 'Off'}</span>
+                  <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
+                    {pubPressed && <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: G, animation: 'socFadeUp 0.4s ease' }}>✓ Scheduled to 4 pages</span>}
+                    <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '8px 26px', borderRadius: 0, letterSpacing: 0.5, animation: pubPressed ? 'socPress 0.45s ease, socPulseOnce 0.7s ease 0.2s' : 'none' }}>Publish</div>
+                  </div>
+                </div>
+                {rowIn && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10, paddingTop: 10, borderTop: '1px solid #eef0f3', animation: 'socFadeUp 0.45s ease' }}>
+                    {igGlyph(13, '#c13584')}
+                    <span style={{ fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>Instagram — all 4 accounts</span>
+                    <span style={{ border: `1.5px solid ${G}`, borderRadius: 0, padding: '4px 10px', fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>18/08/2026</span>
+                    <span style={{ border: `1.5px solid ${G}`, borderRadius: 0, padding: '4px 10px', fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>15:55</span>
+                    <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Same moment, every page</span>
+                  </div>
+                )}
+              </div>
+              {/* One card → four, each stamping Scheduled ✓ */}
+              <div style={{ minHeight: 250 }}>
+                {!fanned ? (
+                  <div style={{ width: 265, margin: '0 auto' }}>{postCard('Powai', false)}</div>
+                ) : (
+                  <div style={{ display: 'flex', gap: 14 }}>
+                    {PAGES.map((p, i) => t > cardAt[i] && (
+                      <div key={p} style={{ flex: 1, animation: 'socLand 0.55s cubic-bezier(0.25,0.1,0.25,1) both' }}>
+                        {postCard(p, t > stampAt[i])}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 4 — MEASURE: InsightIT · Social Media ▸ Instagram */}
+        {frame === 4 && (() => {
+          const tiles = [
+            { label: 'Likes', v: 48973, spark: '0,16 8,13 16,14 24,10 32,11 40,7 48,8 58,3' },
+            { label: 'Comments', v: 3750, spark: '0,15 8,12 16,13 24,10 32,8 40,9 48,5 58,4' },
+            { label: 'Shares', v: 1279, spark: '0,16 8,14 16,11 24,12 32,9 40,7 48,7 58,3' },
+            { label: 'Reach', v: 642180, spark: '0,15 8,13 16,10 24,11 32,7 40,5 48,4 58,1' },
+          ]
+          const ciBars = [['Video', 78], ['Images', 96], ['Carousels', 64], ['Text', 30]]
+          const mapDots = [[12, 30], [18, 42], [26, 58], [30, 26], [38, 40], [44, 62], [50, 30], [55, 48], [62, 26], [66, 58], [72, 38], [78, 52], [84, 30], [88, 60], [46, 76], [24, 72], [68, 74], [58, 70]]
+          const cardTitle = { margin: '0 0 8px', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }
+          return (
+            <div key="s4" style={{ animation: 'socFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 10 }}>
+                <h3 style={{ margin: 0, fontSize: 15, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>InsightIT — Social Media</h3>
+                <div style={{ display: 'flex', gap: 14 }}>
+                  {['FACEBOOK', 'INSTAGRAM'].map((tab, i) => {
+                    const on = i === 1 && t > 500
+                    return <span key={tab} style={{ fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, letterSpacing: 0.6, color: on ? '#000718' : '#9fa3ac', paddingBottom: 3, borderBottom: on ? `2px solid ${G}` : '2px solid transparent', transition: 'all 0.4s ease' }}>{tab}</span>
+                  })}
+                </div>
+                <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
+                  {['ALL LOCATIONS ▾', 'Lifetime ▾'].map(f => (
+                    <span key={f} style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, padding: '5px 12px', borderRadius: 0 }}>{f}</span>
+                  ))}
+                  <div style={{ background: G, color: '#000', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '6px 14px', borderRadius: 0, letterSpacing: 0.5 }}>Export All</div>
+                </div>
+              </div>
+              {/* KPI tiles roll up, sparklines draw */}
+              <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                {tiles.map((tile, i) => (
+                  <div key={tile.label} style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: '9px 13px', background: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <p style={{ margin: '0 0 3px', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.3 }}>{tile.label}</p>
+                      <p style={{ margin: 0, fontSize: 22, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, color: i === 3 ? G : '#000718', lineHeight: 1 }}>{formatIN(easeOut((t - 400 - i * 150) / 1700) * tile.v)}</p>
+                    </div>
+                    <svg width="58" height="18" viewBox="0 0 58 18" style={{ flexShrink: 0 }}>
+                      <polyline points={tile.spark} fill="none" stroke={G} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+                        strokeDasharray="120" style={{ animation: t > 600 ? `socSpark 1.4s ease-out both ${i * 180}ms` : 'none', strokeDashoffset: 120 }} />
+                    </svg>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                {/* Engagement overtime — line traces left → right */}
+                <div style={{ flex: 1.6, border: '1px solid #dee0e7', borderRadius: 6, padding: 12, background: '#fff' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={cardTitle}>Engagement Overtime</p>
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      {[['Likes', G], ['Comments', '#9fa3ac']].map(([l, c]) => (
+                        <span key={l} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}><span style={{ width: 7, height: 7, borderRadius: 4, background: c }} />{l}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <svg width="100%" height="100" viewBox="0 0 430 100" preserveAspectRatio="none">
+                    {[25, 50, 75].map(y => <line key={y} x1="0" y1={y} x2="430" y2={y} stroke="#eef0f3" strokeWidth="1" />)}
+                    <path d="M0 82 C40 76, 60 70, 95 72 C135 74, 155 56, 195 52 C235 48, 255 60, 295 44 C335 28, 365 34, 430 16" fill="none" stroke={G} strokeWidth="2.2" strokeLinecap="round"
+                      strokeDasharray="600" style={{ animation: t > 800 ? 'socDraw 1.8s ease-out both' : 'none', strokeDashoffset: 600 }} />
+                    <path d="M0 90 C50 88, 80 84, 120 84 C170 84, 200 76, 250 74 C300 72, 350 66, 430 58" fill="none" stroke="#c9cdd4" strokeWidth="1.6" strokeLinecap="round"
+                      strokeDasharray="600" style={{ animation: t > 1100 ? 'socDraw 1.8s ease-out both' : 'none', strokeDashoffset: 600 }} />
+                  </svg>
+                </div>
+                {/* Content insight — bars grow bottom-up */}
+                <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: 12, background: '#fff' }}>
+                  <p style={cardTitle}>Content Insight</p>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, height: 78, padding: '0 6px' }}>
+                    {ciBars.map(([l, h], i) => (
+                      <div key={l} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, height: '100%', justifyContent: 'flex-end' }}>
+                        {t > 1400 && <div style={{ width: '100%', height: `${h}%`, background: i === 1 ? G : 'rgba(52,204,50,0.35)', borderRadius: '3px 3px 0 0', transformOrigin: 'bottom', animation: `socGrow 0.7s ease both ${i * 120}ms` }} />}
+                        <span style={{ fontSize: 7.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>{l}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* User reach — world dots twinkle in */}
+                <div style={{ flex: 1.1, border: '1px solid #dee0e7', borderRadius: 6, padding: 12, background: '#fff' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={cardTitle}>User Reach</p>
+                    <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: G }}>Countries: 12</span>
+                  </div>
+                  <div style={{ position: 'relative', height: 78, background: '#fafbfc', borderRadius: 4, overflow: 'hidden' }}>
+                    {mapDots.map(([x, y], i) => t > 1800 && (
+                      <span key={i} style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, width: i % 3 ? 5 : 7, height: i % 3 ? 5 : 7, borderRadius: '50%', background: i % 3 ? 'rgba(52,204,50,0.4)' : G, animation: `socPop 0.5s ease both ${i * 110}ms` }} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* Recent post performance — the festive post, metrics ticking */}
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 14px', background: '#fff', display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ width: 52, height: 44, borderRadius: 4, overflow: 'hidden', flexShrink: 0 }}>{horizonArt(44)}</div>
+                <div style={{ minWidth: 0, flex: 1.6 }}>
+                  <p style={{ margin: '0 0 2px', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }}>Recent Post Performance</p>
+                  <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Every road, lit. Festive offers at your nearest ConvergenSEE showroom ✨</p>
+                  <p style={{ margin: 0, fontSize: 8.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>All pages (4) · Instagram · 18/08/2026</p>
+                </div>
+                {[['Engagement', (easeOut((t - 2600) / 1200) * 8.4).toFixed(1) + '%'], ['Likes', formatIN(easeOut((t - 2750) / 1200) * 12480)], ['Reach', formatIN(easeOut((t - 2900) / 1200) * 186420)]].map(([l, v]) => (
+                  <div key={l} style={{ textAlign: 'right' }}>
+                    <p style={{ margin: '0 0 2px', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.3 }}>{l}</p>
+                    <p style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, color: '#000718', lineHeight: 1 }}>{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 5 — CLOSE */}
+        {frame === 5 && (
+          <div key="s5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center', animation: 'socFadeUp 0.7s ease' }}>
+            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
+              One brand. Every page.<br /><span style={{ color: G }}>Zero rogue posts.</span>
+            </p>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 14px' }}>Central control of every location&apos;s Facebook &amp; Instagram.</p>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+              {PAGES.map((p, i) => (
+                <span key={p} style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '4px 12px', borderRadius: 12, animation: `socPop 0.45s ease both ${i * 150}ms` }}>{p} · Scheduled ✓</span>
+              ))}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>SocialiseIT</span>
+              <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
+              <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 0 — idle */}
+        {frame === 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center' }}>
+            <div style={{ animation: 'socFadeUp 0.5s ease' }}>
+              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>SocialiseIT</p>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Every location&apos;s Facebook &amp; Instagram — one command center</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Lower-third overlay band — full width, sharp corners, 2px green top rule */}
+      {overlay && (
+        <div key={`band-${frame}`} style={{
+          background: 'rgba(0,7,24,0.95)', borderTop: `2px solid ${G}`, padding: '11px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          animation: 'socBandUp 0.5s ease',
+        }}>
+          <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#fff' }}>{overlay.main}</p>
+          <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: G, fontWeight: 500 }}>{overlay.sub}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── AIGenIT content ──────────────────────────────────────────────────────────
 function AIGenContent({ controls, tileVariants }) {
   return (
@@ -3051,6 +4354,692 @@ function AIGenContent({ controls, tileVariants }) {
           { isPen: true, label: 'Bolero Email Subject Lines', sub: 'Generated 15/03/2025' },
         ]} />
       </div>
+    </div>
+  )
+}
+
+// ─── AmplifyIT workflow reel ──────────────────────────────────────────────────
+function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+  const G = '#34cc32'
+
+  const [elapsed, setElapsed] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    return () => clearInterval(id)
+  }, [])
+
+  // Frame: 0 idle  1 Platform(6.5s)  2 Objective(5s)  3 AdSet+map(7s hero)  4 Ad(7.5s)  5 Manage(6.5s)  6 Insight(7s hero)  7 Close(4s)
+  const timeline = [0, 500, 7000, 12000, 19000, 26500, 33000, 40000]
+  const totalDuration = 44000
+  const looped = elapsed % totalDuration
+
+  let frame = 0, t = 0
+  for (let i = timeline.length - 1; i >= 0; i--) {
+    if (looped >= timeline[i]) { frame = i; t = looped - timeline[i]; break }
+  }
+
+  useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
+
+  // Cursor — waypoints timed so the 0.65s glide lands ON each element as its action fires.
+  const cursorScript = {
+    1: { path: [[0, 340, 112], [600, 322, 148], [1400, 170, 208], [1900, 250, 258], [4400, 220, 362], [5500, 1005, 448]], clicks: [700, 1500, 5700] },
+    2: { path: [[0, 300, 130], [800, 290, 215], [2000, 170, 277], [2800, 310, 327], [3900, 1005, 448]], clicks: [1500, 3300, 4400] },
+    3: { path: [[0, 200, 140], [900, 500, 142], [1600, 140, 190], [2900, 988, 238], [4600, 430, 190], [5700, 692, 190], [6200, 1005, 448]], clicks: [2100, 3700, 5300, 6100, 6600] },
+    4: { path: [[0, 200, 134], [1100, 300, 182], [1700, 44, 230], [1950, 1046, 126], [2900, 262, 292], [4300, 252, 348], [5100, 212, 394], [5800, 800, 410], [6600, 1012, 448]], clicks: [1850, 2600, 5300, 7000] },
+    5: { path: [[0, 500, 160], [800, 46, 200], [1350, 46, 252], [1700, 46, 304], [2050, 46, 356], [2400, 46, 408], [3200, 700, 200], [4800, 950, 200]], clicks: [1400, 1750, 2100, 2450, 2800] },
+    6: { path: [[0, 500, 132], [1000, 162, 158], [2200, 200, 224], [3000, 300, 352], [4600, 832, 352], [5800, 1008, 92]], clicks: [5950] },
+  }
+  const seg = cursorScript[frame]
+  let cx = 400, cy = 240
+  if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
+  const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  const overlays = [
+    null,
+    { main: 'Step 1. Brief it. Pick Meta or Google.', sub: 'One brief. Every ad platform.' },
+    { main: 'Step 2. Set the objective.', sub: 'Traffic, leads or sales — recommended settings applied.' },
+    { main: 'Step 3. Target exactly who you want.', sub: 'Location, age, interests — pinned on a map.' },
+    { main: 'Step 4. Build the ad, preview everywhere.', sub: 'One creative — every Meta placement.' },
+    { main: 'Step 5. Launch. Then manage it live.', sub: 'Toggle, budget, bid — Meta and Google, one table.' },
+    { main: 'Step 6. Every rupee, measured.', sub: 'Spend, CPL, CTR — Meta and Google side by side.' },
+    { main: 'Every rupee, every platform, one dashboard.', sub: 'Performance marketing — planned, launched, managed, measured.' },
+  ]
+  const overlay = overlays[frame]
+  const progressLabels = ['PLATFORM', 'CAMPAIGN', 'AD SET', 'AD', 'MANAGE', 'MEASURE']
+  const crumbs = [
+    '',
+    'AmplifyIT ▸ Campaign Setup ▸ Select Platform',
+    'AmplifyIT ▸ Campaign Setup ▸ Create Campaign',
+    'AmplifyIT ▸ Campaign Setup ▸ Setup Ad Set',
+    'AmplifyIT ▸ Campaign Setup ▸ Setup Ad',
+    'AmplifyIT ▸ Campaign Manage ▸ Meta Campaigns',
+    'AmplifyIT ▸ InsightIT ▸ Performance Marketing',
+    '',
+  ]
+
+  const CAMP_NAME = 'Horizon Motors — Festive Drive · Mumbai'
+  const CAMP_DESC = 'Festive-season push for Horizon SUV test drives across Mumbai.'
+  const PRIMARY = 'Festive offers on the Horizon SUV range — book your test drive.'
+  const HEADLINE = 'Every road, lit.'
+
+  const fieldLabel = { fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 4 }
+  const fieldBox = ok => ({ border: `1.5px solid ${ok ? G : '#dee0e7'}`, padding: '8px 12px', fontSize: 12, fontFamily: "'Archivo', sans-serif", color: '#333', borderRadius: 2, transition: 'border-color 0.5s ease' })
+
+  // Sub-views as plain functions called inline — inner components would remount on
+  // every 60ms tick and kill CSS transitions.
+  const ring = pct => {
+    const C = 2 * Math.PI * 9
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="#eef0f3" strokeWidth="3" />
+          <circle cx="12" cy="12" r="9" fill="none" stroke={G} strokeWidth="3" strokeLinecap="round" strokeDasharray={C} strokeDashoffset={C * (1 - pct / 100)} transform="rotate(-90 12 12)" style={{ transition: 'stroke-dashoffset 0.8s ease' }} />
+        </svg>
+        <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 800, color: pct > 0 ? G : '#9fa3ac', transition: 'color 0.4s ease' }}>{pct}%</span>
+      </div>
+    )
+  }
+  const toggle = on => (
+    <div style={{ width: 30, height: 16, borderRadius: 9, background: on ? G : '#c9cdd4', position: 'relative', transition: 'background 0.35s ease', flexShrink: 0 }}>
+      <div style={{ position: 'absolute', top: 2, left: on ? 16 : 2, width: 12, height: 12, borderRadius: 6, background: '#fff', transition: 'left 0.35s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.25)' }} />
+    </div>
+  )
+  const wizHead = (step, title, pct) => (
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 12 }}>
+      <div>
+        <p style={{ margin: '0 0 2px', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', letterSpacing: 1, textTransform: 'uppercase' }}>Campaign · Step {step} of 4</p>
+        <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>{title}</h3>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        {ring(pct)}
+        <div style={{ border: `1.5px solid ${G}`, background: '#e8fde8', color: '#1b5e20', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, padding: '6px 14px', borderRadius: 0 }}>Save &amp; Exit</div>
+      </div>
+    </div>
+  )
+  const wizFoot = (pressed, label = 'Next') => (
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
+      <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Last saved · just now</span>
+      <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '8px 30px', borderRadius: 0, letterSpacing: 0.5, animation: pressed ? 'amPress 0.45s ease, amPulseOnce 0.7s ease 0.2s' : 'none' }}>{label}</div>
+    </div>
+  )
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative', height: '100%' }}>
+      <style>{`
+        @keyframes amFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes amBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes amPop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes amDrop { 0% { transform: translateY(-26px) scale(0.7); opacity: 0; } 70% { transform: translateY(3px) scale(1.05); opacity: 1; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+        @keyframes amPress { 0% { transform: scale(1); } 40% { transform: scale(0.93); } 100% { transform: scale(1); } }
+        @keyframes amPulseOnce { 0% { box-shadow: 0 0 0 0 rgba(52,204,50,0.5); } 100% { box-shadow: 0 0 0 12px rgba(52,204,50,0); } }
+        @keyframes amSlideIn { from { transform: translateX(105%); } to { transform: translateX(0); } }
+        @keyframes amGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        @keyframes amBloom { 0% { transform: scale(0.05); opacity: 0; } 60% { opacity: 0.85; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes amDash { to { stroke-dashoffset: 0; } }
+        @keyframes amBandUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes amClick { 0% { transform: scale(0.25); opacity: 0.9; } 100% { transform: scale(1.3); opacity: 0; } }
+      `}</style>
+
+      {/* Progress bar */}
+      <div style={{ display: 'flex', gap: 0, padding: '14px 24px 0' }}>
+        {progressLabels.map((l, i) => {
+          const done = (frame - 1) > i || frame === 7
+          const cur = (frame - 1) === i && frame !== 7
+          return (
+            <div key={l} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+              <div style={{ height: 3, width: '100%', background: (done || cur) ? G : '#dee0e7', borderRadius: 2, transition: 'background 0.6s ease', opacity: cur ? 0.5 : 1 }} />
+              <span style={{ fontSize: 8, fontFamily: "'Archivo', sans-serif", color: (done || cur) ? G : '#9fa3ac', fontWeight: done ? 700 : 400, transition: 'all 0.3s ease' }}>{l}</span>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Cursor */}
+      {frame > 0 && frame <= 6 && (
+        <div style={{
+          position: 'absolute', left: cx, top: cy, zIndex: 300,
+          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          pointerEvents: 'none',
+        }}>
+          {cursorClick !== undefined && (
+            <span key={cursorClick} style={{ position: 'absolute', left: -15, top: -15, width: 30, height: 30, borderRadius: '50%', border: `2.5px solid ${G}`, animation: 'amClick 0.5s ease-out forwards' }} />
+          )}
+          <svg width="16" height="22" viewBox="0 0 14 19" fill="none">
+            <path d="M0 0V18L4.5 13.5L8 19L10 18L6.5 12.5H13L0 0Z" fill="#000" stroke="#fff" strokeWidth="1" />
+          </svg>
+        </div>
+      )}
+
+      {/* Content area */}
+      <div style={{ flex: 1, minHeight: 480, padding: '12px 24px', overflow: 'hidden', position: 'relative' }}>
+
+        {frame > 0 && frame < 7 && (
+          <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac', fontWeight: 600 }}>
+            {crumbs[frame].split('▸').map((c, i, a) => (
+              <span key={i} style={{ color: i === a.length - 1 ? G : '#9fa3ac' }}>{c}{i < a.length - 1 ? ' ▸ ' : ''}</span>
+            ))}
+          </p>
+        )}
+
+        {/* FRAME 1 — SELECT PLATFORM */}
+        {frame === 1 && (() => {
+          const name = t > 2000 ? CAMP_NAME.slice(0, Math.max(0, Math.floor((t - 2000) / 30))) : ''
+          const nameDone = t > 2000 + CAMP_NAME.length * 30
+          const desc = t > 3300 ? CAMP_DESC.slice(0, Math.max(0, Math.floor((t - 3300) / 18))) : ''
+          const descDone = t > 3300 + CAMP_DESC.length * 18
+          return (
+            <div key="am1" style={{ animation: 'amFadeUp 0.6s ease' }}>
+              {wizHead(1, 'Select Platform', 0)}
+              <div style={{ display: 'flex', gap: 24 }}>
+                {/* Left: platform + brief */}
+                <div style={{ flex: 1.15, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'flex', gap: 12 }}>
+                    {[{ n: 'Google', c: '#4285f4', d: 'Search · Display · YouTube', sel: false }, { n: 'Meta', c: '#0866ff', d: 'Facebook · Instagram', sel: t > 700 }].map(p => (
+                      <div key={p.n} style={{ flex: 1, border: `1.5px solid ${p.sel ? G : '#dee0e7'}`, borderRadius: 6, padding: '11px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: p.sel ? 'rgba(52,204,50,0.05)' : '#fff', transition: 'all 0.5s ease' }}>
+                        <div>
+                          <p style={{ margin: 0, fontSize: 15, fontFamily: "'Archivo', sans-serif", fontWeight: 800, color: p.c }}>{p.n}</p>
+                          <p style={{ margin: 0, fontSize: 8.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>{p.d}</p>
+                        </div>
+                        {p.sel && <div style={{ width: 18, height: 18, borderRadius: 9, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 10, fontWeight: 800, animation: 'amPop 0.45s ease' }}>✓</div>}
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ opacity: t > 1300 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Ad Account</label>
+                    <div style={{ ...fieldBox(t > 1500), display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>{t > 1500 ? 'CS-META-01 — Horizon Motors' : 'Select ad account'}</span>
+                      <span style={{ color: '#9fa3ac', fontSize: 9 }}>▾</span>
+                    </div>
+                  </div>
+                  <div style={{ opacity: t > 1900 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Campaign Name</label>
+                    <div style={fieldBox(nameDone)}>{name}{t > 2000 && !nameDone && <span style={{ animation: 'amBlink 0.8s infinite', color: G }}>|</span>}</div>
+                  </div>
+                  <div style={{ opacity: t > 3200 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Description</label>
+                    <div style={{ ...fieldBox(descDone), minHeight: 34, lineHeight: '16px', fontSize: 11 }}>{desc}{t > 3300 && !descDone && <span style={{ animation: 'amBlink 0.8s infinite', color: G }}>|</span>}</div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    <div style={{ flex: 1, opacity: t > 4600 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Region</label>
+                      <div style={fieldBox(t > 4700)}>{t > 4700 ? 'Mumbai' : ''}</div>
+                    </div>
+                    <div style={{ flex: 1.3, opacity: t > 4600 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Schedule</label>
+                      <div style={fieldBox(t > 4900)}>{t > 4900 ? '20/08 – 27/08/2026' : ''}</div>
+                    </div>
+                  </div>
+                  {t > 5100 && (
+                    <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333', animation: 'amFadeUp 0.5s ease' }}>
+                      Budget — <span style={{ color: G }}>₹2,000/day</span> · Est. reach 4.2L – 6.8L
+                    </p>
+                  )}
+                </div>
+                {/* Right: creative preview */}
+                <div style={{ flex: 1, opacity: t > 2600 ? 1 : 0, transform: t > 2600 ? 'translateX(0)' : 'translateX(24px)', transition: 'all 0.6s cubic-bezier(0.22,1,0.36,1)' }}>
+                  <label style={fieldLabel}>Creative Preview</label>
+                  <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden', position: 'relative', background: '#fff' }}>
+                    <StoryArt hue={30} style={{ height: 176, borderRadius: 0 }} />
+                    <span style={{ position: 'absolute', top: 8, right: 8, background: '#fff4e0', border: '1px solid #f2a33c', color: '#a05c00', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 800, letterSpacing: 0.5, padding: '3px 8px', borderRadius: 3 }}>UNPUBLISHED</span>
+                    <div style={{ padding: '8px 10px' }}>
+                      <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>Horizon Motors — Festive Drive</p>
+                      <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>1 creative · Single image · 1080×1080</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {wizFoot(t > 5700)}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 2 — CREATE CAMPAIGN (objective) */}
+        {frame === 2 && (() => {
+          const objectives = ['Awareness', 'Traffic', 'Engagement', 'Leads', 'App promotion', 'Sales']
+          return (
+            <div key="am2" style={{ animation: 'amFadeUp 0.6s ease' }}>
+              {wizHead(2, 'Create Campaign', 5)}
+              <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                <div style={{ flex: 1.4 }}>
+                  <label style={fieldLabel}>Campaign Name</label>
+                  <div style={fieldBox(true)}>{CAMP_NAME}</div>
+                </div>
+                <div style={{ flex: 1, opacity: t > 400 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                  <label style={fieldLabel}>Special Ad Categories</label>
+                  <div style={{ ...fieldBox(false), color: '#9fa3ac' }}>0 categories declared</div>
+                </div>
+              </div>
+              <label style={fieldLabel}>Campaign Objective</label>
+              <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+                {objectives.map((o, i) => {
+                  const sel = i === 1 && t > 1500
+                  return (
+                    <div key={o} style={{ flex: 1, border: `1.5px solid ${sel ? G : '#dee0e7'}`, borderRadius: 6, padding: '10px 6px 9px', textAlign: 'center', background: sel ? 'rgba(52,204,50,0.06)' : '#fff', transition: 'all 0.45s ease', opacity: t > 400 + i * 100 ? 1 : 0.25 }}>
+                      <div style={{ width: 12, height: 12, borderRadius: 6, border: `2px solid ${sel ? G : '#c9cdd4'}`, background: sel ? G : '#fff', margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: sel ? 'amPop 0.45s ease' : 'none' }}>
+                        {sel && <span style={{ color: '#fff', fontSize: 7, fontWeight: 800 }}>✓</span>}
+                      </div>
+                      <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: sel ? 700 : 500, color: sel ? '#1b5e20' : '#555' }}>{o}</span>
+                    </div>
+                  )
+                })}
+              </div>
+              <div style={{ display: 'flex', gap: 10, marginBottom: 12, alignItems: 'flex-end' }}>
+                <div style={{ width: 290, opacity: t > 2400 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                  <label style={fieldLabel}>Buying Type</label>
+                  <div style={{ ...fieldBox(t > 2600), display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{t > 2600 ? 'Auction' : 'Select'}</span>
+                    <span style={{ color: '#9fa3ac', fontSize: 9 }}>▾</span>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 9, opacity: t > 3000 ? 1 : 0.4, transition: 'opacity 0.4s ease' }}>
+                  {toggle(t > 3300)}
+                  <span style={{ fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>Advantage campaign budget</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 9, opacity: 0.55 }}>
+                  {toggle(false)}
+                  <span style={{ fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>A/B test</span>
+                </div>
+              </div>
+              {t > 3900 && (
+                <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: G, animation: 'amFadeUp 0.5s ease' }}>✓ You have all of our recommended settings applied.</p>
+              )}
+              {wizFoot(t > 4400)}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 3 — SETUP AD SET (hero: map + pin + radius) */}
+        {frame === 3 && (() => {
+          const ageTo = Math.round(34 + easeOut((t - 5300) / 900) * 31)
+          const ageW = 30 + easeOut((t - 5300) / 900) * 54
+          return (
+            <div key="am3" style={{ animation: 'amFadeUp 0.6s ease' }}>
+              {wizHead(3, 'Setup Ad Set', 79)}
+              <div style={{ display: 'flex', gap: 10, marginBottom: 9 }}>
+                {[['Conversion Location', 'Website', 400], ['Performance Goal', 'Link Clicks', 800], ['Budget', 'Daily · ₹2,000', 1200], ['Schedule', '20/08 – 27/08', 1500]].map(([l, v, at]) => (
+                  <div key={l} style={{ flex: 1, opacity: t > at ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>{l}</label>
+                    <div style={{ ...fieldBox(t > at + 150), fontSize: 11, padding: '7px 10px' }}>{t > at + 150 ? v : ''}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 9 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ ...fieldLabel, marginBottom: 0 }}>Audience</span>
+                  {['India', 'Mumbai'].map((c, i) => {
+                    const sel = t > 2000 + i * 250
+                    return <span key={c} style={{ background: sel ? '#e8fde8' : '#f5f6f8', border: `1px solid ${sel ? G : '#dee0e7'}`, color: sel ? '#1b5e20' : '#666', fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: sel ? 700 : 500, padding: '4px 12px', borderRadius: 13, transition: 'all 0.4s ease', animation: sel ? 'amPop 0.45s ease' : 'none' }}>{c}{sel ? ' ✓' : ''}</span>
+                  })}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: t > 5200 ? 1 : 0.35, transition: 'opacity 0.4s ease' }}>
+                  <span style={{ ...fieldLabel, marginBottom: 0 }}>Age</span>
+                  <div style={{ width: 130, height: 5, background: '#eef0f3', borderRadius: 3, position: 'relative' }}>
+                    <div style={{ position: 'absolute', left: '8%', width: `${ageW}%`, height: '100%', background: G, borderRadius: 3 }} />
+                    <div style={{ position: 'absolute', top: '50%', left: '8%', transform: 'translate(-50%,-50%)', width: 11, height: 11, borderRadius: 6, background: '#fff', border: `2px solid ${G}`, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                    <div style={{ position: 'absolute', top: '50%', left: `${8 + ageW}%`, transform: 'translate(-50%,-50%)', width: 11, height: 11, borderRadius: 6, background: '#fff', border: `2px solid ${G}`, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                  </div>
+                  <span style={{ fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>18 – {t > 5300 ? ageTo : 34}</span>
+                </div>
+                <div style={{ opacity: t > 6000 ? 1 : 0.35, transition: 'opacity 0.4s ease', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ ...fieldLabel, marginBottom: 0 }}>Placements</span>
+                  <span style={{ background: t > 6100 ? '#e8fde8' : '#f5f6f8', border: `1px solid ${t > 6100 ? G : '#dee0e7'}`, color: t > 6100 ? '#1b5e20' : '#666', fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: t > 6100 ? 700 : 500, padding: '4px 12px', borderRadius: 13, transition: 'all 0.4s ease', animation: t > 6100 ? 'amPop 0.45s ease' : 'none' }}>Advantage{t > 6100 ? ' ✓' : ''}</span>
+                </div>
+              </div>
+              {/* Map pane — hero beat */}
+              <div style={{ position: 'relative', height: 208, borderRadius: 6, overflow: 'hidden', border: '1px solid #dee0e7', background: '#eef2f5', backgroundImage: 'linear-gradient(#e2e8ec 1px, transparent 1px), linear-gradient(90deg, #e2e8ec 1px, transparent 1px)', backgroundSize: '26px 26px', opacity: t > 2600 ? 1 : 0, transform: t > 2600 ? 'translateY(0)' : 'translateY(18px)', transition: 'all 0.7s cubic-bezier(0.22,1,0.36,1)' }}>
+                <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '11%', background: '#dbe7f0' }} />
+                <div style={{ position: 'absolute', left: '13%', top: '44%', right: '26%', height: 7, background: '#d7dee3', borderRadius: 3, transform: 'rotate(-3deg)' }} />
+                <div style={{ position: 'absolute', left: '38%', top: '6%', width: 8, bottom: '8%', background: '#d7dee3', borderRadius: 3, transform: 'rotate(5deg)' }} />
+                <div style={{ position: 'absolute', left: '60%', top: '24%', right: '4%', height: 6, background: '#dde3e8', borderRadius: 3, transform: 'rotate(7deg)' }} />
+                {t > 4200 && (
+                  <div style={{ position: 'absolute', left: 'calc(55% - 78px)', top: 'calc(46% - 78px)', width: 156, height: 156, borderRadius: '50%', border: `2px solid ${G}`, background: 'rgba(52,204,50,0.13)', animation: 'amBloom 0.9s cubic-bezier(0.22,1,0.36,1) forwards' }} />
+                )}
+                {t > 3800 && (
+                  <div style={{ position: 'absolute', left: 'calc(55% - 11px)', top: 'calc(46% - 26px)', animation: 'amDrop 0.6s ease forwards' }}>
+                    <svg width="22" height="28" viewBox="0 0 16 20"><path d="M8 0C3.6 0 0 3.6 0 8c0 5.5 8 12 8 12s8-6.5 8-12c0-4.4-3.6-8-8-8z" fill="#e53935" /><circle cx="8" cy="8" r="3" fill="#fff" /></svg>
+                  </div>
+                )}
+                {t > 4900 && (
+                  <span style={{ position: 'absolute', left: '59%', top: '60%', background: '#000718', color: '#fff', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '3px 9px', borderRadius: 3, animation: 'amFadeUp 0.5s ease' }}>Mumbai · 15 km radius</span>
+                )}
+                <div style={{ position: 'absolute', right: 10, top: 10, background: t > 3700 ? G : '#000718', color: t > 3700 ? '#000718' : '#fff', fontSize: 10, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.6, padding: '6px 14px', borderRadius: 0, transition: 'all 0.3s ease', animation: t > 3700 ? 'amPress 0.45s ease' : 'none' }}>Drop Pin</div>
+                <span style={{ position: 'absolute', left: 12, bottom: 8, fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Mumbai, Maharashtra</span>
+              </div>
+              {wizFoot(t > 6600)}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 4 — SETUP AD */}
+        {frame === 4 && (() => {
+          const pri = t > 2400 ? PRIMARY.slice(0, Math.max(0, Math.floor((t - 2400) / 22))) : ''
+          const priDone = t > 2400 + PRIMARY.length * 22
+          const hl = t > 4000 ? HEADLINE.slice(0, Math.max(0, Math.floor((t - 4000) / 35))) : ''
+          const hlDone = t > 4000 + HEADLINE.length * 35
+          const tabIdx = t > 6800 ? 3 : t > 6200 ? 2 : t > 5600 ? 1 : 0
+          const tabs = ['FACEBOOK', 'INSTAGRAM', 'MESSENGER', 'AUDIENCE NETWORK']
+          return (
+            <div key="am4" style={{ animation: 'amFadeUp 0.6s ease' }}>
+              {wizHead(4, 'Setup Ad', t > 7000 ? 100 : 92)}
+              <div style={{ display: 'flex', gap: 22 }}>
+                {/* Left: ad build */}
+                <div style={{ flex: 1.2, display: 'flex', flexDirection: 'column', gap: 9 }}>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    <div style={{ flex: 1.1, opacity: t > 400 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Facebook Page</label>
+                      <div style={{ ...fieldBox(t > 500), fontSize: 11, padding: '7px 10px' }}>{t > 500 ? 'ConvergenSEE — Powai' : ''}</div>
+                    </div>
+                    <div style={{ flex: 1, opacity: t > 800 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Instagram Account</label>
+                      <div style={{ ...fieldBox(t > 900), fontSize: 11, padding: '7px 10px' }}>{t > 900 ? '@convergensee.powai' : ''}</div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    <div style={{ flex: 1, opacity: t > 1300 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Ad Type</label>
+                      <div style={{ ...fieldBox(t > 1400), fontSize: 11, padding: '7px 10px' }}>{t > 1400 ? 'Create ad' : ''}</div>
+                    </div>
+                    <div style={{ flex: 1.1, opacity: t > 1300 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Format</label>
+                      <div style={{ ...fieldBox(t > 1500), fontSize: 11, padding: '7px 10px' }}>{t > 1500 ? 'Single Image/Video' : ''}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={fieldLabel}>Media Placement</label>
+                    {[{ l: 'Feeds, In-stream ads for videos and reels', s: '11 placements', on: t > 1900 }, { l: 'Stories and Reels', s: '7 placements', on: false }].map(r => (
+                      <div key={r.l} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0' }}>
+                        <div style={{ width: 12, height: 12, borderRadius: 6, border: `2px solid ${r.on ? G : '#c9cdd4'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'border-color 0.4s ease' }}>
+                          {r.on && <div style={{ width: 6, height: 6, borderRadius: 3, background: G, animation: 'amPop 0.4s ease' }} />}
+                        </div>
+                        <span style={{ fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: r.on ? 700 : 400, color: r.on ? '#333' : '#777' }}>{r.l}</span>
+                        <span style={{ fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: r.on ? G : '#9fa3ac' }}>{r.s}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ opacity: t > 2300 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Primary Text</label>
+                    <div style={{ ...fieldBox(priDone), minHeight: 32, lineHeight: '16px', fontSize: 11 }}>{pri}{t > 2400 && !priDone && <span style={{ animation: 'amBlink 0.8s infinite', color: G }}>|</span>}</div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    <div style={{ flex: 1, opacity: t > 3900 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Headline</label>
+                      <div style={{ ...fieldBox(hlDone), fontSize: 11, padding: '7px 10px' }}>{hl}{t > 4000 && !hlDone && <span style={{ animation: 'amBlink 0.8s infinite', color: G }}>|</span>}</div>
+                    </div>
+                    <div style={{ flex: 0.8, opacity: t > 4700 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                      <label style={fieldLabel}>Call To Action</label>
+                      <div style={{ ...fieldBox(t > 4800), fontSize: 11, padding: '7px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>{t > 4800 ? 'Book Now' : ''}</span>
+                        <span style={{ color: '#9fa3ac', fontSize: 9 }}>▾</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ opacity: t > 4900 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
+                    <label style={fieldLabel}>Website URL</label>
+                    <div style={{ ...fieldBox(t > 5000), fontSize: 11, padding: '7px 10px' }}>{t > 5000 ? 'horizonmotors.in/festive-drive' : ''}</div>
+                  </div>
+                  {t > 5300 && (
+                    <span style={{ alignSelf: 'flex-start', background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '4px 12px', borderRadius: 12, animation: 'amPop 0.45s ease' }}>Advantage+ creative — Enhancements (8/9) ✓</span>
+                  )}
+                </div>
+                {/* Right: ad preview */}
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                    <label style={{ ...fieldLabel, marginBottom: 0 }}>Ad Preview</label>
+                    {toggle(t > 2600)}
+                  </div>
+                  {t > 2900 ? (
+                    <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden', animation: 'amFadeUp 0.5s ease', background: '#fff' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px' }}>
+                        <div style={{ width: 24, height: 24, borderRadius: 12, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 12, color: '#000718', flexShrink: 0 }}>C</div>
+                        <div>
+                          <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>ConvergenSEE — Powai</p>
+                          <p style={{ margin: 0, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Sponsored · {tabs[tabIdx].charAt(0) + tabs[tabIdx].slice(1).toLowerCase()}</p>
+                        </div>
+                      </div>
+                      <StoryArt hue={30} style={{ height: 150, borderRadius: 0 }} />
+                      <div style={{ padding: '8px 10px' }}>
+                        <p style={{ margin: '0 0 6px', fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#333', lineHeight: '14px', minHeight: 28 }}>{pri}</p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 800, color: '#000718' }}>{hlDone ? HEADLINE : hl}</p>
+                            <p style={{ margin: 0, fontSize: 8.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>horizonmotors.in</p>
+                          </div>
+                          <div style={{ border: `1.5px solid ${G}`, color: '#1b5e20', background: '#e8fde8', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '5px 12px', borderRadius: 4, opacity: t > 4800 ? 1 : 0.4, transition: 'opacity 0.4s ease' }}>Book Now</div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ border: '1.5px dashed #c9cdd4', borderRadius: 6, height: 252, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Turn on preview to render your ad</p>
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', gap: 4, marginTop: 8 }}>
+                    {tabs.map((p, i) => {
+                      const on = t > 2900 && i === tabIdx
+                      return <span key={p} style={{ flex: 1, textAlign: 'center', fontSize: 7.5, fontFamily: "'Archivo', sans-serif", fontWeight: on ? 800 : 600, color: on ? '#000718' : '#9fa3ac', background: on ? G : '#f5f6f8', border: `1px solid ${on ? G : '#dee0e7'}`, padding: '4px 2px', borderRadius: 3, transition: 'all 0.3s ease', letterSpacing: 0.3, whiteSpace: 'nowrap', overflow: 'hidden' }}>{p}</span>
+                    })}
+                  </div>
+                </div>
+              </div>
+              {wizFoot(t > 7000, 'Publish')}
+            </div>
+          )
+        })()}
+
+        {/* FRAME 5 — LAUNCH & MANAGE */}
+        {frame === 5 && (() => {
+          const rows = [
+            { n: 'Festive Drive · Mumbai', end: 'Ends 27/08/2026', bud: '₹2,000', res: 1204, reach: 6218440, cost: 0.85, spent: 1287555, hero: true },
+            { n: 'Horizon SUV Launch · Pune', end: 'Ends 05/09/2026', bud: '₹1,500', res: 842, reach: 4120118, cost: 1.12, spent: 943208 },
+            { n: 'Test Drive Week · Thane', end: 'Ends 31/08/2026', bud: '₹1,200', res: 617, reach: 2864902, cost: 1.28, spent: 789760 },
+            { n: 'Monsoon Service Camp', end: 'Ends 12/09/2026', bud: '₹1,000', res: 388, reach: 1945331, cost: 1.44, spent: 558913 },
+            { n: 'EV Teaser · Navi Mumbai', end: 'Ends 20/09/2026', bud: '₹800', res: 296, reach: 1408269, cost: 1.61, spent: 476530 },
+          ]
+          const prog = easeOut((t - 1900) / 2200)
+          return (
+            <div key="am5" style={{ animation: 'amFadeUp 0.6s ease' }}>
+              {t < 3000 && (
+                <div style={{ position: 'absolute', right: 24, top: 30, zIndex: 60, display: 'flex', alignItems: 'center', gap: 8, background: '#000718', border: `1.5px solid ${G}`, borderRadius: 4, padding: '8px 14px', animation: 'amSlideIn 0.5s cubic-bezier(0.22,1,0.36,1)', opacity: t > 2400 ? 0 : 1, transition: 'opacity 0.5s ease' }}>
+                  <span style={{ width: 16, height: 16, borderRadius: 8, background: G, color: '#000718', fontSize: 9, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✓</span>
+                  <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#fff' }}>Published — Festive Drive · Mumbai is live</span>
+                </div>
+              )}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Manage Campaigns</h3>
+                <span style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 600, padding: '5px 12px', borderRadius: 14 }}>Horizon Motors · CS-META-01 ▾</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                <div style={{ display: 'flex', gap: 16 }}>
+                  {['META CAMPAIGNS', 'GOOGLE CAMPAIGNS'].map((tab, i) => (
+                    <span key={tab} style={{ fontSize: 10.5, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, letterSpacing: 0.5, color: i === 0 ? '#000718' : '#9fa3ac', paddingBottom: 5, borderBottom: i === 0 ? `2px solid ${G}` : '2px solid transparent' }}>{tab}</span>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', gap: 6 }}>
+                  {['Advance filters', 'A/B test', 'Charts', 'Export', 'Sort by'].map(c => (
+                    <span key={c} style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.4, padding: '5px 12px', borderRadius: 0 }}>{c}</span>
+                  ))}
+                </div>
+              </div>
+              <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', background: '#f5f6f8', padding: '7px 12px', alignItems: 'center' }}>
+                  {[['', 0.5], ['Campaign', 2.2], ['Delivery', 1.05], ['Bid strategy', 1.0], ['Budget', 0.8], ['Results', 1.1], ['Reach', 1.05], ['Cost/result', 0.9], ['Amount spent', 1.05]].map(([h, f], i) => (
+                    <span key={i} style={{ flex: f, fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }}>{h}</span>
+                  ))}
+                </div>
+                {rows.map((r, i) => {
+                  const on = t > 1400 + i * 350
+                  return (
+                    <div key={r.n} style={{ display: 'flex', alignItems: 'center', padding: '7px 12px', borderTop: '1px solid #f0f0f0', background: r.hero && on ? 'rgba(52,204,50,0.05)' : '#fff', transition: 'background 0.5s ease' }}>
+                      <div style={{ flex: 0.5 }}>{toggle(on)}</div>
+                      <div style={{ flex: 2.2 }}>
+                        <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>{r.n}</p>
+                        <p style={{ margin: 0, fontSize: 8.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>{r.end}</p>
+                      </div>
+                      <div style={{ flex: 1.05 }}>
+                        <span style={{ background: on ? '#e8fde8' : '#f5f6f8', border: `1px solid ${on ? G : '#dee0e7'}`, color: on ? '#1b5e20' : '#9fa3ac', fontSize: 8.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '3px 8px', borderRadius: 10, transition: 'all 0.4s ease', whiteSpace: 'nowrap' }}>{on ? 'Active' : 'Campaign paused'}</span>
+                      </div>
+                      <span style={{ flex: 1.0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#666' }}>Highest volume</span>
+                      <div style={{ flex: 0.8 }}>
+                        <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>{r.bud}</p>
+                        <p style={{ margin: 0, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Daily</p>
+                      </div>
+                      {r.hero ? (
+                        <>
+                          <div style={{ flex: 1.1 }}>
+                            <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>{on ? formatIN(prog * r.res) : '—'}</p>
+                            <p style={{ margin: 0, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Link clicks</p>
+                          </div>
+                          <span style={{ flex: 1.05, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", color: '#666' }}>{on ? formatIN(prog * r.reach) : '—'}</span>
+                          <span style={{ flex: 0.9, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", color: '#666' }}>{on ? '₹' + (prog * r.cost).toFixed(2) : '—'}</span>
+                          <span style={{ flex: 1.05, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>{on ? '₹' + formatIN(prog * r.spent) : '—'}</span>
+                        </>
+                      ) : (
+                        <>
+                          <div style={{ flex: 1.1 }}>
+                            {on ? (
+                              <div style={{ animation: 'amFadeUp 0.5s ease' }}>
+                                <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>{formatIN(r.res)}</p>
+                                <p style={{ margin: 0, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Link clicks</p>
+                              </div>
+                            ) : <p style={{ margin: 0, fontSize: 10.5, color: '#9fa3ac' }}>—</p>}
+                          </div>
+                          <span style={{ flex: 1.05, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", color: '#666' }}>{on ? formatIN(r.reach) : '—'}</span>
+                          <span style={{ flex: 0.9, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", color: '#666' }}>{on ? '₹' + r.cost.toFixed(2) : '—'}</span>
+                          <span style={{ flex: 1.05, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>{on ? '₹' + formatIN(r.spent) : '—'}</span>
+                        </>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 6 — MEASURE: InsightIT performance marketing (hero) */}
+        {frame === 6 && (() => {
+          const kpis = [
+            { l: 'Impressions', v: 18642310, d: '▲ 14.2%', pts: '0,19 14,15 28,17 42,12 56,13 70,9 84,10 100,5' },
+            { l: 'Leads', v: 4312, d: '▲ 9.6%', pts: '0,18 14,16 28,13 42,14 56,10 70,11 84,7 100,4' },
+            { l: 'CPL', v: 432, pre: '₹', d: '▼ 6.8%', pts: '0,6 14,9 28,8 42,12 56,11 70,14 84,13 100,17' },
+            { l: 'Reach', v: 6218440, d: '▲ 11.3%', pts: '0,19 14,17 28,14 42,15 56,11 70,8 84,9 100,5' },
+          ]
+          const bars = [32, 44, 38, 56, 50, 68, 60, 80, 72, 92, 84, 104, 96, 118]
+          const sProg = easeOut((t - 1600) / 1400)
+          return (
+            <div key="am6" style={{ animation: 'amFadeUp 0.6s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Performance Marketing</h3>
+                  {['META', 'GOOGLE'].map((tab, i) => (
+                    <span key={tab} style={{ fontSize: 10.5, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, letterSpacing: 0.5, color: i === 0 ? '#000718' : '#9fa3ac', paddingBottom: 3, borderBottom: i === 0 ? `2px solid ${G}` : '2px solid transparent' }}>{tab}</span>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', gap: 6 }}>
+                  {['All locations ▾', 'Lifetime ▾'].map(c => (
+                    <span key={c} style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, padding: '5px 12px', borderRadius: 0 }}>{c}</span>
+                  ))}
+                  <span style={{ background: G, color: '#000718', fontSize: 9.5, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, padding: '5px 14px', borderRadius: 0 }}>Export All</span>
+                </div>
+              </div>
+              {/* KPI cards */}
+              <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                {kpis.map((k, i) => (
+                  <div key={k.l} style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: '9px 12px', background: '#fff' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+                      <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.3 }}>{k.l}</p>
+                      <span style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 7.5, fontFamily: "'Archivo', sans-serif", fontWeight: 800, padding: '2px 6px', borderRadius: 8 }}>{k.d}</span>
+                    </div>
+                    <p style={{ margin: '0 0 4px', fontSize: 21, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, color: i === 1 ? G : '#000718', lineHeight: 1 }}>{k.pre || ''}{formatIN(easeOut((t - 200 - i * 150) / 1800) * k.v)}</p>
+                    <svg width="100%" height="20" viewBox="0 0 100 22" preserveAspectRatio="none">
+                      <polyline points={k.pts} fill="none" stroke={G} strokeWidth="1.8" pathLength="100" strokeDasharray="100" strokeDashoffset="100" style={{ animation: t > 400 + i * 150 ? 'amDash 1.2s ease forwards' : 'none' }} />
+                    </svg>
+                  </div>
+                ))}
+              </div>
+              {/* Clicks / CTR / CPC strip */}
+              <div style={{ display: 'flex', gap: 10, marginBottom: 10, opacity: t > 1600 ? 1 : 0.3, transition: 'opacity 0.5s ease' }}>
+                {[['Clicks', formatIN(sProg * 214860), '▲ 12.4%'], ['CTR', (sProg * 1.15).toFixed(2) + '%', '▲ 0.21'], ['CPC', '₹' + (sProg * 3.47).toFixed(2), '▼ 8.1%']].map(([l, v, d]) => (
+                  <div key={l} style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: '7px 12px', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.3 }}>{l}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, color: '#000718' }}>{v}</span>
+                      <span style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 7.5, fontFamily: "'Archivo', sans-serif", fontWeight: 800, padding: '2px 6px', borderRadius: 8 }}>{d}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Charts */}
+              <div style={{ display: 'flex', gap: 10 }}>
+                <div style={{ flex: 1.35, border: '1px solid #dee0e7', borderRadius: 6, padding: 12, background: '#fff' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <p style={{ margin: 0, fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase' }}>Amount Spent</p>
+                    <span style={{ fontSize: 8.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Daily · Maximum ▾</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 128 }}>
+                    {bars.map((h, i) => t > 2400 && (
+                      <div key={i} style={{ flex: 1, height: h, background: i === bars.length - 1 ? G : 'rgba(52,204,50,0.35)', borderRadius: '3px 3px 0 0', transformOrigin: 'bottom', animation: `amGrow 0.7s ease forwards ${i * 90}ms`, transform: 'scaleY(0)' }} />
+                    ))}
+                  </div>
+                </div>
+                <div style={{ flex: 1, border: '1px solid #dee0e7', borderRadius: 6, padding: 12, background: '#fff' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                    <p style={{ margin: 0, fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase' }}>Impressions &amp; Clicks</p>
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      {[['Impressions', G], ['Clicks', '#000718']].map(([l, c]) => (
+                        <span key={l} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#666' }}>
+                          <span style={{ width: 7, height: 7, borderRadius: 4, background: c }} />{l}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <svg width="100%" height="128" viewBox="0 0 420 128" preserveAspectRatio="none">
+                    <path d="M0 104 C 40 92, 70 96, 105 80 C 140 64, 175 70, 210 58 C 245 46, 280 50, 315 38 C 350 28, 385 30, 420 20" fill="none" stroke={G} strokeWidth="2.2" pathLength="100" strokeDasharray="100" strokeDashoffset="100" style={{ animation: t > 3400 ? 'amDash 1.6s ease forwards' : 'none' }} />
+                    <path d="M0 116 C 45 112, 80 108, 120 102 C 160 96, 200 90, 240 84 C 280 78, 330 72, 380 66 C 395 64, 410 62, 420 60" fill="none" stroke="#000718" strokeWidth="1.8" opacity="0.55" pathLength="100" strokeDasharray="100" strokeDashoffset="100" style={{ animation: t > 3700 ? 'amDash 1.9s ease forwards' : 'none' }} />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 7 — CLOSE */}
+        {frame === 7 && (
+          <div key="am7" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center', animation: 'amFadeUp 0.7s ease' }}>
+            <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
+              Every <span style={{ color: G }}>rupee</span>, every <span style={{ color: G }}>platform</span>,<br />one dashboard.
+            </p>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>Performance marketing — planned, launched, managed, measured.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>AmplifyIT</span>
+              <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
+              <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 0 — idle */}
+        {frame === 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center' }}>
+            <div style={{ animation: 'amFadeUp 0.5s ease' }}>
+              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>AmplifyIT</p>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Performance marketing across Meta &amp; Google</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Lower-third overlay band */}
+      {overlay && (
+        <div key={`band-${frame}`} style={{
+          background: 'rgba(0,7,24,0.95)', borderTop: `2px solid ${G}`, padding: '11px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          animation: 'amBandUp 0.5s ease',
+        }}>
+          <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#fff' }}>{overlay.main}</p>
+          <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: G, fontWeight: 500 }}>{overlay.sub}</p>
+        </div>
+      )}
     </div>
   )
 }
@@ -3126,8 +5115,79 @@ function InvoiceContent({ controls, tileVariants }) {
   )
 }
 
+// ─── AdaptIT content ──────────────────────────────────────────────────────────
+function AdaptContent({ controls, tileVariants }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
+      <StatTiles tiles={MODULES.AdaptIT.tiles} controls={controls} tileVariants={tileVariants} />
+      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
+        <CTACard headline="Adapt every campaign to every market!" sub="Localise messaging, visuals, pricing and compliance for each region automatically." cta="New Market" controls={controls} custom={0} />
+        <ChartCard title="Localisation Coverage" controls={controls} custom={1}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <HorizRow label="North" value={92} max={100} unit="%" />
+            <HorizRow label="West" value={88} max={100} unit="%" />
+            <HorizRow label="South" value={84} max={100} unit="%" />
+            <HorizRow label="East" value={71} max={100} unit="%" />
+          </div>
+        </ChartCard>
+        <ChartCard title="Assets by Language" controls={controls} custom={2}>
+          <VertBars data={[{l:'HI',v:64},{l:'EN',v:58},{l:'TA',v:38},{l:'TE',v:32},{l:'MR',v:28},{l:'BN',v:28}]} height={200} />
+        </ChartCard>
+      </div>
+      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
+        <ListCard title="Active Market Rollouts" rows={[
+          { isPen: false, label: 'Festive Drive · North', sub: 'Hindi · 42 assets live' },
+          { isPen: false, label: 'Monsoon Care · South', sub: 'Tamil + Telugu · 31 assets' },
+          { isPen: false, label: 'City Lights · West', sub: 'Marathi · 26 assets' },
+          { isPen: false, label: 'Harvest Fest · East', sub: 'Bengali · 19 assets' },
+          { isPen: false, label: 'Year-End Sale · PAN India', sub: '9 languages · 87 assets' },
+        ]} />
+        <ListCard title="Compliance & Pricing" rows={[
+          { isPen: false, label: 'Regional pricing synced', sub: '12 markets · updated 16/03/2025' },
+          { isPen: false, label: 'Ad disclaimers updated', sub: '9 languages · legal approved' },
+          { isPen: false, label: 'Festival calendar mapped', sub: '28 events · next: Gudi Padwa' },
+          { isPen: false, label: 'Format & currency checks', sub: '0 issues across active markets' },
+        ]} />
+      </div>
+    </div>
+  )
+}
+
+// ─── EngageIT content ─────────────────────────────────────────────────────────
+function EngageContent({ controls, tileVariants }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
+      <StatTiles tiles={MODULES.EngageIT.tiles} controls={controls} tileVariants={tileVariants} />
+      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
+        <CTACard headline="Keep every customer in the conversation!" sub="Track touchpoints, trigger follow-ups and grow retention across every channel." cta="New Journey" controls={controls} custom={0} />
+        <ChartCard title="Journey Funnel" controls={controls} custom={1} h={296}>
+          <FunnelViz stages={[{l:'Reached',v:'38K'},{l:'Engaged',v:'12.4K'},{l:'Responded',v:'5.2K'},{l:'Converted',v:'1.9K'}]} />
+        </ChartCard>
+        <ChartCard title="Engagement by Channel" controls={controls} custom={2}>
+          <VertBars data={[{l:'WhatsApp',v:46},{l:'Email',v:28},{l:'SMS',v:14},{l:'Push',v:9},{l:'Web',v:6}]} height={200} />
+        </ChartCard>
+      </div>
+      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
+        <ListCard title="Active Journeys" rows={[
+          { isPen: false, label: 'Test-drive follow-up', sub: 'WhatsApp · 1,240 in journey' },
+          { isPen: false, label: 'Service reminder', sub: 'SMS + Email · 3,480 in journey' },
+          { isPen: false, label: 'Abandoned enquiry nudge', sub: 'Email · 860 in journey' },
+          { isPen: false, label: 'Loyalty win-back', sub: 'WhatsApp · 620 in journey' },
+          { isPen: false, label: 'Delivery feedback', sub: 'WhatsApp · 410 in journey' },
+        ]} />
+        <ListCard title="Recent Automations" rows={[
+          { isPen: false, label: 'Re-engagement burst', sub: '2,140 sent · 31% open · 18/03/2025' },
+          { isPen: false, label: 'Birthday offers', sub: '380 sent · 42% open · 17/03/2025' },
+          { isPen: false, label: 'Segment refresh', sub: '6 segments rebuilt · 16/03/2025' },
+          { isPen: false, label: 'Churn-risk alerts', sub: '92 flagged · routed to CRM' },
+        ]} />
+      </div>
+    </div>
+  )
+}
+
 // ─── Main export ─────────────────────────────────────────────────────────────
-export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT', onModuleChange, stepCount = 0, showWorkflow = false }) {
+export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT', onModuleChange, stepCount = 0, showWorkflow = false, onFrame }) {
   const containerRef = useRef()
   const [scale, setScale] = useState(1)
   const controls = useAnimation()
@@ -3163,7 +5223,10 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
     <div ref={containerRef} style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative', background: '#f9f9fd', borderRadius: 8 }}>
       <div style={{ width: 1440, height: 930, transform: `scale(${scale})`, transformOrigin: 'top left', position: 'relative', background: '#f9f9fd' }}>
 
-        <Sidebar active={activeModule} org={activeModule === 'ScriptIT' && showWorkflow ? { initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' } : undefined} />
+        <Sidebar active={activeModule} insightSub={activeModule === 'InsightIT' && showWorkflow} org={
+          ['ScriptIT', 'AmplifyIT', 'InsightIT', 'LocateIT', 'CreateIT', 'AIGenIT'].includes(activeModule) && showWorkflow ? { initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' }
+          : activeModule === 'SocialiseIT' && showWorkflow ? { initials: 'C', name: 'ConvergenSEE', sub: 'Automobile Ind' }
+          : undefined} />
         <Header />
 
         {/* Main content */}
@@ -3206,20 +5269,25 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
 
           {/* Module content */}
           <div style={{ position: 'relative', width: 1121 }}>
-            {activeModule === 'LocateIT' && showWorkflow && <LocateWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'LocateIT' && showWorkflow && <LocateWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
             {activeModule === 'LocateIT' && !showWorkflow && <LocateContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'AmplifyIT'   && <AmplifyContent   controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'CreateIT' && showWorkflow && <CreateContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'AmplifyIT' && showWorkflow && <AmplifyWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'AmplifyIT' && !showWorkflow && <AmplifyContent controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'CreateIT' && showWorkflow && <CreateContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
             {activeModule === 'CreateIT' && !showWorkflow && <CreateStandardContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'SocialiseIT' && <SocialiseContent controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'SocialiseIT' && showWorkflow && <SocialiseWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'SocialiseIT' && !showWorkflow && <SocialiseContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InfluenceIT' && <InfluenceContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
             {activeModule === 'ScriptIT' && !showWorkflow && <ScriptContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'AIGenIT' && showWorkflow && <AIGenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} />}
+            {activeModule === 'AIGenIT' && showWorkflow && <AIGenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
             {activeModule === 'AIGenIT' && !showWorkflow && <AIGenContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'SearchIT'    && <SearchContent    controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InvoiceIT'   && <InvoiceContent   controls={controls} tileVariants={tileVariants} />}
-            {(activeModule === 'InsightIT' || !['LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT'].includes(activeModule)) &&
+            {activeModule === 'AdaptIT'     && <AdaptContent     controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'EngageIT'    && <EngageContent    controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'InsightIT' && showWorkflow && <InsightWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {((activeModule === 'InsightIT' && !showWorkflow) || !['InsightIT','LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT'].includes(activeModule)) &&
               <InsightContent controls={controls} tileVariants={tileVariants} />}
           </div>
         </div>

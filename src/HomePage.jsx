@@ -80,7 +80,9 @@ const BtnOutlineGreen = ({ children, style, className, ...props }) => (
 function Hero() {
   return (
     <section style={{
-      position: 'relative', height: '100vh', display: 'flex',
+      // 100vh isn't compensated by the laptop-scale body zoom — divide by --pz
+      // so the hero still covers the full screen on 1025–1727px viewports.
+      position: 'relative', height: 'calc(100vh / var(--pz, 1))', display: 'flex',
       alignItems: 'center', justifyContent: 'center',
       overflow: 'hidden', textAlign: 'center',
       background: DARK, padding: '0 20px',
@@ -419,14 +421,14 @@ function CHNC() {
         {/* Stage height caps at the dashboard's rendered height + dock + pin
             runway: on tall screens the raw 100vh left a huge empty band
             between the dock and the next section. */}
-        <div style={{ height: isSmall ? 'auto' : `min(100vh, ${dashH + 250}px)`, position: 'relative' }}>
+        <div style={{ height: isSmall ? 'auto' : `min(calc(100vh / var(--pz, 1)), ${dashH + 250}px)`, position: 'relative' }}>
           {/* Small screens: no 100vh scroll-pin (the shrunken dashboard left a
               huge blank gap) — normal flow, with bottom padding reserving room
               for the absolutely-positioned dock below the dashboard. */}
           <div style={{
             ...(isSmall
               ? { position: 'relative', paddingTop: 20, paddingBottom: 110 }
-              : { position: 'sticky', top: 84, height: `min(calc(100vh - 220px), ${dashH + 20}px)`, paddingTop: '20px' }),
+              : { position: 'sticky', top: 84, height: `min(calc(100vh / var(--pz, 1) - 220px), ${dashH + 20}px)`, paddingTop: '20px' }),
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'flex-start',
             overflow: 'visible',
