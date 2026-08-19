@@ -79,7 +79,12 @@ img, video, svg { max-width: 100%; }
    ≤1024px (tablet/mobile nav breakpoint) and ≥1728px are untouched.
    Viewport units are NOT compensated by zoom (a 100vh hero would render at
    only zoom × viewport height), so --pz mirrors the factor and full-viewport
-   sections use calc(100vh / var(--pz, 1)) to keep covering the screen. */
+   sections use calc(100vh / var(--pz, 1)) to keep covering the screen.
+   NOTE for scroll-linked animations: under zoom, element offsetTop (layout px)
+   and window.scrollY (visual px) diverge by the zoom factor, and framer-motion's
+   useScroll({ target }) measures via offsetTop — so it fires late on zoomed
+   widths. Scroll-driven sections must use the rect-based useVisualScrollProgress
+   hook (src/useVisualScrollProgress.js) instead of useScroll with a target. */
 :root { --pz: 1; }
 @media (min-width: 1025px) and (max-width: 1219px) { body { zoom: 0.72; } :root { --pz: 0.72; } }
 @media (min-width: 1220px) and (max-width: 1359px) { body { zoom: 0.76; } :root { --pz: 0.76; } }

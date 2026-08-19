@@ -9,7 +9,8 @@ import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import { motion, useScroll, useTransform, useMotionValue, useSpring, animate, useInView } from 'framer-motion'
+import { motion, useTransform, useMotionValue, useSpring, animate, useInView } from 'framer-motion'
+import useVisualScrollProgress from './useVisualScrollProgress'
 import CHNCDock from './ui/dock'
 import useResponsive from './useResponsive'
 import { withPose } from './lib/teamRoster'
@@ -258,15 +259,10 @@ function CHNC() {
   const dashH = Math.round(dashW * 930 / 1440) // rendered dashboard height (aspect 1440/930)
   const shiftX = Math.round((width - dashW) / 2 + 4)
 
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ['start start', 'end end'],
-  })
-
-  const { scrollYProgress: tiltProgress } = useScroll({
-    target: scrollRef,
-    offset: ['start 0.85', 'start -0.15'],
-  })
+  // Rect-based progress instead of framer's useScroll({ target }): the laptop
+  // -scale zoom (globals.css) breaks useScroll's offsetTop-based measurement,
+  // firing scroll animations late on 1025–1727px viewports.
+  const tiltProgress = useVisualScrollProgress(scrollRef, ['start 0.85', 'start -0.15'])
   const rotateXRaw    = useTransform(tiltProgress, [0, 1], [32, 0])
   const introScaleRaw = useTransform(tiltProgress, [0, 1], [0.45, 0.88])
 
@@ -334,7 +330,7 @@ function CHNC() {
   // Start point is deliberately late ('start 0.25'): progress stays at 0 until the
   // grid's top has risen to a quarter down the viewport, i.e. all nine cards are on
   // screen and readable. Only then does scrolling begin to pour them into the funnel.
-  const { scrollYProgress: flowRaw } = useScroll({ target: flowRef, offset: ['start 0.25', 'end 0.5'] })
+  const flowRaw = useVisualScrollProgress(flowRef, ['start 0.25', 'end 0.5'])
   // Spring-smooth the raw scroll so motion glides instead of tracking wheel ticks.
   const flow = useSpring(flowRaw, { stiffness: 45, damping: 22, mass: 0.8 })
 
