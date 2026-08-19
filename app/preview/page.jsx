@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import DevicePreview from '@/DevicePreview'
 
 export const metadata = {
@@ -6,9 +5,9 @@ export const metadata = {
   robots: { index: false, follow: false },
 }
 
-// Dev-only tool: try any page at real device viewport sizes (iPhone, iPad,
-// MacBook, desktop presets + custom). 404s in production builds.
+// Internal tool: try any page at real device viewport sizes (iPhone, iPad,
+// MacBook, desktop presets + custom). Unlisted and noindexed, but reachable
+// in production so the team can check the hosted site too.
 export default function Page() {
-  if (process.env.NODE_ENV === 'production') notFound()
   return <DevicePreview />
 }

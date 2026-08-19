@@ -1,6 +1,6 @@
 'use client'
 
-// Dev-only device preview harness (served at /preview, see app/preview/page.jsx).
+// Device preview harness (served at /preview, see app/preview/page.jsx).
 // Renders any site page in a same-origin iframe at real device viewport sizes,
 // so useResponsive breakpoints, the mobile nav CSS and the laptop-scale zoom in
 // globals.css all behave exactly as they would on the physical device.
@@ -126,7 +126,7 @@ export default function DevicePreview() {
         <div style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, letterSpacing: 0.5 }}>
           DEVICE <span style={{ color: GREEN }}>PREVIEW</span>
         </div>
-        <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>dev-only · not in production builds</div>
+        <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>internal tool · unlisted &amp; noindexed</div>
 
         <div style={label}>Page</div>
         <select
