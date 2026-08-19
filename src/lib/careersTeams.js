@@ -63,9 +63,11 @@ export const TEAM_GROUPS = [
     ],
     blurb: 'We think as far as we can for your brand. Bold ideas, sharp execution, and the creativity to make you stand out. Then we bring it all to life with care and precision.',
     members: [
-      'Ashwin Kurup', 'Rakshita Srivastava', 'Charvak Heramb', 'Aastha Goyal',
-      'Alen Sam', 'Bhoomi Jain', 'Ganesh Yedala', 'Mahek Kankaria',
-      'Shreya Chavan', 'Tanushri Vaidya', 'Wilson Thomas', 'Riddhi Modi',
+      'Susan Fernando', 'Vrajesh Daru', 'Rakshita Srivastava', 'Raj Sawant',
+      'Ganesh Yedala', 'Wilson Thomas', 'Shreya Chavan', 'Sonali Belwalkar',
+      'Advait Dawal', 'Moazzam Ali', 'Mustafa Ansari', 'Sandesh Singh',
+      'Sanika Nagulkar', 'Harshali Sonawane', 'Fawwaz Bhati', 'Divya Mittal',
+      'Keerti Varma',
     ],
   },
   {
@@ -87,15 +89,19 @@ export const TEAM_GROUPS = [
     ],
     blurb: "We work with brands every single day to make sure everything runs smoothly. Communication, execution, support — we're the ones making sure you always feel taken care of.",
     members: [
-      'Hemant Tambewagh', 'Palak Kothari', 'Rakshit Bangera',
-      'Rohan Kharwar', 'Tanvi Jadhav', 'Vikrant Shedge',
+      'Bhawani Singh Bhati', 'Palak Kothari', 'Rakshit Bangera',
+      'Rohan Kharwar', 'Rohit Kanojiya', 'Tanvi Jadhav', 'Vikrant Shedge',
+      'Priya Thakur', 'Janhavi Thorat', 'Nikita Salve',
     ],
   },
   {
     name: 'People Experience',
     openings: [],
     blurb: 'We make sure people have a great time. Our job is helping brands perform while keeping the human experience at the center. Results matter, but so does how people feel along the way!',
-    members: ['Minakshi Chaugule', 'Shailesh Nair'],
+    members: [
+      'Minakshi Chaugule', 'Sailesh Nair', 'Amin Khan', 'Prashant Birjudar',
+      'Kishor Gaikwad', 'Pranay Valecha', 'Sakshi Bhushan Mandekar',
+    ],
   },
   {
     name: 'Digital Strategy',
@@ -129,8 +135,8 @@ export const TEAM_GROUPS = [
     ],
     blurb: 'The thinkers who never stop running. We research, we dig, we question everything to understand how to make your brand bigger, better, and sharper online.',
     members: [
-      'Johin Jose', 'Vidhyondra Bansode', 'Bhawani Singh Bhati',
-      'Ransley Moraes', 'Akansha Gwari',
+      'Akansha Gwari', 'Johin Jose', 'Aman Rawat', 'Krish Dsilva',
+      'Ransley Moraes', 'Charvak Heramb', 'Muskan Aahi',
     ],
   },
   {
@@ -151,10 +157,7 @@ export const TEAM_GROUPS = [
       },
     ],
     blurb: "We partner with brands who want to make a difference. Not everyone is a fit, and that's okay. We're here for the ones ready to do real work and create real impact.",
-    members: [
-      'Anand Radhakrishnan', 'Karan Khanna', 'Angel Chaturvedi',
-      'Avinab Saha', 'Reetu Sonar', 'Archana Vaghela', 'Ria Mitra',
-    ],
+    members: ['Anand Radhakrishnan', 'Angel Chaturvedi'],
   },
   {
     name: 'Account Management',
@@ -174,7 +177,10 @@ export const TEAM_GROUPS = [
       },
     ],
     blurb: "Your daily champions. We bridge your vision and our execution, managing every detail so nothing slips through the cracks. We're here to make sure you're heard, and your goals are met.",
-    members: ['Sakina Jaliwala', 'Deeksha Dinesh', 'Krish Daiya', 'Raj Patil'],
+    members: [
+      'Jayesh Jain', 'Krish Daiya', 'Saundarya Kumar',
+      'Meghna Das Gupta', 'Sheetal Chakral',
+    ],
   },
   {
     name: 'Executive Office',
@@ -182,7 +188,7 @@ export const TEAM_GROUPS = [
     blurb: 'We set the vision and keep ConvergenSEE true to who we are. Our job is steering the ship — making sure we grow without losing what makes us, us.',
     members: [
       'Balaji Jagannathan', 'Viswanathan Kalyanasundaram',
-      'Neha Malhotra', 'Vikas Shinde',
+      'Neha Malhotra', 'Shankar Iyer', 'Tiana Balaji',
     ],
   },
   {
@@ -203,7 +209,10 @@ export const TEAM_GROUPS = [
       },
     ],
     blurb: "We're building ConvergenSEE from the ground up. Every campaign we run, every story we tell teaches us something new — and we bring those lessons straight to you.",
-    members: ['Kiran Mulchandani', 'Adheet Shetty', 'Eshaan Sharma'],
+    members: [
+      'Kiran Mulchandani', 'Adheet Shetty', 'Archana Vaghela',
+      'Ria Mitra', 'Rushika Kathrani',
+    ],
   },
   {
     name: 'Influencer Marketing',
@@ -223,7 +232,7 @@ export const TEAM_GROUPS = [
       },
     ],
     blurb: 'We connect brands with voices that matter. Real partnerships, authentic conversations, and influencers who actually align with what you stand for. Relationships over transactions, always.',
-    members: ['Aayush Soni', 'Saanjali Agarwal'],
+    members: ['Aayush Soni', 'Gunnika Bhatia'],
   },
   {
     name: 'Production',
@@ -243,6 +252,6 @@ export const TEAM_GROUPS = [
       },
     ],
     blurb: 'Shoots, edits, renders, reshoots. The team that turns a line on a deck into something you actually want to watch.',
-    members: ['Aayush Soni', 'Alen Sam', 'Bhoomi Jain'],
+    members: ['Akash Khandare', 'Yash Sontate', 'Ankita Jain', 'Manas', 'Aayush Soni'],
   },
 ]
