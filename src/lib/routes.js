@@ -15,6 +15,8 @@ export const PATH_FOR = {
   solutions: '/solutions',
   'case-studies': '/case-studies',
   mahindra: '/case-studies/mahindra',
+  'life-insurance': '/case-studies/life-insurance',
+  'small-finance-bank': '/case-studies/small-finance-bank',
   team: '/team',
   blog: '/blogs',
   'blog-read': `/blogs/${BLOG_SLUG}`,

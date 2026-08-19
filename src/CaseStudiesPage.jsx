@@ -70,6 +70,31 @@ const CASES = [
     type: 'Location pages',
     stats: [{ val: '96%', label: 'Surge in website actions' }, { val: '10x', label: 'Revenue increase' }, { val: '96%', label: 'Increase in sales' }],
   },
+  // ── From the website copy doc (Website - ConvergenSEE.pdf) — anonymised ──
+  {
+    photo: '/artboard-1.png',
+    logo: null,
+    name: 'Leading life insurance brand',
+    type: 'Content at scale',
+    stats: [{ val: '42%', label: 'Faster creative delivery timelines' }, { val: '~50%', label: 'Reduction in time-to-market' }, { val: '2x', label: 'Designer productivity — 2 to 4 creatives a day' }],
+    href: PATH_FOR['life-insurance'],
+  },
+  {
+    photo: '/thar-mountains.jpg',
+    logo: null,
+    name: "India's largest auto brand",
+    type: 'Hyperlocal presence',
+    stats: [{ val: '585+', label: 'Dealer locations advertised locally' }, { val: '3,000+', label: 'Hyperlocal creatives every month' }, { val: '75%', label: 'Increase in website visits' }],
+    href: PATH_FOR['mahindra'],
+  },
+  {
+    photo: '/figma/case-study/img-mahindra4.jpg',
+    logo: null,
+    name: 'Emerging small finance bank',
+    type: 'Performance marketing',
+    stats: [{ val: '5,500+', label: 'Conversions in a 90-day pilot' }, { val: '₹192', label: 'Cost per conversion' }, { val: '7 Cr+', label: 'Impressions across Meta & Google' }],
+    href: PATH_FOR['small-finance-bank'],
+  },
 ]
 
 const INDUSTRIES = ['AUTO', 'ALL', 'FMCG', 'RETAIL', 'FSI', 'OTHERS']
@@ -134,17 +159,19 @@ function CaseCard({ c, href }) {
       </div>
 
       {/* Centre logo — revealed on hover, alongside the stats */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        opacity: hovered ? 1 : 0,
-        transform: hovered ? 'translateY(-9%) scale(1)' : 'translateY(-9%) scale(0.85)',
-        transition: 'opacity 0.5s ease, transform 0.5s ease',
-        pointerEvents: 'none',
-        zIndex: 2,
-      }}>
-        <img loading="lazy" src={c.logo} alt={c.name} style={{ width: 220, maxWidth: '60%', height: 80, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
-      </div>
+      {c.logo && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: hovered ? 1 : 0,
+          transform: hovered ? 'translateY(-9%) scale(1)' : 'translateY(-9%) scale(0.85)',
+          transition: 'opacity 0.5s ease, transform 0.5s ease',
+          pointerEvents: 'none',
+          zIndex: 2,
+        }}>
+          <img loading="lazy" src={c.logo} alt={c.name} style={{ width: 220, maxWidth: '60%', height: 80, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
+        </div>
+      )}
 
       {/* Bottom gradient */}
       <div style={{
@@ -233,7 +260,7 @@ export default function CaseStudiesPage() {
               <CaseCard
                 key={i}
                 c={c}
-                href={i === 0 ? PATH_FOR['mahindra'] : undefined}
+                href={c.href ?? (i === 0 ? PATH_FOR['mahindra'] : undefined)}
               />
             ))}
           </div>
