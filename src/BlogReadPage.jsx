@@ -19,9 +19,9 @@ const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Assets ───────────────────────────────────────────────────────────────────
-const imgBody1      = '/figma/blog-read/img-image-111.jpg'
-const imgBody2      = '/figma/blog-read/img-image-112.jpg'
-const imgBody3      = '/figma/blog-read/img-image-113.jpg'
+const imgBody1      = '/figma/blog-read/img-image-111.webp'
+const imgBody2      = '/figma/blog-read/img-image-112.webp'
+const imgBody3      = '/figma/blog-read/img-image-113.webp'
 
 // ─── Lorem text ───────────────────────────────────────────────────────────────
 const LOREM = 'Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today.'

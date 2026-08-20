@@ -4,9 +4,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import useResponsive from './useResponsive'
-import { NAV_H } from './theme'
 import CHNCPlaceholder from './CHNCPlaceholder'
-import ContactForm from './ContactForm'
 import SectionLabel from './SectionLabel'
 
 import Footer from './Footer'
@@ -65,103 +63,101 @@ const Pill = ({ label, active, onClick }) => (
 )
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
-function Hero({ active, onSelect }) {
-  const { isSmall } = useResponsive()
-  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT']
+function Hero() {
+  // Intro sequence: CHNC starts at hero scale over the headline's spot, then
+  // glides up and shrinks into a small green eyebrow label while the headline
+  // wipes in beneath it (same clip-path reveal as the About hero). The
+  // eyebrow holds for a beat, then fades away at ~4s leaving the headline
+  // alone. It sits in a fixed-height slot so the headline never moves.
+  const [morphed, setMorphed] = useState(false)
+  const [faded, setFaded] = useState(false)
+  useEffect(() => {
+    const t1 = setTimeout(() => setMorphed(true), 600)
+    const t2 = setTimeout(() => setFaded(true), 4000)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [])
 
   return (
-    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', textAlign: 'center', position: 'relative' }}>
-      {/* CHNC */}
-      <div style={{ marginBottom: 24 }}>
-        <p style={{
-          fontFamily: "'Archivo', sans-serif",
-          fontSize: 'clamp(64px, 13vw, 130px)', fontWeight: 800, lineHeight: 1.1,
-          color: G, letterSpacing: '-3.25px',
-          margin: 0,
-        }}>CHNC</p>
-      </div>
+    <section style={{
+      // 100vh isn't compensated by the laptop-scale body zoom — divide by --pz
+      // so the hero still covers the full screen on 1025–1727px viewports.
+      position: 'relative', height: 'calc(100vh / var(--pz, 1))', display: 'flex',
+      alignItems: 'center', justifyContent: 'center',
+      overflow: 'hidden', textAlign: 'center',
+      background: DARK, padding: '0 clamp(20px, 6vw, 100px)',
+    }}>
+      {/* Background video slot — CHNC showreel, same markup as the home hero:
+          <video autoPlay muted loop playsInline preload="metadata" poster="/chnc-hero-poster.webp"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}>
+            <source src="/chnc-hero.mp4" type="video/mp4" />
+          </video> */}
 
-      {/* headline */}
-      <h1 style={{
-        fontFamily: "'Saira Condensed', sans-serif",
-        fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
-        textTransform: 'uppercase', letterSpacing: '-3px',
-        margin: 0,
-      }}>
-        <span style={{ color: '#fff' }}>ALL IN ONE </span>
-        <span style={{ color: G }}>COMMAND CENTRE</span>
-      </h1>
-
-      {/* module pills */}
+      {/* Dark overlays for text readability over the video */}
       <div style={{
-        display: 'flex', gap: 20, justifyContent: 'center',
-        flexWrap: 'wrap', marginTop: 40,
-      }}>
-        {services.map((l) => (
-          <Pill key={l} label={l} active={l === active} onClick={() => onSelect(l)} />
-        ))}
+        position: 'absolute', inset: 0,
+        background: `
+          linear-gradient(to bottom, ${DARK} 0%, rgba(0,7,24,0.2) 40%, rgba(0,7,24,0.2) 60%, ${DARK} 100%),
+          linear-gradient(to right, ${DARK} 0%, transparent 30%, transparent 70%, ${DARK} 100%)
+        `,
+        zIndex: 1,
+      }} />
+
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        {/* Fixed-height slot the wordmark shrinks into — the slot, not the
+            animating text, is what the headline's position is laid out
+            against, so nothing below shifts mid-animation. */}
+        <div style={{
+          height: 'clamp(24px, 2.6vw, 36px)', marginBottom: 24,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          overflow: 'visible',
+        }}>
+          {/* stays the tight-tracked CHNC wordmark at every size — only the
+              font-size and position animate */}
+          <p style={{
+            fontFamily: "'Archivo', sans-serif", fontWeight: 800, lineHeight: 1,
+            color: G, margin: 0, whiteSpace: 'nowrap', letterSpacing: '-0.022em',
+            fontSize: morphed ? 'clamp(24px, 2.6vw, 36px)' : 'clamp(56px, 10vw, 150px)',
+            transform: morphed ? 'none' : 'translateY(clamp(90px, 12vw, 175px))',
+            opacity: faded ? 0 : 1,
+            transition: 'font-size 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease',
+            textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
+          }}>CHNC</p>
+        </div>
+
+        {/* the headline CHNC introduces — same 150px cap as the other hero
+            h1s; 10vw (not 14vw) so the long first line fits at laptop widths.
+            Wipes in left→right like the About hero's word reveal. */}
+        <h1 style={{
+          fontFamily: "'Saira Condensed', sans-serif",
+          fontSize: 'clamp(56px, 10vw, 150px)', fontWeight: 800, lineHeight: 1,
+          textTransform: 'uppercase', margin: 0, letterSpacing: '-3px',
+          clipPath: morphed ? 'inset(-5% -2% -5% -2%)' : 'inset(-5% 102% -5% -2%)',
+          transition: 'clip-path 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.5s',
+          textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
+        }}>
+          <span style={{ display: 'block' }}>
+            <span style={{ color: '#fff' }}>ENTERPRISE </span>
+            <span style={{ color: G }}>MARKETING</span>
+          </span>
+          <span style={{ display: 'block', color: G }}>PLATFORM</span>
+        </h1>
       </div>
     </section>
   )
 }
 
-function ContentCreation() {
-  const cards = [
-    {
-      top: (
-        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(48px, 8vw, 80px)', fontWeight: 800, color: G, lineHeight: 1.1 }}>60%</p>
-      ),
-      desc: 'Faster content creation',
-    },
-    {
-      top: (
-        <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
-          <circle cx="45" cy="45" r="28" stroke={G} strokeWidth="1.5" fill="none" />
-          <line x1="45" y1="32" x2="45" y2="45" stroke={G} strokeWidth="1.5" strokeLinecap="round" />
-          <line x1="45" y1="45" x2="56" y2="45" stroke={G} strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      ),
-      desc: 'Content localised and adapted in seconds',
-    },
-    {
-      top: (
-        <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
-          <circle cx="38" cy="32" r="10" stroke={G} strokeWidth="1.5" fill="none" />
-          <circle cx="55" cy="28" r="8" stroke={G} strokeWidth="1.5" fill="none" />
-          <path d="M20 66 Q24 50 38 50 Q52 50 56 66" stroke={G} strokeWidth="1.5" fill="none" />
-          <path d="M46 54 Q50 44 55 44 Q65 44 68 58" stroke={G} strokeWidth="1.5" fill="none" />
-        </svg>
-      ),
-      desc: 'Real-time collaboration & approvals',
-    },
-  ]
-
-  const { isMobile } = useResponsive()
-
+// Module pills — first thing after the full-screen hero; they drive which
+// module the sections below show.
+function ModulePills({ active, onSelect }) {
+  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT','ConvergeIT']
   return (
-    <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-      <div style={{ textAlign: 'center' }}>
-        <h2 style={{
-          fontFamily: "'Saira Condensed', sans-serif",
-          fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
-          textTransform: 'uppercase', color: '#fff', margin: 0,
-        }}>CONTENT CREATION</h2>
-        <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, marginTop: 16 }}>
-          Create Content and get approval in hours, not days.
-        </p>
-      </div>
-      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 20, width: '100%', maxWidth: 1240 }}>
-        {cards.map((c, i) => (
-          <div key={i} className="card-hover" style={{
-            flex: 1, background: 'transparent', border: `2px solid ${BORDER}`,
-            padding: 'clamp(20px, 4vw, 30px)',
-            display: 'flex', flexDirection: 'column', gap: 10,
-          }}>
-            {c.top}
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: '24px' }}>{c.desc}</p>
-          </div>
-        ))}
-      </div>
+    <section style={{
+      padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0',
+      display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap',
+    }}>
+      {services.map((l) => (
+        <Pill key={l} label={l} active={l === active} onClick={() => onSelect(l)} />
+      ))}
     </section>
   )
 }
@@ -189,11 +185,11 @@ const MODULE_STEPS = {
     { bold: 'Integrate', rest: ' with CRM, APIs, and dashboards for insights' },
   ],
   CreateIT: [
-    { bold: 'Plan', rest: ' content for paid and organic campaigns' },
-    { bold: 'Collect', rest: ' inputs from stakeholders and lock requirements' },
-    { bold: 'Use', rest: ' AI guardrails to match assets and visualise faster' },
-    { bold: 'Generate', rest: ' multilingual copy and content variations' },
-    { bold: 'Publish', rest: ', collaborate on approvals, and track performance' },
+    { bold: 'Brief', rest: ' the campaign — name, platform, region, objective' },
+    { bold: 'Generate', rest: ' visuals with multiple AI engines in seconds' },
+    { bold: 'Approve', rest: ' visuals and AI copy in one click' },
+    { bold: 'Adapt', rest: ' one creative to every format and language' },
+    { bold: 'Publish', rest: ' everywhere and track performance' },
     { stat: true, text: '60% reduction in content creation time' },
   ],
   ScriptIT: [
@@ -251,6 +247,14 @@ const MODULE_STEPS = {
     { bold: 'Segment', rest: ' audiences by engagement level and lifecycle stage' },
     { bold: 'Measure', rest: ' retention, repeat actions, and engagement lift over time' },
   ],
+  // authored — the client doc has no ConvergeIT steps; drafted pending sign-off
+  ConvergeIT: [
+    { bold: 'Connect', rest: ' every agency you work with into one CHNC dashboard' },
+    { bold: 'Standardise', rest: " reporting so every partner's numbers read the same way" },
+    { bold: 'Compare', rest: ' spend, leads, and ROI side by side across agencies' },
+    { bold: 'Spot', rest: ' overlaps, gaps, and underperformance early' },
+    { bold: 'Reallocate', rest: " budgets to what's actually working" },
+  ],
 }
 const DEFAULT_STEPS = [
   { bold: 'Plan', rest: ' your strategy and set clear objectives' },
@@ -267,8 +271,8 @@ const DEFAULT_STEPS = [
 const REEL_FRAME_STEPS = {
   // Overview  LPM  Social  Perf  LPG  Export  Close
   InsightIT: [1, 2, 3, 3, 4, 5, 5],
-  // idle  Brief  Generate  Approve  Adapt  Copy  Merge  Publish  done
-  CreateIT: [0, 2, 3, 3, 3, 4, 4, 5, 6],
+  // idle  Brief  Generate  Approve  Adapt  Publish  Close
+  CreateIT: [0, 1, 2, 3, 4, 5, 6],
   // idle  Create  Audit  Manage  Verify  GoLive  Optimise  Perform  Close
   LocateIT: [0, 0, 1, 2, 3, 3, 4, 4, 5, 5],
   // idle  Brief  Align  Script  Breakdown  Preview  Approve  Close
@@ -555,6 +559,12 @@ const FROM_BRAND = {
     'Lifecycle stages and segmentation criteria',
     'Access to CRM or marketing automation tools',
   ],
+  // authored — the client doc has no ConvergeIT inputs; drafted pending sign-off
+  ConvergeIT: [
+    'List of agencies/partners and their scope of work',
+    "Access to each agency's reporting (dashboards or exports)",
+    'Budget splits, KPIs & review cadence per agency',
+  ],
 }
 
 function AllOfThisWithJust({ activeModule }) {
@@ -587,25 +597,139 @@ function AllOfThisWithJust({ activeModule }) {
   )
 }
 
-// Same quiz data as the home page form (src/HomePage.jsx BrandAudit): every
-// option carries its own reaction clip; picking one swaps the clip on the right.
-const auditDefaultGif = '/figma/home/oh-gifs/default.mp4'
-const auditQs = [
-  { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'],
-    gifs: ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'] },
-  { q: "What's the main", qGreen: 'issue', qEnd: ' today?', opts: ['LOW LEADS', 'LOW QUALITY', 'INCONSISTENT', 'NOT SURE'],
-    gifs: ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'] },
-  { q: "What's your current", qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'],
-    gifs: ['giphy-4', 'stranger-things', 'tiffany', 'max-stranger'] },
+// Per-module "READY TO…?" forms from the client content doc (Website -
+// ConvergenSEE.docx, Aug 20). The section follows the active module pill.
+// Every option press swaps the reaction clip on the right — clips are shared
+// across modules: row = question index, column = option index. The neutral
+// default is an animated WebP, so the renderer branches on extension.
+const quizDefaultGif = '/figma/home/oh-gifs/default.webp'
+const QUIZ_GIF_ROWS = [
+  ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'],
+  ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'],
+  ['giphy-4', 'stranger-things', 'tiffany', 'max-stranger'],
 ]
+const MODULE_QUIZ = {
+  LocateIT: {
+    title: 'Ready to get', green: 'discovered?',
+    qs: [
+      { q: 'Losing customers to bad listings?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready to fix your local presence?', opts: ['Audit My Listings', 'Contact Us', 'Learn More'] },
+      { q: 'Need visibility across locations?', opts: ['View Our Services', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  AmplifyIT: {
+    title: 'Ready to turn spend into', green: 'demand?',
+    qs: [
+      { q: 'Not seeing ROI on your ad spend?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready to fix your funnel?', opts: ['See Case Studies', 'Contact Us', 'Learn More'] },
+      { q: 'Do you have leads data ready?', opts: ['Yes', 'Need Help', 'No'] },
+    ],
+  },
+  SocialiseIT: {
+    title: 'Ready to stay', green: 'remembered?',
+    qs: [
+      { q: 'Posting but inconsistent?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for consistent presence?', opts: ['Join Our Webinar', 'Contact Us', 'Learn More'] },
+      { q: 'Need a content calendar that works?', opts: ['View Our Services', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  CreateIT: {
+    title: 'Ready to create', green: 'content?',
+    qs: [
+      { q: 'Do you have a content plan ready?', opts: ['Yes', 'Need Help', 'No'] },
+      { q: 'Struggling with frequency of posting?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Still posting manually?', opts: ['Yes', 'No', 'Maybe'] },
+    ],
+  },
+  AIGenIT: {
+    title: 'Ready to move at', green: 'AI speed?',
+    qs: [
+      { q: 'Losing leads to slow response times?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for always-on conversations?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
+      { q: 'Need multi-language support?', opts: ['View Our Services', 'Get In Touch', 'Book a Demo'] },
+    ],
+  },
+  SearchIT: {
+    title: 'Ready to be', green: 'found first?',
+    qs: [
+      { q: 'Invisible on search when it matters?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Confused about AEO, GEO, and how search has changed?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Need a clear improvement roadmap?', opts: ['View Our Services', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  InfluenceIT: {
+    title: 'Ready to build', green: 'real trust?',
+    qs: [
+      { q: 'Struggling to find the right creators?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for partnerships that convert?', opts: ['See Our Roster', 'Contact Us', 'Learn More'] },
+      { q: 'Need ROI beyond views and likes?', opts: ['Case Studies', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  ScriptIT: {
+    title: 'Ready for scripts that', green: 'work?',
+    qs: [
+      { q: 'Struggling with consistent storytelling?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for shoot-ready scripts?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
+      { q: 'Need scripts fast for a campaign?', opts: ['Book a Demo', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  InvoiceIT: {
+    title: 'Ready for', green: 'cleaner billing?',
+    qs: [
+      { q: 'Is marketing billing messy today?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for compliance-ready records?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
+      { q: 'Need spends matched to deliverables?', opts: ['See Our Dashboard', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  InsightIT: {
+    title: 'Ready for', green: 'real clarity?',
+    qs: [
+      { q: "Flying blind on what's working?", opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for one dashboard, real-time?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
+      { q: 'Need ROI tracked by campaign or region?', opts: ['Book a Demo', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  AdaptIT: {
+    title: 'Ready to fit', green: 'every platform?',
+    qs: [
+      { q: 'Content looking stretched or cropped?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for platform-perfect assets?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
+      { q: 'Which platforms do you use the most?', opts: ['Instagram', 'YouTube', 'LinkedIn', 'Other'] },
+    ],
+  },
+  EngageIT: {
+    title: 'Ready to get', green: 'personal?',
+    qs: [
+      { q: 'Sending the same message to everyone?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Ready for cohort-based messaging?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
+      { q: 'Need better retention, not just reach?', opts: ['Book a Demo', 'Get In Touch', 'Schedule A Call'] },
+    ],
+  },
+  ConvergeIT: {
+    title: 'Ready for one view of', green: 'everything?',
+    qs: [
+      { q: 'How many agencies are you working with?', opts: ['1-2', '3-5', '5+'] },
+      { q: 'Are you tracking performance across all of them in one place?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'Losing time chasing updates from multiple partners?', opts: ['Yes', 'No', 'Maybe'] },
+    ],
+  },
+}
 
-function ReadyToCreate() {
+function ReadyToCreate({ activeModule }) {
   const { isSmall } = useResponsive()
-  const [selections, setSelections] = useState(auditQs.map(() => null))
-  const [gif, setGif] = useState(auditDefaultGif)
+  const quiz = MODULE_QUIZ[activeModule] || MODULE_QUIZ.CreateIT
+  const [selections, setSelections] = useState([null, null, null])
+  const [gif, setGif] = useState(quizDefaultGif)
+
+  // Switching modules brings a fresh form: clear picks, back to the neutral clip
+  useEffect(() => {
+    setSelections([null, null, null])
+    setGif(quizDefaultGif)
+  }, [activeModule])
+
   // Warm the browser cache for every reaction clip so the swap on click is instant.
   useEffect(() => {
-    auditQs.flatMap(q => q.gifs).forEach(name => {
+    QUIZ_GIF_ROWS.flat().forEach(name => {
       fetch(`/figma/home/oh-gifs/${name}.mp4`).catch(() => {})
     })
   }, [])
@@ -616,28 +740,30 @@ function ReadyToCreate() {
       next[qi] = oi
       return next
     })
-    setGif(`/figma/home/oh-gifs/${auditQs[qi].gifs[oi]}.mp4`)
+    setGif(`/figma/home/oh-gifs/${QUIZ_GIF_ROWS[qi][oi]}.mp4`)
   }
 
   return (
     <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-      <h2 style={{
-        fontFamily: "'Saira Condensed', sans-serif",
-        fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
-        textTransform: 'uppercase', textAlign: 'center', margin: 0,
-      }}>
-        <span style={{ color: '#fff' }}>Got a growth </span>
-        <span style={{ color: G }}>question</span>
-        <span style={{ color: '#fff' }}>?</span>
-      </h2>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+        <SectionLabel>Got a growth question?</SectionLabel>
+        <h2 key={activeModule} style={{
+          fontFamily: "'Saira Condensed', sans-serif",
+          fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
+          textTransform: 'uppercase', textAlign: 'center', margin: 0,
+        }}>
+          <span style={{ color: '#fff' }}>{quiz.title} </span>
+          <span style={{ color: G }}>{quiz.green}</span>
+        </h2>
+      </div>
 
       <div style={{ maxWidth: 1240, width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', width: '100%' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 40, flexShrink: 0 }}>
-            {auditQs.map((q, qi) => (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 40, flexShrink: 0, minWidth: 0 }}>
+            {quiz.qs.map((q, qi) => (
               <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 18, color: '#fff', margin: 0 }}>
-                  {q.q} <span style={{ color: G }}>{q.qGreen}</span>{q.qEnd || ''}
+                  {q.q}
                 </p>
                 <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
                   {q.opts.map((opt, oi) => (
@@ -649,7 +775,11 @@ function ReadyToCreate() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', width: isSmall ? '100%' : 410, maxWidth: 410, flexShrink: 0, alignSelf: isSmall ? 'center' : 'auto' }}>
             <div style={{ width: '100%', height: isSmall ? 'clamp(280px, 70vw, 410px)' : 410, boxShadow: '0 4px 65px rgba(43,179,42,0.1)', overflow: 'hidden' }}>
-              <video key={gif} src={gif} autoPlay muted loop playsInline aria-label="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {gif.endsWith('.webp') ? (
+                <img key={gif} src={gif} alt="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <video key={gif} src={gif} autoPlay muted loop playsInline aria-label="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              )}
             </div>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24, textAlign: 'center', margin: 0 }}>
               Ready for a <span style={{ color: G }}>Reality</span> check?
@@ -663,30 +793,9 @@ function ReadyToCreate() {
               <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
             </div>
           ))}
-          <BtnGreen style={isSmall ? { width: '100%' } : undefined}>Know More</BtnGreen>
+          <BtnGreen style={isSmall ? { width: '100%' } : undefined}>Submit</BtnGreen>
         </div>
       </div>
-    </section>
-  )
-}
-
-function Contact() {
-  return (
-    <section style={{ padding: '0 clamp(20px, 6vw, 100px) clamp(56px, 8vw, 100px)', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-        <SectionLabel>Connect with us</SectionLabel>
-        <h2 style={{
-          fontFamily: "'Saira Condensed', sans-serif",
-          fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
-          textTransform: 'uppercase', textAlign: 'center', margin: 0,
-        }}>
-          <span style={{ color: '#fff' }}>We will </span>
-          <span style={{ color: G }}>shoot </span>
-          <span style={{ color: '#fff' }}>you</span>
-        </h2>
-      </div>
-
-      <ContactForm />
     </section>
   )
 }
@@ -695,16 +804,14 @@ function Contact() {
 export default function SolutionsPage() {
   const [activePill, setActivePill] = useState('CreateIT')
   const activeModule = activePill
-  const { isSmall } = useResponsive()
 
   return (
-    <div style={{ background: DARK, minHeight: '100vh', paddingTop: isSmall ? NAV_H.small : NAV_H.desktop, color: '#fff' }}>
-      <Hero active={activePill} onSelect={setActivePill} />
-      <ContentCreation />
+    <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
+      <Hero />
+      <ModulePills active={activePill} onSelect={setActivePill} />
       <HowWeDoIt activeModule={activeModule} />
       <AllOfThisWithJust activeModule={activeModule} />
-      <ReadyToCreate />
-      <Contact />
+      <ReadyToCreate activeModule={activeModule} />
       <Footer />
     </div>
   )

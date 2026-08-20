@@ -20,32 +20,28 @@ const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Assets ───────────────────────────────────────────────────────────────────
-const imgMahindraHero  = '/figma/case-study-mahindra/img-mahindra1.png'
-const imgMahindraLogo  = '/figma/case-study-mahindra/img-mahindra-m.png'
+const imgMahindraHero  = '/figma/case-study-mahindra/img-mahindra1.webp'
 const imgConvergenC    = '/figma/case-study-mahindra/img-c2-d.svg'
-const imgGallery1      = '/figma/case-study-mahindra/img-image111.jpg'
-const imgGallery2      = '/figma/case-study-mahindra/img-image112.jpg'
-const imgGallery3      = '/figma/case-study-mahindra/img-image113.jpg'
+const imgGallery1      = '/figma/case-study-mahindra/img-image111.webp'
+const imgGallery2      = '/figma/case-study-mahindra/img-image112.webp'
+const imgGallery3      = '/figma/case-study-mahindra/img-image113.webp'
 
-// ─── Other case studies — same set as the Case Studies grid, minus Mahindra ───
+// ─── Other case studies — same set as the Case Studies grid, minus the auto brand ───
 const OTHER_CASES = [
   {
-    photo: '/unicorn-poster.jpg',
-    logo:  '/unicorn-logo.png',
+    photo: '/unicorn-poster.webp',
     name:  'Unicorn',
     type:  'Performance marketing',
     stat:  { val: '96%', label: 'Surge in website actions' },
   },
   {
-    photo: '/sbi-poster.jpg',
-    logo:  '/sbi-logo.png',
+    photo: '/sbi-poster.webp',
     name:  'SBI',
     type:  'Content creation',
     stat:  { val: '10x', label: 'Revenue increase' },
   },
   {
     photo: '/love-and-cheesecake-poster.jpg',
-    logo:  '/lc-logo.webp',
     name:  'Love & Cheesecake',
     type:  'Location pages',
     stat:  { val: '96%', label: 'Increase in sales' },
@@ -53,7 +49,7 @@ const OTHER_CASES = [
 ]
 
 // Tile that reads the same as a card on the Case Studies grid: photo, type pill,
-// brand name always on, logo + headline stat revealed on hover.
+// brand name always on, headline stat revealed on hover. No brand logos.
 function OtherCaseTile({ c, href }) {
   const [hovered, setHovered] = useState(false)
   const Wrapper = href ? Link : 'div'
@@ -77,16 +73,6 @@ function OtherCaseTile({ c, href }) {
           border: `2px solid ${BORDER}`, fontFamily: "'Saira Condensed', sans-serif",
           fontSize: 12, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#fff',
         }}>{c.type}</span>
-      </div>
-
-      {/* Brand mark on hover */}
-      <div style={{
-        position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        opacity: hovered ? 1 : 0,
-        transform: hovered ? 'translateY(-12%) scale(1)' : 'translateY(-12%) scale(0.85)',
-        transition: 'opacity 0.5s ease, transform 0.5s ease', pointerEvents: 'none', zIndex: 2,
-      }}>
-        <img loading="lazy" src={c.logo} alt={c.name} style={{ width: 180, maxWidth: '60%', height: 64, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
       </div>
 
       {/* Bottom gradient */}
@@ -119,24 +105,23 @@ export default function MahindraPage() {
 
       {/* ── Hero — runs under the fixed nav, same as the home page video ────── */}
       <section style={{ position: 'relative', width: '100%', height: isSmall ? 'calc(clamp(360px, 78vw, 480px) + 106px)' : 'calc(clamp(480px, 42vw, 560px) + 106px)', overflow: 'hidden' }}>
-        <Image src={imgMahindraHero} alt="Mahindra" fill priority sizes="100vw" style={{ objectFit: 'cover', display: 'block' }} />
+        <Image src={imgMahindraHero} alt="India's largest auto brand" fill priority sizes="100vw" style={{ objectFit: 'cover', display: 'block' }} />
         {/* Veil — dark at the top so the nav has something to sit on, dark at the
             foot so the image blends into the page; keeps the lockup legible. */}
         <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${DARK} 0%, rgba(0,7,24,0.55) 22%, rgba(0,7,24,0.55) 55%, rgba(0,7,24,0.85) 100%)` }} />
-        {/* Soft scrim behind the lockup. Both marks carry white/silver, which
-            drops out over the light panels of the car — this buys the contrast
-            back without putting a visible box around either logo. */}
+        {/* Soft scrim behind the lockup — keeps the white mark and headline
+            legible over the light panels of the car without a visible box. */}
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 46% 42% at 50% 52%, rgba(0,7,24,0.82) 0%, rgba(0,7,24,0.6) 40%, rgba(0,7,24,0) 78%)' }} />
-        {/* Overlay content: logo lockup + description — offset for the nav */}
+        {/* Overlay content: lockup + description — offset for the nav. The brand
+            is anonymised (no client logos anywhere), so the ConvergenSEE mark
+            pairs with the study name set in type, same as CaseStudyDetailPage. */}
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', justifyContent: 'center', padding: '106px clamp(20px, 6vw, 100px) 0', boxSizing: 'border-box', textAlign: 'center' }}>
-          {/* Logo lockup — Figma frame 1:2875, 205×66 */}
-          <div style={{ height: 66, display: 'flex', alignItems: 'center', gap: 25, justifyContent: 'center', flexShrink: 0 }}>
-            {/* Both marks sit straight on the photo — no chips. A soft drop
-                shadow keeps their light edges off the light parts of the car. */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 25, justifyContent: 'center', flexWrap: 'wrap' }}>
             <img loading="lazy" src={imgConvergenC} alt="ConvergenSEE" style={{ width: 60, height: 53.5, objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
-            {/* x */}
             <span style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 60.4, color: '#34cc32', letterSpacing: '-1.511px', lineHeight: 1, flexShrink: 0 }}>x</span>
-            <img loading="lazy" src={imgMahindraLogo} alt="Mahindra" style={{ height: 52, width: 'auto', objectFit: 'contain', flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.55))' }} />
+            <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(32px, 5vw, 56px)', lineHeight: 1, color: '#fff', textTransform: 'uppercase', textShadow: '0 2px 6px rgba(0,0,0,0.55)' }}>
+              India's largest auto brand
+            </span>
           </div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 566, textAlign: 'center', margin: 0 }}>
             Helping one of India's largest automobile brands win locally through hyperlocal presence
@@ -193,7 +178,7 @@ export default function MahindraPage() {
             {[
               "ConvergenSEE built and ran hyperlocal, dealer-specific advertising — matching creative and targeting to each dealership's ideal local audience, at scale, across 585+ locations.",
               'Produced 3,000+ hyperlocal creatives every month tailored to local context instead of one national campaign, and built 2,500+ localised, dealer-specific ads targeting the ideal audience around each dealership.',
-              'Managed 200+ dealer handles across Facebook & Instagram and 1,000+ Mahindra & dealer touchpoints, running the program continuously over 30 months (Jun 2020 – Dec 2022).',
+              'Managed 200+ dealer handles across Facebook & Instagram and 1,000+ brand & dealer touchpoints, running the program continuously over 30 months (Jun 2020 – Dec 2022).',
             ].map((text, i) => (
               <p key={i} style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.6, margin: 0 }}>
                 <span style={{ color: G }}>🟢</span> {text}

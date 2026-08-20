@@ -52,18 +52,6 @@ function OtherCaseTile({ c, href }) {
         }}>{c.type}</span>
       </div>
 
-      {/* Brand mark on hover — only for studies that carry a logo */}
-      {c.logo && (
-        <div style={{
-          position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          opacity: hovered ? 1 : 0,
-          transform: hovered ? 'translateY(-12%) scale(1)' : 'translateY(-12%) scale(0.85)',
-          transition: 'opacity 0.5s ease, transform 0.5s ease', pointerEvents: 'none', zIndex: 2,
-        }}>
-          <img loading="lazy" src={c.logo} alt={c.name} style={{ width: 180, maxWidth: '60%', height: 64, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
-        </div>
-      )}
-
       {/* Bottom gradient */}
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0, height: 160,
@@ -90,19 +78,17 @@ export default function CaseStudyDetailPage({ study }) {
   const { isMobile, isSmall } = useResponsive()
   const router = useRouter()
 
-  // Cross-link the other doc case studies plus the flagship Mahindra page.
+  // Cross-link the other doc case studies plus the flagship auto-brand page.
   const others = [
     {
-      photo: '/mahindra-poster.jpg',
-      logo: '/mahindra-logo.png',
-      name: 'Mahindra & Mahindra',
+      photo: '/mahindra-poster.webp',
+      name: "India's largest auto brand",
       type: 'Hyperlocal presence',
       stat: { val: '125%', label: 'Increase in customer engagement' },
       href: PATH_FOR['mahindra'],
     },
     ...CASE_STUDIES.filter((c) => c.slug !== study.slug).map((c) => ({
       photo: c.heroImage,
-      logo: null,
       name: c.name,
       type: c.type,
       stat: c.stats[0],

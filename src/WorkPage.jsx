@@ -3,6 +3,7 @@
 // Work Page — "Our Work" portfolio grid
 import { useState } from 'react'
 import Image from 'next/image'
+import LazyVideo from './LazyVideo'
 import useResponsive from './useResponsive'
 import Footer from './Footer'
 import { NAV_H } from './theme'
@@ -78,50 +79,50 @@ const CHNC_PROJECTS = [
     challengeBody: 'Session data showed users spending time on the platform overview pages but dropping before reaching the demo CTA. The value proposition wasn\'t landing. Enterprise buyers were leaving with questions the site never answered.',
     imgs: [
       '/figma/work/macbook1.png',
-      '/figma/home/img-asset31.png',
+      '/figma/home/img-asset31.webp',
     ],
   },
   {
     name: 'KrateIT', category: 'Branding', year: '2022', client: 'KrateIT',
     timeline: '10 weeks',
-    img: '/figma/home/img-asset31.png',
+    img: '/figma/home/img-asset31.webp',
     headline: 'A bold consumer brand for a logistics disruptor entering a market dominated by incumbents with thirty-year head starts.',
     intro: 'KrateIT was entering the last-mile logistics space with a tech-first model that none of the legacy players had. The brand needed to signal speed, reliability, and modernity — and it needed to do it loud enough to cut through category noise.',
     challenge: 'Breaking into a commoditised market where price is assumed to be the only differentiator.',
     challengeBody: 'Established players owned the trust narrative. Shippers defaulted to incumbents out of habit, not preference. KrateIT had a genuinely superior product but no brand equity to support the claim. They needed identity before they could drive adoption.',
     imgs: [
-      '/figma/home/img-asset31.png',
+      '/figma/home/img-asset31.webp',
       '/figma/work/macbook2.png',
     ],
   },
 ]
 
 // Brand photos from Figma (backgrounds)
-const imgMahindraPhoto = '/figma/case-study/img-mahindra2.png'
-const imgAxisPhoto     = '/figma/case-study/img-mahindra3.jpg'
+const imgMahindraPhoto = '/figma/case-study/img-mahindra2.webp'
+const imgAxisPhoto     = '/figma/case-study/img-mahindra3.webp'
 const imgSBIPhoto      = '/figma/case-study/img-mahindra4.jpg'
-const imgLACPhoto      = '/figma/case-study/img-mahindra5.jpg'
+const imgLACPhoto      = '/figma/case-study/img-mahindra5.webp'
 
 const BRAND_PROJECTS = [
   {
     name: 'Content Creation', category: 'Mahindra & Mahindra', year: '2025', client: 'Mahindra & Mahindra', timeline: '12 months',
-    img: '/thar-mountains.jpg', logo: '/mahindra-m.png', logoBg: 'transparent',
+    img: '/thar-mountains.webp', logo: '/mahindra-m.webp', logoBg: 'transparent',
     desc: 'End-to-end content creation and social media management driving a 96% surge in website actions.',
     headline: 'How end-to-end content strategy drove a 96% surge in website actions across Mahindra\'s digital channels.',
     intro: 'Mahindra\'s digital presence spanned multiple product lines, regions, and audiences — yet the content strategy was reactive, siloed, and inconsistent. We embedded as a full-stack content partner: strategy, production, and distribution, running in parallel across their core verticals.',
     challenge: 'A legacy enterprise with fragmented content ownership and no unified digital voice.',
     challengeBody: 'Each product vertical operated its own social presence with no shared editorial calendar, no brand tone guidelines, and no performance benchmarking. Content was produced to fill calendars, not to move audiences. Engagement was declining quarter on quarter despite increasing post frequency.',
-    imgs: ['/scorpio-n.png', '/thar-roxx-delhi.png'],
+    imgs: ['/scorpio-n.webp', '/thar-roxx-delhi.webp'],
     sections: [
-      { label: 'Mahindra & Mahindra', brand: 'Automobile', imgs: ['/thar-mountains.jpg', '/scorpio-n.png', '/thar-roxx-ahm.png', '/thar-new-year.png', '/thar-roxx-delhi.png', '/xuv400.jpg', '/ev.jpg', '/pv-range.jpg'] },
-      { label: 'Food & Beverage Client', brand: 'F&B', imgs: ['/chocolate-cake.png', '/coffee-story.png', '/cover-02.png', '/tiramisu.png', '/tiramisu-2.png', '/tres-leches.png', '/hamper.png'] },
-      { label: 'Lifestyle & Retail', brand: 'Lifestyle', imgs: ['/creative-1.jpg', '/creative-2.jpg', '/creative-3.jpg', '/creative-4.jpg', '/creative-5.jpg', '/creative-6.jpg', '/creative-7.jpg', '/creative-8.jpg', '/creative-9.jpg', '/creative-10.jpg', '/creative-11.jpg', '/creative-12.jpg', '/creative-13.jpg', '/creative-14.jpg', '/creative-15.jpg', '/creative-16.jpg', '/creative-17.jpg', '/creative-18.jpg', '/creative-19.jpg', '/creative-20.jpg', '/dyk-20.jpg', '/dyk-21.jpg', '/artboard-1.png', '/artboard-2.png', '/artboard-7.png', '/frame-1.png', '/untitled-7.png', '/attendence.png'] },
+      { label: 'Mahindra & Mahindra', brand: 'Automobile', imgs: ['/thar-mountains.webp', '/scorpio-n.webp', '/thar-roxx-ahm.webp', '/thar-new-year.webp', '/thar-roxx-delhi.webp', '/xuv400.webp', '/ev.webp', '/pv-range.webp'] },
+      { label: 'Food & Beverage Client', brand: 'F&B', imgs: ['/chocolate-cake.webp', '/coffee-story.webp', '/cover-02.webp', '/tiramisu.webp', '/tiramisu-2.webp', '/tres-leches.webp', '/hamper.webp'] },
+      { label: 'Lifestyle & Retail', brand: 'Lifestyle', imgs: ['/creative-1.webp', '/creative-2.webp', '/creative-3.webp', '/creative-4.webp', '/creative-5.webp', '/creative-6.webp', '/creative-7.webp', '/creative-8.webp', '/creative-9.webp', '/creative-10.webp', '/creative-11.webp', '/creative-12.webp', '/creative-13.webp', '/creative-14.webp', '/creative-15.webp', '/creative-16.webp', '/creative-17.webp', '/creative-18.webp', '/creative-19.webp', '/creative-20.webp', '/dyk-20.webp', '/dyk-21.webp', '/artboard-1.webp', '/artboard-2.webp', '/artboard-7.webp', '/frame-1.png', '/untitled-7.webp', '/attendence.webp'] },
     ],
-    reels: ['/people-tech.mp4', '/review-reel.mp4', '/thar-mountains.jpg', '/tiramisu.png', '/scorpio-n.png', '/chocolate-cake.png'],
+    reels: ['/people-tech.mp4', '/review-reel.mp4', '/thar-mountains.webp', '/tiramisu.webp', '/scorpio-n.webp', '/chocolate-cake.webp'],
   },
   {
     name: 'UI/UX', category: 'MG Motor', year: '2024', client: 'MG Motor India', timeline: '9 months',
-    img: imgAxisPhoto, logo: '/MG-Logo.png', logoBg: 'transparent',
+    img: imgAxisPhoto, logo: '/MG-Logo.webp', logoBg: 'transparent',
     desc: 'Location page strategy and UI/UX overhaul across 2,000+ branches for seamless digital discovery.',
     headline: 'Rebuilding local digital discovery for 2,000+ MG Motor locations — turning search intent into showroom visits.',
     intro: 'MG Motor had expanded aggressively across India, but their digital infrastructure hadn\'t kept pace. Potential buyers searching for their nearest showroom were landing on outdated, unoptimised location pages — or not finding them at all. We redesigned the entire location-page experience from the ground up.',
@@ -141,7 +142,7 @@ const BRAND_PROJECTS = [
   },
   {
     name: 'Influencer Marketing', category: 'Aptech', year: '2023', client: 'Aptech Limited', timeline: '8 months',
-    img: imgLACPhoto, logo: '/Aptech-Logo.png', logoBg: 'transparent',
+    img: imgLACPhoto, logo: '/Aptech-Logo.webp', logoBg: 'transparent',
     desc: 'Influencer-led creative production and performance campaigns across education verticals.',
     headline: 'Driving enrolment for Aptech\'s education verticals through influencer-led performance campaigns built for Gen Z.',
     intro: 'Aptech needed to reach a generation that doesn\'t respond to traditional education advertising. We designed and executed an influencer-led content and performance campaign strategy that met prospective students on the platforms they actually live on — with creative that felt native, not sponsored.',
@@ -383,7 +384,7 @@ function CaseStudyModal({ project, onClose }) {
             return (
               <div key={i} style={{ flex: isSmall ? '1 1 140px' : 1, minWidth: isSmall ? 120 : 0, aspectRatio: '9/16', overflow: 'hidden', background: CARD, position: 'relative', cursor: 'pointer' }}>
                 {isVideo ? (
-                  <video src={src} muted loop autoPlay playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <LazyVideo src={src} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 ) : (
                   <img src={src} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 )}

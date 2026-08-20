@@ -12,7 +12,7 @@ const G = '#34cc32'
 const DARK = '#000718'
 const DIM = '#666a74'
 
-const memeImg = '/figma/home/img-meme1.png'
+const memeImg = '/figma/home/img-meme1.webp'
 const partnerImg = '/figma/home/img-partner-rgb1.png'
 
 // Grouped nav columns per the Aug 2026 content doc. Entries are either a
@@ -25,14 +25,9 @@ const LINK_COLS = [
     ['Advisory Board', { href: '/#advisory-board' }],
     ['Careers', { key: 'careers' }],
   ]},
-  { title: 'Solutions', links: [
-    ['Solutions', { key: 'solutions' }],
-    ['Modules', { href: '/solutions' }],
-    ['Case Studies', { key: 'case-studies' }],
-  ]},
   { title: 'Resources', links: [
+    ['Case Studies', { key: 'case-studies' }],
     ['Blogs', { key: 'blog' }],
-    ['Socials', { key: 'socials' }],
   ]},
 ]
 

@@ -33,8 +33,8 @@ const sbC2D         = '/figma/sidebar-chnc/c-2d.svg' // ConvergenSEE C logo
 
 // ─── Figma Assets (main panel: node 53:2908) ─────────────────────────────────
 const imgVector          = '/figma/dashboard-chnc/img-search-vector.svg'
-const imgCustomer11      = '/figma/dashboard-chnc/img-customer11.png'
-const imgAvatar06        = '/figma/dashboard-chnc/img-avatar06.jpg'
+const imgCustomer11      = '/figma/dashboard-chnc/img-customer11.webp'
+const imgAvatar06        = '/figma/dashboard-chnc/img-avatar06.webp'
 const imgMemoji          = '/figma/dashboard-chnc/img-memoji.png'
 const imgSubtract        = '/figma/dashboard-chnc/img-menu-subtract.svg'
 const imgEllipse103      = '/figma/dashboard-chnc/img-ellipse103.svg'
@@ -393,6 +393,15 @@ function IconPulseRing() {
     </div>
   )
 }
+function IconPanels() {
+  return (
+    <div style={{ position: 'relative', width: 20, height: 20, flexShrink: 0 }}>
+      <div style={{ position: 'absolute', left: '10%', top: '22%', bottom: '22%', width: '18%', border: '0.833px solid #666a74', borderRadius: 1 }} />
+      <div style={{ position: 'absolute', left: '41%', top: '12.5%', bottom: '12.5%', width: '18%', border: '0.833px solid #666a74', borderRadius: 1 }} />
+      <div style={{ position: 'absolute', right: '10%', top: '22%', bottom: '22%', width: '18%', border: '0.833px solid #666a74', borderRadius: 1 }} />
+    </div>
+  )
+}
 
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
 const sbMenuItems = [
@@ -407,6 +416,7 @@ const sbMenuItems = [
   { id: 'InvoiceIT',   label: 'InvoiceIT',   Icon: IconOrder },
   { id: 'AdaptIT',     label: 'AdaptIT',     Icon: IconGlobe },
   { id: 'EngageIT',    label: 'EngageIT',    Icon: IconPulseRing },
+  { id: 'ConvergeIT',  label: 'ConvergeIT',  Icon: IconPanels },
 ]
 
 function Sidebar({ active, org, insightSub }) {
@@ -742,6 +752,15 @@ const MODULES = {
       { label: 'Retention Lift',   value: '14%',   growth: '+9.2%' },
     ],
   },
+  ConvergeIT: {
+    title: 'ConvergeIT',
+    tiles: [
+      { label: 'Agencies Linked',  value: '7',      growth: '+16.7%' },
+      { label: 'Active Campaigns', value: '38',     growth: '+11.8%' },
+      { label: 'Combined Spend',   value: '₹18.6L', growth: '+9.4%' },
+      { label: 'Blended ROAS',     value: '4.1x',   growth: '+13.2%' },
+    ],
+  },
 }
 
 // ─── Chart primitives ─────────────────────────────────────────────────────────
@@ -1054,19 +1073,21 @@ function InsArea({ on, h = 90 }) {
 // ─── Global InsightIT animated walkthrough (analytics reel) ───────────────────
 // 7-frame product reel: OVERVIEW → LPM → SOCIAL → PERFORMANCE → LPG → EXPORT → CLOSE.
 // Fictionalized per the reel rules: Horizon Motors / A. Sharma / swapped figures only.
-function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
   const G = '#34cc32'
   const SA = "'Saira Condensed', sans-serif", AR = "'Archivo', sans-serif"
 
+  // SPEED < 1 slows the whole reel uniformly (frame durations, reveals, cursor).
+  const SPEED = 0.7
   const [elapsed, setElapsed] = useState(0)
   useEffect(() => {
-    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    const id = setInterval(() => setElapsed(e => e + 60 * SPEED), 60)
     return () => clearInterval(id)
   }, [])
 
-  // Frame: 0 Overview 1 LPM 2 Social 3 Performance 4 LPG 5 Export 6 Close
-  const timeline = [0, 2500, 5000, 7500, 10000, 12000, 13500]
-  const totalDuration = 15000
+  // Frame (virtual ms — real time = ÷ SPEED): 0 Overview(6.5s) 1 LPM(6s) 2 Social(6s) 3 Performance(6s) 4 LPG(6s) 5 Export(4.5s) 6 Close(3s)
+  const timeline = [0, 6500, 12500, 18500, 24500, 30500, 35000]
+  const totalDuration = 38000
   const looped = elapsed % totalDuration
 
   let frame = 0, t = 0
@@ -1090,7 +1111,8 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
     return p.join(',') + ',' + l3
   }
 
-  // Tab strip — the sliding underline is the transition device between frames
+  // Tab strip — the sliding underline is the transition device between frames.
+  // Visual language mirrors the real InsightIT dashboard (chnc-final): dark underline, uppercase tabs.
   const TABS = [['OVERVIEW', 54], ['LPM', 30], ['SOCIAL MEDIA', 74], ['PERFORMANCE MARKETING', 120], ['LPG', 30]]
   const TAB_GAP = 26
   const activeTab = [0, 1, 2, 3, 4, 0, 0][frame]
@@ -1098,19 +1120,32 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
   let tacc = 0
   for (const [, w] of TABS) { tabOffsets.push(tacc); tacc += w + TAB_GAP }
 
-  // Cursor rides the tab strip: glides to the next tab and clicks as the underline slides
+  // Cursor rides the data as it reveals, then glides to the next tab and clicks
+  // as the underline slides. Sub-tab cuts (Instagram / Meta) get their own clicks.
   const cursorScript = {
-    0: { path: [[0, 430, 200], [900, 430, 330], [1600, 99, 62]], clicks: [2150] },
-    1: { path: [[0, 99, 62], [500, 300, 140], [1100, 640, 330], [1700, 177, 62]], clicks: [2150] },
-    2: { path: [[0, 177, 62], [500, 172, 96], [1600, 300, 62]], clicks: [1250, 2150] },
-    3: { path: [[0, 300, 62], [500, 480, 300], [1250, 85, 96], [1950, 401, 62]], clicks: [1700, 2200] },
-    4: { path: [[0, 401, 62], [400, 560, 280], [1250, 31, 62]], clicks: [1700] },
-    5: { path: [[0, 31, 62], [250, 1052, 18]], clicks: [640] },
+    0: { path: [[0, 250, 135], [1000, 620, 135], [2100, 400, 250], [3400, 260, 350], [4300, 720, 390], [5400, 99, 62]], clicks: [4700, 5950] },
+    1: { path: [[0, 140, 130], [1000, 430, 130], [2000, 720, 210], [2900, 160, 330], [3800, 430, 380], [4700, 177, 62]], clicks: [5400] },
+    2: { path: [[0, 300, 170], [1000, 700, 170], [1900, 500, 330], [2350, 220, 96], [3400, 260, 210], [4200, 550, 340], [5100, 300, 62]], clicks: [3000, 5750] },
+    3: { path: [[0, 150, 165], [900, 480, 185], [1900, 260, 340], [2750, 135, 96], [3700, 950, 420], [5100, 401, 62]], clicks: [3400, 5750] },
+    4: { path: [[0, 200, 140], [1000, 650, 140], [1900, 400, 215], [2800, 200, 350], [3800, 620, 350], [4700, 31, 62]], clicks: [5400] },
+    5: { path: [[0, 31, 62], [300, 1075, 18]], clicks: [900] },
   }
   const seg = cursorScript[frame]
   let cx = 430, cy = 200
   if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
   const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  // Camera-follow (same rig as CreateIT): zoom in while the data reveals, pull back
+  // outside these windows so tab transitions and the export beat read full-frame.
+  // Overview is a full-frame hero beat (greeting + control strip must stay visible — no zoom).
+  // Social/Paid zoom around their sub-tab cut.
+  const ZOOM = { 1: [[300, 4300]], 2: [[300, 2600], [3300, 4700]], 3: [[300, 3100], [3700, 4900]], 4: [[300, 4300]] }
+  const camOn = !!(ZOOM[frame] && ZOOM[frame].some(([a, b]) => t >= a && t < b))
+  useEffect(() => {
+    if (!onCursor) return
+    onCursor(camOn ? { x: cx, y: cy } : null)
+    return () => onCursor(null)
+  }, [camOn, cx, cy, onCursor])
 
   const overlays = [
     { main: 'Every module reports here.', sub: 'Budget, spend, regions — one global view.' },
@@ -1123,7 +1158,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
   ]
   const overlay = overlays[frame]
 
-  const exportPress = frame === 5 && t > 640 && t < 1000
+  const exportPress = frame === 5 && t > 900 && t < 1260
 
   const cardS = { background: '#fff', border: '1px solid #dee0e7', borderRadius: 6 }
   const cardT = { margin: 0, fontSize: 10, fontFamily: SA, fontWeight: 700, color: '#000718', textTransform: 'uppercase', letterSpacing: 0.5 }
@@ -1149,29 +1184,28 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
       {frame <= 5 && (
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '2px 4px 0' }}>
           <div>
+            <p style={{ margin: '0 0 1px', fontSize: 8.5, fontFamily: AR, fontWeight: 300, color: '#666a74' }}>Home › Analytics</p>
             <p style={{ margin: 0, fontSize: 17, fontFamily: SA, fontWeight: 700, color: '#000718', letterSpacing: 0.3 }}>HELLO, A. SHARMA</p>
-            <div style={{ display: 'flex', gap: 6, marginTop: 3 }}>
-              {['All business assets ▾', 'All ad accounts ▾'].map(c => (
-                <span key={c} style={{ fontSize: 8.5, fontFamily: AR, fontWeight: 600, color: '#666a74', border: '1px solid #dee0e7', borderRadius: 10, padding: '2px 8px', background: '#fff', whiteSpace: 'nowrap' }}>{c}</span>
-              ))}
-            </div>
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            {['ALL LOCATIONS ▾', 'Lifetime ▾'].map(c => (
-              <span key={c} style={{ fontSize: 9, fontFamily: AR, fontWeight: 700, color: '#000718', border: '1px solid #dee0e7', borderRadius: 0, padding: '5px 10px', background: '#fff', whiteSpace: 'nowrap' }}>{c}</span>
+            {['All business assets ▾', 'All ad accounts ▾'].map(f => (
+              <span key={f} style={{ fontSize: 9, fontFamily: AR, fontWeight: 600, color: '#666a74', border: '1px solid #dee0e7', padding: '5px 9px', background: '#fff', whiteSpace: 'nowrap' }}>{f}</span>
             ))}
-            <div style={{ ...btnG, transform: exportPress ? 'scale(0.9)' : 'scale(1)', transition: 'transform 0.18s ease', animation: frame === 5 && t > 640 && t < 1400 ? 'insPulse 0.7s ease-out' : 'none' }}>EXPORT ALL</div>
+            {['All Locations', 'Lifetime'].map(c => (
+              <span key={c} style={{ fontSize: 10, fontFamily: SA, fontWeight: 700, color: '#000718', border: '1px solid #dee0e7', padding: '5px 10px', background: '#fff', whiteSpace: 'nowrap', textTransform: 'uppercase', letterSpacing: 0.5 }}>{c}</span>
+            ))}
+            <div style={{ ...btnG, transform: exportPress ? 'scale(0.9)' : 'scale(1)', transition: 'transform 0.18s ease', animation: frame === 5 && t > 900 && t < 1700 ? 'insPulse 0.7s ease-out' : 'none' }}>+ EXPORT ALL</div>
           </div>
         </div>
       )}
 
       {/* Report chip (Frame 5) */}
-      {frame === 5 && t > 1000 && (
+      {frame === 5 && t > 1400 && (
         <div style={{ position: 'absolute', right: 4, top: 40, zIndex: 150, background: '#fff', border: `1px solid ${G}`, borderLeft: `4px solid ${G}`, boxShadow: '0 8px 24px rgba(0,0,0,0.16)', padding: '7px 12px', borderRadius: 4, animation: 'insToast 0.45s cubic-bezier(0.25,0.1,0.25,1)', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 13 }}>📄</span>
           <div>
             <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 700, color: '#000718' }}>ConvergenSEE — Global Insights</p>
-            <p style={{ margin: '1px 0 0', fontSize: 8.5, fontFamily: AR, color: '#1b5e20' }}>Aug 2026 · All locations · PDF ✓</p>
+            <p style={{ margin: '1px 0 0', fontSize: 8.5, fontFamily: AR, color: '#1b5e20' }}>Aug 2026 · PDF ✓</p>
           </div>
         </div>
       )}
@@ -1184,15 +1218,15 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
               <p style={{ margin: 0, fontSize: 12.5, fontFamily: SA, fontWeight: 600, textTransform: 'uppercase', whiteSpace: 'nowrap', color: i === activeTab ? '#000718' : '#9fa3ac', transition: 'color 0.35s ease' }}>{lab}</p>
             </div>
           ))}
-          <div style={{ position: 'absolute', bottom: -1, height: 2.5, background: G, left: 4 + tabOffsets[activeTab], width: TABS[activeTab][1], transition: 'left 0.45s cubic-bezier(0.25,0.1,0.25,1), width 0.45s cubic-bezier(0.25,0.1,0.25,1)', borderRadius: 2 }} />
+          <div style={{ position: 'absolute', bottom: -1, height: 2, background: '#000718', left: 4 + tabOffsets[activeTab], width: TABS[activeTab][1], transition: 'left 0.45s cubic-bezier(0.25,0.1,0.25,1), width 0.45s cubic-bezier(0.25,0.1,0.25,1)' }} />
         </div>
       )}
 
-      {/* Cursor */}
+      {/* Cursor — moved via transform (compositor), not left/top (layout) */}
       {frame <= 5 && (
         <div style={{
-          position: 'absolute', left: cx, top: cy, zIndex: 200,
-          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          position: 'absolute', left: 0, top: 0, transform: `translate(${cx}px, ${cy}px)`, zIndex: 200,
+          transition: 'transform 0.65s cubic-bezier(0.25,0.1,0.25,1)', willChange: 'transform',
           pointerEvents: 'none',
         }}>
           {cursorClick !== undefined && (
@@ -1207,51 +1241,50 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
       {/* Content area */}
       <div style={{ height: 470, padding: '10px 4px 0', position: 'relative', overflow: 'hidden' }}>
 
-        {/* FRAME 0 — GLOBAL OVERVIEW (hero beat #1) */}
+        {/* FRAME 0 — GLOBAL OVERVIEW: hero money tiles → TOTAL AMOUNT SPENT bars → BEST PERFORMING REGION table */}
         {frame === 0 && (() => {
-          const alloc = cnt(t, 150, 900, 120)
-          const spent = cnt(t, 300, 900, 96.42)
-          const months = [['Sep', 5.8], ['Oct', 6.4], ['Nov', 7.2], ['Dec', 7.9], ['Jan', 7.4], ['Feb', 8.1], ['Mar', 8.6], ['Apr', 8.2], ['May', 9.0], ['Jun', 9.4], ['Jul', 9.8], ['Aug', 8.6]]
+          // Monthly spend sums to the ₹96.42L "Budget spent" hero tile.
+          const months = [['Sep', 5.8], ['Oct', 6.9], ['Nov', 7.4], ['Dec', 8.8], ['Jan', 6.4], ['Feb', 7.1], ['Mar', 8.2], ['Apr', 7.6], ['May', 8.1], ['Jun', 9.0], ['Jul', 9.9], ['Aug', 11.2]]
           const rows = [
-            ['HM Mumbai Central', '8,412', '5,204', '3,988', '1,242', '31.1%'],
-            ['HM Pune West', '6,930', '4,466', '3,105', '958', '30.8%'],
-            ['HM Ahmedabad', '5,872', '3,610', '2,644', '801', '30.3%'],
-            ['HM Delhi South', '5,214', '3,182', '2,310', '676', '29.3%'],
-            ['HM Bengaluru North', '4,466', '2,872', '1,988', '552', '27.8%'],
+            ['Maharashtra', '55,538', '32,180', '19,847', '6,172', '31.1%'],
+            ['Gujarat', '24,917', '14,236', '8,914', '2,304', '25.8%'],
+            ['Delhi', '19,258', '11,032', '6,741', '1,652', '24.5%'],
+            ['Karnataka', '16,842', '9,517', '5,890', '1,342', '22.8%'],
+            ['Tamil Nadu', '12,406', '7,148', '4,322', '918', '21.2%'],
           ]
           return (
             <div key="f0" style={{ animation: 'insFadeUp 0.5s ease', display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
               <div style={{ display: 'flex', gap: 10 }}>
-                {[['BUDGET ALLOCATED', alloc, '#1b5e20', '#e8fde8', G, 'LIFETIME'], ['BUDGET SPENT', spent, '#b71c1c', '#fdecec', '#cc3232', '80.4% USED']].map(([lab, v, col, bg, bd, tag]) => (
-                  <div key={lab} style={{ flex: 1, background: bg, border: `1px solid ${bd}`, borderLeft: `4px solid ${bd}`, borderRadius: 6, padding: '10px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div>
-                      <p style={{ margin: 0, fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.5 }}>{lab}</p>
-                      <p style={{ margin: '2px 0 0', fontSize: 26, fontFamily: SA, fontWeight: 700, color: col, lineHeight: 1.1 }}>₹{v.toFixed(2)} <span style={{ fontSize: 13 }}>lacs</span></p>
-                    </div>
-                    <span style={{ ...pillBase, background: '#fff', color: col, border: `1px solid ${bd}` }}>{tag}</span>
+                {[['BUDGET ALLOCATED', cnt(t, 300, 1200, 120).toFixed(2), '#1b5e20', '#e8fde8', G, 300], ['BUDGET SPENT', cnt(t, 550, 1200, 96.42).toFixed(2), '#b71c1c', '#fdecec', '#cc3232', 550]].map(([lab, v, col, bg, bd, at]) => (
+                  <div key={lab} style={{ flex: 1, background: bg, border: `1px solid ${bd}`, borderRadius: 6, padding: '9px 14px', opacity: t > at ? 1 : 0, transform: t > at ? 'scale(1)' : 'scale(0.94)', transition: 'all 0.45s ease' }}>
+                    <p style={{ ...tiny, fontSize: 8, textTransform: 'uppercase', letterSpacing: 0.4 }}>{lab}</p>
+                    <p style={{ margin: '1px 0 0', fontSize: 22, fontFamily: SA, fontWeight: 700, color: col, whiteSpace: 'nowrap' }}>₹{v} lacs</p>
                   </div>
                 ))}
               </div>
               <div style={{ ...cardS, padding: '10px 14px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                   <p style={cardT}>TOTAL AMOUNT SPENT</p>
-                  <p style={{ ...tiny, fontSize: 8 }}>total amount ▾ · Maximum</p>
+                  <span style={{ ...tiny, fontSize: 8 }}>TOTAL AMOUNT · <span style={{ color: '#000718', fontWeight: 800 }}>MAXIMUM ▾</span></span>
                 </div>
-                <InsBars on={t > 450} h={132} data={months.map(([l, v]) => ({ l, v, t: v.toFixed(1) }))} />
+                <div style={{ marginTop: 6 }}>
+                  <InsBars on={t > 1400} h={128} stagger={90} data={months.map(([l, v]) => ({ l, v, t: '₹' + v.toFixed(1) + 'L' }))} />
+                </div>
               </div>
-              <div style={{ ...cardS, padding: '8px 0 2px', flex: 1, overflow: 'hidden' }}>
-                <p style={{ ...cardT, padding: '0 14px 6px' }}>BEST PERFORMING REGION</p>
+              <div style={{ ...cardS, flex: 1, padding: '8px 0 2px', overflow: 'hidden', minHeight: 0 }}>
+                <p style={{ ...cardT, padding: '0 14px 5px' }}>BEST PERFORMING REGION</p>
                 <div style={{ display: 'flex', background: '#fafbfc', borderTop: '1px solid #f2f2f2', borderBottom: '1px solid #f2f2f2' }}>
-                  {['RO', 'LEADS', 'CALLS', 'ENQUIRY', 'BOOKING', 'E2B %'].map((hd, i) => (
-                    <p key={hd} style={{ ...thS, flex: i === 0 ? 2 : 1, textAlign: i === 0 ? 'left' : 'right' }}>{hd}</p>
+                  {['REGION', 'LEADS', 'CALLS', 'ENQUIRY', 'BOOKING', 'E2B %'].map((hd, i) => (
+                    <p key={hd} style={{ ...thS, flex: i === 0 ? 1.6 : 1, textAlign: i === 0 ? 'left' : 'right', padding: '4px 14px' }}>{hd}</p>
                   ))}
                 </div>
                 {rows.map((r, i) => {
-                  const show = t > 750 + i * 130
+                  const show = t > 3300 + i * 240
                   return (
                     <div key={r[0]} style={{ display: 'flex', alignItems: 'center', padding: '4.5px 0', borderBottom: i < 4 ? '1px solid #f6f6f8' : 'none', opacity: show ? 1 : 0, transform: show ? 'translateX(0)' : 'translateX(-12px)', transition: 'all 0.45s ease' }}>
-                      {r.map((cell, j) => (
-                        <p key={j} style={{ margin: 0, flex: j === 0 ? 2 : 1, padding: '0 14px', fontSize: 10.5, fontFamily: AR, fontWeight: j === 0 ? 700 : 500, color: j === 0 ? '#000718' : j === 5 ? '#1b5e20' : '#555', textAlign: j === 0 ? 'left' : 'right', whiteSpace: 'nowrap' }}>{cell}</p>
+                      <p style={{ margin: 0, flex: 1.6, padding: '0 14px', fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>{i + 1}. {r[0]}</p>
+                      {[1, 2, 3, 4, 5].map(j => (
+                        <p key={j} style={{ margin: 0, flex: 1, padding: '0 14px', fontSize: 9.5, fontFamily: AR, fontWeight: j === 5 ? 800 : 600, color: j === 5 ? '#1b5e20' : '#555', textAlign: 'right', whiteSpace: 'nowrap' }}>{r[j]}</p>
                       ))}
                     </div>
                   )
@@ -1264,15 +1297,15 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
         {/* FRAME 1 — LOCAL (LPM) */}
         {frame === 1 && (() => {
           const kpis = [
-            ['LOCATIONS', inr(cnt(t, 150, 800, 42318)), '+2.4%', G, 150],
-            ['VISIBILITY', cnt(t, 250, 800, 84.1).toFixed(1) + '%', '+21.01%', '#3b82f6', 250],
-            ['ACCURACY', cnt(t, 350, 800, 92.4).toFixed(1) + '%', '+4.6%', '#8b5cf6', 350],
-            ['REVIEWS', cnt(t, 450, 800, 4.6).toFixed(1) + '★', '+0.2', '#f59e0b', 450],
+            ['LOCATIONS', inr(cnt(t, 200, 1200, 42318)), '+1.2%', G, 200],
+            ['VISIBILITY', cnt(t, 400, 1200, 84.1).toFixed(1) + '%', '+4.2%', '#3b82f6', 400],
+            ['ACCURACY', cnt(t, 600, 1200, 92.4).toFixed(1) + '%', '+2.1%', '#8b5cf6', 600],
+            ['REVIEWS', cnt(t, 800, 1200, 4.6).toFixed(1) + '★', '+0.2', '#f59e0b', 800],
           ]
           const verdicts = [
-            ['Southwest', 'BEST PERFORMING REGION', 'Follower Growth +21.01%', 'good', 650],
-            ['Northeast', 'UNDERPERFORMING', 'Engagement 21.6% ↓', 'bad', 850],
-            ['West', 'FASTEST GROWING', '+9.3% / month', 'info', 1050],
+            ['Southwest', 'BEST PERFORMING REGION', 'Follower Growth +21.01%', 'good', 1400],
+            ['Northeast', 'UNDERPERFORMING', 'Engagement 21.6% ↓', 'bad', 1800],
+            ['West', 'FASTEST GROWING', '+9.3% / month', 'info', 2200],
           ]
           return (
             <div key="f1" style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
@@ -1286,7 +1319,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                 <div style={{ ...cardS, width: 316, padding: '10px 14px', display: 'flex', gap: 14 }}>
                   <div style={{ textAlign: 'center', flexShrink: 0 }}>
                     <p style={cardT}>OVERALL HYGIENE</p>
-                    <div style={{ marginTop: 6 }}><InsRing on={t > 800} value={78} /></div>
+                    <div style={{ marginTop: 6 }}><InsRing on={t > 2600} value={78} /></div>
                     <p style={{ ...tiny, fontSize: 8, marginTop: 2, letterSpacing: 0.5 }}>VAC SCORE · <span style={{ color: '#1b5e20', fontWeight: 800 }}>GOOD</span></p>
                   </div>
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 8, minWidth: 0 }}>
@@ -1297,7 +1330,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                           <span style={{ ...tiny, fontSize: 8.5, color: '#1b5e20', fontWeight: 800 }}>{v}%</span>
                         </div>
                         <div style={{ background: '#eceef2', height: 4, borderRadius: 2 }}>
-                          <div style={{ background: G, height: '100%', borderRadius: 2, width: `${v}%`, transform: t > 900 + i * 90 ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.6s ease-out' }} />
+                          <div style={{ background: G, height: '100%', borderRadius: 2, width: `${v}%`, transform: t > 2800 + i * 140 ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.6s ease-out' }} />
                         </div>
                       </div>
                     ))}
@@ -1305,7 +1338,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                 </div>
                 <div style={{ ...cardS, width: 260, padding: '10px 14px', textAlign: 'center' }}>
                   <p style={cardT}>REVIEW NET PROMOTER SCORE</p>
-                  <div style={{ marginTop: 8 }}><InsGauge on={t > 900} value={42} /></div>
+                  <div style={{ marginTop: 8 }}><InsGauge on={t > 3000} value={42} /></div>
                   <p style={{ margin: '2px 0 0', fontSize: 13, fontFamily: SA, fontWeight: 700, color: '#1b5e20' }}>+42 · POSITIVE</p>
                 </div>
                 <div style={{ ...cardS, flex: 1, padding: '10px 14px' }}>
@@ -1313,7 +1346,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                     <p style={cardT}>REVIEWS BY LOCATION</p>
                     <span style={{ ...tiny, fontSize: 8 }}>Last 30 days</span>
                   </div>
-                  <InsDotMap on={t > 900} h={150} w={220} />
+                  <InsDotMap on={t > 3200} h={150} w={220} />
                 </div>
               </div>
             </div>
@@ -1322,27 +1355,28 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
 
         {/* FRAME 2 — SOCIAL (Overview → Instagram cut) */}
         {frame === 2 && (() => {
-          const ig = t > 1400
-          const tb = t - 1400
+          const ig = t > 3200
+          const tb = t - 3200
           const regions = [
-            ['Maharashtra', 'BEST PERFORMING', 'Impressions 5,58,30,392', 'good', 200],
-            ['Bihar', 'UNDERPERFORMING', 'Engagement 1.2% ↓', 'bad', 350],
-            ['Karnataka', 'MOST ENGAGING', 'CTR 4.8%', 'info', 500],
-            ['Assam', 'LOWEST REACH', 'Impressions 8,12,440', 'warn', 650],
+            ['Maharashtra', 'BEST PERFORMING', 'Impressions 5,58,30,392', 'good', 400],
+            ['Bihar', 'UNDERPERFORMING', 'Engagement 1.2% ↓', 'bad', 700],
+            ['Karnataka', 'MOST ENGAGING', 'CTR 4.8%', 'info', 1000],
+            ['Assam', 'LOWEST REACH', 'Impressions 8,12,440', 'warn', 1300],
           ]
-          const states = [['MH', 558], ['GJ', 402], ['KA', 361], ['DL', 328], ['TN', 296], ['UP', 268], ['WB', 224], ['RJ', 196], ['MP', 173], ['KL', 148]]
+          const reach = [['MH', 55.8, '5.58Cr'], ['GJ', 31.4, '3.14Cr'], ['DL', 26.9, '2.69Cr'], ['KA', 24.2, '2.42Cr'], ['TN', 19.8, '1.98Cr'], ['WB', 14.6, '1.46Cr'], ['RJ', 12.1, '1.21Cr'], ['UP', 9.4, '94L']]
           const igStats = [
-            ['LIKES', inr(cnt(tb, 100, 650, 48973))],
-            ['COMMENTS', inr(cnt(tb, 180, 650, 3750))],
-            ['SHARES', inr(cnt(tb, 260, 650, 1279))],
-            ['REACH', inr(cnt(tb, 340, 650, 642180))],
+            ['LIKES', inr(cnt(tb, 150, 900, 48973)), '+8.4%'],
+            ['COMMENTS', inr(cnt(tb, 300, 900, 3750)), '+5.1%'],
+            ['SHARES', inr(cnt(tb, 450, 900, 1279)), '+12.6%'],
+            ['REACH', inr(cnt(tb, 600, 900, 642180)), '+11.4%'],
           ]
           return (
             <div key="f2" style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%' }}>
-              <div style={{ display: 'flex', gap: 18, borderBottom: '1px solid #eceef2', paddingBottom: 5 }}>
-                {['OVERVIEW', 'FACEBOOK', 'INSTAGRAM'].map(st => {
-                  const on = ig ? st === 'INSTAGRAM' : st === 'OVERVIEW'
-                  return <span key={st} style={{ fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: on ? G : '#9fa3ac', borderBottom: on ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 4, transition: 'all 0.3s ease' }}>{st}</span>
+              <div style={{ display: 'flex', gap: 14, alignItems: 'center', borderBottom: '1px solid #eceef2', paddingBottom: 6 }}>
+                <span style={{ fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: '#000718' }}>Social media ›</span>
+                {['Overview', 'Facebook', 'Instagram'].map(st => {
+                  const on = ig ? st === 'Instagram' : st === 'Overview'
+                  return <span key={st} style={{ fontSize: 9.5, fontFamily: AR, fontWeight: on ? 700 : 500, color: on ? '#000718' : '#9fa3ac', transition: 'all 0.3s ease' }}>{st}</span>
                 })}
               </div>
               {!ig ? (
@@ -1351,26 +1385,35 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                     {regions.map(([rg, vd, met, tone, at]) => <InsVerdict key={rg} region={rg} verdict={vd} metric={met} tone={tone} on={t > at} />)}
                   </div>
                   <div style={{ ...cardS, flex: 1, padding: '10px 14px' }}>
-                    <p style={cardT}>REACH BY REGION</p>
-                    <div style={{ marginTop: 6 }}>
-                      <InsBars on={t > 350} h={250} data={states.map(([l, v]) => ({ l, v, t: (v / 100).toFixed(1) + 'Cr' }))} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                      <p style={cardT}>REACH BY REGION</p>
+                      <span style={{ ...tiny, fontSize: 8 }}>Impressions by state · <span style={{ color: '#1b5e20', fontWeight: 800 }}>Maharashtra 5,58,30,392</span></span>
+                    </div>
+                    <div style={{ marginTop: 8 }}>
+                      <InsBars on={t > 900} h={168} stagger={110} data={reach.map(([l, v, tx]) => ({ l, v, t: tx }))} />
                     </div>
                   </div>
                 </>
               ) : (
                 <div key="ig" style={{ animation: 'insFadeUp 0.4s ease', display: 'flex', flexDirection: 'column', gap: 10, flex: 1, minHeight: 0 }}>
                   <div style={{ display: 'flex', gap: 10 }}>
-                    {igStats.map(([lab, val]) => (
+                    {igStats.map(([lab, val, chip]) => (
                       <div key={lab} style={{ flex: 1, ...cardS, padding: '9px 12px' }}>
                         <p style={{ ...tiny, textTransform: 'uppercase', letterSpacing: 0.5 }}>{lab}</p>
                         <p style={{ margin: '1px 0 2px', fontSize: 20, fontFamily: SA, fontWeight: 700, color: '#000718' }}>{val}</p>
-                        <span style={{ fontSize: 8.5, fontFamily: AR, fontWeight: 700, color: '#1b5e20' }}>+21.01% ↑</span>
+                        <span style={{ fontSize: 8.5, fontFamily: AR, fontWeight: 700, color: '#1b5e20' }}>{chip} ↑</span>
                       </div>
                     ))}
                   </div>
-                  <div style={{ ...cardS, flex: 1, padding: '10px 14px', minHeight: 0 }}>
-                    <p style={cardT}>ENGAGEMENT OVERTIME</p>
-                    <div style={{ marginTop: 8 }}><InsLine on={tb > 250} h={150} /></div>
+                  <div style={{ ...cardS, flex: 1, padding: '10px 14px', minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                      <p style={cardT}>ENGAGEMENT OVERTIME</p>
+                      <span style={{ ...tiny, fontSize: 8 }}>Likes + comments + shares · <span style={{ color: '#1b5e20', fontWeight: 800 }}>Last 12 weeks</span></span>
+                    </div>
+                    <div style={{ flex: 1, minHeight: 0, marginTop: 8 }}><InsLine on={tb > 700} h="100%" /></div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+                      {['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12'].map(w => <span key={w} style={{ ...tiny, fontSize: 7 }}>{w}</span>)}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1380,19 +1423,20 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
 
         {/* FRAME 3 — PAID (Performance Marketing) */}
         {frame === 3 && (() => {
-          const meta = t > 1800
+          const meta = t > 3600
           const cpl = [['DEL', 612], ['MUM', 548], ['BLR', 495], ['PUN', 448], ['AMD', 396], ['JPR', 342], ['IND', 298]]
-          const leads = [['Maharashtra', 55538, 850], ['Gujarat', 24917, 1000], ['Delhi', 19258, 1150], ['Karnataka', 16842, 1300], ['Tamil Nadu', 12406, 1450]]
+          const leads = [['Maharashtra', 55538, 1800], ['Gujarat', 24917, 2050], ['Delhi', 19258, 2300], ['Karnataka', 16842, 2550], ['Tamil Nadu', 12406, 2800]]
           return (
             <div key="f3" style={{ display: 'flex', flexDirection: 'column', gap: 10, height: '100%', position: 'relative' }}>
-              <div style={{ display: 'flex', gap: 18, borderBottom: '1px solid #eceef2', paddingBottom: 5 }}>
-                {['OVERVIEW', 'META', 'GOOGLE'].map(st => {
-                  const on = meta ? st === 'META' : st === 'OVERVIEW'
-                  return <span key={st} style={{ fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: on ? G : '#9fa3ac', borderBottom: on ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 4, transition: 'all 0.3s ease' }}>{st}</span>
+              <div style={{ display: 'flex', gap: 14, alignItems: 'center', borderBottom: '1px solid #eceef2', paddingBottom: 6 }}>
+                <span style={{ fontSize: 9.5, fontFamily: AR, fontWeight: 700, color: '#000718' }}>Performance marketing ›</span>
+                {['Overview', 'Meta', 'Google'].map(st => {
+                  const on = meta ? st === 'Meta' : st === 'Overview'
+                  return <span key={st} style={{ fontSize: 9.5, fontFamily: AR, fontWeight: on ? 700 : 500, color: on ? '#000718' : '#9fa3ac', transition: 'all 0.3s ease' }}>{st}</span>
                 })}
               </div>
               <div style={{ display: 'flex', gap: 10 }}>
-                {[['BUDGET ALLOCATED', '₹120.00 lacs', '#1b5e20', '#e8fde8', G, 150], ['BUDGET SPENT', '₹96.42 lacs', '#b71c1c', '#fdecec', '#cc3232', 300]].map(([lab, v, col, bg, bd, at]) => (
+                {[['BUDGET ALLOCATED', '₹120.00 lacs', '#1b5e20', '#e8fde8', G, 250], ['BUDGET SPENT', '₹96.42 lacs', '#b71c1c', '#fdecec', '#cc3232', 500]].map(([lab, v, col, bg, bd, at]) => (
                   <div key={lab} style={{ width: 190, background: bg, border: `1px solid ${bd}`, borderRadius: 6, padding: '8px 12px', opacity: t > at ? 1 : 0, transform: t > at ? 'scale(1)' : 'scale(0.92)', transition: 'all 0.4s ease' }}>
                     <p style={{ ...tiny, fontSize: 8, textTransform: 'uppercase', letterSpacing: 0.4 }}>{lab}</p>
                     <p style={{ margin: '1px 0 0', fontSize: 17, fontFamily: SA, fontWeight: 700, color: col }}>{v}</p>
@@ -1401,7 +1445,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                 <div style={{ ...cardS, flex: 1, padding: '6px 0 2px' }}>
                   <p style={{ ...cardT, padding: '0 12px 3px' }}>BEST PERFORMING REGION</p>
                   {[['Maharashtra', '55,538 leads', 'CPL ₹389'], ['Gujarat', '24,917 leads', 'CPL ₹412'], ['Delhi', '19,258 leads', 'CPL ₹451']].map(([rg, ld, cp], i) => {
-                    const show = t > 450 + i * 130
+                    const show = t > 800 + i * 250
                     return (
                       <div key={rg} style={{ display: 'flex', justifyContent: 'space-between', padding: '2.5px 12px', opacity: show ? 1 : 0, transform: show ? 'translateX(0)' : 'translateX(-10px)', transition: 'all 0.4s ease' }}>
                         <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 700, color: '#000718', width: 120 }}>{i + 1}. {rg}</p>
@@ -1416,7 +1460,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                 <div style={{ ...cardS, flex: 1.15, padding: '10px 14px' }}>
                   <p style={cardT}>CPL BY REGION <span style={{ fontSize: 8, color: '#9fa3ac', fontFamily: AR, fontWeight: 600, textTransform: 'none' }}>(highest → lowest)</span></p>
                   <div style={{ marginTop: 6 }}>
-                    <InsBars on={t > 550} h={190} color="#8b5cf6" data={cpl.map(([l, v]) => ({ l, v, t: '₹' + v }))} />
+                    <InsBars on={t > 1300} h={190} color="#8b5cf6" data={cpl.map(([l, v]) => ({ l, v, t: '₹' + v }))} />
                   </div>
                 </div>
                 <div style={{ ...cardS, flex: 1, padding: '8px 0' }}>
@@ -1459,18 +1503,18 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
         {/* FRAME 4 — WEB (LPG) */}
         {frame === 4 && (() => {
           const kpis = [
-            ['USERS', '1.54M', '+21.01%', G, 100],
-            ['SESSIONS', '2.1M', '+18.4%', '#3b82f6', 190],
-            ['CONVERSIONS', '18.4K', '+12.9%', '#8b5cf6', 280],
-            ['AVG DURATION', '3.8 min', '+0.4', '#f59e0b', 370],
+            ['USERS', cnt(t, 200, 1200, 1.54).toFixed(2) + 'M', '+21.01%', G, 200],
+            ['SESSIONS', cnt(t, 400, 1200, 2.1).toFixed(1) + 'M', '+14.2%', '#3b82f6', 400],
+            ['CONVERSIONS', cnt(t, 600, 1200, 18.4).toFixed(1) + 'K', '+9.8%', '#8b5cf6', 600],
+            ['AVG DURATION', cnt(t, 800, 1200, 3.8).toFixed(1) + ' min', '+6.4%', '#f59e0b', 800],
           ]
           const zones = [
-            ['South', 'TOP REGION BY TRAFFIC', '9,84,210 sessions', 'good', 450],
-            ['West', 'LOWEST TRAFFIC', '2,10,884 sessions', 'bad', 560],
-            ['East', 'MOST CONVERSIONS', '6,412 conversions', 'info', 670],
-            ['North', 'HIGH TRAFFIC · LOW CONV.', 'CVR 0.4%', 'warn', 780],
+            ['South', 'TOP REGION BY TRAFFIC', '9,84,210 sessions', 'good', 1200],
+            ['West', 'LOWEST TRAFFIC', '2,10,884 sessions', 'bad', 1450],
+            ['East', 'MOST CONVERSIONS', '6,412 conversions', 'info', 1700],
+            ['North', 'HIGH TRAFFIC · LOW CONV.', 'CVR 0.4%', 'warn', 1950],
           ]
-          const strip = [['ENGAGEMENT RATE', 64.2, '%'], ['SCROLL RATE', 71.8, '%'], ['PAGES / SESSION', 4.2, ''], ['CTR', 2.9, '%'], ['BOUNCE RATE', 38.4, '%']]
+          const strip = [['ENGAGEMENT RATE', 64.2, '%'], ['SCROLL RATE', 71.8, '%'], ['PAGES PER SESSION', 4.2, ''], ['CTR', 2.9, '%'], ['BOUNCE RATE', 38.4, '%']]
           const sessions = [['S', 84], ['SW', 71], ['W', 38], ['N', 64], ['NE', 29], ['E', 57], ['C', 46]]
           return (
             <div key="f4" style={{ display: 'flex', flexDirection: 'column', gap: 8, height: '100%' }}>
@@ -1484,7 +1528,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                 {strip.map(([lab, v, u], i) => (
                   <div key={lab} style={{ flex: 1, textAlign: 'center', borderRight: i < 4 ? '1px solid #f0f1f4' : 'none', padding: '2px 6px' }}>
                     <p style={{ ...tiny, fontSize: 7.5, textTransform: 'uppercase', letterSpacing: 0.4 }}>{lab}</p>
-                    <p style={{ margin: '1px 0 0', fontSize: 15, fontFamily: SA, fontWeight: 700, color: '#000718' }}>{cnt(t, 600 + i * 80, 550, v).toFixed(1)}{u}</p>
+                    <p style={{ margin: '1px 0 0', fontSize: 15, fontFamily: SA, fontWeight: 700, color: '#000718' }}>{cnt(t, 2400 + i * 120, 800, v).toFixed(1)}{u}</p>
                   </div>
                 ))}
               </div>
@@ -1492,7 +1536,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                 <div style={{ ...cardS, flex: 1.25, padding: '8px 12px' }}>
                   <p style={cardT}>TRAFFIC BY ZONES</p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{ flex: 1 }}><InsDotMap on={t > 650} h={118} w={150} /></div>
+                    <div style={{ flex: 1 }}><InsDotMap on={t > 2900} h={118} w={150} /></div>
                     <div style={{ width: 118, display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0 }}>
                       {[['South', 92], ['North', 74], ['East', 58], ['West', 31]].map(([z, v], i) => (
                         <div key={z}>
@@ -1501,7 +1545,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                             <span style={{ ...tiny, fontSize: 8, color: '#1b5e20', fontWeight: 800 }}>{v}%</span>
                           </div>
                           <div style={{ background: '#eceef2', height: 4, borderRadius: 2 }}>
-                            <div style={{ background: G, height: '100%', borderRadius: 2, width: `${v}%`, transform: t > 800 + i * 80 ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.55s ease-out' }} />
+                            <div style={{ background: G, height: '100%', borderRadius: 2, width: `${v}%`, transform: t > 3100 + i * 120 ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.55s ease-out' }} />
                           </div>
                         </div>
                       ))}
@@ -1514,7 +1558,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                     <span style={{ ...tiny, fontSize: 7.5 }}>1 WEEK · SESSIONS</span>
                   </div>
                   <div style={{ marginTop: 4 }}>
-                    <InsBars on={t > 750} h={118} stagger={70} data={sessions.map(([l, v]) => ({ l, v, t: '' }))} />
+                    <InsBars on={t > 3300} h={118} stagger={70} data={sessions.map(([l, v]) => ({ l, v, t: '' }))} />
                   </div>
                 </div>
                 <div style={{ ...cardS, flex: 1, padding: '8px 12px' }}>
@@ -1522,11 +1566,11 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                     <p style={cardT}>PEAK VISIT TIME</p>
                     <span style={{ ...tiny, fontSize: 7.5, color: '#1b5e20', fontWeight: 800 }}>REGION FOCUS · SOUTHWEST ▾</span>
                   </div>
-                  <div style={{ marginTop: 6 }}><InsArea on={t > 800} h={96} /></div>
+                  <div style={{ marginTop: 6 }}><InsArea on={t > 3500} h={96} /></div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-                    <span style={{ ...tiny, fontSize: 8 }}>Avg time 3.8 min</span>
+                    <span style={{ ...tiny, fontSize: 8 }}>Avg time 3m 24s</span>
                     <span style={{ ...tiny, fontSize: 8 }}>Peak 7–9 PM</span>
-                    <span style={{ ...tiny, fontSize: 8 }}>Bounce 38.4%</span>
+                    <span style={{ ...tiny, fontSize: 8 }}>Bounce 42.3%</span>
                   </div>
                 </div>
               </div>
@@ -1534,8 +1578,8 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
           )
         })()}
 
-        {/* FRAME 5 — EXPORT (hero beat #2 — the pull-back) */}
-        {frame === 5 && (
+        {/* FRAME 5 — EXPORT (hero beat #2 — the pull-back): press → toast → report card */}
+        {frame === 5 && t > 1700 && (
           <div key="f5" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: 780, background: '#fff', border: '1px solid #dee0e7', borderRadius: 10, boxShadow: '0 24px 60px rgba(0,7,24,0.14)', padding: 14, animation: 'insPull 0.7s cubic-bezier(0.25,0.1,0.25,1)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 10, borderBottom: '1px solid #f0f1f4' }}>
@@ -1717,20 +1761,22 @@ function CreateStandardContent({ controls, tileVariants }) {
 }
 
 // ─── CreateIT content (Creative Production) ───────────────────────────────────
-function CreateContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+function CreateContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
   const G = '#34cc32'
 
-  // Self-contained timer: total elapsed ms since mount
+  // Self-contained timer: total elapsed ms since mount.
+  // SPEED < 1 slows the whole reel uniformly (frame durations, reveals, cursor).
+  const SPEED = 1
   const [elapsed, setElapsed] = useState(0)
   useEffect(() => {
-    const id = setInterval(() => setElapsed(e => e + 60), 60)
+    const id = setInterval(() => setElapsed(e => e + 60 * SPEED), 60)
     return () => clearInterval(id)
   }, [])
 
-  // Timeline: cumulative ms for each frame start
-  // Frame:    0=idle  1=Brief(3.5s)  2=Generate(5s)  3=Approve(4s)  4=Adapt(3.5s)  5=Copy(5s)  6=Merge(3.5s)  7=Publish(4s)  8=done
-  const timeline = [0, 500, 4000, 9000, 13000, 16500, 21500, 25000, 29000]
-  const totalDuration = 30000
+  // One frame per product beat: Brief. Generate. Approve. Adapt. Publish.
+  // Frame: 0=idle  1=Brief(5s)  2=Generate(7s)  3=Approve(6s)  4=Adapt(6.3s)  5=Publish(7s)  6=close
+  const timeline = [0, 800, 5800, 12800, 18800, 25100, 32100]
+  const totalDuration = 33800
 
   // Loop the animation
   const looped = elapsed % totalDuration
@@ -1745,35 +1791,59 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame }) {
   useEffect(() => { if (onFrame) onFrame(frame) }, [frame, onFrame])
 
   const copyText = 'Celebrating the spirit of freedom! 🇮🇳 Happy Independence Day to every Indian heart.'
+  const copyAlts = [copyText, 'From struggle to strength. India shines brighter every year. #IndependenceDay', 'Jai Hind! 🇮🇳 Honoring the heroes who made our freedom possible.']
+  // Actual creatives: fictional Horizon Motors Independence Day ads (public/horizon-creative-1..6.webp)
+  const tile = i => `url(/horizon-creative-${i + 1}.webp) center/cover no-repeat`
 
   // Cursor — rides each action. Per frame: path = [switchTime, x, y] waypoints timed so the
   // 0.65s glide lands ON the element as its action fires; clicks pulse a ring at the tip.
   const cursorScript = {
-    1: { path: [[0, 230, 127], [300, 230, 200], [1000, 230, 273], [1700, 230, 346]], clicks: [] },
-    2: { path: [[0, 230, 121], [350, 48, 163], [850, 136, 163], [1500, 520, 230], [2900, 200, 330], [3500, 919, 330], [4200, 560, 380]], clicks: [1050, 1550] },
-    3: { path: [[0, 919, 261]], clicks: [1050] },
-    4: { path: [[0, 198, 150], [500, 560, 150], [1200, 922, 150], [1900, 136, 270]], clicks: [2800] },
-    5: { path: [[0, 230, 117], [350, 230, 179], [750, 230, 241], [1100, 520, 315], [2700, 400, 294], [3900, 400, 340], [4400, 400, 386]], clicks: [3600] },
-    6: { path: [[0, 460, 172], [600, 660, 172], [1100, 560, 172], [1800, 560, 278]], clicks: [] },
-    7: { path: [[0, 1050, 109], [400, 1050, 150], [900, 1050, 191], [1400, 1050, 232], [2200, 560, 300]], clicks: [] },
+    1: { path: [[0, 230, 127], [900, 230, 200], [1900, 230, 273], [2900, 230, 346]], clicks: [] },
+    2: { path: [[0, 230, 121], [900, 48, 163], [1700, 136, 163], [2700, 520, 240], [4600, 260, 290], [6000, 850, 290]], clicks: [1600, 2400] },
+    3: { path: [[0, 440, 165], [1600, 830, 138], [3200, 620, 320]], clicks: [900, 2500] },
+    4: { path: [[0, 89, 155], [1000, 230, 155], [2000, 422, 155], [3000, 228, 275], [4050, 309, 275]], clicks: [3650, 4700] },
+    5: { path: [[0, 144, 200], [1500, 700, 110], [2300, 700, 155], [3100, 700, 200], [3900, 700, 245], [5000, 700, 320]], clicks: [] },
   }
   const seg = cursorScript[frame]
   let cx = 400, cy = 260
   if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
   const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
 
+  // Camera-follow experiment: report the cursor (local coords) upward so the whole
+  // dashboard zooms in and pans with it; null = pull back to the full view.
+  // Pulls back while the AI visuals generate (frame 2) and for "Campaign Live!" (frame 5).
+  const camOff = frame < 1 || frame > 5 || (frame === 2 && t > 2500) || (frame === 5 && t > 4800)
+  useEffect(() => {
+    if (!onCursor) return
+    onCursor(camOff ? null : { x: cx, y: cy })
+    return () => onCursor(null)
+  }, [camOff, cx, cy, onCursor])
+
   const overlays = [
     null,
     { main: 'Tell it what you need.', sub: 'Campaign name. Platform. That\'s it.' },
     { main: 'AI generates your visuals.', sub: 'Multiple options. Multiple AI engines. Seconds.' },
-    { main: 'Pick one. Send for approval.', sub: 'One click. Done.' },
-    { main: 'One image. Every format. Every language.', sub: 'Adapt it once. Use it everywhere.' },
-    { main: 'AI writes the copy too.', sub: 'Multiple variations. Pick your favourite.' },
-    { main: 'Image + copy come together.', sub: 'Your final creative. Ready to go.' },
+    { main: 'Pick your visual. Pick your words.', sub: 'AI writes the copy too. Approval in one click.' },
+    { main: 'One creative. Every format. Every language.', sub: 'Adapt it once. Use it everywhere.' },
     { main: 'Brief. Generate. Approve. Adapt. Publish.', sub: 'All in one place. All in minutes.' },
   ]
   const overlay = overlays[frame]
-  const progressLabels = ['CAMPAIGN', 'BRIEF', 'PLANNING', 'APPROVE', 'ADAPT', 'COPY', 'PUBLISH']
+  const progressLabels = ['BRIEF', 'GENERATE', 'APPROVE', 'ADAPT', 'PUBLISH']
+  const step = frame - 1 // active label index; -1 = idle, 5 = closing (all done)
+
+  // Shared bits — plain helpers called inline (never inner components: the 60ms tick would remount them)
+  const heading = txt => (
+    <h3 style={{ margin: '0 0 18px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>{txt}</h3>
+  )
+  const field = (label, value, show, done) => (
+    <div style={{ opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(12px)', transition: 'all 0.7s ease' }}>
+      <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 5 }}>{label}</label>
+      <div style={{ border: `1.5px solid ${done ? G : '#dee0e7'}`, padding: '9px 14px', fontSize: 13, fontFamily: "'Archivo', sans-serif", color: '#333', transition: 'border-color 0.6s ease', borderRadius: 2 }}>
+        {show ? value : ''}
+        {show && !done && <span style={{ animation: 'blink 0.8s ease infinite', color: G, marginLeft: 1 }}>|</span>}
+      </div>
+    </div>
+  )
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: 1119, position: 'relative', height: '100%' }}>
@@ -1781,25 +1851,30 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame }) {
         @keyframes shimmer { 0% { background-position: -200px 0; } 100% { background-position: 200px 0; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-        @keyframes progressFill { from { width: 0; } to { width: 100%; } }
         @keyframes crClick { 0% { transform: scale(0.25); opacity: 0.9; } 100% { transform: scale(1.3); opacity: 0; } }
       `}</style>
+
+      {/* Preload the creatives during the idle frame so grid tiles don't pop in */}
+      <div style={{ display: 'none' }}>
+        {[1, 2, 3, 4, 5, 6].map(i => <img key={i} src={`/horizon-creative-${i}.webp`} alt="" />)}
+        {['square', 'story', 'banner'].flatMap(f => ['en', 'hi', 'ta'].map(l => `${f}-${l}`)).map(n => <img key={n} src={`/horizon-adapt-${n}.webp`} alt="" />)}
+      </div>
 
       {/* Progress bar */}
       <div style={{ display: 'flex', gap: 0, padding: '14px 24px 0' }}>
         {progressLabels.map((l, i) => (
           <div key={l} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
-            <div style={{ height: 3, width: '100%', background: i < frame ? G : (i === frame && frame > 0) ? G : '#dee0e7', borderRadius: 2, transition: 'background 0.6s ease', opacity: (i === frame && frame > 0) ? 0.5 : 1 }} />
-            <span style={{ fontSize: 8, fontFamily: "'Archivo', sans-serif", color: i <= frame && frame > 0 ? G : '#9fa3ac', fontWeight: i < frame ? 700 : 400, transition: 'all 0.3s ease' }}>{l}</span>
+            <div style={{ height: 3, width: '100%', background: i <= step ? G : '#dee0e7', borderRadius: 2, transition: 'background 0.6s ease', opacity: i === step && step < 5 ? 0.5 : 1 }} />
+            <span style={{ fontSize: 8, fontFamily: "'Archivo', sans-serif", color: i <= step ? G : '#9fa3ac', fontWeight: i < step ? 700 : 400, transition: 'all 0.3s ease' }}>{l}</span>
           </div>
         ))}
       </div>
 
-      {/* Black cursor */}
-      {frame > 0 && frame <= 7 && (
+      {/* Black cursor — moved via transform (compositor), not left/top (layout) */}
+      {frame > 0 && frame <= 5 && (
         <div style={{
-          position: 'absolute', left: cx, top: cy, zIndex: 200,
-          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          position: 'absolute', left: 0, top: 0, transform: `translate(${cx}px, ${cy}px)`, zIndex: 200,
+          transition: 'transform 0.65s cubic-bezier(0.25,0.1,0.25,1)', willChange: 'transform',
           pointerEvents: 'none',
         }}>
           {cursorClick !== undefined && (
@@ -1814,46 +1889,33 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame }) {
       {/* Content area */}
       <div style={{ flex: 1, padding: '18px 24px', overflow: 'hidden' }}>
 
-        {/* FRAME 1 — Brief IT (3.5s) */}
+        {/* FRAME 1 — Brief (5s) */}
         {frame === 1 && (
           <div key="f1" style={{ animation: 'fadeUp 0.7s ease' }}>
-            <h3 style={{ margin: '0 0 22px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Create Campaign</h3>
+            {heading('Brief — Create Campaign')}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               {[
-                { label: 'Campaign Name', value: 'Independence Day Post' },
-                { label: 'Platform', value: 'Instagram' },
-                { label: 'Region', value: 'India — All States' },
-                { label: 'Objective', value: 'Brand Awareness' },
-              ].map((field, i) => {
-                const show = t > i * 700
-                const greenBorder = t > i * 700 + 500
-                return (
-                  <div key={i} style={{ opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(12px)', transition: 'all 0.7s ease' }}>
-                    <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 5 }}>{field.label}</label>
-                    <div style={{ border: `1.5px solid ${greenBorder ? G : '#dee0e7'}`, padding: '9px 14px', fontSize: 13, fontFamily: "'Archivo', sans-serif", color: '#333', transition: 'border-color 0.6s ease', borderRadius: 2 }}>
-                      {show ? field.value : ''}
-                      {show && !greenBorder && <span style={{ animation: 'blink 0.8s ease infinite', color: G, marginLeft: 1 }}>|</span>}
-                    </div>
-                  </div>
-                )
-              })}
+                ['Campaign Name', 'Independence Day Post'],
+                ['Platform', 'Instagram'],
+                ['Region', 'India — All States'],
+                ['Objective', 'Brand Awareness'],
+              ].map(([l, v], i) => (
+                <div key={l}>{field(l, v, t > i * 900, t > i * 900 + 600)}</div>
+              ))}
             </div>
           </div>
         )}
 
-        {/* FRAME 2 — Generate Images (5s) */}
+        {/* FRAME 2 — Generate visuals (7s) */}
         {frame === 2 && (
           <div key="f2" style={{ animation: 'fadeUp 0.7s ease' }}>
-            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Planning — Generate Images</h3>
+            {heading('Generate — AI Visuals')}
             <div style={{ marginBottom: 16 }}>
-              <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 5 }}>Brief</label>
-              <div style={{ border: `1.5px solid ${t > 600 ? G : '#dee0e7'}`, padding: '9px 14px', fontSize: 12, fontFamily: "'Archivo', sans-serif", color: '#333', transition: 'border-color 0.6s ease', borderRadius: 2 }}>
-                Festive post for independence day{t < 1200 && <span style={{ animation: 'blink 0.8s ease infinite', color: G, marginLeft: 1 }}>|</span>}
-              </div>
+              {field('Brief', 'Festive post for independence day', true, t > 1200)}
             </div>
             <div style={{ display: 'flex', gap: 20, marginBottom: 18 }}>
               {['GPT', 'Gemini 2.0'].map((p, i) => {
-                const checked = t > 1000 + i * 500
+                const checked = t > 1600 + i * 800
                 return (
                   <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 7, opacity: checked ? 1 : 0.3, transition: 'opacity 0.5s ease' }}>
                     <div style={{ width: 15, height: 15, borderRadius: 3, border: `2px solid ${checked ? G : '#ccc'}`, background: checked ? G : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.4s ease', transform: checked ? 'scale(1)' : 'scale(0.8)' }}>
@@ -1864,25 +1926,25 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame }) {
                 )
               })}
             </div>
-            {t > 2000 && t < 3500 && (
+            {t > 2700 && t < 4400 && (
               <div style={{ background: '#f5f6f8', borderRadius: 8, padding: 18, textAlign: 'center', border: '1px solid #dee0e7', animation: 'fadeUp 0.5s ease' }}>
                 <p style={{ fontSize: 12, fontFamily: "'Archivo', sans-serif", color: '#333', margin: '0 0 10px', fontWeight: 600 }}>Generating with Dual AI (GPT + Gemini 2.0)</p>
                 <div style={{ height: 6, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}>
-                  <div style={{ height: '100%', background: G, width: `${Math.min(((t - 2000) / 1500) * 100, 100)}%`, borderRadius: 3, transition: 'width 0.1s linear' }} />
+                  <div style={{ height: '100%', background: G, width: `${Math.min(((t - 2700) / 1700) * 100, 100)}%`, borderRadius: 3, transition: 'width 0.1s linear' }} />
                 </div>
               </div>
             )}
-            {t > 3500 && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+            {t > 4400 && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 8 }}>
                 {[0,1,2,3,4,5].map(i => (
                   <div key={i} style={{
-                    aspectRatio: '1/1', background: `hsl(${120 + i * 30}, 30%, ${75 - i * 5}%)`, borderRadius: 4,
-                    opacity: t > 3500 + i * 250 ? 1 : 0, transform: t > 3500 + i * 250 ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.95)',
+                    aspectRatio: '1/1', background: tile(i), borderRadius: 4,
+                    opacity: t > 4400 + i * 250 ? 1 : 0, transform: t > 4400 + i * 250 ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.95)',
                     transition: 'all 0.6s ease', display: 'flex', alignItems: 'center', justifyContent: 'center',
                     position: 'relative', overflow: 'hidden',
                   }}>
-                    {t > 3500 + i * 250 && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)', backgroundSize: '200px 100%', animation: 'shimmer 2s ease infinite' }} />}
-                    <span style={{ fontSize: 9, color: 'rgba(0,0,0,0.2)', fontFamily: "'Archivo', sans-serif", position: 'relative' }}>{i < 3 ? 'Gemini' : 'GPT'}</span>
+                    {t > 4400 + i * 250 && <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)', backgroundSize: '200px 100%', animation: 'shimmer 2s ease infinite' }} />}
+                    <span style={{ position: 'absolute', left: 6, bottom: 6, fontSize: 8, fontWeight: 600, color: '#333', background: 'rgba(255,255,255,0.85)', padding: '2px 7px', borderRadius: 3, fontFamily: "'Archivo', sans-serif" }}>{i < 3 ? 'Gemini' : 'GPT'}</span>
                   </div>
                 ))}
               </div>
@@ -1890,172 +1952,135 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame }) {
           </div>
         )}
 
-        {/* FRAME 3 — Approve (4s) */}
+        {/* FRAME 3 — Approve visual + copy (6s) */}
         {frame === 3 && (
           <div key="f3" style={{ animation: 'fadeUp 0.7s ease' }}>
-            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Select & Approve</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 20 }}>
-              {[0,1,2,3,4,5].map(i => (
-                <div key={i} style={{
-                  aspectRatio: '1/1', background: `hsl(${120 + i * 30}, 30%, ${75 - i * 5}%)`, borderRadius: 4,
-                  border: i === 2 && t > 1000 ? `3px solid ${G}` : '3px solid transparent',
-                  position: 'relative', transition: 'border 0.5s ease',
-                }}>
-                  {i === 2 && t > 1000 && (
-                    <div style={{ position: 'absolute', top: 5, right: 5, width: 18, height: 18, borderRadius: 9, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeUp 0.4s ease' }}>
-                      <span style={{ color: '#fff', fontSize: 10, fontWeight: 800 }}>✓</span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            {t > 1500 && t < 3000 && (
-              <div style={{ background: '#fff8e1', border: '1px solid #ffd54f', borderRadius: 6, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, animation: 'fadeUp 0.5s ease' }}>
-                <span style={{ fontSize: 16 }}>⏳</span>
-                <span style={{ fontSize: 13, fontFamily: "'Archivo', sans-serif", color: '#f57f17', fontWeight: 600 }}>Waiting for Approval...</span>
-              </div>
-            )}
-            {t > 3000 && (
-              <div style={{ background: '#e8fde8', border: `2px solid ${G}`, borderRadius: 6, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, animation: 'fadeUp 0.5s ease' }}>
-                <span style={{ fontSize: 16 }}>✅</span>
-                <span style={{ fontSize: 13, fontFamily: "'Archivo', sans-serif", color: '#1b5e20', fontWeight: 700 }}>Approved by Stakeholder</span>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* FRAME 4 — Adapt (3.5s) */}
-        {frame === 4 && (
-          <div key="f4" style={{ animation: 'fadeUp 0.7s ease' }}>
-            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Adapt — Resize & Localize</h3>
-            <div style={{ display: 'flex', gap: 14, marginBottom: 22 }}>
-              {[{ l: 'Square', r: '1/1' }, { l: 'Story', r: '9/16' }, { l: 'Banner', r: '16/9' }].map((f, i) => (
-                <div key={f.l} style={{
-                  flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
-                  opacity: t > i * 700 ? 1 : 0, transform: t > i * 700 ? 'scale(1)' : 'scale(0.88)',
-                  transition: 'all 0.7s ease',
-                }}>
-                  <div style={{ width: '100%', aspectRatio: f.r, background: 'hsl(150, 30%, 70%)', borderRadius: 4, border: `2px solid ${G}`, maxHeight: 130 }} />
-                  <span style={{ fontSize: 11, fontFamily: "'Archivo', sans-serif", color: '#666' }}>{f.l}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, opacity: t > 2200 ? 1 : 0, transition: 'opacity 0.6s ease' }}>
-              <label style={{ fontSize: 12, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600 }}>Language:</label>
-              {['English', 'Hindi', 'Tamil'].map((l, i) => (
-                <div key={l} style={{ padding: '5px 14px', background: i === 0 ? G : '#f0f0f0', fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: i === 0 ? '#000' : '#666', borderRadius: 3 }}>{l}</div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* FRAME 5 — Generate Copy (5s) */}
-        {frame === 5 && (
-          <div key="f5" style={{ animation: 'fadeUp 0.7s ease' }}>
-            <h3 style={{ margin: '0 0 16px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Generate Copy</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 18 }}>
-              {[{ l: 'Description', v: 'Independence Day Post' }, { l: 'Ideation', v: 'Wish everyone Happy Independence Day' }, { l: 'Tone', v: 'Authentic' }].map((f, i) => {
-                const show = t > i * 400
-                const greenBorder = t > i * 400 + 300
-                return (
-                  <div key={i} style={{ opacity: show ? 1 : 0, transition: 'opacity 0.5s ease' }}>
-                    <label style={{ fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 4 }}>{f.l}</label>
-                    <div style={{ border: `1.5px solid ${greenBorder ? G : '#dee0e7'}`, padding: '7px 12px', fontSize: 12, fontFamily: "'Archivo', sans-serif", color: '#333', transition: 'border-color 0.5s ease', borderRadius: 2 }}>{f.v}</div>
-                  </div>
-                )
-              })}
-            </div>
-            {t > 1500 && t < 3200 && (
-              <div style={{ background: '#f5f6f8', borderRadius: 8, padding: 18, textAlign: 'center', border: '1px solid #dee0e7', animation: 'fadeUp 0.5s ease' }}>
-                <p style={{ fontSize: 12, fontFamily: "'Archivo', sans-serif", color: '#333', margin: '0 0 10px', fontWeight: 600 }}>Generating content...</p>
-                <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginBottom: 10 }}>
-                  <span style={{ fontSize: 10, color: G, fontFamily: "'Archivo', sans-serif" }}>✓ OpenAI</span>
-                  <span style={{ fontSize: 10, color: t > 2200 ? G : '#9fa3ac', fontFamily: "'Archivo', sans-serif" }}>{t > 2200 ? '✓' : '...'} Gemini</span>
-                </div>
-                <div style={{ height: 6, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}>
-                  <div style={{ height: '100%', background: G, width: `${Math.min(((t - 1500) / 1700) * 100, 100)}%`, borderRadius: 3, transition: 'width 0.1s linear' }} />
-                </div>
-              </div>
-            )}
-            {t > 3200 && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {[copyText, 'From struggle to strength. India shines brighter every year. #IndependenceDay', 'Jai Hind! 🇮🇳 Honoring the heroes who made our freedom possible.'].map((v, i) => (
+            {heading('Approve — Visual & Copy')}
+            <div style={{ display: 'flex', gap: 24 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, width: 500, alignContent: 'start' }}>
+                {[0,1,2,3,4,5].map(i => (
                   <div key={i} style={{
-                    padding: '10px 14px', background: i === 0 ? '#e8fde8' : '#f5f6f8',
-                    border: i === 0 ? `2px solid ${G}` : '1px solid #dee0e7',
+                    aspectRatio: '1/1', background: tile(i), borderRadius: 4,
+                    border: i === 2 && t > 900 ? `3px solid ${G}` : '3px solid transparent',
+                    position: 'relative', transition: 'border 0.5s ease',
+                  }}>
+                    {i === 2 && t > 900 && (
+                      <div style={{ position: 'absolute', top: 5, right: 5, width: 18, height: 18, borderRadius: 9, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeUp 0.4s ease' }}>
+                        <span style={{ color: '#fff', fontSize: 10, fontWeight: 800 }}>✓</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600 }}>AI Copy — pick one</label>
+                {copyAlts.map((v, i) => (
+                  <div key={i} style={{
+                    padding: '10px 14px', background: i === 0 && t > 2500 ? '#e8fde8' : '#f5f6f8',
+                    border: i === 0 && t > 2500 ? `2px solid ${G}` : '1px solid #dee0e7',
                     fontSize: 11, fontFamily: "'Archivo', sans-serif", color: '#333', lineHeight: '16px', borderRadius: 4,
-                    opacity: t > 3200 + i * 350 ? 1 : 0, transform: t > 3200 + i * 350 ? 'translateY(0)' : 'translateY(10px)',
+                    opacity: t > 1300 + i * 350 ? 1 : 0, transform: t > 1300 + i * 350 ? 'translateY(0)' : 'translateY(10px)',
                     transition: 'all 0.6s ease',
                   }}>{v}</div>
                 ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* FRAME 6 — Merge (3.5s) */}
-        {frame === 6 && (
-          <div key="f6" style={{ animation: 'fadeUp 0.7s ease', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 28 }}>
-            <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase', alignSelf: 'flex-start' }}>Merge & Preview</h3>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: t > 1200 ? 0 : 70, transition: 'gap 1.2s cubic-bezier(0.25,0.1,0.25,1)', position: 'relative', minHeight: 150 }}>
-              <div style={{ width: 130, height: 130, background: 'hsl(150, 30%, 70%)', borderRadius: 6, transition: 'transform 1s ease', transform: t > 1200 ? 'translateX(0)' : 'translateX(-25px)', boxShadow: '0 6px 20px rgba(0,0,0,0.12)' }} />
-              <div style={{
-                width: 130, height: 130, background: '#fff', border: '1.5px solid #dee0e7', borderRadius: 6, padding: 12,
-                transition: 'all 1s ease', transform: t > 1200 ? 'translateX(-130px)' : 'translateX(25px)',
-                opacity: t > 1200 ? 0 : 1, boxShadow: '0 6px 20px rgba(0,0,0,0.12)',
-              }}>
-                <p style={{ fontSize: 9, color: '#333', fontFamily: "'Archivo', sans-serif", lineHeight: '14px', margin: 0 }}>{copyText}</p>
-              </div>
-              {t > 1500 && (
-                <div style={{ position: 'absolute', width: 170, background: '#fff', borderRadius: 8, overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.18)', animation: 'fadeUp 0.7s ease' }}>
-                  <div style={{ height: 110, background: 'hsl(150, 30%, 70%)' }} />
-                  <div style={{ padding: 10 }}>
-                    <p style={{ fontSize: 9, color: '#333', fontFamily: "'Archivo', sans-serif", lineHeight: '12px', margin: 0 }}>{copyText.slice(0, 60)}...</p>
+                {t > 3400 && t < 4700 && (
+                  <div style={{ background: '#fff8e1', border: '1px solid #ffd54f', borderRadius: 6, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, animation: 'fadeUp 0.5s ease' }}>
+                    <span style={{ fontSize: 14 }}>⏳</span>
+                    <span style={{ fontSize: 12, fontFamily: "'Archivo', sans-serif", color: '#f57f17', fontWeight: 600 }}>Waiting for Approval...</span>
                   </div>
-                </div>
-              )}
-            </div>
-            {t > 2200 && (
-              <div style={{ width: '55%', height: 6, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}>
-                <div style={{ height: '100%', background: G, animation: 'progressFill 1s ease forwards', borderRadius: 3 }} />
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* FRAME 7 — Publish (4s) */}
-        {frame === 7 && (
-          <div key="f7" style={{ animation: 'fadeUp 0.7s ease' }}>
-            <h3 style={{ margin: '0 0 20px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Publish & Schedule</h3>
-            {['Meta — Reel · Scheduled 10:00 AM', 'Instagram — Carousel · Ready', 'Google Display — Static · Ready', 'YouTube — Video · In Review'].map((item, i) => (
-              <div key={i} style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '12px 14px', borderBottom: '1px solid #f0f0f0',
-                opacity: t > i * 500 ? 1 : 0.15, transition: 'opacity 0.6s ease',
-              }}>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#333', margin: 0 }}>{item}</p>
-                {t > i * 500 + 600 && (
-                  <div style={{ width: 20, height: 20, background: G, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeUp 0.4s ease' }}>
-                    <svg width="10" height="10" viewBox="0 0 8 8"><path d="M1.5 4L3 5.5L6.5 2" stroke="#000" strokeWidth="1.2" fill="none"/></svg>
+                )}
+                {t > 4700 && (
+                  <div style={{ background: '#e8fde8', border: `2px solid ${G}`, borderRadius: 6, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, animation: 'fadeUp 0.5s ease' }}>
+                    <span style={{ fontSize: 14 }}>✅</span>
+                    <span style={{ fontSize: 12, fontFamily: "'Archivo', sans-serif", color: '#1b5e20', fontWeight: 700 }}>Approved by Stakeholder</span>
                   </div>
                 )}
               </div>
-            ))}
-            {t > 2800 && (
-              <div style={{ textAlign: 'center', marginTop: 28, animation: 'fadeUp 0.7s ease' }}>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>Campaign Live!</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Brief. Generate. Approve. Adapt. Publish.</p>
-              </div>
-            )}
+            </div>
           </div>
         )}
 
-        {/* FRAME 0 — idle before start */}
-        {frame === 0 && (
+        {/* FRAME 4 — Adapt (6.3s): real per-format adapts; square + banner swap language live */}
+        {frame === 4 && (() => {
+          const li = t > 4700 ? 2 : t > 3650 ? 1 : 0
+          const lang = ['en', 'hi', 'ta'][li]
+          return (
+            <div key="f4" style={{ animation: 'fadeUp 0.7s ease' }}>
+              {heading('Adapt — Resize & Localize')}
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 40, marginBottom: 22 }}>
+                {[
+                  { l: 'Square 1:1', w: 130, h: 130, src: `/horizon-adapt-square-${lang}.webp`, base: '/horizon-adapt-square-en.webp' },
+                  { l: 'Story 9:16', w: 73, h: 130, src: `/horizon-adapt-story-${lang}.webp`, base: '/horizon-adapt-story-en.webp' },
+                  { l: 'Banner 16:9', w: 231, h: 130, src: `/horizon-adapt-banner-${lang}.webp`, base: '/horizon-adapt-banner-en.webp' },
+                ].map((f, i) => (
+                  <div key={f.l} style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                    opacity: t > i * 900 ? 1 : 0, transform: t > i * 900 ? 'scale(1)' : 'scale(0.88)',
+                    transition: 'all 0.7s ease',
+                  }}>
+                    <div style={{ width: f.w, height: f.h, background: `url(${f.base}) center/cover no-repeat`, borderRadius: 4, border: `2px solid ${G}`, position: 'relative', overflow: 'hidden' }}>
+                      <img key={f.src} src={f.src} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', animation: 'fadeUp 0.45s ease' }} />
+                    </div>
+                    <span style={{ fontSize: 11, fontFamily: "'Archivo', sans-serif", color: '#666' }}>{f.l}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, opacity: t > 2600 ? 1 : 0, transition: 'opacity 0.6s ease' }}>
+                <label style={{ fontSize: 12, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600 }}>Language:</label>
+                {['English', 'हिन्दी', 'தமிழ்'].map((l, i) => (
+                  <div key={l} style={{ padding: '5px 14px', background: i === li ? G : '#f0f0f0', fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: i === li ? '#000' : '#666', borderRadius: 3, transition: 'all 0.3s ease' }}>{l}</div>
+                ))}
+              </div>
+            </div>
+          )
+        })()}
+
+        {/* FRAME 5 — Publish (7s): final creative + schedule */}
+        {frame === 5 && (
+          <div key="f5" style={{ animation: 'fadeUp 0.7s ease' }}>
+            {heading('Publish & Schedule')}
+            <div style={{ display: 'flex', gap: 28 }}>
+              <div style={{
+                width: 240, background: '#fff', borderRadius: 8, overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.18)', alignSelf: 'flex-start',
+                opacity: t > 300 ? 1 : 0, transform: t > 300 ? 'scale(1)' : 'scale(0.92)', transition: 'all 0.8s ease',
+              }}>
+                <div style={{ height: 150, background: 'url(/horizon-adapt-banner-en.webp) center/cover no-repeat' }} />
+                <div style={{ padding: 12 }}>
+                  <p style={{ fontSize: 10, color: '#333', fontFamily: "'Archivo', sans-serif", lineHeight: '15px', margin: 0 }}>{copyText}</p>
+                </div>
+              </div>
+              <div style={{ flex: 1 }}>
+                {['Meta — Reel · Scheduled 10:00 AM', 'Instagram — Carousel · Ready', 'Google Display — Static · Ready', 'YouTube — Video · In Review'].map((item, i) => (
+                  <div key={i} style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    padding: '12px 14px', borderBottom: '1px solid #f0f0f0',
+                    opacity: t > 1300 + i * 700 ? 1 : 0.15, transition: 'opacity 0.6s ease',
+                  }}>
+                    <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#333', margin: 0 }}>{item}</p>
+                    {t > 1300 + i * 700 + 550 && (
+                      <div style={{ width: 20, height: 20, background: G, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeUp 0.4s ease' }}>
+                        <svg width="10" height="10" viewBox="0 0 8 8"><path d="M1.5 4L3 5.5L6.5 2" stroke="#000" strokeWidth="1.2" fill="none"/></svg>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                {t > 5000 && (
+                  <div style={{ textAlign: 'center', marginTop: 24, animation: 'fadeUp 0.7s ease' }}>
+                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>Campaign Live!</p>
+                    <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Brief. Generate. Approve. Adapt. Publish.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* FRAME 0 / 6 — idle & close */}
+        {(frame === 0 || frame === 6) && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
             <div style={{ animation: 'fadeUp 0.5s ease' }}>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>CreateIT</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Your end-to-end content creation workflow</p>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Brief. Generate. Approve. Adapt. Publish.</p>
             </div>
           </div>
         )}
@@ -3763,7 +3788,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }
 // ─── SocialiseIT animated walkthrough (One brand, every page) ─────────────────
 // 6-frame product reel: PICK PAGES → COMPOSE → SCHEDULE & PUBLISH → MEASURE → CLOSE
 // Fictionalized per brief: ConvergenSEE pages + Horizon Motors placeholder creative only.
-function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
   const G = '#34cc32'
 
   const [elapsed, setElapsed] = useState(0)
@@ -3799,6 +3824,29 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
   let cx = 400, cy = 240
   if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
   const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  // Camera (variable-depth rig in CHNCDashboard): windows of [start, end, zoom,
+  // fx?, fy?] — fx/fy frame a fixed point (the card grid) instead of the
+  // cursor. ONE depth per beat — depth changes only between beats, never inside
+  // one (in-beat zoom pumping read as shaky); the rig's deadband handles the
+  // cursor roaming within a held shot. Tight on the wizard beats, wide on the
+  // fan-out grid and the analytics tour; gaps pull back full-frame (frame
+  // transitions, the 4-card reveal, close).
+  const CAM = {
+    1: [[500, 6200, 1.8]],
+    2: [[300, 5100, 1.8], [5300, 8300, 1.5]],
+    3: [[300, 3100, 1.85], [4700, 7900, 1.3, 560, 325]],
+    4: [[300, 1900, 1.55], [1900, 7400, 1.3]],
+  }
+  const camWin = CAM[frame] && CAM[frame].find(([a, b]) => t >= a && t < b)
+  const camZ = camWin ? camWin[2] : 0
+  const camX = camWin ? (camWin[3] ?? cx) : 0
+  const camY = camWin ? (camWin[4] ?? cy) : 0
+  useEffect(() => {
+    if (!onCursor) return
+    onCursor(camZ ? { x: camX, y: camY, z: camZ } : null)
+    return () => onCursor(null)
+  }, [camZ, camX, camY, onCursor])
 
   const overlays = [
     null,
@@ -3936,8 +3984,8 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
       {/* Cursor */}
       {frame > 0 && frame <= 4 && (
         <div style={{
-          position: 'absolute', left: cx, top: cy, zIndex: 300,
-          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          position: 'absolute', left: 0, top: 0, transform: `translate(${cx}px, ${cy}px)`, zIndex: 300,
+          transition: 'transform 0.65s cubic-bezier(0.25,0.1,0.25,1)', willChange: 'transform',
           pointerEvents: 'none',
         }}>
           {cursorClick !== undefined && (
@@ -5186,6 +5234,44 @@ function EngageContent({ controls, tileVariants }) {
   )
 }
 
+// ─── ConvergeIT content ───────────────────────────────────────────────────────
+function ConvergeContent({ controls, tileVariants }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
+      <StatTiles tiles={MODULES.ConvergeIT.tiles} controls={controls} tileVariants={tileVariants} />
+      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
+        <CTACard headline="Every agency, one view!" sub="See performance side by side across every partner — no more chasing updates." cta="Add Agency" controls={controls} custom={0} />
+        <ChartCard title="Spend Share by Agency" controls={controls} custom={1}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <HorizRow label="Aurora Media" value={34} max={100} unit="%" />
+            <HorizRow label="PixelForge" value={26} max={100} unit="%" />
+            <HorizRow label="BlueOrbit" value={22} max={100} unit="%" />
+            <HorizRow label="Kite Digital" value={18} max={100} unit="%" />
+          </div>
+        </ChartCard>
+        <ChartCard title="Leads by Agency" controls={controls} custom={2}>
+          <VertBars data={[{l:'AUR',v:52},{l:'PXF',v:41},{l:'BLO',v:33},{l:'KITE',v:24},{l:'IN-H',v:18}]} height={200} />
+        </ChartCard>
+      </div>
+      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
+        <ListCard title="Agency Scorecard" rows={[
+          { isPen: false, label: 'Aurora Media · Paid Social', sub: 'ROAS 4.8x · spend ₹6.2L' },
+          { isPen: false, label: 'PixelForge · Search', sub: 'ROAS 4.2x · spend ₹4.8L' },
+          { isPen: false, label: 'BlueOrbit · Programmatic', sub: 'ROAS 3.6x · spend ₹4.1L' },
+          { isPen: false, label: 'Kite Digital · Influencer', sub: 'ROAS 3.1x · spend ₹3.5L' },
+          { isPen: false, label: 'In-house · CRM & Email', sub: 'ROAS 5.0x · spend ₹1.9L' },
+        ]} />
+        <ListCard title="Latest Syncs" rows={[
+          { isPen: false, label: 'Weekly reports merged', sub: '7 agencies · 18/03/2025' },
+          { isPen: false, label: 'Budget reallocation approved', sub: '₹2.4L moved to top performer' },
+          { isPen: false, label: 'Audience overlap flagged', sub: 'Aurora ↔ PixelForge · 12% shared' },
+          { isPen: false, label: 'QBR deck auto-compiled', sub: 'All partners · ready to share' },
+        ]} />
+      </div>
+    </div>
+  )
+}
+
 // ─── Main export ─────────────────────────────────────────────────────────────
 export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT', onModuleChange, stepCount = 0, showWorkflow = false, onFrame }) {
   const containerRef = useRef()
@@ -5219,9 +5305,57 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
 
   const mod = MODULES[activeModule] || MODULES.InsightIT
 
+  // Camera rig — reels report a framing target via onCursor ({x, y, z?} in
+  // reel-local coords; null = pull back to the full view). z sets the shot
+  // depth per beat (tight ~1.85 on fields/chips, wide ~1.3 on card grids and
+  // charts; default 1.65 keeps CreateIT/InsightIT unchanged). Two nested
+  // compositor-driven CSS transitions (outer pan, inner zoom) keep the glide
+  // smooth no matter what the 60ms reel re-renders do to the main thread — a
+  // JS/rAF camera visibly drops frames whenever React work blocks it.
+  // Glide time scales with pan distance, the zoom outlasts the pan a touch on
+  // push-ins, pull-backs release quicker, and a retarget that lands mid-glide
+  // gets a fast-start ease so the redirect keeps its apparent momentum.
+  const [camCursor, setCamCursor] = useState(null)
+  const cam = useRef({ tx: 0, ty: 0, s: 1, panDur: 0.9, zoomDur: 1, panEase: 'cubic-bezier(0.33, 0, 0.15, 1)', zoomEase: 'cubic-bezier(0.33, 0, 0.15, 1)', settleAt: 0 })
+  const camOn = camCursor && ['CreateIT', 'InsightIT', 'SocialiseIT'].includes(activeModule) && showWorkflow
+  // reel local coords → 1440×930 canvas coords (content area offset), clamped to edges
+  const camZ = camOn ? (camCursor.z || 1.65) : 1
+  const camTx = camOn ? Math.max(1440 - 1440 * camZ, Math.min(0, 720 - camZ * (289 + camCursor.x + 8))) : 0
+  const camTy = camOn ? Math.max(930 - 930 * camZ, Math.min(0, 465 - camZ * (250 + camCursor.y + 11))) : 0
+  {
+    // Durations/easings must land in the SAME commit as the new transform
+    // targets, so they're derived during render (ref-guarded: unchanged
+    // targets — including StrictMode re-renders — are a no-op). A deadband
+    // drops same-zoom retargets that would shift the view < 170px: the cursor
+    // roams inside the held shot and the camera only moves for real relocations
+    // — chasing every waypoint is what read as shaky.
+    const c = cam.current
+    const dist = Math.hypot(camTx - c.tx, camTy - c.ty)
+    const zoomSame = Math.abs(camZ - c.s) < 0.01
+    if ((camTx !== c.tx || camTy !== c.ty || !zoomSame) && !(zoomSame && dist < 170)) {
+      const now = performance.now()
+      if (camZ < c.s - 0.01) {
+        // pull-back: stately release; the pan lands before the zoom so the
+        // shrinking frame can never expose past the canvas edge
+        c.panDur = 1.4; c.zoomDur = 1.65
+        c.panEase = c.zoomEase = 'cubic-bezier(0.3, 0.1, 0.25, 1)'
+      } else {
+        // unhurried: ~1.3s nearby, ~2.2s cross-canvas; zoom settles after the pan
+        c.panDur = Math.round(Math.min(2.2, 1.15 + dist / 900) * 100) / 100
+        c.zoomDur = camZ > c.s + 0.01 ? Math.round(c.panDur * 115) / 100 : c.panDur
+        c.panEase = now < c.settleAt ? 'cubic-bezier(0.25, 0.35, 0.2, 1)' : 'cubic-bezier(0.35, 0, 0.12, 1)'
+        c.zoomEase = 'cubic-bezier(0.35, 0, 0.12, 1)'
+      }
+      c.settleAt = now + Math.max(c.panDur, c.zoomDur) * 1000
+      c.tx = camTx; c.ty = camTy; c.s = camZ
+    }
+  }
+
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative', background: '#f9f9fd', borderRadius: 8 }}>
-      <div style={{ width: 1440, height: 930, transform: `scale(${scale})`, transformOrigin: 'top left', position: 'relative', background: '#f9f9fd' }}>
+    <div ref={containerRef} style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative', background: 'transparent', borderRadius: 8 }}>
+      <div style={{ width: 1440, height: 930, transform: `scale(${scale})`, transformOrigin: 'top left', position: 'relative', background: '#f9f9fd', overflow: 'hidden' }}>
+       <div style={{ width: 1440, height: 930, position: 'relative', transform: `translate(${cam.current.tx}px, ${cam.current.ty}px)`, transformOrigin: '0 0', transition: `transform ${cam.current.panDur}s ${cam.current.panEase}`, willChange: 'transform' }}>
+       <div style={{ width: 1440, height: 930, position: 'relative', transform: `scale(${cam.current.s})`, transformOrigin: '0 0', transition: `transform ${cam.current.zoomDur}s ${cam.current.zoomEase}`, willChange: 'transform' }}>
 
         <Sidebar active={activeModule} insightSub={activeModule === 'InsightIT' && showWorkflow} org={
           ['ScriptIT', 'AmplifyIT', 'InsightIT', 'LocateIT', 'CreateIT', 'AIGenIT'].includes(activeModule) && showWorkflow ? { initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' }
@@ -5273,9 +5407,9 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
             {activeModule === 'LocateIT' && !showWorkflow && <LocateContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'AmplifyIT' && showWorkflow && <AmplifyWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
             {activeModule === 'AmplifyIT' && !showWorkflow && <AmplifyContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'CreateIT' && showWorkflow && <CreateContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'CreateIT' && showWorkflow && <CreateContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'CreateIT' && !showWorkflow && <CreateStandardContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'SocialiseIT' && showWorkflow && <SocialiseWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'SocialiseIT' && showWorkflow && <SocialiseWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'SocialiseIT' && !showWorkflow && <SocialiseContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InfluenceIT' && <InfluenceContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
@@ -5286,12 +5420,15 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
             {activeModule === 'InvoiceIT'   && <InvoiceContent   controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'AdaptIT'     && <AdaptContent     controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'EngageIT'    && <EngageContent    controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'InsightIT' && showWorkflow && <InsightWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
-            {((activeModule === 'InsightIT' && !showWorkflow) || !['InsightIT','LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT'].includes(activeModule)) &&
+            {activeModule === 'ConvergeIT'  && <ConvergeContent  controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'InsightIT' && showWorkflow && <InsightWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
+            {((activeModule === 'InsightIT' && !showWorkflow) || !['InsightIT','LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT','ConvergeIT'].includes(activeModule)) &&
               <InsightContent controls={controls} tileVariants={tileVariants} />}
           </div>
         </div>
 
+       </div>
+       </div>
       </div>
     </div>
   )

@@ -9,8 +9,8 @@ import SectionLabel from './SectionLabel'
 
 import Footer from './Footer'
 import ContactForm from './ContactForm'
+import LazyVideo from './LazyVideo'
 import { PATH_FOR } from './lib/routes'
-import { NAV_H } from './theme'
 const G     = '#34cc32'
 const DARK  = '#000718'
 const CARD  = '#0f1520'
@@ -19,33 +19,28 @@ const DIM   = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
 // ─── Figma assets ─────────────────────────────────────────────────────────────
-const imgMahindraPhoto   = '/figma/case-study/img-mahindra2.png'
-const imgUnicornPhoto    = '/unicorn-poster.jpg'
-const imgSBIPhoto        = '/figma/case-study/img-mahindra3.jpg'
-const imgLACPhoto        = '/figma/case-study/img-mahindra5.jpg'
-const imgMahindraLogo    = '/mahindra-logo.png'
-const imgUnicornLogo     = '/unicorn-logo.png'
-const imgSBILogo         = '/sbi-logo.png'
-const imgLACLogo         = '/figma/case-study/img-image30.png'
+const imgMahindraPhoto   = '/figma/case-study/img-mahindra2.webp'
+const imgUnicornPhoto    = '/unicorn-poster.webp'
+const imgSBIPhoto        = '/figma/case-study/img-mahindra3.webp'
+const imgLACPhoto        = '/figma/case-study/img-mahindra5.webp'
 
 // ─── Case study data ──────────────────────────────────────────────────────────
+// No brand logos anywhere — client can't use them. The auto brand stays
+// anonymised ("India's largest auto brand"), keeping the video card.
 const CASES = [
   {
     photo: imgMahindraPhoto,
     video: '/mahindra.mp4',
-    poster: '/mahindra-poster.jpg',
-    logoBg: '#fff',
-    logo: '/mahindra-logo.png',
-    name: 'Mahindra & Mahindra',
+    poster: '/mahindra-poster.webp',
+    name: "India's largest auto brand",
     type: 'Hyperlocal presence',
     stats: [{ val: '125%', label: 'Increase in customer engagement' }, { val: '7.5L+', label: 'Leads at an average of ₹55 per lead' }, { val: '12,000+', label: 'Vehicles sold' }],
+    href: PATH_FOR['mahindra'],
   },
   {
     photo: imgUnicornPhoto,
     video: '/unicorn.mp4',
-    poster: '/unicorn-poster.jpg',
-    logoBg: '#fff',
-    logo: '/unicorn-logo.png',
+    poster: '/unicorn-poster.webp',
     name: 'Unicorn',
     type: 'Performance marketing',
     stats: [{ val: '96%', label: 'Surge in website actions' }, { val: '10x', label: 'Revenue increase' }, { val: '96%', label: 'Increase in sales' }],
@@ -53,9 +48,7 @@ const CASES = [
   {
     photo: imgSBIPhoto,
     video: '/sbi.mp4',
-    poster: '/sbi-poster.jpg',
-    logoBg: '#292075',
-    logo: '/sbi-logo.png',
+    poster: '/sbi-poster.webp',
     name: 'SBI',
     type: 'Content creation',
     stats: [{ val: '96%', label: 'Surge in website actions' }, { val: '10x', label: 'Revenue increase' }, { val: '96%', label: 'Increase in sales' }],
@@ -64,8 +57,6 @@ const CASES = [
     photo: imgLACPhoto,
     video: '/love-and-cheesecake.mp4',
     poster: '/love-and-cheesecake-poster.jpg',
-    logoBg: '#fffef2',
-    logo: '/lc-logo.webp',
     name: 'Love & Cheesecake',
     type: 'Location pages',
     stats: [{ val: '96%', label: 'Surge in website actions' }, { val: '10x', label: 'Revenue increase' }, { val: '96%', label: 'Increase in sales' }],
@@ -73,23 +64,13 @@ const CASES = [
   // ── From the website copy doc (Website - ConvergenSEE.pdf) — anonymised ──
   {
     photo: '/artboard-1.png',
-    logo: null,
     name: 'Leading life insurance brand',
     type: 'Content at scale',
     stats: [{ val: '42%', label: 'Faster creative delivery timelines' }, { val: '~50%', label: 'Reduction in time-to-market' }, { val: '2x', label: 'Designer productivity — 2 to 4 creatives a day' }],
     href: PATH_FOR['life-insurance'],
   },
   {
-    photo: '/thar-mountains.jpg',
-    logo: null,
-    name: "India's largest auto brand",
-    type: 'Hyperlocal presence',
-    stats: [{ val: '585+', label: 'Dealer locations advertised locally' }, { val: '3,000+', label: 'Hyperlocal creatives every month' }, { val: '75%', label: 'Increase in website visits' }],
-    href: PATH_FOR['mahindra'],
-  },
-  {
     photo: '/figma/case-study/img-mahindra4.jpg',
-    logo: null,
     name: 'Emerging small finance bank',
     type: 'Performance marketing',
     stats: [{ val: '5,500+', label: 'Conversions in a 90-day pilot' }, { val: '₹192', label: 'Cost per conversion' }, { val: '7 Cr+', label: 'Impressions across Meta & Google' }],
@@ -97,7 +78,7 @@ const CASES = [
   },
 ]
 
-const INDUSTRIES = ['AUTO', 'ALL', 'FMCG', 'RETAIL', 'FSI', 'OTHERS']
+const INDUSTRIES = ['ALL', 'AUTO', 'FMCG', 'RETAIL', 'FSI', 'OTHERS']
 
 // ─── Components ───────────────────────────────────────────────────────────────
 function CaseCard({ c, href }) {
@@ -120,18 +101,16 @@ function CaseCard({ c, href }) {
       style={{ position: 'relative', display: 'block', overflow: 'hidden', aspectRatio: '16/9', cursor: href ? 'pointer' : 'default', background: '#1a2235', color: 'inherit', textDecoration: 'none' }}
     >
       {c.video ? (
-        <video
-          ref={videoRef}
-          autoPlay muted loop playsInline preload="metadata"
+        <LazyVideo
+          videoRef={videoRef}
+          src={c.video}
           poster={c.poster}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
             transform: hovered ? 'scale(1.04)' : 'scale(1)',
             transition: 'transform 0.6s ease',
           }}
-        >
-          <source src={c.video} type="video/mp4" />
-        </video>
+        />
       ) : (
         <Image src={c.photo} alt={c.name} fill sizes="100vw" style={{
           objectFit: 'cover',
@@ -157,21 +136,6 @@ function CaseCard({ c, href }) {
           color: '#fff',
         }}>{c.type}</span>
       </div>
-
-      {/* Centre logo — revealed on hover, alongside the stats */}
-      {c.logo && (
-        <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          opacity: hovered ? 1 : 0,
-          transform: hovered ? 'translateY(-9%) scale(1)' : 'translateY(-9%) scale(0.85)',
-          transition: 'opacity 0.5s ease, transform 0.5s ease',
-          pointerEvents: 'none',
-          zIndex: 2,
-        }}>
-          <img loading="lazy" src={c.logo} alt={c.name} style={{ width: 220, maxWidth: '60%', height: 80, objectFit: 'contain', filter: 'brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.5))' }} />
-        </div>
-      )}
 
       {/* Bottom gradient */}
       <div style={{
@@ -209,68 +173,84 @@ function CaseCard({ c, href }) {
 }
 
 export default function CaseStudiesPage() {
-  const { isMobile, isSmall } = useResponsive()
+  const { isMobile } = useResponsive()
   return (
-    <div style={{ background: DARK, minHeight: '100vh', paddingTop: isSmall ? NAV_H.small : NAV_H.desktop, color: '#fff' }}>
+    <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
-            <h1 style={{
-              fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
-              textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
-              maxWidth: 1100,
-            }}>
-              <span style={{ color: '#fff' }}>THE WORK WE </span>
-              <span style={{ color: G }}>LOVE </span>
-              <span style={{ color: '#fff' }}>TO TALK ABOUT.</span>
-            </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 798, margin: 0 }}>
-              Real brands. Real challenges. Real impact. A look at the moments where our thinking
-              met execution and delivered something worth sharing!
-            </p>
-          </div>
+      <section style={{
+        // 100vh isn't compensated by the laptop-scale body zoom — divide by --pz
+        // so the hero still covers the full screen on 1025–1727px viewports.
+        position: 'relative', height: 'calc(100vh / var(--pz, 1))', display: 'flex',
+        alignItems: 'center', justifyContent: 'center',
+        overflow: 'hidden', textAlign: 'center',
+        background: DARK, padding: '0 clamp(20px, 6vw, 100px)',
+      }}>
+        {/* Background video slot — case-studies showreel, same markup as the home hero:
+            <video autoPlay muted loop playsInline preload="metadata" poster="/case-studies-hero-poster.webp"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}>
+              <source src="/case-studies-hero.mp4" type="video/mp4" />
+            </video> */}
 
-          {/* Industry filter pills */}
-        <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
-          {INDUSTRIES.map((ind, i) => (
-            <div key={ind} className="pill-hover" style={{
-              height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
-              background: CARD,
-              border: i === 1 ? `1px solid ${G}` : 'none',
-              backdropFilter: 'blur(10px)',
-              fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 16, fontWeight: i === 1 ? 700 : 500,
-              color: i === 1 ? G : DIM,
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-            }}>{ind}</div>
-          ))}
-          </div>
+        {/* Dark overlays for text readability over the video */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `
+            linear-gradient(to bottom, ${DARK} 0%, rgba(0,7,24,0.2) 40%, rgba(0,7,24,0.2) 60%, ${DARK} 100%),
+            linear-gradient(to right, ${DARK} 0%, transparent 30%, transparent 70%, ${DARK} 100%)
+          `,
+          zIndex: 1,
+        }} />
+
+        <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', textAlign: 'center' }}>
+          <h1 style={{
+            fontFamily: "'Saira Condensed', sans-serif",
+            fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
+            textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
+            maxWidth: 1100, textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
+          }}>
+            <span style={{ color: '#fff' }}>THE WORK WE </span>
+            <span style={{ color: G }}>LOVE </span>
+            <span style={{ color: '#fff' }}>TO TALK ABOUT.</span>
+          </h1>
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 798, margin: 0, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
+            Real brands. Real challenges. Real impact. A look at the moments where our thinking
+            met execution and delivered something worth sharing!
+          </p>
         </div>
       </section>
 
       {/* ── Case study grid ────────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
+          {/* Industry filter pills */}
+          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {INDUSTRIES.map((ind) => (
+              <div key={ind} className="pill-hover" style={{
+                height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
+                background: CARD,
+                border: ind === 'ALL' ? `1px solid ${G}` : 'none',
+                backdropFilter: 'blur(10px)',
+                fontFamily: "'Saira Condensed', sans-serif",
+                fontSize: 16, fontWeight: ind === 'ALL' ? 700 : 500,
+                color: ind === 'ALL' ? G : DIM,
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+              }}>{ind}</div>
+            ))}
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, width: '100%' }}>
             {CASES.map((c, i) => (
-              <CaseCard
-                key={i}
-                c={c}
-                href={c.href ?? (i === 0 ? PATH_FOR['mahindra'] : undefined)}
-              />
+              <CaseCard key={i} c={c} href={c.href} />
             ))}
           </div>
 
           {/* Load more */}
           <button className="btn-outline" style={{
             marginTop: 10,
-            background: 'transparent', border: `1px solid ${G}`,
+            background: 'transparent', border: '1px solid #fff',
             height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
-            fontSize: 16, fontWeight: 700, color: G,
+            fontSize: 16, fontWeight: 700, color: '#fff',
             textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer',
             backdropFilter: 'blur(10px)',
           }}>LOAD MORE</button>

@@ -4,6 +4,9 @@
 //
 // `openings` is the live vacancy list for that team and the single source for
 // the marquee above it — add a role here and it appears in both places.
+// Every opening carries `employmentType` + `experience` (shown on role cards,
+// job pages and JobPosting JSON-LD). Experience values marked "authored" were
+// not in the source copy doc and need client sign-off.
 //
 // Blurbs are the approved department copy from the Aug 2026 website content
 // doc (all except Production, which the doc doesn't cover). The groupings were
@@ -16,6 +19,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'UI/UX Designer',
+        employmentType: 'Full-Time',
+        experience: '2+ years',
         responsibilities: [
           "Own flows end to end \u2014 research, wireframes, prototypes, final UI.",
           "Work directly with engineering so what ships matches what was designed.",
@@ -29,6 +34,8 @@ export const TEAM_GROUPS = [
       },
       {
         title: 'Copywriter',
+        employmentType: 'Full-Time',
+        experience: '1–3 years', // authored
         responsibilities: [
           "Write across campaigns, scripts, decks and long-form \u2014 in the client's voice, not yours.",
           "Sit in on strategy early so the words are not bolted on at the end.",
@@ -49,6 +56,8 @@ export const TEAM_GROUPS = [
         image: '/careers/motion-graphics-designer.mp4',
         imagePoster: '/careers/motion-graphics-designer-poster.jpg',
         imageAlt: 'Racing an office chair past the polaroid wall at ConvergenSEE',
+        employmentType: 'Full-Time',
+        experience: '2+ years', // authored
         responsibilities: [
           "Take static concepts into motion for social, film and product work.",
           "Build reusable templates the team can run with at volume.",
@@ -75,6 +84,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Business Operations Associate',
+        employmentType: 'Full-Time',
+        experience: '1+ year',
         responsibilities: [
           "Keep projects, budgets and timelines moving across every account.",
           "Run the vendor and procurement chase so no delivery slips.",
@@ -108,6 +119,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Senior Performance Marketer',
+        employmentType: 'Full-Time',
+        experience: '3+ years',
         responsibilities: [
           "Plan, run and scale paid media across Meta, Google and emerging platforms.",
           "Own the number \u2014 spend, CAC, ROAS \u2014 and the story behind it.",
@@ -121,6 +134,8 @@ export const TEAM_GROUPS = [
       },
       {
         title: 'SEO Specialist',
+        employmentType: 'Full-Time',
+        experience: '2+ years',
         responsibilities: [
           "Run technical audits, on-page work and content plans that actually rank.",
           "Track SERP and AI-answer visibility, and act on what moves.",
@@ -144,6 +159,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Business Development Manager',
+        employmentType: 'Full-Time',
+        experience: '3+ years', // authored
         responsibilities: [
           "Identify, qualify and pursue new opportunities through inbound and outbound.",
           "Build and manage a pipeline that consistently meets or beats target.",
@@ -164,6 +181,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Account Manager',
+        employmentType: 'Full-Time',
+        experience: '2+ years',
         responsibilities: [
           "Own day-to-day client relationships and the quality of what reaches them.",
           "Translate business problems into briefs the team can execute.",
@@ -196,6 +215,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Social Media Manager',
+        employmentType: 'Full-Time',
+        experience: '2+ years',
         responsibilities: [
           "Own content calendars, publishing and community across client handles.",
           "Spot what is moving culturally and turn it around the same day.",
@@ -219,6 +240,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Influencer Marketing Associate',
+        employmentType: 'Full-Time',
+        experience: '1+ year',
         responsibilities: [
           "Scout, shortlist and negotiate with creators across categories.",
           "Run campaigns end to end \u2014 briefs, deliverables, timelines, payouts.",
@@ -239,6 +262,8 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Video Editor',
+        employmentType: 'Full-Time',
+        experience: '2+ years', // authored
         responsibilities: [
           "Cut social, brand and long-form video from raw footage to final master.",
           "Handle grade, sound and versioning for every platform ratio.",

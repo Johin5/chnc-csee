@@ -136,7 +136,8 @@ export default function JobPage({ job }) {
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Tag label={`${job.team} team`} />
             <Tag label="Mumbai" />
-            <Tag label="Full-time" />
+            <Tag label={job.employmentType || 'Full-Time'} />
+            {job.experience && <Tag label={`${job.experience} experience`} />}
           </div>
 
           <h1 style={{
@@ -164,7 +165,7 @@ export default function JobPage({ job }) {
               textTransform: 'uppercase', letterSpacing: '0.02em', textDecoration: 'none',
               backdropFilter: 'blur(10px)',
             }}
-          >Apply now &darr;</a>
+          >Apply now</a>
         </div>
       </section>
 

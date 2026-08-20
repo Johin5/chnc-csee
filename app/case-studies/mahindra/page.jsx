@@ -2,9 +2,9 @@ import MahindraPage from '@/MahindraPage'
 import { buildMetadata, breadcrumbJsonLd, JsonLd } from '@/lib/seo'
 
 export const metadata = buildMetadata({
-  title: 'Mahindra Case Study',
+  title: "India's Largest Auto Brand Case Study",
   description:
-    'How ConvergenSEE powers Mahindra’s social presence — always-on creative, launch campaigns and community engagement across Thar, Scorpio-N and XUV.',
+    "How ConvergenSEE helped India's largest auto brand win locally — hyperlocal, dealer-specific advertising across 585+ locations with 3,000+ creatives a month.",
   path: '/case-studies/mahindra',
 })
 
@@ -15,7 +15,7 @@ export default function Page() {
         data={breadcrumbJsonLd([
           ['Home', '/'],
           ['Case Studies', '/case-studies'],
-          ['Mahindra', '/case-studies/mahindra'],
+          ["India's Largest Auto Brand", '/case-studies/mahindra'],
         ])}
       />
       <MahindraPage />

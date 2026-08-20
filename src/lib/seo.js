@@ -75,7 +75,9 @@ export function jobPostingJsonLd(job, path) {
       name: SITE_NAME,
       sameAs: SITE_URL,
     },
-    employmentType: 'FULL_TIME',
+    // schema.org wants the SCREAMING_SNAKE enum ("Full-Time" → "FULL_TIME")
+    employmentType: (job.employmentType || 'Full-Time').toUpperCase().replace(/-/g, '_'),
+    ...(job.experience ? { experienceRequirements: `${job.experience} of relevant experience` } : {}),
     // TODO: real posting dates once openings carry them in careersTeams.js
     datePosted: '2026-01-01',
     jobLocation: {

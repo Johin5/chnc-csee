@@ -10,7 +10,6 @@ import SectionLabel from './SectionLabel'
 import Footer from './Footer'
 import ContactForm from './ContactForm'
 import { BLOG_POSTS } from './lib/blogPosts'
-import { NAV_H } from './theme'
 const G      = '#34cc32'
 const DARK   = '#000718'
 const CARD   = '#0f1520'
@@ -112,53 +111,74 @@ function BlogCard({ img, tags, title, desc, author, role, date, href }) {
 
 export default function BlogPage() {
   const [filter, setFilter] = useState('ALL')
-  const { isMobile, isSmall } = useResponsive()
+  const { isMobile } = useResponsive()
 
   return (
-    <div style={{ background: DARK, minHeight: '100vh', paddingTop: isSmall ? NAV_H.small : NAV_H.desktop, color: '#fff' }}>
+    <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
-      <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center', textAlign: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, alignItems: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
-            <h1 style={{
-              fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
-              textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
-              whiteSpace: 'nowrap',
-            }}>
-              <span style={{ color: '#fff' }}>WE </span>
-              <span style={{ color: G }}>DARE </span>
-              <span style={{ color: '#fff' }}>YOU</span>
-            </h1>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 798, margin: 0 }}>
-              Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
-            </p>
-          </div>
-          {/* Filter tabs */}
-          <div style={{ display: 'flex', gap: 'clamp(8px, 1.5vw, 20px)', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {FILTERS.map(f => (
-              <button
-                key={f}
-                className="pill-hover"
-                onClick={() => setFilter(f)}
-                style={{
-                  background: CARD,
-                  border: f === filter ? `1px solid ${G}` : 'none',
-                  height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
-                  fontFamily: "'Saira Condensed', sans-serif",
-                  fontSize: 16, fontWeight: f === filter ? 700 : 500,
-                  color: f === filter ? G : DIM,
-                  textTransform: 'uppercase', cursor: 'pointer',
-                }}
-              >{f}</button>
-            ))}
-          </div>
+      <section style={{
+        // 100vh isn't compensated by the laptop-scale body zoom — divide by --pz
+        // so the hero still covers the full screen on 1025–1727px viewports.
+        position: 'relative', height: 'calc(100vh / var(--pz, 1))', display: 'flex',
+        alignItems: 'center', justifyContent: 'center',
+        overflow: 'hidden', textAlign: 'center',
+        background: DARK, padding: '0 clamp(20px, 6vw, 100px)',
+      }}>
+        {/* Background video slot — blogs showreel, same markup as the home hero:
+            <video autoPlay muted loop playsInline preload="metadata" poster="/blogs-hero-poster.webp"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}>
+              <source src="/blogs-hero.mp4" type="video/mp4" />
+            </video> */}
+
+        {/* Dark overlays for text readability over the video */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `
+            linear-gradient(to bottom, ${DARK} 0%, rgba(0,7,24,0.2) 40%, rgba(0,7,24,0.2) 60%, ${DARK} 100%),
+            linear-gradient(to right, ${DARK} 0%, transparent 30%, transparent 70%, ${DARK} 100%)
+          `,
+          zIndex: 1,
+        }} />
+
+        <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center' }}>
+          <h1 style={{
+            fontFamily: "'Saira Condensed', sans-serif",
+            fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800, lineHeight: 1,
+            textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
+            whiteSpace: 'nowrap', textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
+          }}>
+            <span style={{ color: '#fff' }}>WE </span>
+            <span style={{ color: G }}>DARE </span>
+            <span style={{ color: '#fff' }}>YOU</span>
+          </h1>
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 798, margin: 0, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
+            Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover the power of our secure and rewarding copy. Explore our range of copy and take control of your copy today. Discover us.
+          </p>
         </div>
       </section>
 
       {/* ── Blog grid ────────────────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
+        {/* Filter tabs */}
+        <div style={{ display: 'flex', gap: 'clamp(8px, 1.5vw, 20px)', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', marginBottom: 30 }}>
+          {FILTERS.map(f => (
+            <button
+              key={f}
+              className="pill-hover"
+              onClick={() => setFilter(f)}
+              style={{
+                background: CARD,
+                border: f === filter ? `1px solid ${G}` : 'none',
+                height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
+                fontFamily: "'Saira Condensed', sans-serif",
+                fontSize: 16, fontWeight: f === filter ? 700 : 500,
+                color: f === filter ? G : DIM,
+                textTransform: 'uppercase', cursor: 'pointer',
+              }}
+            >{f}</button>
+          ))}
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 8, width: '100%' }}>
           {BLOG_POSTS.map(post => (
             <BlogCard
@@ -176,7 +196,7 @@ export default function BlogPage() {
         </div>
         {/* Load more */}
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>
-          <button className="btn-outline" style={{ background: CARD, border: `1px solid ${G}`, height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: G, textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer' }}>
+          <button className="btn-outline" style={{ background: 'transparent', border: '1px solid #fff', height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif", fontSize: 16, fontWeight: 700, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)' }}>
             Load More
           </button>
         </div>

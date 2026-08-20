@@ -16,7 +16,7 @@ import { BtnGreen, BtnOutline, G, DARK, CARD, MUTED, DIM, BORDER } from './caree
 import { NAV_H } from './theme'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
-const imgTeam        = '/figma/careers-01/221.png'
+const imgTeam        = '/figma/careers-01/221.webp'
 
 // ─── Hero Section ────────────────────────────────────────────────────────────
 // Blog-page hero shape — headline block on top, then the whole roster tiled
@@ -152,11 +152,10 @@ function Hero() {
   return (
     <section style={{
       position: 'relative', width: '100%', overflow: 'hidden',
-      // Same frame as the Mahindra case-study hero image — full-bleed, running
-      // under the fixed nav (hence the +106).
-      height: isSmall
-        ? 'calc(clamp(360px, 78vw, 480px) + 106px)'
-        : 'calc(clamp(480px, 42vw, 560px) + 106px)',
+      // Fills whatever the first-screen column leaves after the marquee strip
+      // below it — the wall solver re-measures, so the grid adapts to the
+      // slightly shorter frame. The 100vh (÷ --pz) lives on that wrapper.
+      flex: 1, minHeight: 0,
     }}>
       {/* ── The wall ─────────────────────────────────────────────────────────── */}
       <div ref={wallRef} style={{
@@ -242,9 +241,8 @@ function OpenRoles() {
 
   return (
     <section style={{
-      position: 'relative', overflow: 'hidden',
-      borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`,
-      background: '#050d1e', padding: 'clamp(12px, 2vw, 20px) 0',
+      position: 'relative', overflow: 'hidden', flexShrink: 0,
+      background: DARK, padding: 'clamp(12px, 2vw, 20px) 0',
     }}>
       {/* Fixed label — the roles scroll behind it, and the veil it sits on
           fades them out rather than letting them collide with the words. */}
@@ -252,12 +250,12 @@ function OpenRoles() {
         position: 'absolute', left: 0, top: 0, bottom: 0, zIndex: 2,
         display: 'flex', alignItems: 'center',
         padding: '0 clamp(64px, 9vw, 140px) 0 clamp(20px, 6vw, 100px)',
-        background: `linear-gradient(to right, #050d1e 0%, #050d1e 82%, rgba(5,13,30,0.7) 92%, rgba(5,13,30,0) 100%)`,
+        background: `linear-gradient(to right, ${DARK} 0%, ${DARK} 82%, rgba(0,7,24,0.7) 92%, rgba(0,7,24,0) 100%)`,
         pointerEvents: 'none',
       }}>
         <span style={{
           fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
-          fontSize: 'clamp(20px, 3vw, 34px)', textTransform: 'uppercase',
+          fontSize: 'clamp(16px, 2vw, 22px)', textTransform: 'uppercase',
           letterSpacing: '0.02em', color: G, whiteSpace: 'nowrap',
         }}>Open Positions</span>
       </div>
@@ -273,13 +271,13 @@ function OpenRoles() {
                 href={jobPath(job)} className="marquee-role"
                 style={{
                   fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
-                  fontSize: 'clamp(20px, 3vw, 34px)', textTransform: 'uppercase',
+                  fontSize: 'clamp(16px, 2vw, 22px)', textTransform: 'uppercase',
                   letterSpacing: '0.02em', color: '#fff', whiteSpace: 'nowrap',
                 }}
               >{job.title}</Link>
               <span aria-hidden="true" style={{
                 color: G, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 400,
-                fontSize: 'clamp(20px, 3vw, 34px)', padding: '0 clamp(20px, 3vw, 40px)',
+                fontSize: 'clamp(16px, 2vw, 22px)', padding: '0 clamp(20px, 3vw, 40px)',
               }}>|</span>
             </span>
           ))}
@@ -295,6 +293,21 @@ function OpenRoles() {
 // side shows who you'd be joining.
 
 const byName = Object.fromEntries(TEAM.map(m => [m.name, m]))
+
+// Same outlined tag as the job-page hero, sized down a step so up to four of
+// them fit inside a 5/2 role tile.
+function RoleTag({ label }) {
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center',
+      height: 26, padding: '0 10px',
+      border: '2px solid rgba(255,255,255,0.25)',
+      fontFamily: "'Saira Condensed', sans-serif",
+      fontSize: 12, fontWeight: 600, letterSpacing: '0.04em',
+      textTransform: 'uppercase', color: '#fff', whiteSpace: 'nowrap',
+    }}>{label}</span>
+  )
+}
 
 function TeamPhotos({ members }) {
   const gridRef = useRef(null)
@@ -425,11 +438,14 @@ function MeetTheTeams({ onOpenJob }) {
                   fontSize: 'clamp(16px, 2vw, 24px)', textTransform: 'uppercase',
                   letterSpacing: '0.02em', lineHeight: 1.1,
                 }}>{job.title}</span>
-                {!group && (
-                  <span style={{
-                    fontFamily: "'Archivo', sans-serif", fontSize: 12, color: DIM,
-                  }}>{job.team}</span>
-                )}
+                <span style={{
+                  display: 'flex', flexWrap: 'wrap', gap: 6,
+                  justifyContent: 'center', marginTop: 4,
+                }}>
+                  {!group && <RoleTag label={`${job.team} team`} />}
+                  <RoleTag label={job.employmentType || 'Full-Time'} />
+                  {job.experience && <RoleTag label={`${job.experience} experience`} />}
+                </span>
               </button>
             ))}
           </div>
@@ -487,51 +503,6 @@ function MeetTheTeams({ onOpenJob }) {
   )
 }
 
-// ─── We Are ConvergenSEE ─────────────────────────────────────────────────────
-function WeAreSection() {
-  const { isSmall } = useResponsive()
-  return (
-    <section style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center',
-      padding: '0 clamp(20px, 6vw, 100px) 0',
-      textAlign: 'center',
-    }}>
-      <h2 style={{
-        fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
-        lineHeight: 1, margin: 0,
-      }}>
-        <span style={{ color: '#fff' }}>WE ARE </span>
-        <span style={{ color: G }}>ConvergenSEE</span>
-      </h2>
-      <p style={{
-        fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
-        lineHeight: 1.5, maxWidth: 798, margin: '20px 0 0',
-      }}>
-        We are you, the dreamers who see what could be, the thinkers who question what is, the
-        builders who refuse to settle. We exist in the space between your vision and reality,
-        turning digital problems into opportunities with technology that actually works. We're not
-        your brand. We're your people &mdash; solving, creating, and growing right alongside you.
-      </p>
-
-      {/* Team photo */}
-      <div style={{
-        position: 'relative', width: '100%', maxWidth: 1440,
-        height: isSmall ? 'clamp(300px, 60vw, 785px)' : 785,
-        overflow: 'hidden', marginTop: 'clamp(40px, 6vw, 60px)',
-      }}>
-        <img src={imgTeam} alt="ConvergenSEE Team" loading="lazy" decoding="async" style={{
-          width: '100%', height: '100%', objectFit: 'cover',
-          pointerEvents: 'none',
-        }} />
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: `linear-gradient(to bottom, rgba(0,0,0,0) 67.5%, ${DARK} 100%)`,
-        }} />
-      </div>
-    </section>
-  )
-}
-
 // ─── Join The Chaos — Contact Form ───────────────────────────────────────────
 // ─── Careers Page ────────────────────────────────────────────────────────────
 export default function CareersPage() {
@@ -544,10 +515,18 @@ export default function CareersPage() {
   return (
     <div style={{ background: DARK, minHeight: '100vh', color: '#fff' }}>
 
-      <Hero />
-      <OpenRoles />
+      {/* First screen — the face-wall hero and the open-positions marquee
+          split one viewport between them, so the strip is in view without
+          scrolling. 100vh isn't compensated by the laptop-scale body zoom —
+          divide by --pz so it still covers 1025–1727px screens exactly. */}
+      <div style={{
+        height: 'calc(100vh / var(--pz, 1))',
+        display: 'flex', flexDirection: 'column',
+      }}>
+        <Hero />
+        <OpenRoles />
+      </div>
       <MeetTheTeams onOpenJob={openJob} />
-      <WeAreSection />
       <JoinSection />
 
       <Footer />

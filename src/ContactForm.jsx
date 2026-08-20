@@ -64,10 +64,11 @@ export default function ContactForm() {
             <circle className="form-smoke form-smoke-3" cx="-1" cy="1" r="5" fill="rgba(220,255,220,0.25)" />
           </g>
 
-          {/* the envelope in flight */}
+          {/* the envelope in flight — rotate="auto" banks it along the path
+              tangent, so it leaves at the barrel's angle and levels out */}
           <g>
-            <animateMotion dur="0.5s" begin="0.35s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.15 0.7 0.3 1" path={SHOT_PATH} />
-            <g className="form-shell" transform="rotate(-12)">
+            <animateMotion dur="0.48s" begin="0.46s" rotate="auto" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.15 0.7 0.3 1" path={SHOT_PATH} />
+            <g className="form-shell">
               <rect x="-14" y="-10" width="28" height="20" rx="2" stroke={G} strokeWidth="2" fill="rgba(52,204,50,0.15)" />
               <path d="M -14 -7 L 0 4 L 14 -7" stroke={G} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
@@ -78,14 +79,17 @@ export default function ContactForm() {
           <g className="form-mail-pop">
             <rect x="281" y="17" width="34" height="25" rx="3" stroke={G} strokeWidth="2" fill="rgba(52, 204, 50, 0.1)" />
             <path d="M283 20.5 L298 32 L313 20.5" stroke={G} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+          {/* delivered tick pops a beat after the envelope settles */}
+          <g className="form-check-pop">
             <circle cx="314" cy="42" r="8" fill={G} />
             <path d="M310 42 L313 45 L318 39" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </g>
         </svg>
-        <p className="form-success-text" style={{ animationDelay: '1.15s', fontFamily: "'Saira Condensed', sans-serif", fontSize: isMobile ? 24 : 28, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#fff', margin: 0 }}>
+        <p className="form-success-text" style={{ animationDelay: '1.28s', fontFamily: "'Saira Condensed', sans-serif", fontSize: isMobile ? 24 : 28, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#fff', margin: 0 }}>
           Message fired
         </p>
-        <p className="form-success-text" style={{ animationDelay: '1.3s', fontFamily: "'Archivo', sans-serif", fontSize: 16, color: 'rgba(255,255,255,0.75)', margin: 0, textAlign: 'center' }}>
+        <p className="form-success-text" style={{ animationDelay: '1.42s', fontFamily: "'Archivo', sans-serif", fontSize: 16, color: 'rgba(255,255,255,0.75)', margin: 0, textAlign: 'center' }}>
           Direct hit — it&rsquo;s in our inbox. We&rsquo;ll get back to you soon.
         </p>
       </div>

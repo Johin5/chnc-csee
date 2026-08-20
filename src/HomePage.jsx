@@ -30,18 +30,18 @@ const CHNCDashboard = dynamic(() => import('./CHNCDashboard'), { ssr: false, loa
 // measured by pixel-matching each cutout against the delivered composite
 // (Logo Art.png). Array order = z-order, back to front.
 const logoArtPeople = [
-  { src: '/figma/home/logo-art/neha.png',     name: 'Neha',     left: 33.70, top: 11.85, width: 42.50 },
-  { src: '/figma/home/logo-art/vishy.png',    name: 'Vishy',    left: 24.81, top: 11.48, width: 27.04 },
-  { src: '/figma/home/logo-art/archana.png',  name: 'Archana',  left: 6.11,  top: 19.33, width: 31.76 },
-  { src: '/figma/home/logo-art/krish.png',    name: 'Krish',    left: 11.39, top: 33.56, width: 26.94 },
-  { src: '/figma/home/logo-art/rakshita.png', name: 'Rakshita', left: 48.89, top: 59.78, width: 28.80 },
-  { src: '/figma/home/logo-art/akansha.png',  name: 'Akansha',  left: 22.96, top: 46.89, width: 28.98 },
-  { src: '/figma/home/logo-art/kiran.png',    name: 'Kiran',    left: 68.89, top: 13.41, width: 22.31 },
-  { src: '/figma/home/logo-art/bala.png',     name: 'Bala',     left: 32.96, top: 58.15, width: 29.44 },
+  { src: '/figma/home/logo-art/neha.webp',     name: 'Neha',     left: 33.70, top: 11.85, width: 42.50 },
+  { src: '/figma/home/logo-art/vishy.webp',    name: 'Vishy',    left: 24.81, top: 11.48, width: 27.04 },
+  { src: '/figma/home/logo-art/archana.webp',  name: 'Archana',  left: 6.11,  top: 19.33, width: 31.76 },
+  { src: '/figma/home/logo-art/krish.webp',    name: 'Krish',    left: 11.39, top: 33.56, width: 26.94 },
+  { src: '/figma/home/logo-art/rakshita.webp', name: 'Rakshita', left: 48.89, top: 59.78, width: 28.80 },
+  { src: '/figma/home/logo-art/akansha.webp',  name: 'Akansha',  left: 22.96, top: 46.89, width: 28.98 },
+  { src: '/figma/home/logo-art/kiran.webp',    name: 'Kiran',    left: 68.89, top: 13.41, width: 22.31 },
+  { src: '/figma/home/logo-art/bala.webp',     name: 'Bala',     left: 32.96, top: 58.15, width: 29.44 },
 ]
 const funnel1  = '/figma/home/funnel1.png'
-const testiPhoto = '/figma/home/img-image111.png'
-const boardImg = '/figma/home/board.png'
+const testiPhoto = '/figma/home/img-image111.webp'
+const boardImg = '/figma/home/board.webp'
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const G = '#34cc32'
@@ -91,7 +91,7 @@ function Hero() {
       {/* Background video — ConvergenSEE homepage showreel */}
       <video
         autoPlay muted loop playsInline preload="metadata"
-        poster="/home-hero-poster.jpg"
+        poster="/home-hero-poster.webp"
         style={{
           position: 'absolute', inset: 0,
           width: '100%', height: '100%',
@@ -126,7 +126,15 @@ function Hero() {
             Think of us as the part of your team you haven't met yet. We share your ambition, carry your goals, and stay through the messy middle where real growth happens. Every opportunity we find, we build together.
           </p>
         </div>
-        <BtnGreen>Take the CHNC</BtnGreen>
+        <Link href="#contact" className="btn-outline" style={{
+          background: 'transparent', color: '#fff', border: '1px solid #fff',
+          height: 46, padding: '0 20px',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          boxSizing: 'border-box',
+          fontFamily: "'Saira Condensed', sans-serif",
+          fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
+          letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
+        }}>Take the CHNC</Link>
       </div>
     </section>
   )
@@ -135,18 +143,18 @@ function Hero() {
 // ─── Clients ──────────────────────────────────────────────────────────────────
 const clientLogos = [
   { src: '/ll-logo.png', alt: 'Living Liquidz' },
-  { src: '/MG-Logo.png', alt: 'MG' },
+  { src: '/MG-Logo.webp', alt: 'MG' },
   { src: '/mind-craft.png', alt: 'MindCraft' },
-  { src: '/Aptech-Logo.png', alt: 'Aptech' },
+  { src: '/Aptech-Logo.webp', alt: 'Aptech' },
   { src: '/kotak-mf.png', alt: 'Kotak Mutual Fund' },
   { src: '/flickvid.png', alt: 'Flickvid' },
-  { src: '/mahindra-m.png', alt: 'Mahindra' },
+  { src: '/mahindra-m.webp', alt: 'Mahindra' },
 ]
 const tickerLogos = [...clientLogos, ...clientLogos]
 
 function Clients() {
   return (
-    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', borderTop: `1px solid ${BORDER}` }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
       <div className="ticker-wrap" style={{ maxWidth: 1240, margin: '0 auto' }}>
         <div className="ticker-track">
           {tickerLogos.map((logo, i) => (
@@ -180,16 +188,6 @@ function About() {
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, maxWidth: 531 }}>
             We are you, the dreamers who see what could be, the thinkers who question what is, the builders who refuse to settle. We exist in the space between your vision and reality, turning digital problems into opportunities with technology that actually works. We're not your brand. We're your people &mdash; solving, creating, and growing right alongside you.
           </p>
-          <Link href="/team" className="btn-outline" style={{
-            width: 'fit-content',
-            background: 'transparent', color: '#fff', border: '1px solid #fff',
-            height: 46, padding: '0 20px',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            boxSizing: 'border-box',
-            fontFamily: "'Saira Condensed', sans-serif",
-            fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-            letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
-          }}>Meet the team</Link>
         </div>
         <div style={{ width: isSmall ? '100%' : 562, maxWidth: 562, height: isSmall ? 'clamp(320px, 80vw, 564px)' : 564, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ position: 'relative', height: '100%', aspectRatio: '1080 / 1350' }}>
@@ -229,8 +227,8 @@ const platformFeatures = [
     desc: 'Plans and optimises paid campaigns across digital platforms to drive measurable growth. Solves wasted media spend, poor lead quality, and lack of performance accountability.' },
   { title: 'Social Media Management', icon: <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" /></>,
     desc: "Runs your brand's ongoing social presence through structured content and engagement. Solves irregular posting, weak recall, and disconnected audience relationships." },
-  { title: 'Content Creation', icon: <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" />,
-    desc: 'Produces consistent creative assets designed for ads, social, and digital channels. Solves content fatigue, production delays, and inconsistent brand communication.' },
+  { title: 'Content Creation and Adaptation', icon: <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" />,
+    desc: 'Produces consistent creative assets for ads, social, and digital, adapted across every platform and size. Solves content fatigue, production delays, and inconsistent brand communication.' },
   { title: 'AI Conversation & Automation', icon: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22l5.9-2Z" />,
     desc: 'Deploys AI voice and chat agents that interact, assist, and qualify customers instantly. Solves slow response times, manpower dependency, and missed customer enquiries.' },
   { title: 'SEO + AEO + GEO Optimisation', icon: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></>,
@@ -243,6 +241,10 @@ const platformFeatures = [
     desc: 'Centralises marketing invoices, spends, and vendor billing into one organised system. Solves financial confusion, reconciliation delays, and lack of spend visibility.' },
   { title: 'Analytics', icon: <><path d="M3 3v18h18" /><path d="M7 15v3M12 10v8M17 6v12" /></>,
     desc: 'Transforms campaign and customer data into actionable business intelligence. Solves fragmented reporting, unclear performance understanding, and slow decision-making.' },
+  { title: 'Message Personalisation', icon: <><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2Z" /><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" /></>,
+    desc: 'Picks the right cohorts and sends personalised messages built for their moment, driving better experience and stronger retention. Turns generic outreach into conversations that actually land.' },
+  { title: "Agency Bird's-Eye View", icon: <><path d="M2.06 12.35a1 1 0 0 1 0-.7C3.42 8.1 7.22 5 12 5s8.58 3.1 9.94 6.65a1 1 0 0 1 0 .7C20.58 15.9 16.78 19 12 19s-8.58-3.1-9.94-6.65Z" /><circle cx="12" cy="12" r="3" /></>,
+    desc: 'Connects every agency you work with into one dashboard, so performance sits side by side instead of scattered across reports. Full visibility, without chasing five different partners for updates.' },
 ]
 
 function CHNC() {
@@ -251,13 +253,41 @@ function CHNC() {
   const { isSmall, isMobile, isTablet, width } = useResponsive()
   const cols = isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'
 
-  // Responsive edge-bleed: dashboard width + shift scale with the viewport so the
-  // dashboard's right edge always sits ~4px past the screen (a hair of bleed, no
-  // content clipped) and the left card always has room. At 1512px this resolves to
-  // the original 1060px width + 230px shift, so wide screens look unchanged.
-  const dashW = Math.min(1060, width - 360)   // leave ~360px for the left info card
+  // Centered layout: once the dashboard straightens, the info card (left) and
+  // dashboard render as one group centered in the viewport. The flex parent
+  // centers the dashboard container itself, so a rightward shift balances the
+  // card hanging off its left — no viewport-width term needed, which also keeps
+  // it correct under the laptop body zoom (innerWidth ≠ zoomed layout width).
+  // Optical balance: the dashboard settles at scale 0.88 (center origin), so
+  // its VISIBLE edge sits dashW×0.06 inside its layout box; the card's visible
+  // edge is its text (28px padding inside a transparent box). Equalising
+  // text-left vs dashboard-visible-right margins gives (cardW + inset)/2.
+  // Viewport height in LAYOUT px (innerHeight alone lies under the laptop
+  // --pz body zoom, same caveat as innerWidth above).
+  const [vhLayout, setVhLayout] = useState(1000)
+  useEffect(() => {
+    let frame = null
+    const measure = () => {
+      if (frame) cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        const pz = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pz')) || 1
+        setVhLayout(Math.round(window.innerHeight / pz))
+      })
+    }
+    window.addEventListener('resize', measure)
+    measure()
+    return () => { window.removeEventListener('resize', measure); if (frame) cancelAnimationFrame(frame) }
+  }, [])
+
+  // Height-aware cap: the whole ensemble (dashboard + IMPACT caption + dock)
+  // should fit one viewport with the section title still in frame — the
+  // "90% browser zoom" framing the client liked. ~420px budgets the nav/title
+  // above and caption + dock below; tall monitors keep the 1060 width cap.
+  const dashHMax = Math.max(480, vhLayout - 420)
+  const dashW = Math.min(1060, width - 360, Math.round(dashHMax * 1440 / 930))   // leave ~360px for the left info card
   const dashH = Math.round(dashW * 930 / 1440) // rendered dashboard height (aspect 1440/930)
-  const shiftX = Math.round((width - dashW) / 2 + 4)
+  const cardW = 360
+  const centerShift = Math.round((cardW + dashW * 0.06) / 2)
 
   // Rect-based progress instead of framer's useScroll({ target }): the laptop
   // -scale zoom (globals.css) breaks useScroll's offsetTop-based measurement,
@@ -272,7 +302,7 @@ function CHNC() {
   const [tilesReady, setTilesReady] = useState(true)
   const [cardReady, setCardReady] = useState(false)
   const [activeModule, setActiveModule] = useState('InsightIT')
-  // Edge-bleed layout: text on the left, dashboard bleeds off the right edge
+  // Centered layout: text on the left, card + dashboard centered as a group
   const vTopAlign = true
   const vAccent   = true
   const vLink     = true
@@ -284,18 +314,32 @@ function CHNC() {
   const lockedDock    = useMotionValue(0)
 
   const MODULE_INFO = {
-    InsightIT: { title: 'InsightIT', desc: "Gives your brand clarity on what's working and what to do next." },
-    LocateIT: { title: 'LocateIT', desc: 'Helps your brand get discovered in the moments that matter.' },
-    CreateIT: { title: 'CreateIT', desc: 'Gives your brand a steady flow of high-quality creatives at scale.', stats: [{ num: '42%', label: 'reduction in time for creative delivery' }, { num: '50%', label: 'reduction in time to market' }] },
-    AmplifyIT: { title: 'AmplifyIT', desc: 'Turns your marketing spend into real demand and better leads.' },
-    SocialiseIT: { title: 'SocialiseIT', desc: 'Keeps your brand visible, familiar, and remembered every day.' },
-    InfluenceIT: { title: 'InfluenceIT', desc: 'Builds trust and traction through creators your audience already follows.' },
-    ScriptIT: { title: 'ScriptIT', desc: 'Gives your brand scripts that hold attention and drive response.' },
-    AIGenIT: { title: 'AIGenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.' },
-    SearchIT: { title: 'SearchIT', desc: 'Brings in high-intent customers who are ready to take action.' },
-    InvoiceIT: { title: 'InvoiceIT', desc: "Keeps your brand's spends, billing, and tracking clean and organised." },
-    AdaptIT: { title: 'AdaptIT', desc: "Reshapes your brand's content to fit every platform it lands on." },
-    EngageIT: { title: 'EngageIT', desc: 'Gives your brand messaging that speaks to each customer personally.' },
+    InsightIT: { title: 'InsightIT', desc: "Gives your brand clarity on what's working and what to do next.",
+      impact: 'One dashboard, every metric, every channel, no more stitching reports together.' },
+    LocateIT: { title: 'LocateIT', desc: 'Helps your brand get discovered in the moments that matter.',
+      impact: "See every location's performance, reviews, and ranking live, in one dashboard." },
+    CreateIT: { title: 'CreateIT', desc: 'Gives your brand a steady flow of high-quality creatives at scale.', stats: [{ num: '42%', label: 'reduction in time for creative delivery' }, { num: '50%', label: 'reduction in time to market' }],
+      impact: 'Track every asset in production — status, approvals and delays without chasing anyone.' },
+    AmplifyIT: { title: 'AmplifyIT', desc: 'Turns your marketing spend into real demand and better leads.',
+      impact: "Track exactly where every rupee is going and what it's returning, in real time." },
+    SocialiseIT: { title: 'SocialiseIT', desc: 'Keeps your brand visible, familiar, and remembered every day.',
+      impact: 'See engagement across every platform in one view, instead of switching between apps.' },
+    InfluenceIT: { title: 'InfluenceIT', desc: 'Builds trust and traction through creators your audience already follows.',
+      impact: 'See real ROI per creator, not just views and likes, in one dashboard.' },
+    ScriptIT: { title: 'ScriptIT', desc: 'Gives your brand scripts that hold attention and drive response.',
+      impact: "Create and track which scripts perform, which don't, and why — all in one place." },
+    AIGenIT: { title: 'AIGenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.',
+      impact: 'See every conversation, every language, every response time, all from one screen.' },
+    SearchIT: { title: 'SearchIT', desc: 'Brings in high-intent customers who are ready to take action.',
+      impact: 'Track your search visibility and ranking gaps as they happen.' },
+    InvoiceIT: { title: 'InvoiceIT', desc: "Keeps your brand's spends, billing, and tracking clean and organised.",
+      impact: 'See every spend, every invoice, every campaign cost, fully reconciled and audit-ready.' },
+    AdaptIT: { title: 'AdaptIT', desc: "Reshapes your brand's content to fit every platform it lands on.",
+      impact: 'See every platform version of an asset, and how each one is performing.' },
+    EngageIT: { title: 'EngageIT', desc: 'Gives your brand messaging that speaks to each customer personally.',
+      impact: "Track every cohort's response and retention, without digging through separate tools." },
+    ConvergeIT: { title: 'ConvergeIT', desc: 'Connects every agency you work with into a single dashboard for a complete performance view.',
+      impact: "See every agency's performance side by side, without chasing five different partners for updates." },
   }
 
   useEffect(() => {
@@ -328,7 +372,7 @@ function CHNC() {
   // scroll, staggered row-by-row, and the CHNC logo reveals at the neck.
   const flowRef = useRef()
   // Start point is deliberately late ('start 0.25'): progress stays at 0 until the
-  // grid's top has risen to a quarter down the viewport, i.e. all nine cards are on
+  // grid's top has risen to a quarter down the viewport, i.e. the cards are on
   // screen and readable. Only then does scrolling begin to pour them into the funnel.
   const flowRaw = useVisualScrollProgress(flowRef, ['start 0.25', 'end 0.5'])
   // Spring-smooth the raw scroll so motion glides instead of tracking wheel ticks.
@@ -346,7 +390,7 @@ function CHNC() {
   const yBot = useTransform(flow, [0.10, 0.82], [0, 120])
   const sBot = useTransform(flow, [0.10, 0.82], [1, 0.45])
   const oBot = useTransform(flow, [0.40, 0.76], [1, 0])
-  // Ten cards make a fourth row; it sits nearest the funnel so it shares the
+  // Twelve cards fill a fourth row; it sits nearest the funnel so it shares the
   // bottom row's timing.
   const rowY = [yTop, yMid, yBot, yBot]
   const rowS = [sTop, sMid, sBot, sBot]
@@ -380,7 +424,7 @@ function CHNC() {
 
       <div ref={flowRef}>
       {/* Feature grid (services) — cards flow into the funnel on scroll */}
-      <div style={{ maxWidth: 1480, margin: '0 auto 60px', padding: '0 clamp(16px, 3vw, 48px)', width: '100%', boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: 1480, margin: 'clamp(36px, 4vw, 60px) auto 60px', padding: '0 clamp(16px, 3vw, 48px)', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 24, width: '100%' }}>
           {platformFeatures.map((f, i) => {
             const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '24px 26px', minHeight: 104, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14, boxSizing: 'border-box' }
@@ -388,13 +432,13 @@ function CHNC() {
             const animStyle = isSmall ? cardStyle : { ...cardStyle, x: colX[c], y: rowY[r], scale: rowS[r], opacity: rowO[r], willChange: 'transform, opacity' }
             return (
             <motion.div key={f.title} className="feature-card" style={animStyle}>
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 18 }}>
+              <div className="feature-head" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 18 }}>
                 <span className="feature-icon" style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 12, background: 'rgba(52,204,50,0.08)', border: '1px solid rgba(52,204,50,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{f.icon}</svg>
                 </span>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(20px, 1.9vw, 26px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
               </div>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED, lineHeight: '21px', margin: 0 }}>{f.desc}</p>
+              <p className="feature-desc" style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED, lineHeight: '21px', margin: 0 }}>{f.desc}</p>
             </motion.div>
             )
           })}
@@ -416,8 +460,11 @@ function CHNC() {
       <div ref={scrollRef} style={{ position: 'relative' }}>
         {/* Stage height caps at the dashboard's rendered height + dock + pin
             runway: on tall screens the raw 100vh left a huge empty band
-            between the dock and the next section. */}
-        <div style={{ height: isSmall ? 'auto' : `min(calc(100vh / var(--pz, 1)), ${dashH + 250}px)`, position: 'relative' }}>
+            between the dock and the next section. The floor guarantees room
+            for dashboard + dock on short viewports, where a bare 100vh let
+            the absolutely-positioned dock poke into the Impact section. */}
+        {/* Floor raised 130 → 175 for the per-module IMPACT caption under the dock */}
+        <div style={{ height: isSmall ? 'auto' : `clamp(${dashH + 175}px, calc(100vh / var(--pz, 1)), ${dashH + 250}px)`, position: 'relative' }}>
           {/* Small screens: no 100vh scroll-pin (the shrunken dashboard left a
               huge blank gap) — normal flow, with bottom padding reserving room
               for the absolutely-positioned dock below the dashboard. */}
@@ -430,7 +477,7 @@ function CHNC() {
             overflow: 'visible',
           }}>
             <div style={{ position: 'relative', width: isSmall ? '92%' : dashW, maxWidth: isSmall ? '1060px' : undefined,
-              transform: (!isSmall && cardVisible) ? `translateX(${shiftX}px)` : 'translateX(0)',
+              transform: (!isSmall && cardVisible) ? `translateX(${centerShift}px)` : 'translateX(0)',
               transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
             }}>
               {/* Green glow bloom behind dashboard */}
@@ -452,10 +499,14 @@ function CHNC() {
                         ? { position: 'relative', width: '100%', marginBottom: 24, paddingTop: 0, paddingBottom: 0, opacity: 1, transform: 'none' }
                         : {
                             position: 'absolute',
-                            ...(vBleed ? { right: '100%', marginRight: 28 } : { left: '100%', marginLeft: 20 }),
+                            // Fixed-width card hanging off the dashboard's left edge;
+                            // centerShift on the container balances it so the pair
+                            // reads as one centered group.
+                            ...(vBleed
+                              ? { right: '100%', marginRight: 28, width: cardW }
+                              : { left: '100%', marginLeft: 20, width: vRefined ? 320 : 300 }),
                             top: '6%',
                             ...(vTopAlign ? { bottom: 'auto' } : { bottom: '6%' }),
-                            width: vRefined ? 320 : 300,
                             paddingTop: 40, paddingBottom: 40,
                             opacity: cardVisible ? 1 : 0,
                             transform: cardVisible ? 'translateX(0)' : 'translateX(-60px)',
@@ -511,7 +562,7 @@ function CHNC() {
                             // Small screens: pad the text link up to a >=44px tap target
                             ...(isSmall ? { minHeight: 44 } : {}),
                           }}
-                        >Learn more →</button>
+                        >Learn more</button>
                       ) : (
                         <button
                           onClick={() => router.push('/solutions')}
@@ -522,7 +573,7 @@ function CHNC() {
                             letterSpacing: '0.02em', cursor: 'pointer',
                             alignSelf: 'flex-start',
                           }}
-                        >Explore Module →</button>
+                        >Explore Module</button>
                       )}
                     </div>
                   )
@@ -533,7 +584,9 @@ function CHNC() {
                     boxShadow: '0 40px 120px rgba(0,0,0,0.7), 0 0 80px rgba(52,204,50,0.12)',
                     transformOrigin: 'center center', borderRadius: 8, overflow: 'hidden',
                     rotateX, scale: imageScale, willChange: 'transform',
-                    background: '#f9f9fd',
+                    // No backdrop fill: a light backing bleeds out of the rounded
+                    // corners at fractional scales and reads as a white border.
+                    background: 'transparent',
                     backfaceVisibility: 'hidden',
                     WebkitBackfaceVisibility: 'hidden',
                   }}
@@ -542,16 +595,36 @@ function CHNC() {
                 </motion.div>
               </div>
               <motion.div
-                // Mirror the parent's edge-bleed shift with the same timing so the
+                // Mirror the parent's centering shift with the same timing so the
                 // dock stays viewport-centered the whole time (no slide of its own).
-                animate={{ x: (!isSmall && cardVisible) ? -shiftX : 0 }}
+                animate={{ x: (!isSmall && cardVisible) ? -centerShift : 0 }}
                 transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                   position: 'absolute', top: '100%', left: 0, right: 0,
-                  display: 'flex', justifyContent: 'center',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center',
                   marginTop: done ? 20 : 8, opacity: dockOpacity,
                 }}
               >
+                {/* Per-module IMPACT line (client doc: "IMPACT for each to show
+                    at the bottom of the dashboard image") — sits between the
+                    dashboard image and the dock. */}
+                <motion.p
+                  key={activeModule}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, ease: 'easeOut' }}
+                  style={{
+                    margin: '0 0 16px', padding: '0 20px', maxWidth: 760, textAlign: 'center',
+                    fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(13px, 1.6vw, 15px)',
+                    lineHeight: 1.5, color: 'rgba(255,255,255,0.72)',
+                  }}
+                >
+                  <span style={{
+                    fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 13,
+                    letterSpacing: 1.5, textTransform: 'uppercase', color: G, marginRight: 10,
+                  }}>Impact</span>
+                  {(MODULE_INFO[activeModule] || MODULE_INFO.InsightIT).impact}
+                </motion.p>
                 <CHNCDock triggerOpacity={dockOpacity} activeModule={activeModule} onSelect={setActiveModule} />
               </motion.div>
             </div>
@@ -643,8 +716,9 @@ function Impact() {
 // ─── Brand Audit (Reality Check) ─────────────────────────────────────────────
 // Every option carries its own reaction clip (muted looping mp4 — the gif
 // look at a fraction of the size); picking one swaps the clip on the right.
-// Nothing is selected initially, so the neutral default clip shows.
-const auditDefaultGif = '/figma/home/oh-gifs/default.mp4'
+// Nothing is selected initially, so the neutral default clip shows — that one
+// is an animated WebP, so the renderer branches on extension.
+const auditDefaultGif = '/figma/home/oh-gifs/default.webp'
 const auditQs = [
   { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'],
     gifs: ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'] },
@@ -719,7 +793,11 @@ function BrandAudit() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'center', width: isSmall ? '100%' : 410, maxWidth: 410, flexShrink: 0, alignSelf: isSmall ? 'center' : 'auto' }}>
             <div style={{ width: '100%', height: isSmall ? 'clamp(280px, 70vw, 410px)' : 410, boxShadow: '0 4px 65px rgba(43,179,42,0.1)', overflow: 'hidden' }}>
-              <video key={gif} src={gif} autoPlay muted loop playsInline aria-label="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {gif.endsWith('.webp') ? (
+                <img key={gif} src={gif} alt="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <video key={gif} src={gif} autoPlay muted loop playsInline aria-label="Reality check reaction" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              )}
             </div>
             <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24, textAlign: 'center' }}>
               Ready for a <span style={{ color: G }}>Reality</span> check?
@@ -770,10 +848,6 @@ function Testimonials() {
           ))}
         </div>
         <div style={{ width: '100%' }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginBottom: 20 }}>
-            <button style={{ width: 40, height: 40, borderRadius: '50%', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 18 }}>‹</button>
-            <button style={{ width: 40, height: 40, borderRadius: '50%', background: G, border: 'none', color: DARK, fontSize: 18 }}>›</button>
-          </div>
           <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', width: '100%' }}>
             <div style={{
               flex: 1, background: DARK, border: `2px solid ${BORDER}`,
@@ -788,7 +862,7 @@ function Testimonials() {
               <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
                 {testiStats.map((s) => (
                   <div key={s.label}>
-                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 800, lineHeight: 1.1 }}>{s.num}</p>
+                    <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 800, color: G, lineHeight: 1.1 }}>{s.num}</p>
                     <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.label}</p>
                   </div>
                 ))}
@@ -804,7 +878,6 @@ function Testimonials() {
             </div>
           </div>
         </div>
-        <BtnGreen>Know More</BtnGreen>
       </div>
     </section>
   )
@@ -849,9 +922,10 @@ function Team() {
 
 // ─── Advisory Board ───────────────────────────────────────────────────────────
 const boardMembers = [
-  { name: 'Balaji Jagannathan (Bala)', title: 'CEO', bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', img: boardImg },
-  { name: 'Balaji Jagannathan (Bala)', title: 'CEO', bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', img: boardImg },
-  { name: 'Balaji Jagannathan (Bala)', title: 'CEO', bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', img: boardImg },
+  // TODO: real titles + bios pending from the client (bios below are placeholder)
+  { name: 'balaji jaganathan', title: 'CEO', bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', img: boardImg },
+  { name: 'Prakash Satyapalan', title: 'Advisory Board Member', bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', img: '/figma/home/board-prakash.webp' },
+  { name: 'Vikram Nair', title: 'Advisory Board Member', bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', img: '/figma/home/board-vikram.webp' },
 ]
 
 function BoardCard({ member }) {
@@ -863,7 +937,13 @@ function BoardCard({ member }) {
       style={{
         flex: 1, position: 'relative', overflow: 'hidden',
         cursor: 'pointer', height: 561,
-        border: `1px solid ${hovered ? G : BORDER}`,
+        // White backing: Bala's portrait is a transparent cutout, so without
+        // this the dark page shows through instead of a studio background.
+        background: '#fff',
+        // padding-box keeps the white backing from painting under the border,
+        // which read as a permanent white outline on the dark page.
+        backgroundClip: 'padding-box',
+        border: `1px solid ${hovered ? G : 'transparent'}`,
         transition: 'border-color 0.3s ease',
       }}
     >
@@ -913,7 +993,7 @@ function BoardCard({ member }) {
         <div>
           <p style={{
             fontFamily: "'Archivo', sans-serif", fontWeight: 700,
-            fontSize: 36, lineHeight: '40px', color: '#fff', marginBottom: 10, textTransform: 'lowercase',
+            fontSize: 36, lineHeight: '40px', color: '#fff', marginBottom: 10,
           }}>{member.name}</p>
           <p style={{
             fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, letterSpacing: '1px',

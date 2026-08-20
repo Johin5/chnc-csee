@@ -13,13 +13,8 @@ import useResponsive from '../useResponsive'
 const items = [
   'InsightIT', 'LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT',
   'InfluenceIT', 'ScriptIT', 'AIGenIT', 'SearchIT', 'InvoiceIT',
-  'AdaptIT', 'EngageIT',
+  'AdaptIT', 'EngageIT', 'ConvergeIT',
 ]
-
-function formatLabel(label) {
-  const withoutIT = label.replace(/IT$/, '')
-  return withoutIT.charAt(0).toUpperCase() + withoutIT.slice(1).toLowerCase() + 'IT'
-}
 
 const itemVariants = {
   hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
@@ -81,7 +76,7 @@ function DockItem({ label, mouseX, isActive, onSelect, isSmall }) {
         transition: 'color 0.2s ease',
         userSelect: 'none',
       }}>
-        {formatLabel(label)}
+        {label}
       </span>
     </motion.button>
   )
@@ -148,7 +143,7 @@ export default function CHNCDock({ triggerOpacity, activeModule, onSelect }) {
             padding: isSmall ? '8px 10px' : '6px 10px',
             backdropFilter: 'blur(12px)',
             WebkitBackdropFilter: 'blur(12px)',
-            // Small screens: 12 modules can't fit across the viewport, so the
+            // Small screens: 13 modules can't fit across the viewport, so the
             // dock rail scrolls sideways instead of bleeding off both edges.
             ...(isSmall ? {
               maxWidth: '100%',

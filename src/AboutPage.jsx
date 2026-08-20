@@ -2,8 +2,12 @@
 
 // About Page — built from Figma node 1:841 (Landing Page - Dark-About)
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
+import LazyVideo from './LazyVideo'
 import useResponsive from './useResponsive'
+import SectionLabel from './SectionLabel'
+import { PATH_FOR } from './lib/routes'
 
 import Footer from './Footer'
 const G    = '#34cc32'
@@ -13,7 +17,7 @@ const MUTED = 'rgba(255,255,255,0.7)'
 const DIM  = '#666a74'
 
 // ─── Asset URLs (from Figma MCP) ─────────────────────────────────────────────
-const imgTeam        = '/figma/about/img221.png'
+const imgTeam        = '/figma/about/img221.webp'
 const imgBala        = '/figma/about/img-image6.png'
 const imgValCard1    = '/figma/about/img-component134.jpg'
 const imgValWalk     = '/walk-the-talk.mp4'
@@ -32,7 +36,7 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg, desc }) {
       <div style={{ position: 'absolute', inset: 0, background: CARD }} />
       {/* texture bg — an .mp4 plays as a muted loop, anything else is a still */}
       {bg.endsWith('.mp4') ? (
-        <video src={bg} autoPlay muted loop playsInline style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+        <LazyVideo src={bg} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
       ) : (
         <Image src={bg} alt="" fill sizes="100vw" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
       )}
@@ -45,7 +49,6 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg, desc }) {
           lineHeight: 1.05, textTransform: 'uppercase',
         }}>
           <span style={{ color: line1Green ? G : '#fff', fontWeight: line1Green ? 700 : 600 }}>{line1}</span>
-          {line1Green ? '' : ''}
         </div>
         {line2 && (
           <div style={{
@@ -182,7 +185,8 @@ export default function AboutPage() {
                 lineHeight: 1, textTransform: 'uppercase',
               }}>
                 <div style={{ color: '#fff' }}>Letter from</div>
-                <div style={{ color: G }}>bala</div>
+                {/* stays lowercase: the parent uppercases, "bala" must not */}
+                <div style={{ color: G, textTransform: 'none' }}>bala</div>
               </div>
             </div>
             <p style={{
@@ -207,7 +211,7 @@ export default function AboutPage() {
 
           {/* Right: Bala polaroid gif */}
           <div style={{ width: isSmall ? '100%' : 732, maxWidth: isSmall ? 'none' : 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
-            <Image src="/bala-polaroid.gif" alt="Letter from Bala" fill sizes="100vw" style={{
+            <Image src="/bala-polaroid.webp" alt="Letter from Bala" fill sizes="100vw" style={{
               objectFit: 'contain', pointerEvents: 'none',
             }} />
           </div>
@@ -220,15 +224,7 @@ export default function AboutPage() {
 
           {/* Heading */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
-            <div style={{
-              border: `1px solid ${G}`, padding: '5px 12px',
-              backdropFilter: 'blur(10px)',
-            }}>
-              <span style={{
-                fontFamily: "'Archivo', sans-serif", fontSize: 16,
-                color: '#fff',
-              }}>VALUES</span>
-            </div>
+            <SectionLabel>Values</SectionLabel>
             <h2 style={{
               fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800,
               textTransform: 'uppercase', lineHeight: 1, textAlign: 'center', margin: 0,
@@ -269,29 +265,14 @@ export default function AboutPage() {
                 bg={imgValCard1}
                 desc="No passing the buck, no waiting to be told. If it's on our plate, we see it through — start to finish."
               />
-              <div className="card-hover" style={{
-                position: 'relative', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, height: isSmall ? 'clamp(200px, 50vw, 300px)' : 300,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                overflow: 'hidden', flexShrink: 0,
-              }}>
-                <div style={{ position: 'absolute', inset: 0, background: CARD }} />
-                <Image src={imgValCard1} alt="" fill sizes="100vw" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.7)' }} />
-                <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-                  <div style={{
-                    fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 600,
-                    lineHeight: 1.05, textTransform: 'uppercase', color: '#fff',
-                  }}>CHASE THE</div>
-                  <div style={{
-                    fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 700,
-                    lineHeight: 1.05, textTransform: 'uppercase', color: G,
-                  }}>CHNC</div>
-                  <p style={{
-                    fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(13px, 1.6vw, 16px)', color: MUTED,
-                    lineHeight: 1.5, maxWidth: 460, margin: '14px auto 0', padding: '0 20px',
-                  }}>Every gap is a chance waiting to be taken.</p>
-                </div>
-              </div>
+              <ValueCard
+                line1="CHASE THE"
+                line1Green={false}
+                line2="CHNC"
+                line2Green
+                bg={imgValCard1}
+                desc="Every gap is a chance waiting to be taken."
+              />
             </div>
           </div>
         </div>
@@ -308,12 +289,12 @@ export default function AboutPage() {
             <span style={{ color: '#fff' }}>JOIN THE </span>
             <span style={{ color: G }}>Chaos!</span>
           </h2>
-          <button className="btn-outline" style={{
+          <Link href={PATH_FOR.careers} className="btn-outline" style={{
             background: 'transparent', color: '#fff', border: '1px solid #fff',
             height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
             fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
             letterSpacing: '0.02em', cursor: 'pointer',
-          }}>TAKE THE CHNC</button>
+          }}>TAKE THE CHNC</Link>
         </div>
       </section>
 
