@@ -12,7 +12,7 @@ const G     = '#34cc32'
 const MUTED = 'rgba(255,255,255,0.7)'
 
 export default function TeamMemberCard({ member, variant = 'grid' }) {
-  const { name, role, photo, pose, video, bio } = member
+  const { name, role, photo, pose, video, bio, lowercaseName } = member
   const [hovered, setHovered] = useState(false)
   const [poseLoaded, setPoseLoaded] = useState(false)
   // The pose/video only downloads once the card is first touched, so a 45-card
@@ -173,7 +173,7 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
         }} />
         <p style={{
           fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 28,
-          textTransform: 'uppercase', letterSpacing: '0.02em', color: '#fff',
+          textTransform: lowercaseName ? 'lowercase' : 'uppercase', letterSpacing: '0.02em', color: '#fff',
           margin: 0, lineHeight: 1.1,
         }}>{name}</p>
         <p style={{

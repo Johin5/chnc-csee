@@ -123,7 +123,7 @@ function Hero() {
             <span style={{ color: '#fff' }}>You</span>
           </h1>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', marginTop: 8, maxWidth: 640, textShadow: '0 1px 12px rgba(0,0,0,0.8)' }}>
-            Think of us as the part of your team you haven't met yet. We share your ambition, carry your goals, and stay through the messy middle where real growth happens. Every opportunity we find, we build together.
+            An extension of your team, your thinking, your brand. We amplify what you already do well, spot the opportunities you're too close to see, and help you grow into them.
           </p>
         </div>
         <Link href="#contact" className="btn-outline" style={{
@@ -726,6 +726,8 @@ const auditQs = [
     gifs: ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'] },
   { q: "What's your current", qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'],
     gifs: ['giphy-4', 'stranger-things', 'tiffany', 'max-stranger'] },
+  { q: 'How many', qGreen: 'locations', qEnd: ' does your business have?', opts: ['10-20', '20-100', '100+'],
+    gifs: ['oh-i-see', 'i-see-wow', 'ooh-wee'] },
 ]
 
 function QuizPill({ label, isActive, onClick }) {

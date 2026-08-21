@@ -13,7 +13,9 @@
 //    drive's Creative/ folder (the dark-kurta pair at 16.31.16-2/17).
 
 export const TEAM = [
-  { name: 'Balaji Jagannathan', role: 'Founder & CEO', photo: '/team/balaji-jagannathan.jpg', pose: '/team/balaji-jagannathan-pose.jpg' },
+  // `lowercaseName` renders the card name in lowercase instead of the default
+  // all-caps — Bala's name is styled lowercase everywhere (see advisory board).
+  { name: 'Balaji Jagannathan', role: 'Founder & CEO', photo: '/team/balaji-jagannathan.jpg', pose: '/team/balaji-jagannathan-pose.jpg', lowercaseName: true },
   { name: 'Viswanathan Kalyanasundaram', role: 'Director', photo: '/team/viswanathan-kalyanasundaram.jpg', pose: '/team/viswanathan-kalyanasundaram-pose.jpg' },
   { name: 'Neha Malhotra', role: 'Director - New Business, Digital & Content Strategy', photo: '/team/neha-malhotra.jpg', pose: '/team/neha-malhotra-pose.jpg' },
   { name: 'Shankar Iyer', role: 'Director - Technology', photo: '/team/shankar-iyer.jpg', pose: '/team/shankar-iyer-pose.jpg' },
