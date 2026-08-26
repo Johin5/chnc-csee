@@ -157,7 +157,7 @@ function PostCard({ post }) {
           }}
         />
       ) : (
-        <Image src={post.img} alt={post.caption} fill sizes="100vw" style={{
+        <Image src={post.img} alt={post.caption} fill sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw" style={{
           objectFit: 'cover',
           transform: hovered ? 'scale(1.05)' : 'scale(1)',
           transition: 'transform 0.6s ease',

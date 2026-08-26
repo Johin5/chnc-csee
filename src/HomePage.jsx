@@ -76,6 +76,11 @@ function Hero() {
       overflow: 'hidden', textAlign: 'center',
       background: DARK, padding: '0 20px',
     }}>
+      {/* React 19 hoists this into <head>: fetch the poster at top priority so
+          the hero backdrop paints immediately instead of after the video tag
+          is discovered. */}
+      <link rel="preload" as="image" href="/home-hero-poster.webp" fetchPriority="high" />
+
       {/* Background video — ConvergenSEE homepage showreel */}
       <video
         autoPlay muted loop playsInline preload="metadata"

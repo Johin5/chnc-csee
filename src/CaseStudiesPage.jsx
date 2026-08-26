@@ -114,7 +114,7 @@ function CaseCard({ c, href }) {
           }}
         />
       ) : (
-        <Image src={c.photo} alt={c.name} fill sizes="100vw" style={{
+        <Image src={c.photo} alt={c.name} fill sizes="(max-width: 480px) 100vw, 50vw" style={{
           objectFit: 'cover',
           transform: hovered ? 'scale(1.04)' : 'scale(1)',
           transition: 'transform 0.6s ease',

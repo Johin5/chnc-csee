@@ -38,7 +38,7 @@ function ValueCard({ line1, line1Green, line2, line2Green, bg, desc }) {
       {bg.endsWith('.mp4') ? (
         <LazyVideo src={bg} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
       ) : (
-        <Image src={bg} alt="" fill sizes="100vw" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
+        <Image src={bg} alt="" fill sizes="(max-width: 1024px) 100vw, 610px" style={{ objectFit: 'cover', pointerEvents: 'none' }} />
       )}
       {/* dark overlay */}
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,7,24,0.7)' }} />
@@ -101,6 +101,10 @@ export default function AboutPage() {
         overflow: 'hidden', textAlign: 'center',
         background: DARK, padding: '0 20px',
       }}>
+        {/* React 19 hoists this into <head>: fetch the poster at top priority
+            so the hero backdrop paints immediately. */}
+        <link rel="preload" as="image" href="/about-hero-poster.jpg" fetchPriority="high" />
+
         {/* Background video — ConvergenSEE about showreel */}
         <video
           autoPlay muted loop playsInline preload="metadata"
@@ -231,7 +235,7 @@ export default function AboutPage() {
 
           {/* Right: Bala polaroid gif — right-aligned, vertically centered to the letter */}
           <div style={{ width: isSmall ? '100%' : 732, maxWidth: isSmall ? 'none' : 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 800, overflow: 'hidden', flexShrink: 0, position: 'relative', alignSelf: isSmall ? undefined : 'center', marginRight: isSmall ? 0 : 48 }}>
-            <Image src="/bala-polaroid.webp" alt="Letter from Bala" fill sizes="100vw" style={{
+            <Image src="/bala-polaroid.webp" alt="Letter from Bala" fill sizes="(max-width: 1024px) 100vw, 732px" style={{
               objectFit: 'contain', objectPosition: isSmall ? 'center' : 'right center', pointerEvents: 'none',
             }} />
           </div>

@@ -37,7 +37,7 @@ function OtherCaseTile({ c, href }) {
       onMouseLeave={() => setHovered(false)}
       style={{ position: 'relative', display: 'block', overflow: 'hidden', aspectRatio: '16/10', cursor: href ? 'pointer' : 'default', background: '#1a2235', color: 'inherit', textDecoration: 'none' }}
     >
-      <Image src={c.photo} alt={c.name} fill sizes="100vw" style={{
+      <Image src={c.photo} alt={c.name} fill sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 33vw" style={{
         objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.6s ease',
       }} />

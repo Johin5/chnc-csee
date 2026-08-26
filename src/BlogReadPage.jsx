@@ -54,7 +54,7 @@ function RelatedTile({ b }) {
       onMouseLeave={() => setHovered(false)}
       style={{ display: 'block', position: 'relative', overflow: 'hidden', aspectRatio: '16/10', cursor: 'pointer', background: '#1a2235', color: 'inherit', textDecoration: 'none' }}
     >
-      <Image src={b.img} alt={b.title} fill sizes="100vw" style={{
+      <Image src={b.img} alt={b.title} fill sizes="(max-width: 480px) 100vw, 50vw" style={{
         objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.6s ease',
       }} />

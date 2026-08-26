@@ -28,7 +28,7 @@ function BlogCard({ img, tags, title, desc, author, role, date, href }) {
       onMouseLeave={() => setHovered(false)}
       style={{ display: 'block', position: 'relative', overflow: 'hidden', aspectRatio: '16/9', cursor: 'pointer', background: CARD, color: 'inherit', textDecoration: 'none' }}
     >
-      <Image src={img} alt={title} fill sizes="100vw" style={{
+      <Image src={img} alt={title} fill sizes="(max-width: 480px) 100vw, 50vw" style={{
         objectFit: 'cover',
         transform: hovered ? 'scale(1.04)' : 'scale(1)',
         transition: 'transform 0.6s ease',
