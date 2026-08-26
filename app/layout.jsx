@@ -1,5 +1,6 @@
 import '@/globals.css'
 import Nav from '@/Nav'
+import ScrollRestorer from '@/ScrollRestorer'
 import { SITE_URL, SITE_NAME, DEFAULT_DESCRIPTION, orgJsonLd, webSiteJsonLd, JsonLd } from '@/lib/seo'
 
 export const metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       <body>
         <JsonLd data={orgJsonLd()} />
         <JsonLd data={webSiteJsonLd()} />
+        <ScrollRestorer />
         <Nav />
         {children}
       </body>

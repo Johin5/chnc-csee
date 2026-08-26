@@ -44,6 +44,10 @@ no CSS framework — styling is inline `style={{}}` objects plus
   `public/fonts/`; family names must stay 'Archivo' / 'Saira Condensed'
   because inline styles reference them literally), reset, ticker keyframes,
   micro-interaction classes.
+- `src/ScrollRestorer.jsx` — manual back/forward scroll restoration, mounted
+  once by the layout. Native restore fires before remounting pages reach full
+  height, so this saves per-path offsets and re-applies them instantly on
+  popstate, retrying across frames until the layout settles.
 - `src/useResponsive.js` — viewport hook. Initial width is a constant 1440 so
   SSR and hydration agree; phones relayout one frame after mount. Don't
   reintroduce a `window.innerWidth` initial state.
