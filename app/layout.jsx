@@ -23,6 +23,48 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
+        {/* Runs while the HTML is still parsing, long before React hydrates:
+            on a reload/back-forward load it starts pinning the scroll to the
+            offset ScrollRestorer saved, so the first painted frame is already
+            at the reader's position instead of flashing the hero and jumping.
+            ScrollRestorer calls window.__earlyRestore.stop() when it takes
+            over; the loop also stops if the user scrolls, or after ~4s. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function () {
+  try {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+    var nav = performance.getEntriesByType('navigation')[0]
+    if (!nav || (nav.type !== 'reload' && nav.type !== 'back_forward')) return
+    var y = +sessionStorage.getItem('scroll:' + location.pathname) || 0
+    if (!y) return
+    var html = document.documentElement
+    html.style.scrollBehavior = 'auto'
+    var done = false
+    var stop = function () {
+      if (done) return
+      done = true
+      html.style.scrollBehavior = ''
+      removeEventListener('wheel', onWheel)
+      removeEventListener('touchmove', stop)
+    }
+    var onWheel = function (e) {
+      if (Math.abs(e.deltaY) > 4 && Math.abs(e.deltaY) > Math.abs(e.deltaX)) stop()
+    }
+    addEventListener('wheel', onWheel, { passive: true })
+    addEventListener('touchmove', stop, { passive: true })
+    var tries = 0
+    var step = function () {
+      if (done || tries++ > 240) return stop()
+      if (Math.abs(scrollY - y) > 1) scrollTo(0, y)
+      requestAnimationFrame(step)
+    }
+    step()
+    window.__earlyRestore = { stop: stop }
+  } catch (e) {}
+})()`,
+          }}
+        />
         {/* React 19 hoists these into <head>: fetch the above-the-fold fonts
             (hero headline, buttons, body copy) before the CSS discovers them,
             so first paint uses the brand fonts instead of a fallback flash. */}

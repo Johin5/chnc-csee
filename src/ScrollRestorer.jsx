@@ -70,9 +70,13 @@ export default function ScrollRestorer() {
     document.addEventListener('click', onClick, true)
     window.addEventListener('popstate', onPop)
     // Full page loads that should land where the user left off (reload, or a
-    // swipe back into the site that missed the bfcache).
+    // swipe back into the site that missed the bfcache). The inline script in
+    // the layout has been pinning the offset since before first paint — stop
+    // it first (it resets html.style.scrollBehavior) so restore() starts from
+    // a clean slate and takes over the tail end of the job.
     const nav = performance.getEntriesByType('navigation')[0]
     if (nav && (nav.type === 'reload' || nav.type === 'back_forward')) {
+      window.__earlyRestore?.stop()
       restore(saved(window.location.pathname))
     }
     return () => {

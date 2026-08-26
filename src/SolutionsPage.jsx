@@ -627,7 +627,10 @@ function AllOfThisWithJust({ activeModule }) {
 // Every option press swaps the reaction clip on the right — clips are shared
 // across modules: row = question index, column = option index. The neutral
 // default is an animated WebP, so the renderer branches on extension.
-const quizDefaultGif = '/figma/home/oh-gifs/default.mp4'
+// The "Tell me what you want" clip (default.webp re-encoded to H.264, 596KB →
+// 180KB). Not default.mp4 — that file is a DIFFERENT clip the Aug 20 client
+// change list replaced.
+const quizDefaultGif = '/figma/home/oh-gifs/tell-me-what-you-want.mp4'
 const QUIZ_GIF_ROWS = [
   ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'],
   ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'],

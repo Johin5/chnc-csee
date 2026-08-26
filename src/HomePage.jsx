@@ -740,7 +740,10 @@ function Impact() {
 // look at a fraction of the size); picking one swaps the clip on the right.
 // Nothing is selected initially, so the neutral default clip shows — that one
 // is an animated WebP, so the renderer branches on extension.
-const auditDefaultGif = '/figma/home/oh-gifs/default.mp4'
+// The "Tell me what you want" clip (default.webp re-encoded to H.264, 596KB →
+// 180KB). Not default.mp4 — that file is a DIFFERENT clip the Aug 20 client
+// change list replaced.
+const auditDefaultGif = '/figma/home/oh-gifs/tell-me-what-you-want.mp4'
 const auditQs = [
   { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'],
     gifs: ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'] },
