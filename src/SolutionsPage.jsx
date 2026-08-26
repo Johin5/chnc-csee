@@ -627,7 +627,7 @@ function AllOfThisWithJust({ activeModule }) {
 // Every option press swaps the reaction clip on the right — clips are shared
 // across modules: row = question index, column = option index. The neutral
 // default is an animated WebP, so the renderer branches on extension.
-const quizDefaultGif = '/figma/home/oh-gifs/default.webp'
+const quizDefaultGif = '/figma/home/oh-gifs/default.mp4'
 const QUIZ_GIF_ROWS = [
   ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'],
   ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'],
