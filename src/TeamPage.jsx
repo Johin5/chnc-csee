@@ -6,6 +6,7 @@ import useResponsive from './useResponsive'
 import { NAV_H } from './theme'
 import { TEAM as MEMBERS } from './lib/teamRoster'
 import TeamMemberCard from './TeamMemberCard'
+import useWarmImages from './useWarmImages'
 import ContactForm from './ContactForm'
 import SectionLabel from './SectionLabel'
 import WavyBand from './WavyBand'
@@ -18,8 +19,14 @@ const MUTED  = 'rgba(255,255,255,0.7)'
 const DIM    = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
 
+// Cards withhold the pose shot until first hover; warming the cache behind the
+// page makes that swap instant. Video members reveal the clip, not the pose,
+// so their (much heavier) media stays hover-gated.
+const POSES = MEMBERS.filter((m) => m.pose && !m.video).map((m) => m.pose)
+
 export default function TeamPage() {
   const { isMobile, isSmall } = useResponsive()
+  useWarmImages(POSES)
 
   // How much of the left band's tail is visible depends on viewport height
   // (its curl anchors to the viewport bottom). Letters are live animations —

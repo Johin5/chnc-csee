@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import useResponsive from './useResponsive'
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect'
+import useWarmImages from './useWarmImages'
 import { TEAM } from './lib/teamRoster'
 import { TEAM_GROUPS } from './lib/careersTeams'
 import JoinSection from './JoinSection'
@@ -552,8 +553,14 @@ function MeetTheTeams({ onOpenJob }) {
 
 // ─── Join The Chaos — Contact Form ───────────────────────────────────────────
 // ─── Careers Page ────────────────────────────────────────────────────────────
+// The face wall withholds each pose shot until its tile is first hovered (so
+// the hero doesn't pull double weight up front) — this fills the cache behind
+// the page instead, making that first hover swap instant.
+const POSES = TEAM.map((m) => m.pose).filter(Boolean)
+
 export default function CareersPage() {
   const { isSmall } = useResponsive()
+  useWarmImages(POSES)
   // Every role has its own URL (/careers/copywriter) so an opening can be
   // linked straight from a job post; the detail view is that route's page.
   const router = useRouter()
