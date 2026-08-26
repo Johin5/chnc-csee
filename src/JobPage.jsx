@@ -205,8 +205,10 @@ export default function JobPage({ job }) {
                 <TeamMemberCard key={m.name} member={m} variant="strip" />
               ))}
             </div>
-            <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 160, background: 'linear-gradient(to right, #000718 60%, transparent)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 160, background: 'linear-gradient(to left, #000718 60%, transparent)', pointerEvents: 'none' }} />
+            {/* Edge fades track the viewport (like the home Team strip) so a
+                phone keeps the first card and its name readable. */}
+            <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 'clamp(28px, 10vw, 160px)', background: 'linear-gradient(to right, #000718 60%, transparent)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 'clamp(28px, 10vw, 160px)', background: 'linear-gradient(to left, #000718 60%, transparent)', pointerEvents: 'none' }} />
           </div>
           <div style={{ textAlign: 'center', marginTop: 40 }}>
             <Link href="/team" className="btn-outline" style={{

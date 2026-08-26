@@ -4,8 +4,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import useResponsive from './useResponsive'
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect'
 import CHNCPlaceholder from './CHNCPlaceholder'
 import SectionLabel from './SectionLabel'
+import AuditForm, { AuditTakeover } from './AuditForm'
 
 import Footer from './Footer'
 
@@ -21,14 +23,6 @@ const BORDER = 'rgba(255,255,255,0.1)'
 // ─── Figma assets ─────────────────────────────────────────────────────────────
 
 // ─── Shared atoms ─────────────────────────────────────────────────────────────
-const BtnGreen = ({ children, style, ...p }) => (
-  <button {...p} className="btn-outline" style={{
-    background: 'transparent', color: '#fff', border: '1px solid #fff',
-    height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
-    fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-    letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)', ...style,
-  }}>{children}</button>
-)
 const BtnOutline = ({ children, style, active, onClick, ...p }) => {
   const [hovered, setHovered] = useState(false)
   return (
@@ -63,18 +57,31 @@ const Pill = ({ label, active, onClick }) => (
 )
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
+// Survives client-side route changes (module scope), resets on a full reload.
+let heroIntroSeen = false
+
 function Hero() {
   // Intro sequence: CHNC starts at hero scale over the headline's spot, then
   // glides up and shrinks into a small green eyebrow label while the headline
   // wipes in beneath it (same clip-path reveal as the About hero). The
   // eyebrow holds for a beat, then fades away at ~4s leaving the headline
   // alone. It sits in a fixed-height slot so the headline never moves.
+  // Plays once per page load: marked seen once the headline has wiped in
+  // (~2s), so coming back via in-site navigation renders the settled
+  // headline with no animation. The flag is module state, not storage, so a
+  // reload starts fresh and replays the intro.
   const [morphed, setMorphed] = useState(false)
   const [faded, setFaded] = useState(false)
-  useEffect(() => {
+  const [skipped, setSkipped] = useState(false)
+  useIsomorphicLayoutEffect(() => {
+    if (heroIntroSeen) {
+      setSkipped(true); setMorphed(true); setFaded(true)
+      return
+    }
     const t1 = setTimeout(() => setMorphed(true), 600)
-    const t2 = setTimeout(() => setFaded(true), 4000)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
+    const t2 = setTimeout(() => { heroIntroSeen = true }, 2000)
+    const t3 = setTimeout(() => setFaded(true), 4000)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
   }, [])
 
   return (
@@ -119,7 +126,7 @@ function Hero() {
             fontSize: morphed ? 'clamp(24px, 2.6vw, 36px)' : 'clamp(56px, 10vw, 150px)',
             transform: morphed ? 'none' : 'translateY(clamp(90px, 12vw, 175px))',
             opacity: faded ? 0 : 1,
-            transition: 'font-size 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease',
+            transition: skipped ? 'none' : 'font-size 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease',
             textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
           }}>CHNC</p>
         </div>
@@ -132,7 +139,7 @@ function Hero() {
           fontSize: 'clamp(56px, 10vw, 150px)', fontWeight: 800, lineHeight: 1,
           textTransform: 'uppercase', margin: 0, letterSpacing: '-3px',
           clipPath: morphed ? 'inset(-5% -2% -5% -2%)' : 'inset(-5% 102% -5% -2%)',
-          transition: 'clip-path 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.5s',
+          transition: skipped ? 'none' : 'clip-path 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.5s',
           textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
         }}>
           <span style={{ display: 'block' }}>
@@ -263,6 +270,24 @@ const DEFAULT_STEPS = [
   { bold: 'Optimise', rest: ' continuously for maximum performance' },
   { stat: true, text: 'Measurable results from day one' },
 ]
+
+// Per-module IMPACT line (client doc: "IMPACT for each to show at the bottom
+// of the dashboard image") — the caption under the How-we-do-IT dashboard.
+const MODULE_IMPACT = {
+  InsightIT: 'One dashboard, every metric, every channel, no more stitching reports together.',
+  LocateIT: "See every location's performance, reviews, and ranking live, in one dashboard.",
+  CreateIT: 'Track every asset in production — status, approvals and delays without chasing anyone.',
+  AmplifyIT: "Track exactly where every rupee is going and what it's returning, in real time.",
+  SocialiseIT: 'See engagement across every platform in one view, instead of switching between apps.',
+  InfluenceIT: 'See real ROI per creator, not just views and likes, in one dashboard.',
+  ScriptIT: "Create and track which scripts perform, which don't, and why — all in one place.",
+  AIGenIT: 'See every conversation, every language, every response time, all from one screen.',
+  SearchIT: 'Track your search visibility and ranking gaps as they happen.',
+  InvoiceIT: 'See every spend, every invoice, every campaign cost, fully reconciled and audit-ready.',
+  AdaptIT: 'See every platform version of an asset, and how each one is performing.',
+  EngageIT: "Track every cohort's response and retention, without digging through separate tools.",
+  ConvergeIT: "See every agency's performance side by side, without chasing five different partners for updates.",
+}
 
 // For modules with a dashboard reel: how many rail boxes are visible during each
 // reel frame (index = frame reported by CHNCDashboard). Keeps the rail locked to
@@ -486,11 +511,11 @@ function HowWeDoIt({ activeModule }) {
         <WorkflowStack steps={steps} count={stepCount} />
       </div>
 
-      <p style={{
+      <p key={activeModule} style={{
         fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
         lineHeight: '24px', textAlign: 'center', maxWidth: 804,
       }}>
-        What happens after you choose a module &mdash; step by step.
+        {MODULE_IMPACT[activeModule] || 'What happens after you choose a module — step by step.'}
       </p>
     </section>
   )
@@ -720,6 +745,16 @@ function ReadyToCreate({ activeModule }) {
   const quiz = MODULE_QUIZ[activeModule] || MODULE_QUIZ.CreateIT
   const [selections, setSelections] = useState([null, null, null])
   const [gif, setGif] = useState(quizDefaultGif)
+  // Submission takeover: auditName != null fades the whole quiz body out, then
+  // `live` swaps it for the brief-delivery scene (see AuditForm.jsx).
+  const [auditName, setAuditName] = useState(null)
+  const [auditCompany, setAuditCompany] = useState('')
+  const [live, setLive] = useState(false)
+  useEffect(() => {
+    if (auditName === null) return
+    const t = setTimeout(() => setLive(true), 500)
+    return () => clearTimeout(t)
+  }, [auditName])
 
   // Switching modules brings a fresh form: clear picks, back to the neutral clip
   useEffect(() => {
@@ -757,8 +792,13 @@ function ReadyToCreate({ activeModule }) {
         </h2>
       </div>
 
-      <div style={{ maxWidth: 1240, width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', width: '100%' }}>
+      {live ? (
+        <div style={{ maxWidth: 1240, width: '100%' }}>
+          <AuditTakeover name={auditName} company={auditCompany} />
+        </div>
+      ) : (
+      <div className={auditName !== null ? 'audit-form-out' : undefined} style={{ maxWidth: 1240, width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center', pointerEvents: auditName !== null ? 'none' : undefined }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', justifyContent: 'center', width: '100%' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40, flexShrink: 0, minWidth: 0 }}>
             {quiz.qs.map((q, qi) => (
               <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -786,16 +826,12 @@ function ReadyToCreate({ activeModule }) {
             </p>
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: isSmall ? 'stretch' : 'flex-end', width: '100%' }}>
-          {['Your name', 'Your email', 'Company name'].map((lbl, i) => (
-            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-              <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-            </div>
-          ))}
-          <BtnGreen style={isSmall ? { width: '100%' } : undefined}>Submit</BtnGreen>
-        </div>
+        <AuditForm
+          context={{ page: 'solutions', module: activeModule, answers: quiz.qs.map((q, qi) => (selections[qi] == null ? null : q.opts[selections[qi]])) }}
+          onSuccess={({ name, company }) => { setAuditName(name ?? ''); setAuditCompany(company ?? '') }}
+        />
       </div>
+      )}
     </section>
   )
 }

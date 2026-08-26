@@ -64,6 +64,8 @@ const CASES = [
   // ── From the website copy doc (Website - ConvergenSEE.pdf) — anonymised ──
   {
     photo: '/artboard-1.png',
+    video: '/life-insurance.mp4',
+    poster: '/life-insurance-poster.webp',
     name: 'Leading life insurance brand',
     type: 'Content at scale',
     stats: [{ val: '42%', label: 'Faster creative delivery timelines' }, { val: '~50%', label: 'Reduction in time-to-market' }, { val: '2x', label: 'Designer productivity — 2 to 4 creatives a day' }],

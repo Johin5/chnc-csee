@@ -9,11 +9,11 @@ export const CASE_STUDIES = [
     name: 'Leading Life Insurance Brand',
     metaTitle: 'Life Insurance Case Study',
     metaDescription:
-      'How ConvergenSEE helped a leading life insurance brand scale content operations through CREATEIT — 42% faster creative delivery and nearly 50% less time-to-market.',
+      'How ConvergenSEE helped a leading life insurance brand scale content operations through CreateIT — 42% faster creative delivery and nearly 50% less time-to-market.',
     heroImage: '/artboard-1.png',
     type: 'Content at scale',
     tagline:
-      'Helping a leading life insurance brand scale content faster — nearly 200 creatives a month, planned, produced and delivered through CREATEIT.',
+      'Helping a leading life insurance brand scale content faster — nearly 200 creatives a month, planned, produced and delivered through CreateIT.',
     stats: [
       { val: '42%', label: 'Faster creative delivery timelines' },
       { val: '~50%', label: 'Reduction in time-to-market' },
@@ -25,13 +25,13 @@ export const CASE_STUDIES = [
       'Slow delivery was holding up campaign rollouts and creating operational bottlenecks for the team.',
     ],
     solution: [
-      "ConvergenSEE enabled the brand's content operations through CREATEIT — bringing structure and consistency to how creatives were planned, produced and delivered.",
+      "ConvergenSEE enabled the brand's content operations through CreateIT — bringing structure and consistency to how creatives were planned, produced and delivered.",
       'Introduced clearer briefing formats to reduce rework, and streamlined workflows across creation, adapts, feedback and approvals.',
       'Reduced dependency on manual coordination between teams, and established a scalable production process that supported high-volume content needs.',
     ],
     highlights: [
       { val: '33%', label: 'Reduction in creative resource requirement', tag: 'Content at scale' },
-      { val: '200', label: 'Creatives a month — each with multiple channel versions — delivered without bottlenecks', tag: 'CREATEIT' },
+      { val: '200', label: 'Creatives a month — each with multiple channel versions — delivered without bottlenecks', tag: 'CreateIT' },
     ],
   },
   {
@@ -39,11 +39,11 @@ export const CASE_STUDIES = [
     name: 'Emerging Small Finance Bank',
     metaTitle: 'Small Finance Bank Case Study',
     metaDescription:
-      'How ConvergenSEE helped an emerging small finance bank scale digital performance marketing through AMPLIFYIT on CHNC — 5,500+ conversions at ₹192 per conversion in a 90-day pilot.',
+      'How ConvergenSEE helped an emerging small finance bank scale digital performance marketing through AmplifyIT on CHNC — 5,500+ conversions at ₹192 per conversion in a 90-day pilot.',
     heroImage: '/figma/case-study/img-mahindra4.jpg',
     type: 'Performance marketing',
     tagline:
-      'Helping an emerging small finance bank scale digital performance marketing — a 90-day pilot across Fixed Deposits and Personal Loans, run through AMPLIFYIT on CHNC.',
+      'Helping an emerging small finance bank scale digital performance marketing — a 90-day pilot across Fixed Deposits and Personal Loans, run through AmplifyIT on CHNC.',
     stats: [
       { val: '5,500+', label: 'Conversions — loan enquiries submitted and FD app downloads' },
       { val: '₹192', label: 'Cost per conversion' },
@@ -55,12 +55,12 @@ export const CASE_STUDIES = [
       'Both products needed awareness, app installs for the FD journey, and high-quality, intent-verified leads for Personal Loans — inside 90 days.',
     ],
     solution: [
-      'ConvergenSEE ran a multi-channel performance campaign through AMPLIFYIT on CHNC — Meta, Google and retargeting campaigns managed through one command centre.',
+      'ConvergenSEE ran a multi-channel performance campaign through AmplifyIT on CHNC — Meta, Google and retargeting campaigns managed through one command centre.',
       'Built an intelligence layer on top that reads every signal and every rupee spent — tracking performance in real time, so spend could be optimised as it happened.',
       'Delivered visibility into exactly what was working, channel by channel.',
     ],
     highlights: [
-      { val: '16.5L+', label: 'Total clicks across the 90-day pilot', tag: 'AMPLIFYIT' },
+      { val: '16.5L+', label: 'Total clicks across the 90-day pilot', tag: 'AmplifyIT' },
       { val: '2', label: 'Products scaled — Fixed Deposits and Personal Loans', tag: 'Performance marketing' },
     ],
   },

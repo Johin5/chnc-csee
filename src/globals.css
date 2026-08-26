@@ -37,6 +37,14 @@
   font-display: swap;
   src: url('/fonts/saira-condensed-latin-800.woff2') format('woff2');
 }
+/* Handwritten signature (Letter from Bala) */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/caveat-latin-600.woff2') format('woff2');
+}
 
 /* ── Base (was index.html <style>) ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,10 +54,10 @@ a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; }
 .ticker-wrap { position: relative; overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
 .ticker-track { display: flex; align-items: center; gap: 80px; width: max-content; animation: ticker 20s linear infinite; }
-.ticker-track:hover { animation-play-state: paused; }
+@media (hover: hover) { .ticker-track:hover { animation-play-state: paused; } }
 .ticker-item { flex-shrink: 0; display: flex; align-items: center; }
 .ticker-item img { height: 40px; width: auto; max-width: 168px; object-fit: contain; opacity: 0.72; transition: opacity 0.2s ease, transform 0.2s ease; }
-.ticker-item img:hover { opacity: 1; }
+@media (hover: hover) { .ticker-item img:hover { opacity: 1; } }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .logo-art-float { animation: logo-art-float 3s ease-in-out infinite alternate; }
 @keyframes logo-art-float { from { transform: translateY(-3px); } to { transform: translateY(3px); } }
@@ -103,16 +111,22 @@ img, video, svg { max-width: 100%; }
   color: #000718;
 }
 
-/* ── Micro-interactions ──────────────────────────────────────────────────────── */
+/* ── Micro-interactions ────────────────────────────────────────────────────────
+   All decorative :hover rules live behind @media (hover: hover). Touch
+   browsers apply :hover to whatever the finger last landed on (even while
+   scrolling) and leave it stuck there, which reads as a random "selected"
+   pill/card. :active press feedback stays unguarded for touch. */
 
 /* Green primary button */
 .btn-green {
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
-.btn-green:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(52, 204, 50, 0.35);
-  filter: brightness(1.08);
+@media (hover: hover) {
+  .btn-green:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(52, 204, 50, 0.35);
+    filter: brightness(1.08);
+  }
 }
 .btn-green:active {
   transform: translateY(0) scale(0.97);
@@ -123,14 +137,16 @@ img, video, svg { max-width: 100%; }
 .btn-outline {
   transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
 }
-.btn-outline:hover {
-  color: #34cc32 !important;
-  border-color: #34cc32 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(52, 204, 50, 0.2);
-}
-.btn-outline:hover * {
-  color: #34cc32 !important;
+@media (hover: hover) {
+  .btn-outline:hover {
+    color: #34cc32 !important;
+    border-color: #34cc32 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(52, 204, 50, 0.2);
+  }
+  .btn-outline:hover * {
+    color: #34cc32 !important;
+  }
 }
 .btn-outline:active {
   color: #34cc32 !important;
@@ -142,20 +158,35 @@ img, video, svg { max-width: 100%; }
   color: #34cc32 !important;
 }
 
-/* Per-button hover color overrides */
-.btn-hover-cyan:hover, .btn-hover-cyan:active,
-.btn-hover-cyan:hover *, .btn-hover-cyan:active * {
-  color: #2ad3e6 !important;
+/* Testimonial carousel arrows — suppress the default focus ring (keep one for keyboard) */
+.testi-arrow:focus {
+  outline: none;
 }
-.btn-hover-cyan:hover, .btn-hover-cyan:active {
+.testi-arrow:focus-visible {
+  outline: 2px solid #34cc32;
+  outline-offset: 2px;
+}
+
+/* Per-button hover color overrides */
+@media (hover: hover) {
+  .btn-hover-cyan:hover, .btn-hover-cyan:hover * { color: #2ad3e6 !important; }
+  .btn-hover-cyan:hover {
+    border-color: #2ad3e6 !important;
+    box-shadow: 0 6px 24px rgba(42, 211, 230, 0.2);
+  }
+  .btn-hover-red:hover, .btn-hover-red:hover * { color: #ee2226 !important; }
+  .btn-hover-red:hover {
+    border-color: #ee2226 !important;
+    box-shadow: 0 6px 24px rgba(238, 34, 38, 0.2);
+  }
+}
+.btn-hover-cyan:active, .btn-hover-cyan:active * { color: #2ad3e6 !important; }
+.btn-hover-cyan:active {
   border-color: #2ad3e6 !important;
   box-shadow: 0 6px 24px rgba(42, 211, 230, 0.2);
 }
-.btn-hover-red:hover, .btn-hover-red:active,
-.btn-hover-red:hover *, .btn-hover-red:active * {
-  color: #ee2226 !important;
-}
-.btn-hover-red:hover, .btn-hover-red:active {
+.btn-hover-red:active, .btn-hover-red:active * { color: #ee2226 !important; }
+.btn-hover-red:active {
   border-color: #ee2226 !important;
   box-shadow: 0 6px 24px rgba(238, 34, 38, 0.2);
 }
@@ -164,12 +195,14 @@ img, video, svg { max-width: 100%; }
 .pill-hover {
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.15s ease;
 }
-.pill-hover:hover {
-  border: 1px solid rgba(52, 204, 50, 0.6) !important;
-  color: #34cc32 !important;
-}
-.pill-hover:hover * {
-  color: #34cc32 !important;
+@media (hover: hover) {
+  .pill-hover:hover {
+    border: 1px solid rgba(52, 204, 50, 0.6) !important;
+    color: #34cc32 !important;
+  }
+  .pill-hover:hover * {
+    color: #34cc32 !important;
+  }
 }
 .pill-hover:active {
   transform: scale(0.96);
@@ -179,8 +212,10 @@ img, video, svg { max-width: 100%; }
 .pill-active {
   transition: all 0.25s ease;
 }
-.pill-active:hover {
-  box-shadow: 0 0 16px rgba(52, 204, 50, 0.25);
+@media (hover: hover) {
+  .pill-active:hover {
+    box-shadow: 0 0 16px rgba(52, 204, 50, 0.25);
+  }
 }
 .pill-active:active {
   transform: scale(0.96);
@@ -191,17 +226,21 @@ img, video, svg { max-width: 100%; }
   transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s ease;
   will-change: transform;
 }
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(52, 204, 50, 0.15);
+@media (hover: hover) {
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(52, 204, 50, 0.15);
+  }
 }
 
 /* Image zoom inside cards */
 .card-hover .img-zoom {
   transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.card-hover:hover .img-zoom {
-  transform: scale(1.06);
+@media (hover: hover) {
+  .card-hover:hover .img-zoom {
+    transform: scale(1.06);
+  }
 }
 
 /* Nav header links */
@@ -219,13 +258,15 @@ img, video, svg { max-width: 100%; }
   background: #34cc32;
   transition: width 0.25s ease, left 0.25s ease;
 }
-.nav-link:hover::after {
-  width: 100%;
-  left: 0;
-}
-.nav-link:hover,
-.nav-link:hover * {
-  color: #34cc32 !important;
+@media (hover: hover) {
+  .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+  }
+  .nav-link:hover,
+  .nav-link:hover * {
+    color: #34cc32 !important;
+  }
 }
 
 /* Footer links */
@@ -233,9 +274,11 @@ img, video, svg { max-width: 100%; }
   transition: color 0.2s ease, transform 0.2s ease;
   display: inline-flex !important;
 }
-.footer-link:hover {
-  color: #34cc32 !important;
-  transform: translateX(5px);
+@media (hover: hover) {
+  .footer-link:hover {
+    color: #34cc32 !important;
+    transform: translateX(5px);
+  }
 }
 
 /* Form inputs */
@@ -377,6 +420,171 @@ img, video, svg { max-width: 100%; }
   .form-mail-pop, .form-check-pop { animation: none; opacity: 1; }
 }
 
+/* Reality-check audit success (see AuditForm.jsx): the whole quiz body fades
+   out and the brief-delivery scene plays where it stood — the CHNC rider
+   scoots in past the Gateway of India with the brief on the back, decelerates
+   to a stop at the ConvergenSEE HQ skyline, a pin drops, the delivered check
+   pops, then "BRIEF DELIVERED." slams. Timeline lives with the markup. */
+@keyframes audit-form-out {
+  to { opacity: 0; transform: translateY(10px); }
+}
+.audit-form-out { animation: audit-form-out 0.45s ease forwards; }
+.deliv-stage {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2.2vw, 26px);
+  width: 100%;
+  min-height: clamp(430px, 42vw, 560px);
+  padding: clamp(28px, 4vw, 48px) clamp(16px, 3vw, 40px);
+  box-sizing: border-box;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+.deliv-scene {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: clamp(190px, 26vw, 280px);
+  overflow: hidden;
+}
+@keyframes deliv-sky-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+.deliv-sky { position: absolute; bottom: 14px; animation: deliv-sky-in 0.6s ease 0.1s both; }
+.deliv-sky-client { left: 0; height: 54%; opacity: 0.85; }
+.deliv-sky-hq { right: 0; height: 56%; opacity: 0.85; animation-delay: 0.15s; }
+@keyframes deliv-ground-in {
+  from { transform: scaleX(0); }
+}
+.deliv-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  transform-origin: left;
+  animation: deliv-ground-in 0.55s ease-out 0.1s both;
+}
+/* the A→B journey, on loop: the rider emerges small from the client's lobby
+   (left), grows to full size pulling onto the road, cruises, then shrinks
+   and fades into the ConvergenSEE HQ entrance (right) and pauses "inside"
+   before the next run. Scale is ground-anchored (transform-origin bottom) so
+   the wheels never leave the road. Base styles (centered, full size) are the
+   reduced-motion fallback. */
+@keyframes deliv-journey {
+  0%   { left: 13%; transform: translateX(-50%) scale(0.3); opacity: 0; }
+  4%   { left: 15%; transform: translateX(-50%) scale(0.38); opacity: 1; }
+  16%  { left: 30%; transform: translateX(-50%) scale(1); }
+  72%  { left: 68%; transform: translateX(-50%) scale(1); }
+  84%  { left: 79%; transform: translateX(-50%) scale(0.38); opacity: 1; }
+  88%  { left: 82%; transform: translateX(-50%) scale(0.3); opacity: 0; }
+  100% { left: 82%; transform: translateX(-50%) scale(0.3); opacity: 0; }
+}
+.deliv-rider {
+  position: absolute;
+  left: 50%;
+  bottom: 15px;
+  width: clamp(96px, 15vw, 150px);
+  z-index: 2;
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  /* size container so the BRIEF tag can scale in cqw — exactly proportional
+     to the rider at any viewport, zoom factor, or journey scale */
+  container-type: inline-size;
+  /* backwards fill holds the 0% frame (offscreen, opacity 0) through the
+     0.4s delay — without it the base centered styles flash static first */
+  animation: deliv-journey 6.5s linear 0.4s infinite backwards;
+}
+@keyframes deliv-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-3px); }
+}
+.deliv-rider-bob { position: relative; animation: deliv-bob 0.32s ease-in-out 0.2s infinite alternate; }
+.deliv-rider-img { position: relative; display: block; width: 100%; }
+/* opaque navy body under the line art — same art, flood-filled */
+.deliv-rider-sil { position: absolute; top: 0; left: 0; width: 100%; }
+/* wheels: white disc behind the art blanks the baked-in tire marks; the
+   crescent marks on top spin forever */
+.deliv-wheel-fill { position: absolute; aspect-ratio: 1; border-radius: 50%; background: #fff; }
+@keyframes deliv-wheel-spin {
+  to { transform: rotate(360deg); }
+}
+.deliv-wheel-marks { position: absolute; aspect-ratio: 1; animation: deliv-wheel-spin 0.55s linear 0.2s infinite; }
+/* clouds drift right-to-left through the sky on loop — the moving-world cue
+   that keeps the centered scooter reading as in motion */
+@keyframes deliv-cloud {
+  to { transform: translateX(-120vw); }
+}
+.deliv-cloud {
+  position: absolute;
+  left: 100%;
+  opacity: 0.4;
+  animation: deliv-cloud 11s linear 0.4s infinite;
+}
+/* anchored to the box face's clean center (the face is a tilted
+   parallelogram: TL 1%,30% · TR 28%,24% · BR 38%,61% · BL 8%,56%).
+   translate self-centers the text on the point; the -8° matches the face's
+   lean, same as the art's original hand-drawn label. */
+.deliv-brief-tag {
+  position: absolute;
+  left: 17.5%;
+  top: 43%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  white-space: nowrap;
+  font-size: 10.5cqw;
+}
+/* speed streaks: right-anchored just behind the scooter's tail, tapered like
+   comet trails, streaming left on a staggered loop */
+@keyframes deliv-dash {
+  0% { opacity: 0; transform: translateX(12%); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-55%); }
+}
+.deliv-dash {
+  position: absolute;
+  right: 102%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  opacity: 0;
+  animation: deliv-dash 0.45s linear 0.2s infinite;
+}
+@keyframes deliv-pin-drop {
+  0% { opacity: 0; transform: translateY(-18px); }
+  60% { opacity: 1; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.deliv-pin {
+  position: absolute;
+  right: 8%;
+  top: 16%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  animation: deliv-pin-drop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2) 1.5s both;
+}
+@keyframes deliv-slam {
+  0% { opacity: 0; transform: scale(2.1); }
+  55% { opacity: 1; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.deliv-slam { animation: deliv-slam 0.4s cubic-bezier(0.2, 0.9, 0.3, 1) 0.25s both; }
+@media (max-width: 640px) {
+  .deliv-sky-client { height: 40%; }
+  .deliv-sky-hq { height: 42%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .audit-form-out { animation: none; opacity: 0; }
+  .deliv-sky, .deliv-ground, .deliv-rider, .deliv-rider-bob, .deliv-wheel-marks, .deliv-pin, .deliv-slam { animation: none; }
+  .deliv-dash, .deliv-cloud { display: none; }
+}
+
 /* Careers match scene — JoinSection's submit animation: a phone on which the
    ConvergenSEE card gets swiped right, Tinder-style, then the match screen.
    Timeline (seconds from mount): 0.0 scene fades up · 0.5 thumb presses the
@@ -430,18 +638,22 @@ img, video, svg { max-width: 100%; }
   transition: transform 0.2s ease, opacity 0.2s ease;
   cursor: pointer;
 }
-.social-icon:hover {
-  transform: translateY(-3px) scale(1.15);
-  opacity: 0.85;
+@media (hover: hover) {
+  .social-icon:hover {
+    transform: translateY(-3px) scale(1.15);
+    opacity: 0.85;
+  }
 }
 
 /* Gallery arrows */
 .arrow-btn {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.arrow-btn:hover {
-  transform: scale(1.12);
-  box-shadow: 0 4px 16px rgba(52, 204, 50, 0.3);
+@media (hover: hover) {
+  .arrow-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 4px 16px rgba(52, 204, 50, 0.3);
+  }
 }
 .arrow-btn:active {
   transform: scale(0.95);
@@ -459,41 +671,68 @@ img, video, svg { max-width: 100%; }
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.marquee-track:hover { animation-play-state: paused; }
+@media (hover: hover) {
+  .marquee-track:hover { animation-play-state: paused; }
+  .marquee-role:hover { color: #34cc32; }
+}
 .marquee-role { transition: color 0.25s ease; cursor: pointer; }
-.marquee-role:hover { color: #34cc32; }
 
-/* Job-opening tiles */
-.role-tile { transition: border-color 0.25s ease, color 0.25s ease; }
-.role-tile:hover { border-color: #34cc32; color: #34cc32; }
+/* Job-opening rows — hover lifts the row on a green ring, lights the team
+   label and the APPLY / arrow CTA; active presses it back down, and keyboard
+   focus gets the same green ring the rest of the site uses. */
+.role-card { transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; }
+@media (hover: hover) {
+  .role-card:hover {
+    border-color: #34cc32 !important;
+    background-color: rgba(52, 204, 50, 0.04);
+    box-shadow: 0 6px 24px rgba(52, 204, 50, 0.12);
+    transform: translateY(-2px);
+  }
+  .role-card:hover .role-card-eyebrow {
+    color: #34cc32 !important;
+    border-color: rgba(52, 204, 50, 0.6) !important;
+  }
+  .role-card:hover .role-card-cta { color: #34cc32 !important; }
+}
+.role-card:active { transform: translateY(0) scale(0.99); box-shadow: none; }
+.role-card:focus-visible { outline: 2px solid #34cc32; outline-offset: 2px; }
+.role-card-eyebrow { transition: color 0.25s ease, border-color 0.25s ease; }
+.role-card-cta { transition: color 0.25s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .role-card, .role-card:hover, .role-card:active { transform: none; }
+}
 
 /* Client logo ticker items */
 .ticker-item {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.ticker-item:hover {
-  opacity: 1 !important;
-  transform: scale(1.1);
-}
-.ticker-item:hover img {
-  filter: brightness(1.2);
+@media (hover: hover) {
+  .ticker-item:hover {
+    opacity: 1 !important;
+    transform: scale(1.1);
+  }
+  .ticker-item:hover img {
+    filter: brightness(1.2);
+  }
 }
 
 /* Platform-offers feature cards */
 .feature-card {
   transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
-.feature-card:hover {
-  border-color: rgba(52, 204, 50, 0.55) !important;
-  background-color: rgba(52, 204, 50, 0.05) !important;
-  box-shadow: 0 0 28px rgba(52, 204, 50, 0.12);
+@media (hover: hover) {
+  .feature-card:hover {
+    border-color: rgba(52, 204, 50, 0.55) !important;
+    background-color: rgba(52, 204, 50, 0.05) !important;
+    box-shadow: 0 0 28px rgba(52, 204, 50, 0.12);
+  }
+  .feature-card:hover .feature-icon {
+    background-color: rgba(52, 204, 50, 0.18) !important;
+    border-color: rgba(52, 204, 50, 0.6) !important;
+  }
 }
 .feature-icon {
   transition: background-color 0.25s ease, border-color 0.25s ease;
-}
-.feature-card:hover .feature-icon {
-  background-color: rgba(52, 204, 50, 0.18) !important;
-  border-color: rgba(52, 204, 50, 0.6) !important;
 }
 /* Hover crossfade (hover-capable devices only; touch keeps title + text
    visible together): tiles hold one fixed compact size, the icon + title
@@ -536,4 +775,32 @@ img, video, svg { max-width: 100%; }
 }
 .fade-in-out {
   animation: fade-in-out 4s ease-in-out infinite;
+}
+
+/* 404 reaction-check game — HUD pulses, GO burst, result pop */
+@keyframes reaction-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes reaction-dot {
+  0%, 80%, 100% { opacity: 0.15; }
+  40% { opacity: 1; }
+}
+@keyframes reaction-pop {
+  0% { transform: scale(0.55); opacity: 0; }
+  60% { transform: scale(1.07); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes reaction-go-in {
+  from { transform: scale(0.7); }
+  to { transform: scale(1); }
+}
+@keyframes reaction-ring {
+  0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(1.9); opacity: 0; }
+}
+@keyframes reaction-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }

@@ -294,19 +294,32 @@ function OpenRoles() {
 
 const byName = Object.fromEntries(TEAM.map(m => [m.name, m]))
 
-// Same outlined tag as the job-page hero, sized down a step so up to four of
-// them fit inside a 5/2 role tile.
-function RoleTag({ label }) {
+// "2+ years" reads as "2+ yrs" in the card corner — the long form stays on
+// the job pages where there's room for it.
+const shortExp = (e) => e.replace(/\byears?\b/, m => (m === 'year' ? 'yr' : 'yrs'))
+
+// Inherits currentColor, so it sits dim inside a resting CTA and goes green
+// wherever the hover state or a green label colors it. An SVG rather than a
+// → glyph — the self-hosted Archivo subset doesn't cover U+2192.
+function ArrowRight() {
   return (
-    <span style={{
-      display: 'inline-flex', alignItems: 'center',
-      height: 26, padding: '0 10px',
-      border: '2px solid rgba(255,255,255,0.25)',
-      fontFamily: "'Saira Condensed', sans-serif",
-      fontSize: 12, fontWeight: 600, letterSpacing: '0.04em',
-      textTransform: 'uppercase', color: '#fff', whiteSpace: 'nowrap',
-    }}>{label}</span>
+    <svg
+      aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none"
+      style={{ flexShrink: 0 }}
+    >
+      <path
+        d="M3 10 H17 M11 4 L17 10 L11 16"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+      />
+    </svg>
   )
+}
+
+// Shared text styles — the cards speak the brand's condensed uppercase for
+// anything label-like and Archivo for the reading lines.
+const EYEBROW_FONT = {
+  fontFamily: "'Saira Condensed', sans-serif", fontSize: 14, fontWeight: 600,
+  letterSpacing: '0.22em', textTransform: 'uppercase',
 }
 
 function TeamPhotos({ members }) {
@@ -396,7 +409,7 @@ function MeetTheTeams({ onOpenJob }) {
       </div>
 
       {/* Openings — its own outlined panel, centred title over a 3-up grid of
-          landscape tiles, above the team the roles belong to */}
+          rounded role cards, above the team the roles belong to */}
       <div style={{
         width: '100%', maxWidth: 1240, border: `2px solid ${BORDER}`,
         padding: 'clamp(24px, 4vw, 50px)', boxSizing: 'border-box',
@@ -413,50 +426,84 @@ function MeetTheTeams({ onOpenJob }) {
           }}>{group ? group.name : 'Across every team'}</p>
         </div>
 
-        {openings.length ? (
-          <div style={{
-            display: 'grid', gap: 20, width: '100%',
-            // minmax(0, …) stops the 5/2 aspect-ratio tiles transferring their
-            // content min-height into a min-width that blows out narrow viewports
-            gridTemplateColumns: isMobile
-              ? 'minmax(0, 1fr)'
-              : isSmall ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, 1fr)',
-          }}>
-            {openings.map(job => (
-              <button
-                key={`${job.team}-${job.title}`} className="role-tile"
-                onClick={() => onOpenJob(job)}
-                style={{
-                  aspectRatio: '5 / 2', background: 'transparent', border: `1px solid ${BORDER}`,
-                  padding: 'clamp(12px, 2vw, 20px)', cursor: 'pointer',
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  gap: 6, textAlign: 'center', color: '#fff', boxSizing: 'border-box',
-                }}
-              >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%' }}>
+          {/* Every opening as the same compact one-line row */}
+          {openings.map(job => (
+            <button
+              key={`${job.team}-${job.title}`} className="role-card"
+              onClick={() => onOpenJob(job)}
+              style={{
+                background: 'transparent', border: `1px solid ${BORDER}`,
+                padding: 'clamp(16px, 1.6vw, 24px) clamp(22px, 2.4vw, 38px)',
+                cursor: 'pointer', display: 'flex', alignItems: 'center',
+                justifyContent: 'space-between', gap: 18, flexWrap: 'wrap',
+                textAlign: 'left', color: '#fff', boxSizing: 'border-box', width: '100%',
+              }}
+            >
+              <span style={{
+                display: 'flex', alignItems: 'baseline',
+                gap: 'clamp(14px, 2vw, 28px)', flexWrap: 'wrap', minWidth: 0,
+              }}>
                 <span style={{
                   fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
-                  fontSize: 'clamp(16px, 2vw, 24px)', textTransform: 'uppercase',
+                  fontSize: 'clamp(20px, 1.8vw, 27px)', textTransform: 'uppercase',
                   letterSpacing: '0.02em', lineHeight: 1.1,
                 }}>{job.title}</span>
+                <span className="role-card-eyebrow" style={{
+                  display: 'inline-flex', alignItems: 'center',
+                  padding: '5px 10px', border: '1px solid rgba(255,255,255,0.25)',
+                  fontFamily: "'Archivo', sans-serif", fontSize: 12, fontWeight: 600,
+                  letterSpacing: '0.1em', textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.45)', whiteSpace: 'nowrap',
+                }}>{job.team}</span>
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 14 }}>
                 <span style={{
-                  display: 'flex', flexWrap: 'wrap', gap: 6,
-                  justifyContent: 'center', marginTop: 4,
+                  fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(14px, 1.1vw, 17px)',
+                  color: 'rgba(255,255,255,0.6)',
                 }}>
-                  {!group && <RoleTag label={`${job.team} team`} />}
-                  <RoleTag label={job.employmentType || 'Full-Time'} />
-                  {job.experience && <RoleTag label={`${job.experience} experience`} />}
+                  {job.experience && `${shortExp(job.experience)} · `}
+                  {(job.employmentType || 'Full-Time').replace('-Time', '-time')}
+                  {' · '}
+                  {job.location || 'Powai'}
                 </span>
-              </button>
-            ))}
-          </div>
-        ) : (
-          <p style={{
-            fontFamily: "'Archivo', sans-serif", fontSize: 16, color: MUTED,
-            lineHeight: '24px', margin: 0, textAlign: 'center',
-          }}>
-            Nothing open on this team right now &mdash; send your CV anyway, we keep the good ones.
-          </p>
-        )}
+                <span className="role-card-cta" style={{
+                  display: 'inline-flex', color: 'rgba(255,255,255,0.45)',
+                }}>
+                  <ArrowRight />
+                </span>
+              </span>
+            </button>
+          ))}
+
+          {/* The seat we keep open — last row, and for a team with nothing
+              live it's the whole list: the pitch to send work anyway,
+              pointing at the application form below. */}
+          <button
+            className="role-card"
+            onClick={() => document.getElementById('join-the-chaos')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{
+              background: 'transparent', border: '1px dashed rgba(255,255,255,0.3)',
+              padding: 'clamp(16px, 1.6vw, 24px) clamp(22px, 2.4vw, 38px)',
+              cursor: 'pointer', display: 'flex', alignItems: 'center',
+              justifyContent: 'space-between', gap: 18, flexWrap: 'wrap',
+              textAlign: 'left', color: '#fff', boxSizing: 'border-box', width: '100%',
+            }}
+          >
+            <span style={{
+              fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
+              fontSize: 'clamp(20px, 1.8vw, 27px)', textTransform: 'uppercase',
+              letterSpacing: '0.02em', lineHeight: 1.1,
+            }}>Not seeing your role?</span>
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, color: G,
+              ...EYEBROW_FONT, letterSpacing: '0.08em', fontWeight: 700,
+            }}>
+              Get in touch
+              <ArrowRight />
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* The team itself — only once a specific team is picked */}

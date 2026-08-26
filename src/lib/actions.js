@@ -24,3 +24,26 @@ export async function submitContact(prevState, formData) {
   console.log('[contact] submission:', JSON.stringify(data))
   return { ok: true }
 }
+
+// Reality-check quiz form (home + solutions). `context` is the quiz state —
+// page, chosen answers, module — serialized to JSON by <AuditForm />.
+export async function submitAudit(prevState, formData) {
+  const data = {
+    name: (formData.get('name') || '').toString().trim(),
+    email: (formData.get('email') || '').toString().trim(),
+    company: (formData.get('company') || '').toString().trim(),
+    context: (formData.get('context') || '').toString(),
+  }
+
+  if (!data.name || !data.email || !data.company) {
+    return { ok: false, error: 'Please fill in your name, email and company.' }
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    return { ok: false, error: 'That email address doesn’t look right.' }
+  }
+
+  console.log('[audit] submission:', JSON.stringify(data))
+  // First name for the greeting; company labels the client's office in the
+  // delivery scene (casing preserved exactly as typed).
+  return { ok: true, name: data.name.split(/\s+/)[0], company: data.company }
+}

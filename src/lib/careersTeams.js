@@ -5,8 +5,9 @@
 // `openings` is the live vacancy list for that team and the single source for
 // the marquee above it — add a role here and it appears in both places.
 // Every opening carries `employmentType` + `experience` (shown on role cards,
-// job pages and JobPosting JSON-LD). Experience values marked "authored" were
-// not in the source copy doc and need client sign-off.
+// job pages and JobPosting JSON-LD) plus a one-line `summary` for the role
+// card. Values marked "authored" (all summaries are) were not in the source
+// copy doc and need client sign-off.
 //
 // Blurbs are the approved department copy from the Aug 2026 website content
 // doc (all except Production, which the doc doesn't cover). The groupings were
@@ -19,6 +20,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'UI/UX Designer',
+        summary: "Own end-to-end product flows for client web builds.", // authored
         employmentType: 'Full-Time',
         experience: '2+ years',
         responsibilities: [
@@ -34,6 +36,7 @@ export const TEAM_GROUPS = [
       },
       {
         title: 'Copywriter',
+        summary: "Write campaigns, scripts and the words brands remember.", // authored
         employmentType: 'Full-Time',
         experience: '1–3 years', // authored
         responsibilities: [
@@ -49,6 +52,7 @@ export const TEAM_GROUPS = [
       },
       {
         title: 'Motion Graphics Designer',
+        summary: "Take static concepts into motion for social and film.", // authored
         // Role visual — a wide (16:9) shot used as the page's hero, the way
         // case studies open on campaign art. Give any opening an `image`
         // (+ optional `imageAlt`) and its page opens on it. An .mp4 plays as
@@ -84,6 +88,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Business Operations Associate',
+        summary: "Keep projects, budgets and timelines moving across accounts.", // authored
         employmentType: 'Full-Time',
         experience: '1+ year',
         responsibilities: [
@@ -119,6 +124,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Senior Performance Marketer',
+        summary: "Run and scale paid media across Meta and Google.", // authored
         employmentType: 'Full-Time',
         experience: '3+ years',
         responsibilities: [
@@ -134,6 +140,7 @@ export const TEAM_GROUPS = [
       },
       {
         title: 'SEO Specialist',
+        summary: "Audits, on-page fixes and content plans that actually rank.", // authored
         employmentType: 'Full-Time',
         experience: '2+ years',
         responsibilities: [
@@ -159,6 +166,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Business Development Manager',
+        summary: "Build a pipeline that consistently beats target.", // authored
         employmentType: 'Full-Time',
         experience: '3+ years', // authored
         responsibilities: [
@@ -181,6 +189,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Account Manager',
+        summary: "Own day-to-day client relationships end to end.", // authored
         employmentType: 'Full-Time',
         experience: '2+ years',
         responsibilities: [
@@ -215,6 +224,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Social Media Manager',
+        summary: "Run content calendars and community across client handles.", // authored
         employmentType: 'Full-Time',
         experience: '2+ years',
         responsibilities: [
@@ -240,6 +250,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Influencer Marketing Associate',
+        summary: "Scout, sign and manage creators across categories.", // authored
         employmentType: 'Full-Time',
         experience: '1+ year',
         responsibilities: [
@@ -262,6 +273,7 @@ export const TEAM_GROUPS = [
     openings: [
       {
         title: 'Video Editor',
+        summary: "Cut short-form social content on a fast turnaround.", // authored
         employmentType: 'Full-Time',
         experience: '2+ years', // authored
         responsibilities: [

@@ -17,6 +17,7 @@ import { withPose } from './lib/teamRoster'
 import TeamMemberCard from './TeamMemberCard'
 import Footer from './Footer'
 import ContactForm from './ContactForm'
+import AuditForm, { AuditTakeover } from './AuditForm'
 import CHNCPlaceholder from './CHNCPlaceholder'
 import SectionLabel from './SectionLabel'
 
@@ -50,19 +51,6 @@ const CARD = '#0f1520'
 const MUTED = 'rgba(255,255,255,0.7)'
 const DIM = '#666a74'
 const BORDER = 'rgba(255,255,255,0.1)'
-
-const BtnGreen = ({ children, style, className, ...props }) => (
-  <button {...props} className={`btn-outline ${className || ''}`} style={{
-    background: 'transparent', color: '#fff', border: '1px solid #fff',
-    height: 46, padding: '0 20px',
-    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-    boxSizing: 'border-box',
-    fontFamily: "'Saira Condensed', sans-serif",
-    fontSize: 16, fontWeight: 700, textTransform: 'uppercase',
-    letterSpacing: '0.02em', cursor: 'pointer', backdropFilter: 'blur(10px)',
-    ...style,
-  }}>{children}</button>
-)
 
 const BtnOutlineGreen = ({ children, style, className, ...props }) => (
   <button {...props} className={`btn-outline ${className || ''}`} style={{
@@ -279,10 +267,10 @@ function CHNC() {
     return () => { window.removeEventListener('resize', measure); if (frame) cancelAnimationFrame(frame) }
   }, [])
 
-  // Height-aware cap: the whole ensemble (dashboard + IMPACT caption + dock)
-  // should fit one viewport with the section title still in frame — the
-  // "90% browser zoom" framing the client liked. ~420px budgets the nav/title
-  // above and caption + dock below; tall monitors keep the 1060 width cap.
+  // Height-aware cap: the whole ensemble (dashboard + dock) should fit one
+  // viewport with the section title still in frame — the "90% browser zoom"
+  // framing the client liked. ~420px budgets the nav/title above and the dock
+  // below; tall monitors keep the 1060 width cap.
   const dashHMax = Math.max(480, vhLayout - 420)
   const dashW = Math.min(1060, width - 360, Math.round(dashHMax * 1440 / 930))   // leave ~360px for the left info card
   const dashH = Math.round(dashW * 930 / 1440) // rendered dashboard height (aspect 1440/930)
@@ -293,8 +281,13 @@ function CHNC() {
   // -scale zoom (globals.css) breaks useScroll's offsetTop-based measurement,
   // firing scroll animations late on 1025–1727px viewports.
   const tiltProgress = useVisualScrollProgress(scrollRef, ['start 0.85', 'start -0.15'])
-  const rotateXRaw    = useTransform(tiltProgress, [0, 1], [32, 0])
-  const introScaleRaw = useTransform(tiltProgress, [0, 1], [0.45, 0.88])
+  // Tilt is compressed into the first half of the scroll range so the
+  // dashboard is fully straight (and the dock in) around the time the CHNC
+  // heading above it is fully visible at the top of the viewport — it used
+  // to straighten across the whole range and finish much later. (0.35 was
+  // too quick — the straightening flew by before you could watch it.)
+  const rotateXRaw    = useTransform(tiltProgress, [0, 0.5], [32, 0])
+  const introScaleRaw = useTransform(tiltProgress, [0, 0.5], [0.45, 0.88])
 
   const imageScaleRaw = introScaleRaw
 
@@ -302,6 +295,9 @@ function CHNC() {
   const [tilesReady, setTilesReady] = useState(true)
   const [cardReady, setCardReady] = useState(false)
   const [activeModule, setActiveModule] = useState('InsightIT')
+  // Mobile accordion: which service row is expanded (first open by default so
+  // the rows read as expandable; -1 = all closed)
+  const [openFeature, setOpenFeature] = useState(0)
   // Centered layout: text on the left, card + dashboard centered as a group
   const vTopAlign = true
   const vAccent   = true
@@ -314,45 +310,34 @@ function CHNC() {
   const lockedDock    = useMotionValue(0)
 
   const MODULE_INFO = {
-    InsightIT: { title: 'InsightIT', desc: "Gives your brand clarity on what's working and what to do next.",
-      impact: 'One dashboard, every metric, every channel, no more stitching reports together.' },
-    LocateIT: { title: 'LocateIT', desc: 'Helps your brand get discovered in the moments that matter.',
-      impact: "See every location's performance, reviews, and ranking live, in one dashboard." },
-    CreateIT: { title: 'CreateIT', desc: 'Gives your brand a steady flow of high-quality creatives at scale.', stats: [{ num: '42%', label: 'reduction in time for creative delivery' }, { num: '50%', label: 'reduction in time to market' }],
-      impact: 'Track every asset in production — status, approvals and delays without chasing anyone.' },
-    AmplifyIT: { title: 'AmplifyIT', desc: 'Turns your marketing spend into real demand and better leads.',
-      impact: "Track exactly where every rupee is going and what it's returning, in real time." },
-    SocialiseIT: { title: 'SocialiseIT', desc: 'Keeps your brand visible, familiar, and remembered every day.',
-      impact: 'See engagement across every platform in one view, instead of switching between apps.' },
-    InfluenceIT: { title: 'InfluenceIT', desc: 'Builds trust and traction through creators your audience already follows.',
-      impact: 'See real ROI per creator, not just views and likes, in one dashboard.' },
-    ScriptIT: { title: 'ScriptIT', desc: 'Gives your brand scripts that hold attention and drive response.',
-      impact: "Create and track which scripts perform, which don't, and why — all in one place." },
-    AIGenIT: { title: 'AIGenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.',
-      impact: 'See every conversation, every language, every response time, all from one screen.' },
-    SearchIT: { title: 'SearchIT', desc: 'Brings in high-intent customers who are ready to take action.',
-      impact: 'Track your search visibility and ranking gaps as they happen.' },
-    InvoiceIT: { title: 'InvoiceIT', desc: "Keeps your brand's spends, billing, and tracking clean and organised.",
-      impact: 'See every spend, every invoice, every campaign cost, fully reconciled and audit-ready.' },
-    AdaptIT: { title: 'AdaptIT', desc: "Reshapes your brand's content to fit every platform it lands on.",
-      impact: 'See every platform version of an asset, and how each one is performing.' },
-    EngageIT: { title: 'EngageIT', desc: 'Gives your brand messaging that speaks to each customer personally.',
-      impact: "Track every cohort's response and retention, without digging through separate tools." },
-    ConvergeIT: { title: 'ConvergeIT', desc: 'Connects every agency you work with into a single dashboard for a complete performance view.',
-      impact: "See every agency's performance side by side, without chasing five different partners for updates." },
+    InsightIT: { title: 'InsightIT', desc: "Gives your brand clarity on what's working and what to do next." },
+    LocateIT: { title: 'LocateIT', desc: 'Helps your brand get discovered in the moments that matter.' },
+    CreateIT: { title: 'CreateIT', desc: 'Gives your brand a steady flow of high-quality creatives at scale.', stats: [{ num: '42%', label: 'reduction in time for creative delivery' }, { num: '50%', label: 'reduction in time to market' }] },
+    AmplifyIT: { title: 'AmplifyIT', desc: 'Turns your marketing spend into real demand and better leads.' },
+    SocialiseIT: { title: 'SocialiseIT', desc: 'Keeps your brand visible, familiar, and remembered every day.' },
+    InfluenceIT: { title: 'InfluenceIT', desc: 'Builds trust and traction through creators your audience already follows.' },
+    ScriptIT: { title: 'ScriptIT', desc: 'Gives your brand scripts that hold attention and drive response.' },
+    AIGenIT: { title: 'AIGenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.' },
+    SearchIT: { title: 'SearchIT', desc: 'Brings in high-intent customers who are ready to take action.' },
+    InvoiceIT: { title: 'InvoiceIT', desc: "Keeps your brand's spends, billing, and tracking clean and organised." },
+    AdaptIT: { title: 'AdaptIT', desc: "Reshapes your brand's content to fit every platform it lands on." },
+    EngageIT: { title: 'EngageIT', desc: 'Gives your brand messaging that speaks to each customer personally.' },
+    ConvergeIT: { title: 'ConvergeIT', desc: 'Connects every agency you work with into a single dashboard for a complete performance view.' },
   }
 
   useEffect(() => {
     const unsubTilt = tiltProgress.on('change', (v) => {
       if (v >= 0.05 && !tilesReady) setTilesReady(true)
 
-      // At 60% straightened, lock scroll and auto-complete the rest
-      if (v >= 0.60 && !done) {
+      // ~60% through the compressed tilt range: lock and auto-complete the
+      // rest, so the dashboard lands straight and the dock is in right as
+      // the CHNC heading becomes fully visible at the top of the viewport.
+      if (v >= 0.30 && !done) {
         lockedRotateX.set(rotateXRaw.get())
         lockedScale.set(imageScaleRaw.get())
         lockedDock.set(0)
         setDone(true)
-        // Auto-complete the last 25% smoothly
+        // Auto-complete the remaining tilt smoothly
         animate(lockedRotateX, 0, { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] })
         animate(lockedScale, 0.88, { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] })
         setTimeout(() => {
@@ -403,8 +388,15 @@ function CHNC() {
   const colX = [xLeft, xMid, xRight]
 
 
-  const chncOpacity = useTransform(flow, [0.60, 0.95], [0, 1])
-  const chncScale   = useTransform(flow, [0.60, 1],    [0.55, 1])
+  // CHNC reveal keyed to the funnel's own viewport position, not `flow`:
+  // flow spans grid + funnel, so pausing with the funnel low on screen sat in
+  // a dead zone — cards already poured away, wordmark not yet faded in — and
+  // the funnel read as an empty pair of curves.
+  const funnelRef = useRef()
+  const chncRaw  = useVisualScrollProgress(funnelRef, ['start 0.95', 'start 0.5'])
+  const chncProg = useSpring(chncRaw, { stiffness: 60, damping: 20, mass: 0.6 })
+  const chncOpacity = useTransform(chncProg, [0.1, 0.8], [0, 1])
+  const chncScale   = useTransform(chncProg, [0, 1],     [0.55, 1])
 
   return (
     <section style={{ paddingTop: 0, background: DARK }}>
@@ -425,6 +417,36 @@ function CHNC() {
       <div ref={flowRef}>
       {/* Feature grid (services) — cards flow into the funnel on scroll */}
       <div style={{ maxWidth: 1480, margin: 'clamp(36px, 4vw, 60px) auto 60px', padding: '0 clamp(16px, 3vw, 48px)', width: '100%', boxSizing: 'border-box' }}>
+        {isMobile ? (
+          /* Accordion: 12 full-height cards made the section a ~2400px scroll
+             on phones — slim rows with tap-to-expand descriptions instead. */
+          <div style={{ background: DARK, border: `2px solid ${BORDER}` }}>
+            {platformFeatures.map((f, i) => {
+              const open = openFeature === i
+              return (
+              <div key={f.title} style={{ borderTop: i === 0 ? 'none' : `1px solid ${BORDER}` }}>
+                <button
+                  onClick={() => setOpenFeature(open ? -1 : i)}
+                  aria-expanded={open}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+                >
+                  <span style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: 'rgba(52,204,50,0.08)', border: '1px solid rgba(52,204,50,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{f.icon}</svg>
+                  </span>
+                  <p style={{ flex: 1, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 18, lineHeight: 1.15, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={open ? G : DIM} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s ease, stroke 0.3s ease' }}><path d="m6 9 6 6 6-6" /></svg>
+                </button>
+                {/* 0fr→1fr grid keeps the open/close animation in CSS with no height measuring */}
+                <div style={{ display: 'grid', gridTemplateRows: open ? '1fr' : '0fr', transition: 'grid-template-rows 0.35s ease' }}>
+                  <div style={{ overflow: 'hidden' }}>
+                    <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED, lineHeight: '21px', margin: 0, padding: '2px 16px 16px 68px' }}>{f.desc}</p>
+                  </div>
+                </div>
+              </div>
+              )
+            })}
+          </div>
+        ) : (
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: 24, width: '100%' }}>
           {platformFeatures.map((f, i) => {
             const cardStyle = { background: DARK, border: `2px solid ${BORDER}`, padding: '24px 26px', minHeight: 104, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14, boxSizing: 'border-box' }
@@ -436,21 +458,34 @@ function CHNC() {
                 <span className="feature-icon" style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 12, background: 'rgba(52,204,50,0.08)', border: '1px solid rgba(52,204,50,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={G} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{f.icon}</svg>
                 </span>
-                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 'clamp(20px, 1.9vw, 26px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
+                <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(20px, 1.9vw, 26px)', lineHeight: 1.1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>{f.title}</p>
               </div>
               <p className="feature-desc" style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: MUTED, lineHeight: '21px', margin: 0 }}>{f.desc}</p>
             </motion.div>
             )
           })}
         </div>
+        )}
       </div>
 
-      <div style={{ position: 'relative', height: isSmall ? 240 : 430, maxWidth: 1240, margin: '0 auto', padding: '0 clamp(20px, 6vw, 100px) clamp(20px, 4vw, 48px)', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
-        <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
-        <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 7, width: 'clamp(180px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
-        <motion.div style={isSmall ? { position: 'relative', zIndex: 1, textAlign: 'center' } : { position: 'relative', zIndex: 1, textAlign: 'center', opacity: chncOpacity, scale: chncScale }}>
+      <div ref={funnelRef} style={{ position: 'relative', height: isSmall ? 240 : 430, maxWidth: 1240, margin: '0 auto', padding: '0 clamp(20px, 6vw, 100px) clamp(20px, 4vw, 48px)', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', overflow: 'hidden' }}>
+        {/* Both curves anchor at top 0 — the mirror transform keeps the same
+            bounding box, so any offset here reads as misalignment. */}
+        {/* Curve min-width 140 (was 180): on phones two 180px curves nearly met
+            mid-screen and their tails dove into the CHNC wordmark. */}
+        <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', left: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(140px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8 }} />
+        <img loading="lazy" src={funnel1} alt="" style={{ position: 'absolute', right: 'clamp(16px, 3vw, 48px)', top: 0, width: 'clamp(140px, 28vw, 423px)', height: 'auto', objectFit: 'contain', opacity: 0.8, transform: 'rotate(180deg) scaleY(-1)' }} />
+        {/* isSmall passes literal 1s (not merely omitting the keys): the first
+            render uses the SSR width (desktop), which binds the scroll-linked
+            motion values — and framer keeps a bound value applied even after
+            the key disappears from style, leaving the lockup stuck faded on
+            phones. Explicit values override the stale binding. */}
+        <motion.div style={{ position: 'relative', zIndex: 1, textAlign: 'center', opacity: isSmall ? 1 : chncOpacity, scale: isSmall ? 1 : chncScale }}>
           <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(52px, 7.5vw, 113px)', fontWeight: 800, color: G, letterSpacing: '-3.27px', lineHeight: 1 }}>CHNC</div>
-          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: DIM, letterSpacing: '4px', textTransform: 'uppercase', marginTop: 16 }}>
+          {/* Gap/size/tracking scale with the wordmark (7.5vw) so the lockup
+              keeps the desktop proportions on small screens instead of the
+              tagline drifting away from CHNC. */}
+          <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(10px, 1.15vw, 14px)', color: DIM, letterSpacing: 'clamp(2px, 0.33vw, 4px)', textTransform: 'uppercase', marginTop: 'clamp(6px, 1.3vw, 16px)' }}>
             The Opportunity Creators
           </p>
         </motion.div>
@@ -463,8 +498,7 @@ function CHNC() {
             between the dock and the next section. The floor guarantees room
             for dashboard + dock on short viewports, where a bare 100vh let
             the absolutely-positioned dock poke into the Impact section. */}
-        {/* Floor raised 130 → 175 for the per-module IMPACT caption under the dock */}
-        <div style={{ height: isSmall ? 'auto' : `clamp(${dashH + 175}px, calc(100vh / var(--pz, 1)), ${dashH + 250}px)`, position: 'relative' }}>
+        <div style={{ height: isSmall ? 'auto' : `clamp(${dashH + 130}px, calc(100vh / var(--pz, 1)), ${dashH + 250}px)`, position: 'relative' }}>
           {/* Small screens: no 100vh scroll-pin (the shrunken dashboard left a
               huge blank gap) — normal flow, with bottom padding reserving room
               for the absolutely-positioned dock below the dashboard. */}
@@ -591,7 +625,10 @@ function CHNC() {
                     WebkitBackfaceVisibility: 'hidden',
                   }}
                 >
-                  <CHNCDashboard tilesTrigger={tilesReady} activeModule={activeModule} onModuleChange={setActiveModule} />
+                  {/* InsightIT renders as a bare feature shot (no platform
+                      chrome); other modules keep the full dashboard mock. */}
+                  <CHNCDashboard tilesTrigger={tilesReady} activeModule={activeModule} onModuleChange={setActiveModule}
+                    bare={activeModule === 'InsightIT'} />
                 </motion.div>
               </div>
               <motion.div
@@ -605,26 +642,6 @@ function CHNC() {
                   marginTop: done ? 20 : 8, opacity: dockOpacity,
                 }}
               >
-                {/* Per-module IMPACT line (client doc: "IMPACT for each to show
-                    at the bottom of the dashboard image") — sits between the
-                    dashboard image and the dock. */}
-                <motion.p
-                  key={activeModule}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, ease: 'easeOut' }}
-                  style={{
-                    margin: '0 0 16px', padding: '0 20px', maxWidth: 760, textAlign: 'center',
-                    fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(13px, 1.6vw, 15px)',
-                    lineHeight: 1.5, color: 'rgba(255,255,255,0.72)',
-                  }}
-                >
-                  <span style={{
-                    fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 13,
-                    letterSpacing: 1.5, textTransform: 'uppercase', color: G, marginRight: 10,
-                  }}>Impact</span>
-                  {(MODULE_INFO[activeModule] || MODULE_INFO.InsightIT).impact}
-                </motion.p>
                 <CHNCDock triggerOpacity={dockOpacity} activeModule={activeModule} onSelect={setActiveModule} />
               </motion.div>
             </div>
@@ -758,6 +775,16 @@ function BrandAudit() {
   const { isSmall } = useResponsive()
   const [selections, setSelections] = useState(auditQs.map(() => null))
   const [gif, setGif] = useState(auditDefaultGif)
+  // Submission takeover: auditName != null fades the whole quiz body out, then
+  // `live` swaps it for the brief-delivery scene (see AuditForm.jsx).
+  const [auditName, setAuditName] = useState(null)
+  const [auditCompany, setAuditCompany] = useState('')
+  const [live, setLive] = useState(false)
+  useEffect(() => {
+    if (auditName === null) return
+    const t = setTimeout(() => setLive(true), 500)
+    return () => clearTimeout(t)
+  }, [auditName])
   // Warm the browser cache for every reaction clip so the swap on click is
   // instant — without this the old clip lingers while the next one downloads.
   useEffect(() => {
@@ -778,7 +805,11 @@ function BrandAudit() {
             Find your next <span style={{ color: G }}>opportunity</span>
           </h2>
         </div>
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', width: '100%' }}>
+        {live ? (
+          <AuditTakeover name={auditName} company={auditCompany} />
+        ) : (
+        <div className={auditName !== null ? 'audit-form-out' : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center', width: '100%', pointerEvents: auditName !== null ? 'none' : undefined }}>
+        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: isSmall ? 40 : 'clamp(40px, 8vw, 229px)', alignItems: isSmall ? 'stretch' : 'flex-start', justifyContent: 'center', width: '100%' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 40, flexShrink: 0 }}>
             {auditQs.map((q, qi) => (
               <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -806,15 +837,12 @@ function BrandAudit() {
             </p>
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: isSmall ? 'stretch' : 'flex-end', width: '100%' }}>
-          {['Your name', 'Your email', 'Company name'].map((lbl, i) => (
-            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <label style={{ fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff' }}>{lbl}</label>
-              <input placeholder="Enter here" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }} />
-            </div>
-          ))}
-          <BtnGreen style={isSmall ? { width: '100%' } : undefined}>Know More</BtnGreen>
+        <AuditForm
+          context={{ page: 'home', answers: auditQs.map((q, qi) => (selections[qi] == null ? null : q.opts[selections[qi]])) }}
+          onSuccess={({ name, company }) => { setAuditName(name ?? ''); setAuditCompany(company ?? '') }}
+        />
         </div>
+        )}
       </div>
     </section>
   )
@@ -822,14 +850,76 @@ function BrandAudit() {
 
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 const testiTabs = ['AUTOMOBILE', 'BANKING', 'FMCG', 'RETAIL', 'FSI', 'OTHER']
-const testiStats = [
-  { num: '96%', label: 'Increase in traffic growth' },
-  { num: '10x', label: 'Revenue increase' },
-  { num: '96%', label: 'Increase in sales' },
+// Dummy reviews pending real client quotes — fictional companies only (no real
+// client names beyond the pre-existing Mahindra attribution).
+const testimonials = [
+  {
+    tab: 'AUTOMOBILE',
+    quote: ['ConvergenSEE changed the trajectory and ', 'success', " of my business, and I'm a lifelong user at this point."],
+    name: 'Alina Sharma', company: 'Mahindra', photo: testiPhoto,
+    stats: [
+      { num: '96%', label: 'Increase in traffic growth' },
+      { num: '10x', label: 'Revenue increase' },
+      { num: '96%', label: 'Increase in sales' },
+    ],
+  },
+  {
+    tab: 'BANKING',
+    quote: ['One dashboard finally showed us where every rupee goes — our campaigns have never been this ', 'accountable', '.'],
+    name: 'Rohan Mehta', company: 'Meridian Bank', photo: '/testi-rohan.webp',
+    stats: [
+      { num: '3.2x', label: 'Return on ad spend' },
+      { num: '41%', label: 'Lower cost per lead' },
+      { num: '58%', label: 'Growth in digital accounts' },
+    ],
+  },
+  {
+    tab: 'FMCG',
+    quote: ['From creative production to shelf visibility, the CHNC gave our brand a ', 'rhythm', ' we could never keep manually.'],
+    name: 'Priya Nair', company: 'Everleaf Naturals', photo: '/testi-priya.webp',
+    stats: [
+      { num: '84%', label: 'Increase in traffic growth' },
+      { num: '2.5x', label: 'D2C revenue increase' },
+      { num: '47%', label: 'Faster creative delivery' },
+    ],
+  },
+  {
+    tab: 'RETAIL',
+    quote: ['Every store, every listing, every review — ', 'visible', ' and improving week on week.'],
+    name: 'Kabir Malhotra', company: 'UrbanNest Stores', photo: null,
+    stats: [
+      { num: '120+', label: 'Locations managed' },
+      { num: '68%', label: 'More store visits' },
+      { num: '4.6★', label: 'Average store rating' },
+    ],
+  },
+  {
+    tab: 'FSI',
+    quote: ['Compliance-safe creatives at startup speed — that combination simply did not ', 'exist', ' for us before.'],
+    name: 'Ananya Iyer', company: 'Crestline Insurance', photo: null,
+    stats: [
+      { num: '52%', label: 'Lift in qualified leads' },
+      { num: '3x', label: 'Faster campaign launches' },
+      { num: '96%', label: 'On-brand approval rate' },
+    ],
+  },
+  {
+    tab: 'OTHER',
+    quote: ['We stopped guessing. Every decision now starts with what the data ', 'actually', ' says.'],
+    name: 'Devika Rao', company: 'Northlight Edutech', photo: null,
+    stats: [
+      { num: '2.8x', label: 'Enrolment enquiries' },
+      { num: '37%', label: 'Lower acquisition cost' },
+      { num: '5x', label: 'Organic reach growth' },
+    ],
+  },
 ]
 
 function Testimonials() {
   const { isSmall } = useResponsive()
+  const [idx, setIdx] = useState(0)
+  const t = testimonials[idx]
+  const step = (dir) => setIdx((idx + dir + testimonials.length) % testimonials.length)
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
@@ -840,18 +930,30 @@ function Testimonials() {
           </h2>
         </div>
         <div style={{ display: 'flex', gap: 'clamp(8px, 1.5vw, 20px)', flexWrap: 'wrap', justifyContent: 'center' }}>
-          {testiTabs.map((t, i) => (
-            <button key={t} style={{
-              background: 'transparent', border: i === 1 ? `1px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
-              height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
-              fontSize: 16, fontWeight: i === 1 ? 700 : 500,
-              color: i === 1 ? G : '#fff', textTransform: 'uppercase',
-            }}>{t}</button>
-          ))}
+          {testiTabs.map((tab) => {
+            const active = tab === t.tab
+            return (
+              <button key={tab} onClick={() => setIdx(testimonials.findIndex(r => r.tab === tab))} style={{
+                background: 'transparent', border: active ? `1px solid ${G}` : '1px solid rgba(255,255,255,0.15)',
+                height: 46, padding: '0 20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', fontFamily: "'Saira Condensed', sans-serif",
+                fontSize: 16, fontWeight: active ? 700 : 500,
+                color: active ? G : '#fff', textTransform: 'uppercase', cursor: 'pointer',
+                transition: 'color 0.25s ease, border-color 0.25s ease',
+              }}>{tab}</button>
+            )
+          })}
         </div>
         <div style={{ width: '100%' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginBottom: 20 }}>
+            <button onClick={() => step(-1)} aria-label="Previous testimonial" className="btn-outline testi-arrow" style={{ width: 44, height: 44, borderRadius: '50%', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            <button onClick={() => step(1)} aria-label="Next testimonial" className="btn-outline testi-arrow" style={{ width: 44, height: 44, borderRadius: '50%', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          </div>
           <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', width: '100%' }}>
-            <div style={{
+            <motion.div key={`quote-${idx}`} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: 'easeOut' }} style={{
               flex: 1, background: DARK, border: `2px solid ${BORDER}`,
               borderRight: isSmall ? `2px solid ${BORDER}` : 'none',
               borderBottom: isSmall ? 'none' : `2px solid ${BORDER}`,
@@ -859,25 +961,33 @@ function Testimonials() {
               justifyContent: 'space-between', gap: 30, minHeight: isSmall ? 'auto' : 505,
             }}>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(18px, 2.5vw, 24px)', color: '#fff', lineHeight: 1.3, maxWidth: 658 }}>
-                "ConvergenSEE changed the trajectory and <span style={{ color: '#34cc32' }}>success</span> of my business, and I'm a lifelong user at this point."
+                "{t.quote[0]}<span style={{ color: G }}>{t.quote[1]}</span>{t.quote[2]}"
               </p>
-              <div style={{ display: 'flex', gap: 'clamp(16px, 5vw, 80px)', flexWrap: 'wrap' }}>
-                {testiStats.map((s) => (
-                  <div key={s.label}>
+              <div style={{ display: 'flex', gap: isSmall ? 16 : 'clamp(16px, 3vw, 50px)', flexWrap: isSmall ? 'wrap' : 'nowrap' }}>
+                {t.stats.map((s) => (
+                  <div key={s.label} style={{ flex: isSmall ? '1 1 40%' : '1 1 0', minWidth: 0 }}>
                     <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 800, color: G, lineHeight: 1.1 }}>{s.num}</p>
                     <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, lineHeight: '24px', marginTop: 10 }}>{s.label}</p>
                   </div>
                 ))}
               </div>
-            </div>
-            <div style={{ width: isSmall ? '100%' : 494, height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, position: 'relative', border: `2px solid ${BORDER}`, borderLeft: isSmall ? `2px solid ${BORDER}` : 'none', overflow: 'hidden', flexShrink: 0 }}>
-              <img loading="lazy" src={testiPhoto} alt="Alina Sharma" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </motion.div>
+            <motion.div key={`photo-${idx}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, ease: 'easeOut' }} style={{ width: isSmall ? '100%' : 494, height: isSmall ? 'clamp(320px, 80vw, 505px)' : 505, position: 'relative', border: `2px solid ${BORDER}`, borderLeft: isSmall ? `2px solid ${BORDER}` : 'none', overflow: 'hidden', flexShrink: 0, background: DARK }}>
+              {t.photo ? (
+                <img loading="lazy" src={t.photo} alt={t.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span aria-hidden="true" style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 200, lineHeight: 1, color: 'rgba(52,204,50,0.12)' }}>
+                    {t.name.split(' ').map(w => w[0]).join('')}
+                  </span>
+                </div>
+              )}
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,7,24,0) 42%, #000718)' }} />
               <div style={{ position: 'absolute', bottom: 40, left: 38 }}>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24 }}>Alina Sharma</p>
-                <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 16, color: MUTED, marginTop: 8 }}>Mahindra</p>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 24 }}>{t.name}</p>
+                <p style={{ fontFamily: "'Archivo', sans-serif", fontWeight: 500, fontSize: 16, color: MUTED, marginTop: 8 }}>{t.company}</p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -904,8 +1014,11 @@ function Team() {
             <TeamMemberCard key={m.name} member={m} variant="strip" />
           ))}
         </div>
-        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 160, background: 'linear-gradient(to right, #000718 60%, transparent)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 160, background: 'linear-gradient(to left, #000718 60%, transparent)', pointerEvents: 'none' }} />
+        {/* Edge fades track the viewport: 160px on desktop, but only ~40px on a
+            phone — at a fixed 160 the two fades swallowed 320px of a 390px
+            screen and dissolved the first card's photo and name into the dark. */}
+        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 'clamp(28px, 10vw, 160px)', background: 'linear-gradient(to right, #000718 60%, transparent)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 'clamp(28px, 10vw, 160px)', background: 'linear-gradient(to left, #000718 60%, transparent)', pointerEvents: 'none' }} />
       </div>
       <div style={{ textAlign: 'center', marginTop: 40 }}>
         <Link href="/team" className="btn-outline" style={{
@@ -930,22 +1043,31 @@ const boardMembers = [
   { name: 'Vikram Nair', title: 'Advisory Board Member', bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', img: '/figma/home/board-vikram.webp' },
 ]
 
-function BoardCard({ member }) {
+function BoardCard({ member, active, onToggle }) {
   const [hovered, setHovered] = useState(false)
+  const { isMobile, isSmall } = useResponsive()
+  // On mobile the parent owns the open state so a tap on one card closes the
+  // others; elsewhere hover drives the reveal.
+  const shown = active ?? hovered
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => (onToggle ? onToggle() : setHovered(h => !h))}
       style={{
-        flex: 1, position: 'relative', overflow: 'hidden',
-        cursor: 'pointer', height: 561,
+        // Cells keep the desktop 400×561 proportion. Three cards sharing a
+        // phone row shrink to ~110px, so on mobile they wrap 2+1 instead —
+        // larger cards with no scrolling.
+        flex: isMobile ? '0 0 calc((100% - 8px) / 2)' : 1,
+        position: 'relative', overflow: 'hidden',
+        cursor: 'pointer', aspectRatio: '400 / 561',
         // White backing: Bala's portrait is a transparent cutout, so without
         // this the dark page shows through instead of a studio background.
         background: '#fff',
         // padding-box keeps the white backing from painting under the border,
         // which read as a permanent white outline on the dark page.
         backgroundClip: 'padding-box',
-        border: `1px solid ${hovered ? G : 'transparent'}`,
+        border: `1px solid ${shown ? G : 'transparent'}`,
         transition: 'border-color 0.3s ease',
       }}
     >
@@ -955,7 +1077,7 @@ function BoardCard({ member }) {
         alt={member.name}
         style={{
           width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top',
-          transform: hovered ? 'scale(1.05)' : 'scale(1)',
+          transform: shown ? 'scale(1.05)' : 'scale(1)',
           transition: 'transform 0.6s ease',
           display: 'block',
         }}
@@ -964,7 +1086,7 @@ function BoardCard({ member }) {
       {/* Gradient overlay — always a subtle base, deepens on hover */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: hovered
+        background: shown
           ? 'rgba(0,7,24,0.88)'
           : 'linear-gradient(to top, rgba(0,7,24,0.6) 0%, rgba(0,7,24,0.0) 60%)',
         transition: 'background 0.4s ease',
@@ -974,7 +1096,7 @@ function BoardCard({ member }) {
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, height: 2,
         background: G,
-        transform: hovered ? 'scaleX(1)' : 'scaleX(0)',
+        transform: shown ? 'scaleX(1)' : 'scaleX(0)',
         transformOrigin: 'left',
         transition: 'transform 0.4s ease',
       }} />
@@ -982,43 +1104,53 @@ function BoardCard({ member }) {
       {/* Text — slides up on hover */}
       <div style={{
         position: 'absolute', inset: 0,
-        padding: '32px 28px',
+        padding: isSmall ? '14px 12px' : '32px 28px',
         display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-        transform: hovered ? 'translateY(0)' : 'translateY(24px)',
-        opacity: hovered ? 1 : 0,
+        transform: shown ? 'translateY(0)' : 'translateY(24px)',
+        opacity: shown ? 1 : 0,
         transition: 'transform 0.45s ease, opacity 0.4s ease',
       }}>
+        {/* Mobile cells are narrow, so the bio drops to 10px and scrolls if a
+            long bio still overflows the card. */}
         <p style={{
-          fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED,
-          lineHeight: '28px', marginBottom: 32, flex: 1, display: 'flex', alignItems: 'flex-start', paddingTop: 32,
+          fontFamily: "'Archivo', sans-serif", fontSize: isMobile ? 10 : isSmall ? 11 : 18, color: MUTED,
+          lineHeight: isMobile ? 1.4 : isSmall ? 1.45 : '28px', marginBottom: isMobile ? 8 : isSmall ? 12 : 32,
+          flex: 1, minHeight: 0, overflowY: 'auto', paddingTop: isSmall ? 8 : 32,
         }}>{member.bio}</p>
         <div>
           <p style={{
             fontFamily: "'Archivo', sans-serif", fontWeight: 700,
-            fontSize: 36, lineHeight: '40px', color: '#fff', marginBottom: 10,
+            fontSize: isSmall ? 'clamp(13px, 3.5vw, 20px)' : 36,
+            lineHeight: isSmall ? 1.15 : '40px', color: '#fff', marginBottom: isSmall ? 4 : 10,
           }}>{member.name}</p>
           <p style={{
-            fontFamily: "'Archivo', sans-serif", fontSize: 18, color: MUTED, letterSpacing: '1px',
+            fontFamily: "'Archivo', sans-serif", fontSize: isSmall ? 11 : 18, color: MUTED, letterSpacing: '1px',
           }}>{member.title}</p>
         </div>
       </div>
 
       {/* Name always visible at bottom (subtle, disappears on hover) */}
       <div style={{
-        position: 'absolute', bottom: 24, left: 28,
-        opacity: hovered ? 0 : 1,
+        position: 'absolute', bottom: isSmall ? 10 : 24, left: isSmall ? 10 : 28,
+        opacity: shown ? 0 : 1,
         transition: 'opacity 0.3s ease',
       }}>
-        <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600, fontSize: 22, color: '#fff' }}>{member.name}</p>
+        <p style={{
+          fontFamily: "'Saira Condensed', sans-serif", fontWeight: 600,
+          fontSize: isSmall ? 'clamp(11px, 2.8vw, 14px)' : 22, color: '#fff',
+        }}>{member.name}</p>
       </div>
     </div>
   )
 }
 
 function AdvisoryBoard() {
-  // Stack below 1024px too — three fixed-height portrait cards squeezed into a
-  // tablet width crop the faces badly.
-  const { isSmall } = useResponsive()
+  // The cards keep their 400×561 proportion (aspect-ratio in BoardCard) and
+  // never scroll: one row on tablet/desktop, a 2+1 wrap on phones. Hover
+  // reveals the bio in-card on desktop/tablet; on mobile a tap does the same
+  // (the parent owns the open state so only one card is open at a time).
+  const { isMobile, isSmall } = useResponsive()
+  const [openIdx, setOpenIdx] = useState(null)
   return (
     <section id="advisory-board" style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
@@ -1031,8 +1163,16 @@ function AdvisoryBoard() {
             CHNC was shaped by people who've built and scaled brands in the real world. Our advisory board has helped ConvergenSEE stay clear on direction and stronger in thinking. Their guidance has influenced how we build systems, execute, and measure impact. Even today, they continue to shape how CHNC grows.
           </p>
         </div>
-        <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, width: '100%' }}>
-          {boardMembers.map((m, i) => <BoardCard key={i} member={m} />)}
+        <div style={{ width: '100%' }}>
+          <div style={{ display: 'flex', flexWrap: isMobile ? 'wrap' : 'nowrap', justifyContent: 'center', gap: isSmall ? 8 : 20 }}>
+            {boardMembers.map((m, i) => (
+              <BoardCard
+                key={i} member={m}
+                active={isMobile ? openIdx === i : undefined}
+                onToggle={isMobile ? () => setOpenIdx(openIdx === i ? null : i) : undefined}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

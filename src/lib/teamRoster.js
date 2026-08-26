@@ -32,9 +32,9 @@ export const TEAM = [
   {
     name: 'Archana Vaghela', role: 'Inside Sales & Marketing Associate',
     photo: '/team/archana-vaghela.jpg', pose: '/team/archana-vaghela-pose.jpg',
-    // `bio` is a list of [label, value] rows revealed over the lower half of
-    // the card. (Her hover video from the old shoot retired to .retired-team;
-    // a `video` key here beats `pose` if it ever comes back.)
+    // A `video` beats `pose` on hover — it loops silently like a GIF. `bio` is a
+    // list of [label, value] rows revealed over the lower half of the card.
+    video: '/team/archana-vaghela.mp4',
     bio: [
       ['Blood group', 'Chai, coffee, khana, peena, shayari, empathy, beer, doom scrolling'],
       ['Weapons', 'Eyes, kyunki ankhiyon se goli maare. Also, chasma laga hua hai…so 4 goli maare.'],

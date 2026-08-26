@@ -923,20 +923,186 @@ function ListCard({ title, rows }) {
   )
 }
 
-// ─── InsightIT content ────────────────────────────────────────────────────────
-function InsightContent({ controls, tileVariants }) {
+// ─── InsightIT content (home hero feature visual) ─────────────────────────────
+// A static FEATURE shot framed by the real CHNC chrome: the product Sidebar and
+// Header render around it (see the `bare` branch), and inside the content area
+// sits one big legible InsightIT analytics card plus floating satellite cards
+// (visibility KPI, review, brand health, report toast) and a fixed AI cursor +
+// chip — a SaaS marketing still, not a video. The only motion is the one-time
+// entry draw-in and a barely-there idle float. All data is fictional.
+// Laid out for the 1183×860 content area right of the sidebar.
+const FEAT_G = '#34cc32'
+const FEAT_REACH = [3.9, 4.1, 4.4, 4.3, 4.6, 4.9, 5.1, 5.4, 5.6, 5.9, 6.1, 6.42]
+const FEAT_MONTHS = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
+const FEAT_VARIANTS = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (i) => ({ opacity: 1, y: 0, transition: { delay: 0.15 + i * 0.1, duration: 0.5, ease: 'easeOut' } }),
+}
+
+function FeatBurst({ size = 19, color = FEAT_G }) {
+  const c = size / 2, r = size / 2 - 1
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
-      <StatTiles tiles={MODULES.InsightIT.tiles} controls={controls} tileVariants={tileVariants} />
-      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
-        <CTACard headline="Let's create campaign for your amazing brand!" sub="Track reviews, sentiment & ratings across all locations." cta="Go for it" controls={controls} custom={0} />
-        <CampaignCard controls={controls} custom={1} />
-        <LocationCard controls={controls} custom={2} />
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ flexShrink: 0 }}>
+      {Array.from({ length: 8 }, (_, i) => {
+        const a = (i * Math.PI) / 4
+        return <line key={i} x1={c + Math.cos(a) * 3.2} y1={c + Math.sin(a) * 3.2} x2={c + Math.cos(a) * r} y2={c + Math.sin(a) * r} stroke={color} strokeWidth="2.2" strokeLinecap="round" />
+      })}
+    </svg>
+  )
+}
+
+// Card shell. Entry is framer-motion (controls); the idle bob runs on an inner
+// wrapper so the two transforms never fight.
+function FeatCard({ custom, controls, style, pad = 22, float = 0, children }) {
+  return (
+    <motion.div custom={custom} variants={FEAT_VARIANTS} initial="hidden" animate={controls}
+      style={{ position: 'absolute', background: '#fff', border: '1px solid #e3e6ec', borderRadius: 12, boxShadow: '0 18px 50px rgba(0,7,24,0.10)', ...style }}>
+      <div style={{ width: '100%', height: '100%', boxSizing: 'border-box', padding: pad, display: 'flex', flexDirection: 'column', animation: float ? `featFloat ${float}s ease-in-out infinite alternate` : 'none' }}>
+        {children}
       </div>
-      <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
-        <ListCard title="Recent Campaign" rows={[0,1,2,3,4,5,6].map(() => ({ isPen: true, label: 'Mahindra XUV700 Awareness', sub: 'Created 30/07/2024' }))} />
-        <ListCard title="Recent Locations" rows={[0,1,2,3,4,5,6].map(() => ({ isPen: false, label: 'Powai Hiranandani', sub: 'Created 30/07/2024' }))} />
-      </div>
+    </motion.div>
+  )
+}
+
+function InsightContent({ controls }) {
+  const [armed, setArmed] = useState(false)
+  useEffect(() => {
+    const arm = setTimeout(() => setArmed(true), 400)
+    return () => clearTimeout(arm)
+  }, [])
+
+  // Smooth reach curve, 720×330 viewBox (rendered at 628px wide)
+  const pts = FEAT_REACH.map((v, i) => [12 + i * (696 / 11), 278 - ((v - 3.6) / 3.0) * 252])
+  let line = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`
+  for (let i = 1; i < pts.length; i++) {
+    const mx = ((pts[i - 1][0] + pts[i][0]) / 2).toFixed(1)
+    line += ` C ${mx} ${pts[i - 1][1].toFixed(1)}, ${mx} ${pts[i][1].toFixed(1)}, ${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)}`
+  }
+  const area = `${line} L ${pts[11][0].toFixed(1)} 292 L ${pts[0][0].toFixed(1)} 292 Z`
+
+  const eyebrow = { margin: 0, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: 2, textTransform: 'uppercase', color: FEAT_G }
+  const kicker = { margin: 0, fontFamily: "'Archivo', sans-serif", fontWeight: 700, fontSize: 12, letterSpacing: 0.6, textTransform: 'uppercase', color: '#9fa3ac' }
+
+  return (
+    <div style={{ position: 'relative', width: 1183, height: 860, fontFamily: "'Archivo', sans-serif" }}>
+      <style>{`
+        @keyframes featFloat { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+        @keyframes featPulse { 0% { box-shadow: 0 0 0 0 rgba(52,204,50,0.5); } 100% { box-shadow: 0 0 0 12px rgba(52,204,50,0); } }
+        @keyframes featDot { 0% { transform: scale(0); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+      `}</style>
+
+      {/* Soft brand glow behind the composition */}
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 60% 50% at 40% 45%, rgba(52,204,50,0.07) 0%, transparent 70%)' }} />
+
+      {/* Main feature card — the reach chart */}
+      <FeatCard custom={0} controls={controls} style={{ left: 36, top: 48, width: 700, height: 590 }} pad={34}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+          <div>
+            <p style={eyebrow}>Global InsightIT</p>
+            <p style={{ margin: '6px 0 0', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 32, color: '#000718', lineHeight: 1.1 }}>Total Reach — All Locations</p>
+          </div>
+          {/* Kept clear of the Visibility satellite overlapping this corner */}
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 12, fontWeight: 800, color: '#1b5e20', paddingTop: 8, marginRight: 80 }}>
+            <span style={{ width: 8, height: 8, borderRadius: 4, background: FEAT_G, animation: 'featPulse 1.6s ease-out infinite' }} />LIVE
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, margin: '16px 0 8px' }}>
+          <p style={{ margin: 0, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 60, color: '#000718', lineHeight: 1 }}>6.42 Cr</p>
+          <span style={{ fontSize: 14, fontWeight: 800, background: '#e8fde8', color: '#1b5e20', padding: '5px 12px', borderRadius: 999 }}>↑ 12.8% vs July</span>
+        </div>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end' }}>
+          <svg width="628" height="288" viewBox="0 0 720 330" style={{ display: 'block' }}>
+            <defs>
+              <linearGradient id="featFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={FEAT_G} stopOpacity="0.22" />
+                <stop offset="100%" stopColor={FEAT_G} stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            {[60, 130, 200, 270].map((y) => <line key={y} x1="12" y1={y} x2="708" y2={y} stroke="#eef0f4" strokeWidth="1" />)}
+            <path d={area} fill="url(#featFill)" style={{ opacity: armed ? 1 : 0, transition: 'opacity 0.8s ease 0.9s' }} />
+            <path d={line} fill="none" stroke={FEAT_G} strokeWidth="3.5" strokeLinecap="round" pathLength="1"
+              style={{ strokeDasharray: 1, strokeDashoffset: armed ? 0 : 1, transition: 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1) 0.3s' }} />
+            {pts.map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r={i === 11 ? 6 : 3.5} fill={i === 11 ? FEAT_G : '#fff'} stroke={FEAT_G} strokeWidth="2"
+                style={{ opacity: armed ? 1 : 0, transition: `opacity 0.3s ease ${400 + i * 130}ms`, transformOrigin: `${x}px ${y}px`, animation: armed && i === 11 ? 'featDot 0.5s ease 2s both' : 'none' }} />
+            ))}
+            {FEAT_MONTHS.map((m, i) => (i % 2 === 0 || i === 11) && (
+              <text key={m} x={pts[i][0]} y={318} textAnchor="middle" fontSize="14" fontFamily="'Archivo', sans-serif" fontWeight="600" fill={i === 11 ? '#000718' : '#9fa3ac'}>{m}</text>
+            ))}
+          </svg>
+        </div>
+      </FeatCard>
+
+      {/* Collaborator bubble on the main card's corner */}
+      <motion.div custom={4} variants={FEAT_VARIANTS} initial="hidden" animate={controls}
+        style={{ position: 'absolute', left: 6, top: 18, width: 62, height: 62, borderRadius: 31, background: FEAT_G, border: '4px solid #fff', boxShadow: '0 10px 30px rgba(0,7,24,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 24, color: '#000718', zIndex: 4 }}>AS</motion.div>
+
+      {/* Satellite — visibility KPI */}
+      <FeatCard custom={1} controls={controls} style={{ left: 692, top: 80, width: 320, height: 112, zIndex: 3 }} float={3.4}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
+          <div>
+            <p style={kicker}>Visibility</p>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 9 }}>
+              <p style={{ margin: '4px 0 0', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 38, color: '#000718', lineHeight: 1 }}>84.1%</p>
+              <span style={{ fontSize: 12, fontWeight: 800, color: '#1b5e20' }}>+4.2% ↑</span>
+            </div>
+          </div>
+          <svg width="84" height="36" viewBox="0 0 84 36" style={{ flexShrink: 0 }}>
+            <polyline points="2,28 15,21 28,24 41,14 54,18 67,9 82,13" fill="none" stroke={FEAT_G} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" pathLength="1"
+              style={{ strokeDasharray: 1, strokeDashoffset: armed ? 0 : 1, transition: 'stroke-dashoffset 1.2s ease-out 0.8s' }} />
+          </svg>
+        </div>
+      </FeatCard>
+
+      {/* Satellite — live review sentiment */}
+      <FeatCard custom={2} controls={controls} style={{ left: 714, top: 234, width: 388, height: 192, zIndex: 3 }} float={4.2}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', gap: 3 }}>
+              {Array.from({ length: 5 }, (_, i) => (
+                <span key={i} style={{ fontSize: 20, lineHeight: 1, color: FEAT_G }}>★</span>
+              ))}
+            </div>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#9fa3ac', background: '#f2f3f7', padding: '4px 10px', borderRadius: 999 }}>via Google</span>
+          </div>
+          <p style={{ margin: 0, fontSize: 17, fontWeight: 600, color: '#000718', lineHeight: 1.45 }}>“Quick service and a spotless showroom experience.”</p>
+          <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: '#9fa3ac' }}>Powai, Mumbai · just now</p>
+        </div>
+      </FeatCard>
+
+      {/* Satellite — brand health */}
+      <FeatCard custom={3} controls={controls} style={{ left: 692, top: 468, width: 330, height: 152, zIndex: 3 }} float={3.8}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, height: '100%' }}>
+          <InsRing on={armed} value={78} size={92} />
+          <div>
+            <p style={kicker}>Brand Health</p>
+            <p style={{ margin: '5px 0 7px', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 26, color: '#000718', lineHeight: 1 }}>+42 NPS</p>
+            <span style={{ fontSize: 11, fontWeight: 800, background: '#e8fde8', color: '#1b5e20', padding: '3px 10px', borderRadius: 999 }}>POSITIVE</span>
+          </div>
+        </div>
+      </FeatCard>
+
+      {/* Report toast — static part of the composition */}
+      <motion.div custom={5} variants={FEAT_VARIANTS} initial="hidden" animate={controls}
+        style={{ position: 'absolute', left: 724, top: 660, width: 372, background: '#fff', border: '1px solid #e3e6ec', borderRadius: 12, boxShadow: '0 18px 50px rgba(0,7,24,0.14)', padding: 18, display: 'flex', alignItems: 'center', gap: 14, zIndex: 3 }}>
+        <div style={{ width: 40, height: 40, borderRadius: 9, background: '#e8fde8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, color: '#1b5e20', flexShrink: 0 }}>✓</div>
+        <div style={{ minWidth: 0 }}>
+          <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>Global Insights — Aug 2026</p>
+          <p style={{ margin: '2px 0 0', fontSize: 12.5, fontWeight: 600, color: '#9fa3ac', whiteSpace: 'nowrap' }}>PDF · exported to your inbox</p>
+        </div>
+      </motion.div>
+
+      {/* Fixed AI cursor + chip, baked into the still like the reference */}
+      <motion.div custom={6} variants={FEAT_VARIANTS} initial="hidden" animate={controls}
+        style={{ position: 'absolute', left: 700, top: 652, zIndex: 5, pointerEvents: 'none' }}>
+        <svg width="27" height="27" viewBox="0 0 24 24" style={{ display: 'block', filter: 'drop-shadow(0 2px 4px rgba(0,7,24,0.3))' }}>
+          <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87c.45 0 .67-.54.35-.85L6.35 2.85a.5.5 0 0 0-.85.36Z" fill="#111318" stroke="#fff" strokeWidth="1.3" />
+        </svg>
+        <div style={{ position: 'absolute', right: 6, top: 30, display: 'flex', alignItems: 'center', gap: 9, background: '#fff', borderRadius: 999, padding: '10px 19px 10px 14px', boxShadow: '0 10px 34px rgba(0,7,24,0.2)', whiteSpace: 'nowrap' }}>
+          <FeatBurst />
+          <span style={{ fontWeight: 700, fontSize: 15.5, color: '#000718' }}>Compiling your August report</span>
+        </div>
+      </motion.div>
     </div>
   )
 }
@@ -2112,7 +2278,7 @@ function formatIN(n) {
 }
 const easeOut = p => 1 - Math.pow(1 - Math.max(0, Math.min(1, p)), 2)
 
-function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
   const G = '#34cc32'
   const cardBg = 'linear-gradient(135deg, #cfe9d6, #b7dccf)'
 
@@ -2149,6 +2315,31 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame 
   let cx = 400, cy = 240
   if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
   const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  // Camera (variable-depth rig in CHNCDashboard): windows of [start, end, zoom,
+  // fx?, fy?] — fx/fy frame a fixed point instead of the cursor. ONE depth per
+  // beat; gaps between windows pull back full-frame (frame transitions, the
+  // photo fan-out reveal, the go-live stamp landing, the close). Tight on the
+  // create form, default on the audit/verify tables, medium on the go-live
+  // phone and review card, wide on the analytics charts.
+  const CAM = {
+    1: [[400, 2500, 1.85]],
+    2: [[400, 3300, 1.65]],
+    3: [[2400, 4500, 1.5]],
+    4: [[500, 3300, 1.65]],
+    5: [[2200, 4600, 1.55]],
+    6: [[400, 1900, 1.5, 500, 210], [1900, 4300, 1.3, 560, 300]],
+    7: [[500, 3600, 1.3]],
+  }
+  const camWin = CAM[frame] && CAM[frame].find(([a, b]) => t >= a && t < b)
+  const camZ = camWin ? camWin[2] : 0
+  const camX = camWin ? (camWin[3] ?? cx) : 0
+  const camY = camWin ? (camWin[4] ?? cy) : 0
+  useEffect(() => {
+    if (!onCursor) return
+    onCursor(camZ ? { x: camX, y: camY, z: camZ } : null)
+    return () => onCursor(null)
+  }, [camZ, camX, camY, onCursor])
 
   const overlays = [
     null,
@@ -2206,8 +2397,8 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame 
       {/* Cursor */}
       {frame > 0 && frame <= 7 && (
         <div style={{
-          position: 'absolute', left: cx, top: cy, zIndex: 200,
-          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          position: 'absolute', left: 0, top: 0, transform: `translate(${cx}px, ${cy}px)`, zIndex: 200,
+          transition: 'transform 0.65s cubic-bezier(0.25,0.1,0.25,1)', willChange: 'transform',
           pointerEvents: 'none',
         }}>
           {cursorClick !== undefined && (
@@ -2729,7 +2920,7 @@ function StoryArt({ hue = 150, style }) {
   )
 }
 
-function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
   const G = '#34cc32'
 
   const [elapsed, setElapsed] = useState(0)
@@ -2764,6 +2955,30 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame 
   let cx = 400, cy = 240
   if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
   const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  // Camera (variable-depth rig in CHNCDashboard): windows of [start, end, zoom,
+  // fx?, fy?] — fx/fy frame a fixed point instead of the cursor. ONE depth per
+  // beat; gaps between windows pull back full-frame (frame transitions, the
+  // script cards landing, the drawer slide, the final-uploads tab cut, the
+  // close). Tight on the brief form and generate panel, default on the Q&A /
+  // preview / approval tables, medium fixed on the breakdown drawer tour.
+  const CAM = {
+    1: [[400, 3000, 1.85]],
+    2: [[500, 3400, 1.3, 560, 235]],
+    3: [[400, 2900, 1.85]],
+    4: [[1600, 4400, 1.5, 790, 280]],
+    5: [[800, 4300, 1.65]],
+    6: [[400, 2100, 1.3, 560, 235]],
+  }
+  const camWin = CAM[frame] && CAM[frame].find(([a, b]) => t >= a && t < b)
+  const camZ = camWin ? camWin[2] : 0
+  const camX = camWin ? (camWin[3] ?? cx) : 0
+  const camY = camWin ? (camWin[4] ?? cy) : 0
+  useEffect(() => {
+    if (!onCursor) return
+    onCursor(camZ ? { x: camX, y: camY, z: camZ } : null)
+    return () => onCursor(null)
+  }, [camZ, camX, camY, onCursor])
 
   const overlays = [
     null,
@@ -2844,8 +3059,8 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame 
       {/* Cursor */}
       {frame > 0 && frame <= 6 && (
         <div style={{
-          position: 'absolute', left: cx, top: cy, zIndex: 200,
-          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          position: 'absolute', left: 0, top: 0, transform: `translate(${cx}px, ${cy}px)`, zIndex: 200,
+          transition: 'transform 0.65s cubic-bezier(0.25,0.1,0.25,1)', willChange: 'transform',
           pointerEvents: 'none',
         }}>
           {cursorClick !== undefined && (
@@ -3312,7 +3527,7 @@ function ScriptContent({ controls, tileVariants }) {
 // ─── AIGenIT animated walkthrough (AI voice agents) ───────────────────────────
 // 5-frame product video: BUILD → GROUND → TEST LIVE → CAPTURE → CLOSE
 // Anonymized per brief: agent = Asha (ConvergenSEE), fictional masked leads.
-function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
   const G = '#34cc32'
 
   const [elapsed, setElapsed] = useState(0)
@@ -3345,6 +3560,30 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }
   let cx = 400, cy = 240
   if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
   const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  // Camera (variable-depth rig in CHNCDashboard): windows of [start, end, zoom,
+  // fx?, fy?] — fx/fy frame a fixed point instead of the cursor. ONE depth per
+  // beat — depth changes only between windows, never inside one; the rig's
+  // deadband lets the cursor roam a held shot. Tight on the build/ground forms,
+  // hero frame 3 stays full-frame through the menu + drawer slide-in reveal and
+  // then holds a fixed medium shot on the live-voice drawer; the InsightIT tour
+  // opens medium on the KPI count-up and widens for chart + leads. Gaps =
+  // full-frame pull-backs (frame transitions, drawer reveal, idle/close).
+  const CAM = {
+    1: [[400, 5700, 1.85]],
+    2: [[400, 6400, 1.85]],
+    3: [[3400, 7300, 1.5, 940, 270]],
+    4: [[400, 2100, 1.55], [2100, 6300, 1.3]],
+  }
+  const camWin = CAM[frame] && CAM[frame].find(([a, b]) => t >= a && t < b)
+  const camZ = camWin ? camWin[2] : 0
+  const camX = camWin ? (camWin[3] ?? cx) : 0
+  const camY = camWin ? (camWin[4] ?? cy) : 0
+  useEffect(() => {
+    if (!onCursor) return
+    onCursor(camZ ? { x: camX, y: camY, z: camZ } : null)
+    return () => onCursor(null)
+  }, [camZ, camX, camY, onCursor])
 
   const overlays = [
     null,
@@ -3401,8 +3640,8 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }
       {/* Cursor */}
       {frame > 0 && frame <= 4 && (
         <div style={{
-          position: 'absolute', left: cx, top: cy, zIndex: 300,
-          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          position: 'absolute', left: 0, top: 0, transform: `translate(${cx}px, ${cy}px)`, zIndex: 300,
+          transition: 'transform 0.65s cubic-bezier(0.25,0.1,0.25,1)', willChange: 'transform',
           pointerEvents: 'none',
         }}>
           {cursorClick !== undefined && (
@@ -4407,7 +4646,7 @@ function AIGenContent({ controls, tileVariants }) {
 }
 
 // ─── AmplifyIT workflow reel ──────────────────────────────────────────────────
-function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame }) {
+function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
   const G = '#34cc32'
 
   const [elapsed, setElapsed] = useState(0)
@@ -4441,6 +4680,32 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
   let cx = 400, cy = 240
   if (seg) for (const [ts, x, y] of seg.path) { if (t >= ts) { cx = x; cy = y } }
   const cursorClick = seg ? seg.clicks.find(c => t >= c && t < c + 500) : undefined
+
+  // Camera (variable-depth rig in CHNCDashboard): windows of [start, end, zoom,
+  // fx?, fy?] — fx/fy frame a fixed point instead of the cursor. ONE depth per
+  // beat — depth changes only between windows; the rig's deadband lets the
+  // cursor roam a held shot. Tight on the picker/form wizards (1, 2, 4), wide
+  // fixed on the ad-set form before the map hero goes full-frame (pin + radius
+  // stay uncropped), 1.65 on the manage table after the Published toast plays
+  // full-frame, and the InsightIT KPI hero counts up full-frame before a wide
+  // chart tour. Gaps = full-frame pull-backs (transitions, reveals, idle/close).
+  const CAM = {
+    1: [[400, 5400, 1.85]],
+    2: [[400, 3800, 1.8]],
+    3: [[400, 2200, 1.3, 560, 170]],
+    4: [[400, 5300, 1.85], [5300, 7200, 1.5, 860, 300]],
+    5: [[2600, 6000, 1.65]],
+    6: [[2600, 6400, 1.3, 560, 280]],
+  }
+  const camWin = CAM[frame] && CAM[frame].find(([a, b]) => t >= a && t < b)
+  const camZ = camWin ? camWin[2] : 0
+  const camX = camWin ? (camWin[3] ?? cx) : 0
+  const camY = camWin ? (camWin[4] ?? cy) : 0
+  useEffect(() => {
+    if (!onCursor) return
+    onCursor(camZ ? { x: camX, y: camY, z: camZ } : null)
+    return () => onCursor(null)
+  }, [camZ, camX, camY, onCursor])
 
   const overlays = [
     null,
@@ -4545,8 +4810,8 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
       {/* Cursor */}
       {frame > 0 && frame <= 6 && (
         <div style={{
-          position: 'absolute', left: cx, top: cy, zIndex: 300,
-          transition: 'left 0.65s cubic-bezier(0.25,0.1,0.25,1), top 0.65s cubic-bezier(0.25,0.1,0.25,1)',
+          position: 'absolute', left: 0, top: 0, transform: `translate(${cx}px, ${cy}px)`, zIndex: 300,
+          transition: 'transform 0.65s cubic-bezier(0.25,0.1,0.25,1)', willChange: 'transform',
           pointerEvents: 'none',
         }}>
           {cursorClick !== undefined && (
@@ -5273,7 +5538,7 @@ function ConvergeContent({ controls, tileVariants }) {
 }
 
 // ─── Main export ─────────────────────────────────────────────────────────────
-export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT', onModuleChange, stepCount = 0, showWorkflow = false, onFrame }) {
+export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT', onModuleChange, stepCount = 0, showWorkflow = false, onFrame, bare = false }) {
   const containerRef = useRef()
   const [scale, setScale] = useState(1)
   const controls = useAnimation()
@@ -5317,7 +5582,7 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
   // gets a fast-start ease so the redirect keeps its apparent momentum.
   const [camCursor, setCamCursor] = useState(null)
   const cam = useRef({ tx: 0, ty: 0, s: 1, panDur: 0.9, zoomDur: 1, panEase: 'cubic-bezier(0.33, 0, 0.15, 1)', zoomEase: 'cubic-bezier(0.33, 0, 0.15, 1)', settleAt: 0 })
-  const camOn = camCursor && ['CreateIT', 'InsightIT', 'SocialiseIT'].includes(activeModule) && showWorkflow
+  const camOn = camCursor && ['CreateIT', 'InsightIT', 'SocialiseIT', 'LocateIT', 'ScriptIT', 'AIGenIT', 'AmplifyIT'].includes(activeModule) && showWorkflow
   // reel local coords → 1440×930 canvas coords (content area offset), clamped to edges
   const camZ = camOn ? (camCursor.z || 1.65) : 1
   const camTx = camOn ? Math.max(1440 - 1440 * camZ, Math.min(0, 720 - camZ * (289 + camCursor.x + 8))) : 0
@@ -5357,6 +5622,16 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
        <div style={{ width: 1440, height: 930, position: 'relative', transform: `translate(${cam.current.tx}px, ${cam.current.ty}px)`, transformOrigin: '0 0', transition: `transform ${cam.current.panDur}s ${cam.current.panEase}`, willChange: 'transform' }}>
        <div style={{ width: 1440, height: 930, position: 'relative', transform: `scale(${cam.current.s})`, transformOrigin: '0 0', transition: `transform ${cam.current.zoomDur}s ${cam.current.zoomEase}`, willChange: 'transform' }}>
 
+        {/* bare: feature-shot mode for the home hero — the real CHNC sidebar
+            and topbar frame the module's feature composition, without the
+            in-page chrome (page header/tabs). InsightIT only for now. */}
+        {bare ? <>
+          <Sidebar active="InsightIT" org={{ initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' }} />
+          <Header />
+          <div style={{ position: 'absolute', left: 257, top: 70, width: 1183, height: 860 }}>
+            <InsightContent controls={controls} />
+          </div>
+        </> : <>
         <Sidebar active={activeModule} insightSub={activeModule === 'InsightIT' && showWorkflow} org={
           ['ScriptIT', 'AmplifyIT', 'InsightIT', 'LocateIT', 'CreateIT', 'AIGenIT'].includes(activeModule) && showWorkflow ? { initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' }
           : activeModule === 'SocialiseIT' && showWorkflow ? { initials: 'C', name: 'ConvergenSEE', sub: 'Automobile Ind' }
@@ -5403,18 +5678,18 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
 
           {/* Module content */}
           <div style={{ position: 'relative', width: 1121 }}>
-            {activeModule === 'LocateIT' && showWorkflow && <LocateWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'LocateIT' && showWorkflow && <LocateWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'LocateIT' && !showWorkflow && <LocateContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'AmplifyIT' && showWorkflow && <AmplifyWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'AmplifyIT' && showWorkflow && <AmplifyWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'AmplifyIT' && !showWorkflow && <AmplifyContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'CreateIT' && showWorkflow && <CreateContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'CreateIT' && !showWorkflow && <CreateStandardContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'SocialiseIT' && showWorkflow && <SocialiseWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'SocialiseIT' && !showWorkflow && <SocialiseContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InfluenceIT' && <InfluenceContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'ScriptIT' && !showWorkflow && <ScriptContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'AIGenIT' && showWorkflow && <AIGenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} />}
+            {activeModule === 'AIGenIT' && showWorkflow && <AIGenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'AIGenIT' && !showWorkflow && <AIGenContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'SearchIT'    && <SearchContent    controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InvoiceIT'   && <InvoiceContent   controls={controls} tileVariants={tileVariants} />}
@@ -5426,6 +5701,7 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
               <InsightContent controls={controls} tileVariants={tileVariants} />}
           </div>
         </div>
+        </>}
 
        </div>
        </div>

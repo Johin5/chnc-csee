@@ -169,7 +169,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Letter from Bala ────────────────────────────────────────────────── */}
-      <section style={{ background: DARK, paddingLeft: isSmall ? 0 : 'clamp(20px, 6vw, 100px)' }}>
+      <section id="letter-from-bala" style={{ background: DARK, paddingLeft: isSmall ? 0 : 'clamp(20px, 6vw, 100px)' }}>
         <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', alignItems: 'stretch', justifyContent: 'space-between' }}>
           {/* Left: text */}
           <div style={{
@@ -189,30 +189,50 @@ export default function AboutPage() {
                 <div style={{ color: G, textTransform: 'none' }}>bala</div>
               </div>
             </div>
-            <p style={{
+            <div style={{
               fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)',
               color: MUTED, lineHeight: '24px',
+              display: 'flex', flexDirection: 'column', gap: 18,
             }}>
-              When we started ConvergenSEE, we set out to solve a problem we saw across the
-              industry: marketing had become fragmented. Brands were working across multiple tools,
-              platforms, and vendors, yet still unable to answer the one question that matters most
-              &mdash; is this creating real business opportunity? Creativity, technology, and
-              insight were operating in isolation, and that disconnect was costing brands time,
-              money, and opportunity. ConvergenSEE was built to change that. As a MarTech platform,
-              we bring creativity, technology, and intelligence together into a single system
-              &mdash; one designed to help brands move faster and make decisions with confidence.
-              We believe marketing alone does not create growth; growth comes from understanding an
-              audience deeply and executing with precision. That belief is the foundation this
-              brand is built on, and it is what every person here works toward &mdash; not
-              marketing outputs, but real, measurable opportunity for the brands, and the
-              businesses, we serve.
-            </p>
+              <p>Dear reader,</p>
+              <p>
+                When we started ConvergenSEE, we set out to solve a problem we saw across the
+                industry: marketing had become fragmented. Brands were working across multiple
+                tools, platforms, and vendors, yet still unable to answer the one question that
+                matters most &mdash; is this creating real business opportunity? Creativity,
+                technology, and insight were operating in isolation, and that disconnect was
+                costing brands time, money, and opportunity.
+              </p>
+              <p>
+                ConvergenSEE was built to change that. As a MarTech platform, we bring creativity,
+                technology, and intelligence together into a single system &mdash; one designed to
+                help brands move faster and make decisions with confidence.
+              </p>
+              <p>
+                We believe marketing alone does not create growth; growth comes from understanding
+                an audience deeply and executing with precision. That belief is the foundation this
+                brand is built on, and it is what every person here works toward &mdash; not
+                marketing outputs, but real, measurable opportunity for the brands, and the
+                businesses, we serve.
+              </p>
+              <p style={{ marginTop: 6 }}>Warm regards,</p>
+              <div>
+                <span style={{
+                  fontFamily: "'Caveat', cursive", fontSize: 46, lineHeight: 1, color: G,
+                  display: 'inline-block', transform: 'rotate(-3.5deg)',
+                }}>Bala</span>
+                <div style={{
+                  fontFamily: "'Archivo', sans-serif", fontSize: 11, letterSpacing: '0.14em',
+                  textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginTop: 6,
+                }}>Founder, ConvergenSEE</div>
+              </div>
+            </div>
           </div>
 
-          {/* Right: Bala polaroid gif */}
-          <div style={{ width: isSmall ? '100%' : 732, maxWidth: isSmall ? 'none' : 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 702, overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
+          {/* Right: Bala polaroid gif — right-aligned, vertically centered to the letter */}
+          <div style={{ width: isSmall ? '100%' : 732, maxWidth: isSmall ? 'none' : 732, height: isSmall ? 'clamp(320px, 70vw, 702px)' : 800, overflow: 'hidden', flexShrink: 0, position: 'relative', alignSelf: isSmall ? undefined : 'center', marginRight: isSmall ? 0 : 48 }}>
             <Image src="/bala-polaroid.webp" alt="Letter from Bala" fill sizes="100vw" style={{
-              objectFit: 'contain', pointerEvents: 'none',
+              objectFit: 'contain', objectPosition: isSmall ? 'center' : 'right center', pointerEvents: 'none',
             }} />
           </div>
         </div>

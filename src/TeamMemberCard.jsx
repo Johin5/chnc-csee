@@ -8,8 +8,7 @@ import useResponsive from './useResponsive'
 // card is sized by its parent: 'strip' is a fixed cell in a horizontal
 // scroller, 'grid' fills a wrapping grid and collapses to full width on mobile.
 
-const G     = '#34cc32'
-const MUTED = 'rgba(255,255,255,0.7)'
+const G = '#34cc32'
 
 export default function TeamMemberCard({ member, variant = 'grid' }) {
   const { name, role, photo, pose, video, bio, lowercaseName } = member
@@ -49,6 +48,10 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
   const showPose  = !video && pose && hovered && poseLoaded
   const revealed  = showVideo || showPose
   const isStrip   = variant === 'strip'
+  // In the 3-across mobile grid a cell is ~130px wide — the labeled bio rows
+  // can't fit legibly, so a tap reveals only the pose, name and role there.
+  const smallCell = !isStrip && isSmall
+  const showBio   = bio && !(isMobile && !isStrip)
 
   return (
     <div
@@ -56,9 +59,14 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
       onMouseLeave={close}
       onTouchStart={() => (hovered ? close() : open())}
       style={{
-        width: isStrip || !isMobile ? 320 : '100%', maxWidth: 320,
-        flex: isStrip ? '0 0 auto' : (isMobile ? '1 1 100%' : '0 0 auto'),
-        flexShrink: isStrip ? 0 : (isMobile ? 1 : 0),
+        // Grid cells are a fluid quarter (third on mobile) of the row so the
+        // wrap always lands on 4 / 3 columns; the 2px gaps are subtracted so
+        // the last column never spills to a new line. Strip cells shrink on a
+        // phone so the scroller shows a real slice of the next card.
+        width: isStrip ? (isMobile ? 240 : 320) : (isMobile ? 'calc((100% - 4px) / 3)' : 'calc((100% - 6px) / 4)'),
+        maxWidth: 320,
+        flex: '0 0 auto',
+        flexShrink: 0,
         position: 'relative', overflow: 'hidden', cursor: 'pointer',
         border: `1px solid ${hovered ? G : 'transparent'}`,
         transition: 'border-color 0.3s ease',
@@ -66,7 +74,9 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
     >
       {/* portrait — cross-fades to the person's own quirky pose on hover */}
       <div style={{
-        height: isSmall && !isStrip ? 'clamp(300px, 70vw, 440px)' : 440,
+        // Cards scale with their cell, so the portrait keeps the 320×440
+        // proportion instead of a fixed height (at full width it is still 440).
+        aspectRatio: '320 / 440',
         overflow: 'hidden', position: 'relative', background: '#e9eaec',
       }}>
         <img
@@ -123,7 +133,7 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
 
       {/* Deeper scrim, hover only — buys the bio enough contrast to read while
           still leaving the top of the frame (and the face) in the clear. */}
-      {bio && (
+      {showBio && (
         <div style={{
           position: 'absolute', bottom: 0, left: 0, right: 0, height: '78%',
           background: 'linear-gradient(to top, rgba(0,7,24,0.96) 30%, rgba(0,7,24,0.72) 62%, transparent 100%)',
@@ -135,13 +145,14 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
 
       {/* text overlay */}
       <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, padding: 24,
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        padding: smallCell ? 10 : isStrip && isMobile ? 16 : 24,
         pointerEvents: 'none',
         transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
         transition: 'transform 0.35s ease',
       }}>
         {/* bio rows — grow upward from the bottom-anchored block on hover */}
-        {bio && (
+        {showBio && (
           <div style={{
             maxHeight: hovered ? 220 : 0,
             opacity: hovered ? 1 : 0,
@@ -167,19 +178,25 @@ export default function TeamMemberCard({ member, variant = 'grid' }) {
 
         {/* green accent line */}
         <div style={{
-          width: hovered ? 40 : 0, height: 2, background: G,
-          marginBottom: 10,
+          width: hovered ? (smallCell ? 24 : 40) : 0, height: 2, background: G,
+          marginBottom: smallCell ? 6 : 10,
           transition: 'width 0.35s ease',
         }} />
         <p style={{
-          fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 28,
+          fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700,
+          fontSize: isStrip ? (isMobile ? 20 : 28) : smallCell ? 'clamp(9px, 2vw, 14px)' : 22,
           textTransform: lowercaseName ? 'lowercase' : 'uppercase', letterSpacing: '0.02em', color: '#fff',
           margin: 0, lineHeight: 1.1,
         }}>{name}</p>
+        {/* designation — hidden until hover, like the advisory-board cards */}
         <p style={{
-          fontFamily: "'Archivo', sans-serif", fontSize: 13, margin: '6px 0 0',
-          color: hovered ? G : MUTED,
-          transition: 'color 0.3s ease',
+          fontFamily: "'Archivo', sans-serif", fontSize: smallCell ? 10 : 13, margin: 0,
+          maxHeight: hovered ? 40 : 0,
+          marginTop: hovered ? (smallCell ? 3 : 6) : 0,
+          opacity: hovered ? 1 : 0,
+          overflow: 'hidden',
+          color: G,
+          transition: 'max-height 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease',
         }}>{role}</p>
       </div>
     </div>
