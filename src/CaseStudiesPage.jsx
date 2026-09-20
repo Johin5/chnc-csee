@@ -68,7 +68,7 @@ const CASES = [
     poster: '/life-insurance-poster.webp',
     name: 'Leading life insurance brand',
     type: 'Content at scale',
-    stats: [{ val: '42%', label: 'Faster creative delivery timelines' }, { val: '~50%', label: 'Reduction in time-to-market' }, { val: '2x', label: 'Designer productivity — 2 to 4 creatives a day' }],
+    stats: [{ val: '42%', label: 'Faster creative delivery timelines' }, { val: '~50%', label: 'Reduction in time-to-market' }, { val: '2x', label: 'Designer productivity: 2 to 4 creatives a day' }],
     href: PATH_FOR['life-insurance'],
   },
   {
@@ -211,7 +211,7 @@ export default function CaseStudiesPage() {
             textTransform: 'uppercase', letterSpacing: '-3px', margin: 0,
             maxWidth: 1100, textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.6)',
           }}>
-            <span style={{ color: '#fff' }}>THE WORK WE </span>
+            <span style={{ color: '#fff' }}>WORK WE </span>
             <span style={{ color: G }}>LOVE </span>
             <span style={{ color: '#fff' }}>TO TALK ABOUT.</span>
           </h1>

@@ -166,7 +166,7 @@ export default function AboutPage() {
             A team of thinkers, doers, and opportunity creators who genuinely care about the brands
             we work with. We're a Martech brand that believes technology should solve real problems.
             We research relentlessly, think deeply, and build with love because that's the only way
-            we know how to work. From strategy to execution, we're right there with you &mdash; your
+            we know how to work. From strategy to execution, we're right there with you: your
             people, your partners, making things happen together!
           </p>
         </div>
@@ -203,19 +203,19 @@ export default function AboutPage() {
                 When we started ConvergenSEE, we set out to solve a problem we saw across the
                 industry: marketing had become fragmented. Brands were working across multiple
                 tools, platforms, and vendors, yet still unable to answer the one question that
-                matters most &mdash; is this creating real business opportunity? Creativity,
+                matters most: is this creating real business opportunity? Creativity,
                 technology, and insight were operating in isolation, and that disconnect was
                 costing brands time, money, and opportunity.
               </p>
               <p>
                 ConvergenSEE was built to change that. As a MarTech platform, we bring creativity,
-                technology, and intelligence together into a single system &mdash; one designed to
+                technology, and intelligence together into a single system, one designed to
                 help brands move faster and make decisions with confidence.
               </p>
               <p>
                 We believe marketing alone does not create growth; growth comes from understanding
                 an audience deeply and executing with precision. That belief is the foundation this
-                brand is built on, and it is what every person here works toward &mdash; not
+                brand is built on, and it is what every person here works toward: not
                 marketing outputs, but real, measurable opportunity for the brands, and the
                 businesses, we serve.
               </p>
@@ -224,11 +224,12 @@ export default function AboutPage() {
                 <span style={{
                   fontFamily: "'Caveat', cursive", fontSize: 46, lineHeight: 1, color: G,
                   display: 'inline-block', transform: 'rotate(-3.5deg)',
-                }}>Bala</span>
+                }}>bala</span>
+                {/* textTransform none: "ConvergenSEE" casing is load-bearing */}
                 <div style={{
                   fontFamily: "'Archivo', sans-serif", fontSize: 11, letterSpacing: '0.14em',
-                  textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginTop: 6,
-                }}>Founder, ConvergenSEE</div>
+                  textTransform: 'none', color: 'rgba(255,255,255,0.5)', marginTop: 6,
+                }}>FOUNDER, ConvergenSEE</div>
               </div>
             </div>
           </div>
@@ -272,12 +273,12 @@ export default function AboutPage() {
                 desc="We don't just talk growth, we build it. Every promise we make to a brand is one we hold ourselves to first."
               />
               <ValueCard
-                line1="Be "
+                line1="Stay hungry,"
                 line1Green={false}
-                line2="foolish"
+                line2="stay foolish"
                 line2Green
                 bg={imgValFoolish}
-                desc="The best ideas rarely look safe at first. We'd rather take the leap than play it safe and watch someone else take the opportunity!"
+                desc="Comfortable is where good work goes to die. We keep learning like we're starting out and keep backing the ideas that don't look safe."
               />
             </div>
             <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, width: '100%' }}>
@@ -287,15 +288,15 @@ export default function AboutPage() {
                 line2=" IT"
                 line2Green={false}
                 bg={imgValCard1}
-                desc="No passing the buck, no waiting to be told. If it's on our plate, we see it through — start to finish."
+                desc="No passing the buck, no waiting to be told. If it's on our plate, we see it through, start to finish."
               />
               <ValueCard
-                line1="CHASE THE"
+                line1="Insanely great"
                 line1Green={false}
-                line2="CHNC"
+                line2="customer experience"
                 line2Green
                 bg={imgValCard1}
-                desc="Every gap is a chance waiting to be taken."
+                desc="We'd rather do fewer things and have them be great than many things and have them be fine."
               />
             </div>
           </div>
@@ -311,7 +312,7 @@ export default function AboutPage() {
             whiteSpace: 'nowrap',
           }}>
             <span style={{ color: '#fff' }}>JOIN THE </span>
-            <span style={{ color: G }}>Chaos!</span>
+            <span style={{ color: G }}>Crazies!</span>
           </h2>
           <Link href={PATH_FOR.careers} className="btn-outline" style={{
             background: 'transparent', color: '#fff', border: '1px solid #fff',

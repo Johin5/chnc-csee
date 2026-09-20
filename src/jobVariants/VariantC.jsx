@@ -18,9 +18,9 @@ const SAIRA = "'Saira Condensed', sans-serif"
 const ARCHIVO = "'Archivo', sans-serif"
 
 const STEPS = [
-  { n: '01', title: 'Apply', desc: "Send your CV and your work. That's it — no cover-letter theatre." },
+  { n: '01', title: 'Apply', desc: "Send your CV and your work. That's it, no cover-letter theatre." },
   { n: '02', title: 'Intro chat', desc: "30 minutes with the team lead about what you've made and what you want to make." },
-  { n: '03', title: 'Craft task', desc: 'A short exercise close to the real work — never free work we ship.' },
+  { n: '03', title: 'Craft task', desc: 'A short exercise close to the real work, never free work we ship.' },
   { n: '04', title: 'Offer', desc: "We move fast. If it's a yes, you'll hear within the week." },
 ]
 

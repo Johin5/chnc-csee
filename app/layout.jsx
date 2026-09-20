@@ -6,7 +6,7 @@ import { SITE_URL, SITE_NAME, DEFAULT_DESCRIPTION, orgJsonLd, webSiteJsonLd, Jso
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'ConvergenSEE — Digital Marketing Agency, Mumbai',
+    default: 'ConvergenSEE - Digital Marketing Agency, Mumbai',
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,

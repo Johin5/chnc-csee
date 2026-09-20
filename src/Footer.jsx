@@ -21,6 +21,7 @@ const partnerImg = '/figma/home/img-partner-rgb1.png'
 const LINK_COLS = [
   { title: 'Company', links: [
     ['About', { key: 'about' }],
+    ['CHNC', { key: 'solutions' }],
     ['Team', { key: 'team' }],
     ['Advisory Board', { href: '/#advisory-board' }],
     ['Careers', { key: 'careers' }],
@@ -130,11 +131,19 @@ export default function Footer() {
           {/* Contact */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <p style={colTitle}>Contact</p>
-            <Link href="/#contact" className="footer-link" style={{ ...linkStyle, ...tapPad }}>
+            {/* Already on /#contact, the hash doesn't change and the browser
+                skips the anchor scroll — scroll imperatively when on home. */}
+            <Link href="/#contact" onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+              if (window.location.pathname !== '/') return
+              e.preventDefault()
+              document.getElementById('contact')?.scrollIntoView()
+              history.replaceState(null, '', '/#contact')
+            }} className="footer-link" style={{ ...linkStyle, ...tapPad }}>
               <span style={{ color: G }}>›</span>Contact Us
             </Link>
-            <a href="mailto:hello@convergensee.ai?subject=Book%20a%20call" className="footer-link" style={{ ...linkStyle, ...tapPad }}>
-              <span style={{ color: G }}>›</span>Book a Call
+            <a href="mailto:letsconnect@convergensee.ai?subject=Book%20a%20demo" className="footer-link" style={{ ...linkStyle, ...tapPad }}>
+              <span style={{ color: G }}>›</span>Book a Demo
             </a>
             <div>
               <p style={contactLabel}>Address</p>
@@ -146,7 +155,7 @@ export default function Footer() {
             </div>
             <div>
               <p style={contactLabel}>Email us</p>
-              <a href="mailto:hello@convergensee.ai" style={{ ...contactText, display: 'block', ...tapPad }}>hello@convergensee.ai</a>
+              <a href="mailto:letsconnect@convergensee.ai" style={{ ...contactText, display: 'block', ...tapPad }}>letsconnect@convergensee.ai</a>
             </div>
             <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
               {/* Instagram */}

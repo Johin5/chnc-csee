@@ -13,10 +13,18 @@ const G = '#34cc32'
 // onSuccess) and mounts <AuditTakeover /> in its place: the CHNC delivery
 // rider rides through Mumbai with the brief strapped on the back — endlessly,
 // between the Gateway of India and the pin-dropped ConvergenSEE HQ skyline —
-// "BRIEF ON ITS WAY." Keyframes live in globals.css under the deliv- prefix.
+// "WE HEARD YOU." Keyframes live in globals.css under the deliv- prefix.
 // The quiz answers ride along as a hidden JSON field (`context`).
 
-const FIELDS = [['Your name', 'name'], ['Your email', 'email'], ['Company name', 'company']]
+// Website URL is the highest-value field — it lets the audit start before the
+// first call (31 Aug brief).
+const FIELDS = [
+  ['Your name', 'name'],
+  ['Your email', 'email'],
+  ['Phone', 'phone'],
+  ['Company name', 'company'],
+  ['Company website', 'website'],
+]
 
 // Scene art from the CHNC "Aap Powai aa rahe ho" creative (Figma: Charvak /
 // A6 - Cards with copy), reprocessed as transparent white line art. The box
@@ -46,7 +54,7 @@ const WHEEL_MARKS = (
 // it keeps riding — bob, wheel spin, speed dashes and drifting clouds loop
 // forever (the brief is BEING delivered, never delivered) · 0.6 the client's
 // company pin drops on their office (departure) · 1.5 ConvergenSEE HQ pin
-// drops on the destination · 1.9 "BRIEF ON ITS WAY." slams · 2.25 thanks
+// drops on the destination · 1.9 "WE HEARD YOU." slams · 2.25 the follow-up
 // line fades up.
 export function AuditTakeover({ name, company }) {
   // The quiz body this card replaces is far taller (on mobile the questions,
@@ -117,17 +125,17 @@ export function AuditTakeover({ name, company }) {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, textAlign: 'center' }}>
         <p className="deliv-slam" style={{ animationDelay: '1.9s', fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(26px, 3.6vw, 44px)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.02em', lineHeight: 1.05, color: '#fff', margin: 0 }}>
-          Brief <span style={{ color: G }}>on its way</span>.
+          We heard <span style={{ color: G }}>you</span>.
         </p>
         <p className="form-success-text" style={{ animationDelay: '2.25s', fontFamily: "'Archivo', sans-serif", fontSize: 16, color: 'rgba(255,255,255,0.8)', margin: '6px 0 0' }}>
-          Thanks{name ? `, ${name}` : ''} — your brief is riding to ConvergenSEE HQ. The findings will find you.
+          Now we'll come back with the solutions that create more business opportunities for your brand.
         </p>
       </div>
     </div>
   )
 }
 
-export default function AuditForm({ context, onSuccess }) {
+export default function AuditForm({ context, onSuccess, cta = 'Submit' }) {
   const { isSmall } = useResponsive()
   const [state, formAction, pending] = useActionState(submitAudit, null)
   // Warm the scene art so the rider never scoots in blank.
@@ -155,7 +163,7 @@ export default function AuditForm({ context, onSuccess }) {
           <input
             id={`audit-${key}`}
             name={key}
-            type={key === 'email' ? 'email' : 'text'}
+            type={key === 'email' ? 'email' : key === 'phone' ? 'tel' : 'text'}
             className="input-glow"
             placeholder="Enter here"
             style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', outline: 'none', height: 46, padding: '0 15px', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#fff', width: '100%', boxSizing: 'border-box' }}
@@ -177,7 +185,7 @@ export default function AuditForm({ context, onSuccess }) {
             </svg>
             Submitting…
           </span>
-        ) : 'Submit'}
+        ) : cta}
       </button>
       {state?.error && (
         <p className="form-fade-up" style={{ flexBasis: '100%', fontFamily: "'Archivo', sans-serif", fontSize: 14, color: '#ee2226', margin: 0 }}>{state.error}</p>

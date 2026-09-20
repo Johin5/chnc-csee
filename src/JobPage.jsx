@@ -17,9 +17,9 @@ import SectionLabel from './SectionLabel'
 
 // PLACEHOLDER COPY — drafted to brand voice, not approved. Swap freely.
 const HIRING_STEPS = [
-  { num: '01', title: 'Apply', desc: 'Send your CV and your work. That’s it — no cover-letter theatre.' },
+  { num: '01', title: 'Apply', desc: 'Send your CV and your work. That’s it, no cover-letter theatre.' },
   { num: '02', title: 'Intro chat', desc: '30 minutes with the team lead about what you’ve made and what you want to make.' },
-  { num: '03', title: 'Craft task', desc: 'A short exercise close to the real work — never free work we ship.' },
+  { num: '03', title: 'Craft task', desc: 'A short exercise close to the real work, never free work we ship.' },
   { num: '04', title: 'Offer', desc: 'We move fast. If it’s a yes, you’ll hear within the week.' },
 ]
 

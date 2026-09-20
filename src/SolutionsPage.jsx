@@ -156,7 +156,7 @@ function Hero() {
 // Module pills — first thing after the full-screen hero; they drive which
 // module the sections below show.
 function ModulePills({ active, onSelect }) {
-  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT','ConvergeIT']
+  const services = ['InsightIT','LocateIT','CreateIT','AmplifyIT','SocialiseIT','InfluenceIT','ScriptIT','AIgenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT','ConvergeIT']
   return (
     <section style={{
       padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0',
@@ -175,7 +175,7 @@ const MODULE_STEPS = {
     { bold: 'Centralise', rest: ' all store info in one dashboard' },
     { bold: 'Standardise', rest: ' every listing for accuracy and visibility' },
     { bold: 'Optimise', rest: ' listings and pages using local SEO best practices' },
-    { stat: true, text: '10 stores or 10,000 — one dashboard' },
+    { stat: true, text: '10 stores or 10,000: one dashboard' },
   ],
   SearchIT: [
     { bold: 'Analyse', rest: ' your content to find SEO and GEO gaps' },
@@ -184,7 +184,7 @@ const MODULE_STEPS = {
     { bold: 'Give', rest: ' a clear improvement roadmap' },
     { bold: 'Track', rest: ' results continuously and adapt strategy' },
   ],
-  AIGenIT: [
+  AIgenIT: [
     { bold: 'Enable', rest: ' human-like conversations in multiple languages' },
     { bold: 'Adapt', rest: ' responses to your brand, industry, and cultural context' },
     { bold: 'Handle', rest: ' multiple users in real time' },
@@ -192,7 +192,7 @@ const MODULE_STEPS = {
     { bold: 'Integrate', rest: ' with CRM, APIs, and dashboards for insights' },
   ],
   CreateIT: [
-    { bold: 'Brief', rest: ' the campaign — name, platform, region, objective' },
+    { bold: 'Brief', rest: ' the campaign: name, platform, region, objective' },
     { bold: 'Generate', rest: ' visuals with multiple AI engines in seconds' },
     { bold: 'Approve', rest: ' visuals and AI copy in one click' },
     { bold: 'Adapt', rest: ' one creative to every format and language' },
@@ -214,8 +214,8 @@ const MODULE_STEPS = {
     { bold: 'Track', rest: ' ROI live through CHNC dashboards' },
   ],
   SocialiseIT: [
-    { bold: 'Pick', rest: ' every location page — one selection' },
-    { bold: 'Compose', rest: ' once — approved creative, caption, live preview' },
+    { bold: 'Pick', rest: ' every location page: one selection' },
+    { bold: 'Compose', rest: ' once: approved creative, caption, live preview' },
     { bold: 'Schedule', rest: ' one post to every page, same moment' },
     { bold: 'Measure', rest: ' Facebook + Instagram in one dashboard' },
     { stat: true, text: 'One post → every page. Zero rogue posts' },
@@ -235,11 +235,11 @@ const MODULE_STEPS = {
     { bold: 'Link', rest: ' spends directly to marketing ROI' },
   ],
   InsightIT: [
-    { bold: 'Consolidate', rest: ' every module into one global view — budget, spend, regions' },
-    { bold: 'Measure', rest: ' local presence — visibility, accuracy, reviews by region' },
-    { bold: 'Track', rest: ' social and paid — reach, CPL, and leads, platform by platform' },
-    { bold: 'Reveal', rest: ' what happens on your pages — sessions, conversions, peak hours' },
-    { bold: 'Export', rest: ' everything — all locations, any period, one click' },
+    { bold: 'Consolidate', rest: ' every module into one global view: budget, spend, regions' },
+    { bold: 'Measure', rest: ' local presence: visibility, accuracy, reviews by region' },
+    { bold: 'Track', rest: ' social and paid: reach, CPL, and leads, platform by platform' },
+    { bold: 'Reveal', rest: ' what happens on your pages: sessions, conversions, peak hours' },
+    { bold: 'Export', rest: ' everything: all locations, any period, one click' },
   ],
   AdaptIT: [
     { bold: 'Analyse', rest: ' each market or region for language, culture, and platform norms' },
@@ -276,12 +276,12 @@ const DEFAULT_STEPS = [
 const MODULE_IMPACT = {
   InsightIT: 'One dashboard, every metric, every channel, no more stitching reports together.',
   LocateIT: "See every location's performance, reviews, and ranking live, in one dashboard.",
-  CreateIT: 'Track every asset in production — status, approvals and delays without chasing anyone.',
+  CreateIT: 'Track every asset in production: status, approvals and delays without chasing anyone.',
   AmplifyIT: "Track exactly where every rupee is going and what it's returning, in real time.",
   SocialiseIT: 'See engagement across every platform in one view, instead of switching between apps.',
   InfluenceIT: 'See real ROI per creator, not just views and likes, in one dashboard.',
-  ScriptIT: "Create and track which scripts perform, which don't, and why — all in one place.",
-  AIGenIT: 'See every conversation, every language, every response time, all from one screen.',
+  ScriptIT: "Create and track which scripts perform, which don't, and why, all in one place.",
+  AIgenIT: 'See every conversation, every language, every response time, all from one screen.',
   SearchIT: 'Track your search visibility and ranking gaps as they happen.',
   InvoiceIT: 'See every spend, every invoice, every campaign cost, fully reconciled and audit-ready.',
   AdaptIT: 'See every platform version of an asset, and how each one is performing.',
@@ -303,7 +303,7 @@ const REEL_FRAME_STEPS = {
   // idle  Brief  Align  Script  Breakdown  Preview  Approve  Close
   ScriptIT: [0, 1, 1, 2, 3, 4, 5, 5, 5],
   // idle  Build  Ground  Test  Capture  Close
-  AIGenIT: [0, 1, 2, 4, 5, 5],
+  AIgenIT: [0, 1, 2, 4, 5, 5],
   // idle  Pick  Compose  Schedule  Measure  Close
   SocialiseIT: [0, 1, 2, 3, 4, 5],
   // idle  Platform  Objective  AdSet  Ad  Manage  Insight  Close
@@ -492,13 +492,15 @@ function HowWeDoIt({ activeModule }) {
 
   return (
     <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+      {/* 31 Aug brief: the generic "How we do IT?" heading is replaced by the
+          active solution's own name — "IT" keeps the brand green. */}
       <h2 style={{
         fontFamily: "'Saira Condensed', sans-serif",
         fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, lineHeight: 1,
-        textTransform: 'uppercase', textAlign: 'center', margin: 0,
+        textTransform: 'none', textAlign: 'center', margin: 0,
       }}>
-        <span style={{ color: '#fff' }}>How we do </span>
-        <span style={{ color: G }}>IT?</span>
+        <span style={{ color: '#fff' }}>{activeModule.replace(/IT$/, '')}</span>
+        <span style={{ color: G }}>IT</span>
       </h2>
 
       <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 50, alignItems: 'center', width: '100%', maxWidth: 1240 }}>
@@ -515,7 +517,7 @@ function HowWeDoIt({ activeModule }) {
         fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
         lineHeight: '24px', textAlign: 'center', maxWidth: 804,
       }}>
-        {MODULE_IMPACT[activeModule] || 'What happens after you choose a module — step by step.'}
+        {MODULE_IMPACT[activeModule] || 'What happens after you choose a module, step by step.'}
       </p>
     </section>
   )
@@ -534,7 +536,7 @@ const FROM_BRAND = {
     'Keyword priorities & business focus areas',
     'Competitor benchmarks or market context',
   ],
-  AIGenIT: [
+  AIgenIT: [
     'Product/service FAQs & knowledge base',
     'CRM/CMS access for lead or conversation sync',
     'Language & geography priorities',
@@ -635,110 +637,127 @@ const QUIZ_GIF_ROWS = [
   ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'],
   ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'],
   ['giphy-4', 'stranger-things', 'tiffany', 'max-stranger'],
+  ['oh-i-see', 'i-see-wow', 'ooh-wee', 'jimbo'],
 ]
+// CHNC Audit question sets (31 Aug brief): four questions per module — scale,
+// symptom, setup and access. Every option is a data point, not a call to
+// action; the CTA is the Submit button.
 const MODULE_QUIZ = {
   LocateIT: {
     title: 'Ready to get', green: 'discovered?',
     qs: [
-      { q: 'Losing customers to bad listings?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready to fix your local presence?', opts: ['Audit My Listings', 'Contact Us', 'Learn More'] },
-      { q: 'Need visibility across locations?', opts: ['View Our Services', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'How many locations do you manage?', opts: ['1-5', '6-20', '20-100', '100+'] },
+      { q: 'What breaks most often?', opts: ['Wrong details', 'Duplicate listings', 'Unanswered reviews', 'Not appearing'] },
+      { q: 'Who updates your listings today?', opts: ['Each branch', 'Central team', 'An agency', 'Nobody'] },
+      { q: 'Do you have Google Business access?', opts: ['Yes, all', 'Some', 'Not sure'] },
     ],
   },
   AmplifyIT: {
     title: 'Ready to turn spend into', green: 'demand?',
     qs: [
-      { q: 'Not seeing ROI on your ad spend?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready to fix your funnel?', opts: ['See Case Studies', 'Contact Us', 'Learn More'] },
-      { q: 'Do you have leads data ready?', opts: ['Yes', 'Need Help', 'No'] },
+      { q: 'What is your monthly media spend?', opts: ['Under ₹1L', '₹1-5L', '₹5-10L', '₹10L+'] },
+      { q: 'What is the problem?', opts: ['Rising cost/lead', "Leads don't convert", 'Channel unclear', 'Not scaling'] },
+      { q: 'Where is the spend going?', opts: ['Meta', 'Google', 'Both', 'Both plus others'] },
+      { q: 'Can you share campaign data?', opts: ['Yes', 'Partly', 'Need approval'] },
     ],
   },
   SocialiseIT: {
     title: 'Ready to stay', green: 'remembered?',
     qs: [
-      { q: 'Posting but inconsistent?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for consistent presence?', opts: ['Join Our Webinar', 'Contact Us', 'Learn More'] },
-      { q: 'Need a content calendar that works?', opts: ['View Our Services', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'How many handles do you run?', opts: ['1-3', '4-10', '10-50', '50+'] },
+      { q: 'How often do you post?', opts: ['Daily', 'Few times weekly', 'Occasionally', 'Rarely'] },
+      { q: 'What is not working?', opts: ['Flat reach', 'Low engagement', 'Inconsistent posting', 'Off-brand content'] },
+      { q: 'Who makes the content?', opts: ['In-house', 'Freelancers', 'An agency', 'A mix'] },
     ],
   },
   CreateIT: {
     title: 'Ready to create', green: 'content?',
     qs: [
-      { q: 'Do you have a content plan ready?', opts: ['Yes', 'Need Help', 'No'] },
-      { q: 'Struggling with frequency of posting?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Still posting manually?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'How many creatives do you need monthly?', opts: ['Under 10', '10-50', '50-200', '200+'] },
+      { q: 'Brief to live, how long?', opts: ['Same day', '2-3 days', 'About a week', 'Longer'] },
+      { q: 'Where does it stall?', opts: ['Unclear briefs', 'Endless feedback', 'Slow approvals', 'Size adapts'] },
+      { q: 'How many versions per asset?', opts: ['1-3', '4-8', '9+', 'It varies'] },
     ],
   },
-  AIGenIT: {
+  AIgenIT: {
     title: 'Ready to move at', green: 'AI speed?',
     qs: [
-      { q: 'Losing leads to slow response times?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for always-on conversations?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
-      { q: 'Need multi-language support?', opts: ['View Our Services', 'Get In Touch', 'Book a Demo'] },
+      { q: 'How many enquiries per month?', opts: ['Under 500', '500-5,000', '5,000-25,000', '25,000+'] },
+      { q: 'What is your first response time?', opts: ['Within minutes', 'Few hours', 'Next day', 'It varies'] },
+      { q: 'Who answers them today?', opts: ['Call centre', 'Sales team', 'Basic chatbot', 'Nobody'] },
+      { q: 'Which languages do you need?', opts: ['English only', 'English, Hindi', '3-5 languages', '5+ languages'] },
     ],
   },
   SearchIT: {
     title: 'Ready to be', green: 'found first?',
     qs: [
-      { q: 'Invisible on search when it matters?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Confused about AEO, GEO, and how search has changed?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Need a clear improvement roadmap?', opts: ['View Our Services', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'What is your monthly organic traffic?', opts: ['Under 5,000', '5,000-50,000', '50,000-5 lakh', 'Not tracked'] },
+      { q: 'What is happening to it?', opts: ['Falling', 'Flat', 'Growing slowly', 'Never checked'] },
+      { q: 'Does AI search mention you?', opts: ['Yes', 'No', "Haven't checked", "Didn't know"] },
+      { q: 'Who owns SEO today?', opts: ['In-house', 'An agency', 'Nobody', 'Web developer'] },
     ],
   },
   InfluenceIT: {
     title: 'Ready to build', green: 'real trust?',
     qs: [
-      { q: 'Struggling to find the right creators?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for partnerships that convert?', opts: ['See Our Roster', 'Contact Us', 'Learn More'] },
-      { q: 'Need ROI beyond views and likes?', opts: ['Case Studies', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'What is your annual influencer budget?', opts: ['Under ₹1L', '₹1-5L', '₹5-10L', '₹10L+'] },
+      { q: 'What went wrong last time?', opts: ['Wrong fit', 'Weak performance', 'Cost unjustified', 'Never tried'] },
+      { q: 'How do you pick creators?', opts: ['Agency list', 'We reach out', 'A platform', 'Not started'] },
+      { q: 'What do you measure?', opts: ['Views, likes', 'Link clicks', 'Actual sales', 'Nothing formal'] },
     ],
   },
   ScriptIT: {
     title: 'Ready for scripts that', green: 'work?',
     qs: [
-      { q: 'Struggling with consistent storytelling?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for shoot-ready scripts?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
-      { q: 'Need scripts fast for a campaign?', opts: ['Book a Demo', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'How many videos per month?', opts: ['1-3', '4-10', '10-30', '30+'] },
+      { q: 'Where does it break?', opts: ['Slow drafts', 'Too many rewrites', 'Shoot-day changes', 'Early drop-offs'] },
+      { q: 'Who writes them now?', opts: ['In-house team', 'Production house', 'An agency', 'It varies'] },
+      { q: 'Which formats do you need?', opts: ['Brand films', 'Reels, shorts', 'Ad scripts', 'All formats'] },
     ],
   },
   InvoiceIT: {
     title: 'Ready for', green: 'cleaner billing?',
     qs: [
-      { q: 'Is marketing billing messy today?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for compliance-ready records?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
-      { q: 'Need spends matched to deliverables?', opts: ['See Our Dashboard', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'How many vendors do you pay monthly?', opts: ['1-5', '6-20', '20-50', '50+'] },
+      { q: 'What is the pain?', opts: ['Slow reconciliation', 'Spend vs deliverables', 'Lost approvals', 'Audit chaos'] },
+      { q: 'How is spend tracked today?', opts: ['Spreadsheets', 'Our ERP', 'Finance separately', 'Scattered'] },
+      { q: 'Invoice to payment takes?', opts: ['Under 30 days', '30-60 days', '60-90 days', '90+ days'] },
     ],
   },
   InsightIT: {
     title: 'Ready for', green: 'real clarity?',
     qs: [
-      { q: "Flying blind on what's working?", opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for one dashboard, real-time?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
-      { q: 'Need ROI tracked by campaign or region?', opts: ['Book a Demo', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'How many dashboards do you check weekly?', opts: ['1-2', '3-5', '6+', 'Agency reports only'] },
+      { q: 'What can you not answer today?', opts: ['Revenue by channel', 'ROI by region', 'What to stop', 'All above'] },
+      { q: 'Monthly report takes how long?', opts: ['Few hours', 'Couple days', 'A week', 'Stopped asking'] },
+      { q: 'Where does the data live?', opts: ['Platform dashboards', 'A BI tool', 'Excel', 'With agencies'] },
     ],
   },
   AdaptIT: {
     title: 'Ready to fit', green: 'every platform?',
     qs: [
-      { q: 'Content looking stretched or cropped?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for platform-perfect assets?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
-      { q: 'Which platforms do you use the most?', opts: ['Instagram', 'YouTube', 'LinkedIn', 'Other'] },
+      { q: 'How many markets do you run?', opts: ['1-3', '4-10', '10-25', '25+'] },
+      { q: 'What breaks?', opts: ['Cropped assets', 'Weak translation', 'Local compliance', 'Off-brand versions'] },
+      { q: 'Who adapts content today?', opts: ['Central team', 'Local teams', 'An agency', 'Nobody'] },
+      { q: 'How many languages?', opts: ['English only', '2-3', '4-8', '8+'] },
     ],
   },
   EngageIT: {
     title: 'Ready to get', green: 'personal?',
     qs: [
-      { q: 'Sending the same message to everyone?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Ready for cohort-based messaging?', opts: ['Book a Demo', 'Contact Us', 'Learn More'] },
-      { q: 'Need better retention, not just reach?', opts: ['Book a Demo', 'Get In Touch', 'Schedule A Call'] },
+      { q: 'How big is your customer database?', opts: ['Under 10,000', '10,000-1 lakh', '1-10 lakh', '10 lakh+'] },
+      { q: 'What are you fixing?', opts: ['Low repeat', 'Customers go quiet', 'Rising unsubscribes', 'Retention unknown'] },
+      { q: 'What do you send today?', opts: ['Same to everyone', 'Basic segments', 'Behaviour triggers', 'Nothing regular'] },
+      { q: 'What is your CRM stack?', opts: ['Salesforce', 'HubSpot', 'CleverTap, WebEngage', 'None yet'] },
     ],
   },
   ConvergeIT: {
     title: 'Ready for one view of', green: 'everything?',
     qs: [
-      { q: 'How many agencies are you working with?', opts: ['1-2', '3-5', '5+'] },
-      { q: 'Are you tracking performance across all of them in one place?', opts: ['Yes', 'No', 'Maybe'] },
-      { q: 'Losing time chasing updates from multiple partners?', opts: ['Yes', 'No', 'Maybe'] },
+      { q: 'How many agencies do you work with?', opts: ['1-2', '3-5', '6-10', '10+'] },
+      { q: 'Time to get total spend?', opts: ['Same day', 'Few days', 'A week+', 'We estimate'] },
+      { q: 'How do you compare them?', opts: ['Shared format', 'Their own formats', 'Manually in Excel', "We don't"] },
+      { q: 'What brought you here?', opts: ['Renewal coming', "Numbers don't add", 'New leadership', 'Consolidating vendors'] },
     ],
   },
 }
@@ -746,7 +765,7 @@ const MODULE_QUIZ = {
 function ReadyToCreate({ activeModule }) {
   const { isSmall } = useResponsive()
   const quiz = MODULE_QUIZ[activeModule] || MODULE_QUIZ.CreateIT
-  const [selections, setSelections] = useState([null, null, null])
+  const [selections, setSelections] = useState(() => quiz.qs.map(() => null))
   const [gif, setGif] = useState(quizDefaultGif)
   // Submission takeover: auditName != null fades the whole quiz body out, then
   // `live` swaps it for the brief-delivery scene (see AuditForm.jsx).
@@ -761,7 +780,7 @@ function ReadyToCreate({ activeModule }) {
 
   // Switching modules brings a fresh form: clear picks, back to the neutral clip
   useEffect(() => {
-    setSelections([null, null, null])
+    setSelections((MODULE_QUIZ[activeModule] || MODULE_QUIZ.CreateIT).qs.map(() => null))
     setGif(quizDefaultGif)
   }, [activeModule])
 
@@ -778,7 +797,8 @@ function ReadyToCreate({ activeModule }) {
       next[qi] = oi
       return next
     })
-    setGif(`/figma/home/oh-gifs/${QUIZ_GIF_ROWS[qi][oi]}.mp4`)
+    const row = QUIZ_GIF_ROWS[qi % QUIZ_GIF_ROWS.length]
+    setGif(`/figma/home/oh-gifs/${row[oi % row.length]}.mp4`)
   }
 
   return (

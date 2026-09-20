@@ -90,7 +90,7 @@ export default function ContactForm() {
           Message fired
         </p>
         <p className="form-success-text" style={{ animationDelay: '1.42s', fontFamily: "'Archivo', sans-serif", fontSize: 16, color: 'rgba(255,255,255,0.75)', margin: 0, textAlign: 'center' }}>
-          Direct hit — it&rsquo;s in our inbox. We&rsquo;ll get back to you soon.
+          Direct hit: it&rsquo;s in our inbox. We&rsquo;ll get back to you soon.
         </p>
       </div>
     )

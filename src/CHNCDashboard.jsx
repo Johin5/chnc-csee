@@ -411,7 +411,7 @@ const sbMenuItems = [
   { id: 'SocialiseIT', label: 'SocialiseIT', Icon: IconMessage },
   { id: 'InfluenceIT', label: 'InfluenceIT', Icon: IconBook },
   { id: 'ScriptIT',    label: 'ScriptIT',    Icon: IconVideo },
-  { id: 'AIGenIT',     label: 'AIGenIT',     Icon: IconAI },
+  { id: 'AIgenIT',     label: 'AIgenIT',     Icon: IconAI },
   { id: 'SearchIT',    label: 'SearchIT',    Icon: IconSearch },
   { id: 'InvoiceIT',   label: 'InvoiceIT',   Icon: IconOrder },
   { id: 'AdaptIT',     label: 'AdaptIT',     Icon: IconGlobe },
@@ -707,8 +707,8 @@ const MODULES = {
       { label: 'Avg Days',     value: '4.2',  growth: '-18.2%' },
     ],
   },
-  AIGenIT: {
-    title: 'AIGenIT',
+  AIgenIT: {
+    title: 'AIgenIT',
     tiles: [
       { label: 'Generated',    value: '2,140', growth: '+44.2%' },
       { label: 'Quality Score',value: '91%',   growth: '+6.8%' },
@@ -999,7 +999,7 @@ function InsightContent({ controls }) {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
           <div>
             <p style={eyebrow}>Global InsightIT</p>
-            <p style={{ margin: '6px 0 0', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 32, color: '#000718', lineHeight: 1.1 }}>Total Reach — All Locations</p>
+            <p style={{ margin: '6px 0 0', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 32, color: '#000718', lineHeight: 1.1 }}>Total Reach - All Locations</p>
           </div>
           {/* Kept clear of the Visibility satellite overlapping this corner */}
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 12, fontWeight: 800, color: '#1b5e20', paddingTop: 8, marginRight: 80 }}>
@@ -1087,7 +1087,7 @@ function InsightContent({ controls }) {
         style={{ position: 'absolute', left: 724, top: 660, width: 372, background: '#fff', border: '1px solid #e3e6ec', borderRadius: 12, boxShadow: '0 18px 50px rgba(0,7,24,0.14)', padding: 18, display: 'flex', alignItems: 'center', gap: 14, zIndex: 3 }}>
         <div style={{ width: 40, height: 40, borderRadius: 9, background: '#e8fde8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, color: '#1b5e20', flexShrink: 0 }}>✓</div>
         <div style={{ minWidth: 0 }}>
-          <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>Global Insights — Aug 2026</p>
+          <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#000718', whiteSpace: 'nowrap' }}>Global Insights - Aug 2026</p>
           <p style={{ margin: '2px 0 0', fontSize: 12.5, fontWeight: 600, color: '#9fa3ac', whiteSpace: 'nowrap' }}>PDF · exported to your inbox</p>
         </div>
       </motion.div>
@@ -1314,12 +1314,12 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
   }, [camOn, cx, cy, onCursor])
 
   const overlays = [
-    { main: 'Every module reports here.', sub: 'Budget, spend, regions — one global view.' },
+    { main: 'Every module reports here.', sub: 'Budget, spend, regions - one global view.' },
     { main: 'Local presence, at a glance.', sub: 'Visibility. Accuracy. Reviews. Region by region.' },
-    { main: 'Every page, every platform.', sub: 'Facebook + Instagram — measured together.' },
-    { main: 'Every rupee of paid media.', sub: 'Meta and Google — CPL and leads by region.' },
-    { main: 'And what happens on your pages.', sub: 'Sessions, conversions, peak hours — by region.' },
-    { main: 'One filter. One export. Everything.', sub: 'All locations, any period — one click.' },
+    { main: 'Every page, every platform.', sub: 'Facebook + Instagram - measured together.' },
+    { main: 'Every rupee of paid media.', sub: 'Meta and Google - CPL and leads by region.' },
+    { main: 'And what happens on your pages.', sub: 'Sessions, conversions, peak hours - by region.' },
+    { main: 'One filter. One export. Everything.', sub: 'All locations, any period - one click.' },
     { main: 'Every module. Every metric. One InsightIT.', sub: 'The observability layer of CHNC.' },
   ]
   const overlay = overlays[frame]
@@ -1370,7 +1370,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
         <div style={{ position: 'absolute', right: 4, top: 40, zIndex: 150, background: '#fff', border: `1px solid ${G}`, borderLeft: `4px solid ${G}`, boxShadow: '0 8px 24px rgba(0,0,0,0.16)', padding: '7px 12px', borderRadius: 4, animation: 'insToast 0.45s cubic-bezier(0.25,0.1,0.25,1)', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 13 }}>📄</span>
           <div>
-            <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 700, color: '#000718' }}>ConvergenSEE — Global Insights</p>
+            <p style={{ margin: 0, fontSize: 10, fontFamily: AR, fontWeight: 700, color: '#000718' }}>ConvergenSEE - Global Insights</p>
             <p style={{ margin: '1px 0 0', fontSize: 8.5, fontFamily: AR, color: '#1b5e20' }}>Aug 2026 · PDF ✓</p>
           </div>
         </div>
@@ -1649,7 +1649,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
               {meta && (
                 <div style={{ position: 'absolute', right: 0, bottom: 0, width: 300, background: '#fff', border: `1px solid ${G}`, borderRadius: 6, boxShadow: '0 12px 30px rgba(0,0,0,0.18)', padding: '10px 14px', animation: 'insToast 0.4s ease', zIndex: 60 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <p style={cardT}>META — SNAPSHOT</p>
+                    <p style={cardT}>META - SNAPSHOT</p>
                     <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20' }}>LIVE</span>
                   </div>
                   <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
@@ -1750,7 +1750,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
             <div style={{ width: 780, background: '#fff', border: '1px solid #dee0e7', borderRadius: 10, boxShadow: '0 24px 60px rgba(0,7,24,0.14)', padding: 14, animation: 'insPull 0.7s cubic-bezier(0.25,0.1,0.25,1)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 10, borderBottom: '1px solid #f0f1f4' }}>
                 {['#ff5f57', '#febc2e', '#28c840'].map(c => <span key={c} style={{ width: 8, height: 8, borderRadius: 4, background: c }} />)}
-                <p style={{ margin: '0 0 0 6px', fontSize: 10.5, fontFamily: AR, fontWeight: 700, color: '#000718' }}>Global InsightIT — one dashboard</p>
+                <p style={{ margin: '0 0 0 6px', fontSize: 10.5, fontFamily: AR, fontWeight: 700, color: '#000718' }}>Global InsightIT - one dashboard</p>
                 <span style={{ ...tiny, fontSize: 8.5, marginLeft: 'auto' }}>ALL LOCATIONS · Lifetime</span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 10 }}>
@@ -1789,7 +1789,7 @@ function InsightWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
             </div>
             <p style={{ fontFamily: AR, fontSize: 9, color: '#9fa3ac', margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: 1 }}>InsightIT inside every one</p>
             <div style={{ display: 'flex', gap: 16 }}>
-              {['LocateIT', 'SocialiseIT', 'AmplifyIT', 'CreateIT', 'ScriptIT', 'AIGenIT'].map((m, i) => (
+              {['LocateIT', 'SocialiseIT', 'AmplifyIT', 'CreateIT', 'ScriptIT', 'AIgenIT'].map((m, i) => (
                 <div key={m} style={{ display: 'flex', alignItems: 'center', gap: 5, animation: 'insPop 0.45s ease both', animationDelay: `${200 + i * 110}ms` }}>
                   <span style={{ width: 6, height: 6, borderRadius: 3, background: G }} />
                   <span style={{ fontFamily: SA, fontWeight: 600, fontSize: 12, color: '#666a74' }}>{m}</span>
@@ -2058,12 +2058,12 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame, onCurso
         {/* FRAME 1 — Brief (5s) */}
         {frame === 1 && (
           <div key="f1" style={{ animation: 'fadeUp 0.7s ease' }}>
-            {heading('Brief — Create Campaign')}
+            {heading('Brief - Create Campaign')}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               {[
                 ['Campaign Name', 'Independence Day Post'],
                 ['Platform', 'Instagram'],
-                ['Region', 'India — All States'],
+                ['Region', 'India - All States'],
                 ['Objective', 'Brand Awareness'],
               ].map(([l, v], i) => (
                 <div key={l}>{field(l, v, t > i * 900, t > i * 900 + 600)}</div>
@@ -2075,7 +2075,7 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame, onCurso
         {/* FRAME 2 — Generate visuals (7s) */}
         {frame === 2 && (
           <div key="f2" style={{ animation: 'fadeUp 0.7s ease' }}>
-            {heading('Generate — AI Visuals')}
+            {heading('Generate - AI Visuals')}
             <div style={{ marginBottom: 16 }}>
               {field('Brief', 'Festive post for independence day', true, t > 1200)}
             </div>
@@ -2121,7 +2121,7 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame, onCurso
         {/* FRAME 3 — Approve visual + copy (6s) */}
         {frame === 3 && (
           <div key="f3" style={{ animation: 'fadeUp 0.7s ease' }}>
-            {heading('Approve — Visual & Copy')}
+            {heading('Approve - Visual & Copy')}
             <div style={{ display: 'flex', gap: 24 }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, width: 500, alignContent: 'start' }}>
                 {[0,1,2,3,4,5].map(i => (
@@ -2139,7 +2139,7 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame, onCurso
                 ))}
               </div>
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600 }}>AI Copy — pick one</label>
+                <label style={{ fontSize: 11, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600 }}>AI Copy - pick one</label>
                 {copyAlts.map((v, i) => (
                   <div key={i} style={{
                     padding: '10px 14px', background: i === 0 && t > 2500 ? '#e8fde8' : '#f5f6f8',
@@ -2172,7 +2172,7 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame, onCurso
           const lang = ['en', 'hi', 'ta'][li]
           return (
             <div key="f4" style={{ animation: 'fadeUp 0.7s ease' }}>
-              {heading('Adapt — Resize & Localize')}
+              {heading('Adapt - Resize & Localize')}
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 40, marginBottom: 22 }}>
                 {[
                   { l: 'Square 1:1', w: 130, h: 130, src: `/horizon-adapt-square-${lang}.webp`, base: '/horizon-adapt-square-en.webp' },
@@ -2216,7 +2216,7 @@ function CreateContent({ controls, tileVariants, stepCount = 0, onFrame, onCurso
                 </div>
               </div>
               <div style={{ flex: 1 }}>
-                {['Meta — Reel · Scheduled 10:00 AM', 'Instagram — Carousel · Ready', 'Google Display — Static · Ready', 'YouTube — Video · In Review'].map((item, i) => (
+                {['Meta - Reel · Scheduled 10:00 AM', 'Instagram - Carousel · Ready', 'Google Display - Static · Ready', 'YouTube - Video · In Review'].map((item, i) => (
                   <div key={i} style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                     padding: '12px 14px', borderBottom: '1px solid #f0f0f0',
@@ -2343,12 +2343,12 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
 
   const overlays = [
     null,
-    { main: 'Step 1. Create every listing.', sub: 'Details, hours, map pin — one form.' },
+    { main: 'Step 1. Create every listing.', sub: 'Details, hours, map pin - one form.' },
     { main: 'Step 2. Audit at scale.', sub: '42,318 checked. Strays caught & fixed.' },
     { main: 'Step 3. Update once. Publish everywhere.', sub: 'One upload → 312 locations.' },
     { main: 'Step 4. Verify every location.', sub: 'Submitted → Verified. Tracked live.' },
-    { main: 'Step 5. Live on Google.', sub: 'Every branch — found, everywhere.' },
-    { main: 'Step 6. It tells you what to fix.', sub: 'High-impact actions — ranked, then done.' },
+    { main: 'Step 5. Live on Google.', sub: 'Every branch - found, everywhere.' },
+    { main: 'Step 6. It tells you what to fix.', sub: 'High-impact actions - ranked, then done.' },
     { main: 'Step 7. Watch it pay off.', sub: '84L+ impressions. 87% on mobile.' },
     { main: '10 stores or 10,000. One dashboard.', sub: 'Manage your Local Presence at scale.' },
   ]
@@ -2423,7 +2423,7 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
 
         {/* FRAME 1 — CREATE: Create / Edit Listing */}
         {frame === 1 && (() => {
-          const name = 'ConvergenSEE — Powai, Mumbai'.slice(0, Math.max(0, Math.floor(t / 40)))
+          const name = 'ConvergenSEE - Powai, Mumbai'.slice(0, Math.max(0, Math.floor(t / 40)))
           const hours = [['Mon', '9:00 AM – 9:00 PM'], ['Tue', '9:00 AM – 9:00 PM'], ['Wed', '9:00 AM – 9:00 PM'], ['Thu', '9:00 AM – 9:00 PM'], ['Fri', '9:00 AM – 9:00 PM'], ['Sat', '10:00 AM – 8:00 PM'], ['Sun', 'Closed']]
           return (
             <div key="l1" style={{ animation: 'locFadeUp 0.6s ease' }}>
@@ -2486,12 +2486,12 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
         {/* FRAME 2 — AUDIT */}
         {frame === 2 && (() => {
           const rows = [
-            ['ConvergenSEE — Powai', '9, Central Ave, Powai', 'ok'],
-            ['ConvergenSEE — Bandra', 'Linking Rd, Bandra West', 'ok'],
-            ['ConvergenSEE — Andheri', 'Chakala, Andheri East', 'ok'],
-            ['ConvergenSEE — Central Ave', 'Plot 24, Central Avenue, Powai, Mumbai', 'stray'],
-            ['ConvergenSEE — Thane', 'Ghodbunder Rd, Thane', 'ok'],
-            ['ConvergenSEE — Vashi', 'Sector 17, Vashi', 'ok'],
+            ['ConvergenSEE - Powai', '9, Central Ave, Powai', 'ok'],
+            ['ConvergenSEE - Bandra', 'Linking Rd, Bandra West', 'ok'],
+            ['ConvergenSEE - Andheri', 'Chakala, Andheri East', 'ok'],
+            ['ConvergenSEE - Central Ave', 'Plot 24, Central Avenue, Powai, Mumbai', 'stray'],
+            ['ConvergenSEE - Thane', 'Ghodbunder Rd, Thane', 'ok'],
+            ['ConvergenSEE - Vashi', 'Sector 17, Vashi', 'ok'],
           ]
           const fixed = t > 2400
           return (
@@ -2559,7 +2559,7 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
         {frame === 3 && (
           <div key="l3" style={{ animation: 'locFadeUp 0.6s ease' }}>
             <div style={{ display: 'flex', gap: 16, marginBottom: 8 }}>
-              <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Manage Locations — Photos</h3>
+              <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Manage Locations - Photos</h3>
               <div style={{ display: 'flex', gap: 14, alignItems: 'flex-end' }}>
                 {['GBP', 'PHOTOS', 'DETAILS'].map(tab => (
                   <span key={tab} style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: tab === 'PHOTOS' ? G : '#9fa3ac', borderBottom: tab === 'PHOTOS' ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 3 }}>{tab}</span>
@@ -2596,11 +2596,11 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
             {/* Business details bulk sweep table */}
             <div style={{ position: 'relative', border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
               <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee' }}>
-                <div style={{ ...th, flex: 1.4 }}>Business Details — Bulk Update</div><div style={{ ...th, flex: 1 }}>Field</div><div style={{ ...th, width: 90 }}>Status</div>
+                <div style={{ ...th, flex: 1.4 }}>Business Details - Bulk Update</div><div style={{ ...th, flex: 1 }}>Field</div><div style={{ ...th, width: 90 }}>Status</div>
               </div>
               {['Powai', 'Bandra', 'Andheri', 'Thane', 'Vashi', 'Kurla', 'Dadar', 'Chembur'].map((b, i) => (
                 <div key={b} style={{ display: 'flex', alignItems: 'center', borderBottom: i < 7 ? '1px solid #f2f2f2' : 'none' }}>
-                  <div style={{ ...td, flex: 1.4, fontWeight: 600, padding: '5px 12px' }}>ConvergenSEE — {b}</div>
+                  <div style={{ ...td, flex: 1.4, fontWeight: 600, padding: '5px 12px' }}>ConvergenSEE - {b}</div>
                   <div style={{ ...td, flex: 1, padding: '5px 12px' }}>Hours · Phone · URL</div>
                   <div style={{ ...td, width: 90, padding: '5px 12px' }}><span style={{ color: t > 1400 + i * 120 ? '#1b5e20' : '#9fa3ac', fontWeight: 700, fontSize: 10, transition: 'color 0.3s ease' }}>{t > 1400 + i * 120 ? 'Updated ✓' : 'Queued'}</span></div>
                 </div>
@@ -2613,12 +2613,12 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
         {/* FRAME 4 — VERIFY */}
         {frame === 4 && (() => {
           const rows = [
-            ['ConvergenSEE — Powai', 'Powai, Mumbai'],
-            ['ConvergenSEE — Bandra', 'Bandra West, Mumbai'],
-            ['ConvergenSEE — Andheri', 'Andheri East, Mumbai'],
-            ['ConvergenSEE — Thane', 'Ghodbunder, Thane'],
-            ['ConvergenSEE — Vashi', 'Vashi, Navi Mumbai'],
-            ['ConvergenSEE — Kurla', 'Kurla West, Mumbai'],
+            ['ConvergenSEE - Powai', 'Powai, Mumbai'],
+            ['ConvergenSEE - Bandra', 'Bandra West, Mumbai'],
+            ['ConvergenSEE - Andheri', 'Andheri East, Mumbai'],
+            ['ConvergenSEE - Thane', 'Ghodbunder, Thane'],
+            ['ConvergenSEE - Vashi', 'Vashi, Navi Mumbai'],
+            ['ConvergenSEE - Kurla', 'Kurla West, Mumbai'],
           ]
           return (
             <div key="l4" style={{ animation: 'locFadeUp 0.6s ease' }}>
@@ -2686,7 +2686,7 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
                   <div style={{ background: '#fff', borderRadius: 20, overflow: 'hidden' }}>
                     <div style={{ height: 74, background: cardBg }} />
                     <div style={{ padding: '10px 12px' }}>
-                      <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#222' }}>ConvergenSEE — Powai, Mumbai</p>
+                      <p style={{ margin: 0, fontSize: 12, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#222' }}>ConvergenSEE - Powai, Mumbai</p>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 5, margin: '4px 0 8px' }}>
                         <span style={{ fontSize: 11, fontWeight: 700, color: '#222' }}>4.6</span>
                         <span style={{ color: '#f5a623', fontSize: 10 }}>★★★★<span style={{ color: '#ddd' }}>★</span></span>
@@ -2715,7 +2715,7 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
         {frame === 6 && (
           <div key="l6" style={{ animation: 'locFadeUp 0.6s ease' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-              <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Optima — Recommendations</h3>
+              <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Optima - Recommendations</h3>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac', fontWeight: 600 }}>{t > 1200 ? '63%' : '60%'}</span>
                 <div style={{ width: 80, height: 5, background: '#e0e0e0', borderRadius: 3, overflow: 'hidden' }}><div style={{ height: '100%', background: G, width: t > 1200 ? '63%' : '60%', transition: 'width 0.8s ease', borderRadius: 3 }} /></div>
@@ -2753,7 +2753,7 @@ function LocateWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
         {/* FRAME 7 — PERFORM */}
         {frame === 7 && (
           <div key="l7" style={{ animation: 'locFadeUp 0.6s ease' }}>
-            <h3 style={{ margin: '0 0 12px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Local Analytics — Google Business Profile</h3>
+            <h3 style={{ margin: '0 0 12px', fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>Local Analytics - Google Business Profile</h3>
             <div style={{ display: 'flex', gap: 16 }}>
               <div style={{ flex: 1.5, border: '1px solid #dee0e7', borderRadius: 6, padding: 14 }}>
                 <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase' }}>Customer Actions</p>
@@ -2982,13 +2982,13 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
 
   const overlays = [
     null,
-    { main: 'Step 1. Brief the shot.', sub: 'Idea, platform, deadline — one form.' },
+    { main: 'Step 1. Brief the shot.', sub: 'Idea, platform, deadline - one form.' },
     { main: 'Step 2. Align before anyone shoots.', sub: 'Questions asked. Answers locked.' },
     { main: 'Step 3. Scripts, written by dual AI.', sub: 'Two engines. Multiple drafts. Pick one.' },
     { main: 'Step 4. Scene-by-scene shooting directions.', sub: 'Your creators know exactly what to shoot.' },
     { main: 'Step 5. AI previews every shot.', sub: 'See the film before the shoot.' },
-    { main: 'Step 6. Approve. Stitch. Deliver.', sub: 'Every stage signed off — nothing off-brand.' },
-    { main: 'Brief in. Shoot-ready out.', sub: 'Scripts, storyboards, shot lists & AI previews — one flow.' },
+    { main: 'Step 6. Approve. Stitch. Deliver.', sub: 'Every stage signed off - nothing off-brand.' },
+    { main: 'Brief in. Shoot-ready out.', sub: 'Scripts, storyboards, shot lists & AI previews - one flow.' },
   ]
   const overlay = overlays[frame]
 
@@ -3093,7 +3093,7 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
 
         {/* FRAME 1 — BRIEF: Shot Details form fills itself */}
         {frame === 1 && (() => {
-          const title = 'Horizon Motors — Festive Drive Reel'.slice(0, Math.max(0, Math.floor(t / 35)))
+          const title = 'Horizon Motors - Festive Drive Reel'.slice(0, Math.max(0, Math.floor(t / 35)))
           const titleDone = t > 1250
           const idea = '30s festive reel: family homecoming, city lights, the new SUV'.slice(0, Math.max(0, Math.floor((t - 1100) / 20)))
           const ideaDone = t > 2350
@@ -3110,7 +3110,7 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
           const pressed = t > 3300 && t < 3700
           return (
             <div key="s1" style={{ animation: 'scrFadeUp 0.6s ease' }}>
-              <h3 style={{ ...h3s, marginBottom: 12 }}>Create New Shot — Shot Details</h3>
+              <h3 style={{ ...h3s, marginBottom: 12 }}>Create New Shot - Shot Details</h3>
               <div style={{ display: 'flex', gap: 18 }}>
                 <div style={{ flex: 1.25, display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <div>
@@ -3162,14 +3162,14 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
         {/* FRAME 2 — ALIGN: Requirements Q&A */}
         {frame === 2 && (() => {
           const rows = [
-            ['When is this campaign?', 'A. Sharma', 'AS', 1400, 'Diwali week — 18–23 Oct, PAN India'],
-            ['Which SUV variant do we feature?', 'R. V.', 'RV', 2400, 'Top trim — city + highway shots'],
+            ['When is this campaign?', 'A. Sharma', 'AS', 1400, 'Diwali week - 18–23 Oct, PAN India'],
+            ['Which SUV variant do we feature?', 'R. V.', 'RV', 2400, 'Top trim - city + highway shots'],
             ['Any brand lines to include?', 'A. Sharma', 'AS', 3100, '“Lights on. Horizon on.”'],
           ]
           return (
             <div key="s2" style={{ animation: 'scrFadeUp 0.6s ease' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <h3 style={h3s}>Requirements — Shot Questions &amp; Answers</h3>
+                <h3 style={h3s}>Requirements - Shot Questions &amp; Answers</h3>
                 <div style={btnG}>Assign Questions</div>
               </div>
               <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
@@ -3273,24 +3273,24 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
             <h3 style={{ ...h3s, marginBottom: 12 }}>Shot Breakdown</h3>
             <div style={{ width: '52%', display: 'flex', flexDirection: 'column', gap: 8 }}>
               <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
-                <p style={{ flex: 1, margin: 0, fontSize: 11.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>The Homecoming Drive — Shot Breakdown</p>
+                <p style={{ flex: 1, margin: 0, fontSize: 11.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>The Homecoming Drive - Shot Breakdown</p>
                 <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20' }}>Approved</span>
                 <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", color: G, fontWeight: 700, whiteSpace: 'nowrap' }}>View breakdown →</span>
               </div>
               <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, opacity: 0.55 }}>
-                <p style={{ flex: 1, margin: 0, fontSize: 11.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>Lights On — Shot Breakdown</p>
+                <p style={{ flex: 1, margin: 0, fontSize: 11.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>Lights On - Shot Breakdown</p>
                 <span style={{ ...pillBase, background: '#fff3e0', color: '#e65100' }}>Requested</span>
               </div>
             </div>
             {t > 600 && (
               <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 660, background: '#fff', borderLeft: `2px solid ${G}`, boxShadow: '-16px 0 40px rgba(0,0,0,0.14)', borderRadius: '6px 0 0 6px', padding: '13px 18px', animation: 'scrDrawer 0.7s cubic-bezier(0.25,0.1,0.25,1)', overflow: 'hidden' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 9 }}>
-                  <p style={{ margin: 0, fontSize: 13, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', color: '#000718' }}>The Homecoming Drive — Breakdown</p>
+                  <p style={{ margin: 0, fontSize: 13, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', color: '#000718' }}>The Homecoming Drive - Breakdown</p>
                   <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20' }}>Approved</span>
                 </div>
                 {t > 1300 && (
                   <div style={{ animation: 'scrWipe 0.7s ease forwards', background: '#fafbfc', border: '1px solid #eee', borderRadius: 4, padding: '9px 14px', fontFamily: "'Courier New', monospace", marginBottom: 9 }}>
-                    <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: '#000718' }}>INT. HORIZON SHOWROOM — EVENING</p>
+                    <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: '#000718' }}>INT. HORIZON SHOWROOM - EVENING</p>
                     <p style={{ margin: '5px 0 0', fontSize: 10, color: '#444', lineHeight: '14px' }}>City lights bloom beyond the glass. A family crosses the floor toward the new SUV.</p>
                     <p style={{ margin: '5px 0 0', fontSize: 10, color: '#444', textAlign: 'center', fontWeight: 700 }}>MEERA</p>
                     <p style={{ margin: '1px 0 0', fontSize: 10, color: '#444', textAlign: 'center' }}>“This Diwali… we drive home.”</p>
@@ -3300,8 +3300,8 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
                   <div style={{ display: 'flex', gap: 10, marginBottom: 9, animation: 'scrPop 0.5s ease', alignItems: 'center' }}>
                     <StoryArt hue={150} style={{ width: 148, height: 80, flexShrink: 0 }} />
                     <div>
-                      <p style={{ margin: '0 0 3px', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }}>Storyboard — Frame 01</p>
-                      <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#555', lineHeight: '14px' }}>Family enters frame left; SUV reveal far right — lights up on the beat.</p>
+                      <p style={{ margin: '0 0 3px', fontSize: 9, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#9fa3ac', textTransform: 'uppercase', letterSpacing: 0.4 }}>Storyboard - Frame 01</p>
+                      <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", color: '#555', lineHeight: '14px' }}>Family enters frame left; SUV reveal far right, lights up on the beat.</p>
                     </div>
                   </div>
                 )}
@@ -3311,8 +3311,8 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
                       <div style={{ ...th, width: 42, padding: '6px 10px' }}>Shot</div><div style={{ ...th, width: 92, padding: '6px 10px' }}>Type</div><div style={{ ...th, flex: 1.5, padding: '6px 10px' }}>Camera</div><div style={{ ...th, flex: 1, padding: '6px 10px' }}>Notes</div>
                     </div>
                     {[
-                      ['01', 'Medium Wide', 'Tracking lateral move — smartphone: gimbal or stable handheld walk', 'Cover the full action in one 8–12s pass.'],
-                      ['02', 'Close-Up', 'Static on tripod — focus on hands & diya', 'Hold 3s. Cut on the smile.'],
+                      ['01', 'Medium Wide', 'Tracking lateral move - smartphone: gimbal or stable handheld walk', 'Cover the full action in one 8–12s pass.'],
+                      ['02', 'Close-Up', 'Static on tripod - focus on hands & diya', 'Hold 3s. Cut on the smile.'],
                       ['03', 'Tracking', 'Slow push-in to the SUV reveal', 'Headlights on at the final beat.'],
                     ].map((r, i) => {
                       const show = t > 3100 + i * 320
@@ -3342,13 +3342,13 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
           return (
             <div key="s5" style={{ animation: 'scrFadeUp 0.6s ease' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                <h3 style={h3s}>Video Generation — Scene 1</h3>
+                <h3 style={h3s}>Video Generation - Scene 1</h3>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                   <span style={{ ...pillBase, background: '#f5f6f8', border: '1px solid #dee0e7', color: '#555', fontWeight: 700 }}>16:9</span>
                   <div style={btnG}>Generate Videos</div>
                 </div>
               </div>
-              <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Courier New', monospace", fontWeight: 700, color: '#555' }}>INT. HORIZON SHOWROOM — EVENING</p>
+              <p style={{ margin: '0 0 8px', fontSize: 10, fontFamily: "'Courier New', monospace", fontWeight: 700, color: '#555' }}>INT. HORIZON SHOWROOM - EVENING</p>
               <div style={{ border: '1px solid #dee0e7', borderRadius: 6, overflow: 'hidden' }}>
                 <div style={{ display: 'flex', background: '#fafbfc', borderBottom: '1px solid #eee', alignItems: 'center' }}>
                   <div style={{ ...th, width: 120 }}>Shot</div><div style={{ ...th, width: 162 }}>Preview</div><div style={{ ...th, width: 150 }}>Status</div><div style={{ ...th, flex: 1 }}></div>
@@ -3403,14 +3403,14 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
           const cut = t > 2400
           const activeTab = cut ? 'FINAL UPLOADS' : 'SCRIPTS'
           const arts = [
-            ['The Homecoming Drive — Script', 'ENGLISH | 30 SECS | INTERIOR | EVENING', 400],
-            ['Shot Q&A — 3 answered', 'Requirements locked before the shoot', 850],
-            ['Scene 1 — Shot Breakdown', '3 shots · storyboard attached', 1300],
+            ['The Homecoming Drive - Script', 'ENGLISH | 30 SECS | INTERIOR | EVENING', 400],
+            ['Shot Q&A - 3 answered', 'Requirements locked before the shoot', 850],
+            ['Scene 1 - Shot Breakdown', '3 shots · storyboard attached', 1300],
             ['Shot Previews ×3', 'AI previews · 16:9', 1750],
           ]
           return (
             <div key="s6" style={{ animation: 'scrFadeUp 0.6s ease' }}>
-              <h3 style={{ ...h3s, marginBottom: 10 }}>Approve — Festive Drive Campaign</h3>
+              <h3 style={{ ...h3s, marginBottom: 10 }}>Approve - Festive Drive Campaign</h3>
               <div style={{ display: 'flex', gap: 16, borderBottom: '1px solid #dee0e7', marginBottom: 10 }}>
                 {tabs.map(tab => (
                   <span key={tab} style={{ fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: tab === activeTab ? G : '#9fa3ac', borderBottom: tab === activeTab ? `2px solid ${G}` : '2px solid transparent', paddingBottom: 6, whiteSpace: 'nowrap', transition: 'all 0.3s ease' }}>{tab}</span>
@@ -3435,7 +3435,7 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
                   <div style={{ border: '1px solid #dee0e7', borderRadius: 6, padding: 14, display: 'flex', alignItems: 'center', gap: 14 }}>
                     <StoryArt hue={260} style={{ width: 120, height: 64, flexShrink: 0 }} />
                     <div style={{ flex: 1 }}>
-                      <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#000718' }}>Festive Drive — Final</p>
+                      <p style={{ margin: 0, fontSize: 13, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#000718' }}>Festive Drive - Final</p>
                       <p style={{ margin: '3px 0 0', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Stitched from 3 approved shots · 30 secs · 16:9</p>
                     </div>
                     <span style={{ ...pillBase, background: '#e8fde8', color: '#1b5e20', animation: 'scrPop 0.45s ease' }}>Generated</span>
@@ -3456,7 +3456,7 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
             <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
               Brief in. <span style={{ color: G }}>Shoot-ready</span> out.
             </p>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>Scripts, storyboards, shot lists &amp; AI previews — one flow.</p>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>Scripts, storyboards, shot lists &amp; AI previews - one flow.</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>ScriptIT</span>
               <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
@@ -3470,7 +3470,7 @@ function ScriptWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame,
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
             <div style={{ animation: 'scrFadeUp 0.5s ease' }}>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>ScriptIT</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Brief to shoot-ready video — one flow</p>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Brief to shoot-ready video - one flow</p>
             </div>
           </div>
         )}
@@ -3497,7 +3497,7 @@ function ScriptContent({ controls, tileVariants }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
       <StatTiles tiles={MODULES.ScriptIT.tiles} controls={controls} tileVariants={tileVariants} />
       <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
-        <CTACard headline="Write compelling scripts for every format & platform!" sub="Video scripts, ad copy and voiceovers — briefed, drafted and approved in one place." cta="New Script" controls={controls} custom={0} />
+        <CTACard headline="Write compelling scripts for every format & platform!" sub="Video scripts, ad copy and voiceovers - briefed, drafted and approved in one place." cta="New Script" controls={controls} custom={0} />
         <ChartCard title="Production Pipeline" controls={controls} custom={1} h={296}>
           <PipelineFlow stages={[{l:'Brief',v:'12'},{l:'Drafting',v:'8'},{l:'Review',v:'6'},{l:'Approved',v:'41'},{l:'Complete',v:'54'}]} />
         </ChartCard>
@@ -3524,7 +3524,7 @@ function ScriptContent({ controls, tileVariants }) {
   )
 }
 
-// ─── AIGenIT animated walkthrough (AI voice agents) ───────────────────────────
+// ─── AIgenIT animated walkthrough (AI voice agents) ───────────────────────────
 // 5-frame product video: BUILD → GROUND → TEST LIVE → CAPTURE → CLOSE
 // Anonymized per brief: agent = Asha (ConvergenSEE), fictional masked leads.
 function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, onCursor }) {
@@ -3589,18 +3589,18 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
     null,
     { main: 'Step 1. Build your voice agent.', sub: 'Name it. Brief it. Brand it.' },
     { main: 'Step 2. Ground it in your knowledge.', sub: 'Your docs in. Guesswork out.' },
-    { main: 'Step 3. Talk to it — right now.', sub: 'Live voice test, before it ever takes a call.' },
-    { main: 'Step 4. Every call becomes a lead.', sub: 'Name, phone, email — delivered instantly.' },
-    { main: 'Every call answered. Every lead captured.', sub: 'AI voice agents — inbound, outbound, and on your website.' },
+    { main: 'Step 3. Talk to it - right now.', sub: 'Live voice test, before it ever takes a call.' },
+    { main: 'Step 4. Every call becomes a lead.', sub: 'Name, phone, email - delivered instantly.' },
+    { main: 'Every call answered. Every lead captured.', sub: 'AI voice agents - inbound, outbound, and on your website.' },
   ]
   const overlay = overlays[frame]
   const progressLabels = ['BUILD', 'GROUND', 'TEST', 'CAPTURE']
   const crumbs = [
-    '', 'AIGenIT ▸ Create', 'AIGenIT ▸ Create ▸ Knowledge & Voice',
-    'AIGenIT ▸ Manage', 'AIGenIT ▸ InsightIT ▸ Leads', 'AIGenIT',
+    '', 'AIgenIT ▸ Create', 'AIgenIT ▸ Create ▸ Knowledge & Voice',
+    'AIgenIT ▸ Manage', 'AIgenIT ▸ InsightIT ▸ Leads', 'AIgenIT',
   ]
 
-  const AGENT_NAME = 'Asha — ConvergenSEE Assistant'
+  const AGENT_NAME = 'Asha - ConvergenSEE Assistant'
   const AGENT_DESC = 'Inbound concierge for calls & website'
   const INSTR = 'Always start with “Thank you for calling ConvergenSEE. This is Asha. How may I help you today?”'
 
@@ -3743,7 +3743,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
                           <div style={{ width: 30, height: 36, borderRadius: 4, background: '#fff', border: '1px solid #dee0e7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 800, color: '#c62828' }}>PDF</div>
                           <div>
                             <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>convergensee-knowledge.pdf</p>
-                            <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo', sans-serif", color: G, fontWeight: 700 }}>✓ Indexed — 34 pages</p>
+                            <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo', sans-serif", color: G, fontWeight: 700 }}>✓ Indexed - 34 pages</p>
                           </div>
                         </div>
                       ) : (
@@ -3754,7 +3754,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
                   <div style={{ opacity: t > 1400 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
                     <label style={fieldLabel}>Realtime Voice Model</label>
                     <div style={{ ...fieldBox(t > 1600), display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span>{t > 1600 ? 'Realtime v2 — Multilingual' : 'Select model'}</span>
+                      <span>{t > 1600 ? 'Realtime v2 - Multilingual' : 'Select model'}</span>
                       <span style={{ color: '#9fa3ac', fontSize: 9 }}>▾</span>
                     </div>
                   </div>
@@ -3823,7 +3823,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
           const bubbles = [
             { who: 'agent', text: 'Thank you for calling ConvergenSEE. This is Asha. How may I help you today?', at: 3000, ts: '00:02' },
             { who: 'user', text: 'I’d like to book a consultation.', at: 4600, ts: '00:07' },
-            { who: 'agent', text: 'Of course! Weekday or weekend — and what’s the best number to reach you on?', at: 5800, ts: '00:11' },
+            { who: 'agent', text: 'Of course! Weekday or weekend, and what’s the best number to reach you on?', at: 5800, ts: '00:11' },
           ]
           return (
             <div key="a3" style={{ animation: 'agFadeUp 0.6s ease' }}>
@@ -3839,7 +3839,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
                 </div>
                 {[
                   { name: AGENT_NAME, sub: AGENT_DESC, model: 'OpenAI', status: 'Active', rating: '4.8', hot: true },
-                  { name: 'Kiran — Outbound Follow-ups', sub: 'Callback & reminder agent', model: 'Gemini', status: 'Draft', rating: '—', hot: false },
+                  { name: 'Kiran - Outbound Follow-ups', sub: 'Callback & reminder agent', model: 'Gemini', status: 'Draft', rating: '—', hot: false },
                 ].map((r, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'center', padding: '10px 14px', borderTop: '1px solid #f0f0f0', background: r.hot && t > 600 ? 'rgba(52,204,50,0.05)' : '#fff', transition: 'background 0.5s ease' }}>
                     <div style={{ flex: 2.2, display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -3926,7 +3926,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
           return (
             <div key="a4" style={{ animation: 'agFadeUp 0.6s ease' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>InsightIT — Voice Agent</h3>
+                <h3 style={{ margin: 0, fontSize: 16, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>InsightIT - Voice Agent</h3>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <span style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 600, padding: '5px 12px', borderRadius: 14 }}>Agent: Asha ▾</span>
                   <span style={{ border: '1px solid #dee0e7', background: '#fff', color: '#666', fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 600, padding: '5px 12px', borderRadius: 14 }}>01 Jul – 17 Aug ▾</span>
@@ -3989,9 +3989,9 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
             <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
               Every call <span style={{ color: G }}>answered</span>.<br />Every lead <span style={{ color: G }}>captured</span>.
             </p>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>AI voice agents — inbound, outbound, and on your website.</p>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>AI voice agents - inbound, outbound, and on your website.</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>AIGenIT</span>
+              <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>AIgenIT</span>
               <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
               <span style={{ fontFamily: "'Archivo', sans-serif", fontSize: 11, color: '#9fa3ac' }}>CHNC ▸ ConvergenSEE</span>
             </div>
@@ -4002,7 +4002,7 @@ function AIGenWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame, 
         {frame === 0 && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center' }}>
             <div style={{ animation: 'agFadeUp 0.5s ease' }}>
-              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>AIGenIT</p>
+              <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>AIgenIT</p>
               <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>AI voice agents for calls & websites</p>
             </div>
           </div>
@@ -4089,10 +4089,10 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
 
   const overlays = [
     null,
-    { main: 'Step 1. Pick every page — at once.', sub: 'All your locations. One selection.' },
+    { main: 'Step 1. Pick every page - at once.', sub: 'All your locations. One selection.' },
     { main: 'Step 2. Compose once, on-brand.', sub: 'Approved creative. Approved caption. Live preview.' },
     { main: 'Step 3. Schedule to every page.', sub: 'One click → 4 pages, same moment, same brand.' },
-    { main: 'Step 4. Every page, one dashboard.', sub: 'Facebook + Instagram — measured together.' },
+    { main: 'Step 4. Every page, one dashboard.', sub: 'Facebook + Instagram - measured together.' },
     { main: 'One brand. Every page. Zero rogue posts.', sub: "Central control of every location's Facebook & Instagram." },
   ]
   const overlay = overlays[frame]
@@ -4279,7 +4279,7 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
                   <label style={fieldLabel}>Business assets</label>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12, minHeight: 60 }}>
                     {PAGES.map((p, i) => t > chipAt[i] && (
-                      <span key={p} style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '6px 13px', borderRadius: 15, animation: 'socPop 0.45s ease', alignSelf: 'flex-start' }}>ConvergenSEE — {p} ✓</span>
+                      <span key={p} style={{ background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '6px 13px', borderRadius: 15, animation: 'socPop 0.45s ease', alignSelf: 'flex-start' }}>ConvergenSEE - {p} ✓</span>
                     ))}
                     {t <= chipAt[0] && <span style={{ border: '1.5px dashed #c9cdd4', color: '#9fa3ac', fontSize: 11, fontFamily: "'Archivo', sans-serif", padding: '6px 13px', borderRadius: 15, alignSelf: 'flex-start' }}>Select pages…</span>}
                   </div>
@@ -4336,7 +4336,7 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
               <div style={{ display: 'flex', gap: 24 }}>
                 <div style={{ flex: 1.45, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <div>
-                    {sec('Post to — Instagram accounts', postToDone)}
+                    {sec('Post to - Instagram accounts', postToDone)}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, border: `1.5px solid ${postToDone ? G : '#dee0e7'}`, borderRadius: 4, padding: '7px 9px', transition: 'border-color 0.5s ease', minHeight: 32 }}>
                       {PAGES.map((p, i) => t > acctAt[i] && (
                         <span key={p} style={{ display: 'flex', alignItems: 'center', gap: 5, background: '#f5f6f8', border: '1px solid #dee0e7', color: '#333', fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 600, padding: '3px 9px', borderRadius: 11, animation: 'socPop 0.4s ease' }}>{igGlyph(9, '#c13584')}@convergensee.{p.toLowerCase()}</span>
@@ -4426,7 +4426,7 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
                   <div style={{ width: 34, height: 18, borderRadius: 9, background: togOn ? G : '#dee0e7', position: 'relative', transition: 'background 0.35s ease', flexShrink: 0 }}>
                     <span style={{ position: 'absolute', top: 2, left: togOn ? 18 : 2, width: 14, height: 14, borderRadius: 7, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.25)', transition: 'left 0.35s cubic-bezier(0.25,0.1,0.25,1)' }} />
                   </div>
-                  <span style={{ fontSize: 9.5, fontFamily: "'Archivo', sans-serif", color: togOn ? G : '#9fa3ac', fontWeight: 700, transition: 'color 0.3s ease' }}>{togOn ? 'On — publish at a set time' : 'Off'}</span>
+                  <span style={{ fontSize: 9.5, fontFamily: "'Archivo', sans-serif", color: togOn ? G : '#9fa3ac', fontWeight: 700, transition: 'color 0.3s ease' }}>{togOn ? 'On - publish at a set time' : 'Off'}</span>
                   <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
                     {pubPressed && <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: G, animation: 'socFadeUp 0.4s ease' }}>✓ Scheduled to 4 pages</span>}
                     <div style={{ background: G, color: '#000', fontSize: 11, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, textTransform: 'uppercase', padding: '8px 26px', borderRadius: 0, letterSpacing: 0.5, animation: pubPressed ? 'socPress 0.45s ease, socPulseOnce 0.7s ease 0.2s' : 'none' }}>Publish</div>
@@ -4435,7 +4435,7 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
                 {rowIn && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10, paddingTop: 10, borderTop: '1px solid #eef0f3', animation: 'socFadeUp 0.45s ease' }}>
                     {igGlyph(13, '#c13584')}
-                    <span style={{ fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>Instagram — all 4 accounts</span>
+                    <span style={{ fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 600, color: '#333' }}>Instagram - all 4 accounts</span>
                     <span style={{ border: `1.5px solid ${G}`, borderRadius: 0, padding: '4px 10px', fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>18/08/2026</span>
                     <span style={{ border: `1.5px solid ${G}`, borderRadius: 0, padding: '4px 10px', fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>15:55</span>
                     <span style={{ fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Same moment, every page</span>
@@ -4474,7 +4474,7 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
           return (
             <div key="s4" style={{ animation: 'socFadeUp 0.6s ease' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 10 }}>
-                <h3 style={{ margin: 0, fontSize: 15, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>InsightIT — Social Media</h3>
+                <h3 style={{ margin: 0, fontSize: 15, fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, color: '#000718', textTransform: 'uppercase' }}>InsightIT - Social Media</h3>
                 <div style={{ display: 'flex', gap: 14 }}>
                   {['FACEBOOK', 'INSTAGRAM'].map((tab, i) => {
                     const on = i === 1 && t > 500
@@ -4591,7 +4591,7 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 450, textAlign: 'center' }}>
             <div style={{ animation: 'socFadeUp 0.5s ease' }}>
               <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 22, color: G, textTransform: 'uppercase', margin: '0 0 6px' }}>SocialiseIT</p>
-              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Every location&apos;s Facebook &amp; Instagram — one command center</p>
+              <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 12, color: '#666', margin: 0 }}>Every location&apos;s Facebook &amp; Instagram - one command center</p>
             </div>
           </div>
         )}
@@ -4612,13 +4612,13 @@ function SocialiseWorkflowContent({ controls, tileVariants, stepCount = 0, onFra
   )
 }
 
-// ─── AIGenIT content ──────────────────────────────────────────────────────────
+// ─── AIgenIT content ──────────────────────────────────────────────────────────
 function AIGenContent({ controls, tileVariants }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
-      <StatTiles tiles={MODULES.AIGenIT.tiles} controls={controls} tileVariants={tileVariants} />
+      <StatTiles tiles={MODULES.AIgenIT.tiles} controls={controls} tileVariants={tileVariants} />
       <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
-        <CTACard headline="Generate on-brand AI content at scale!" sub="Copy, captions, scripts and product descriptions — all AI-drafted, human-approved." cta="Generate" controls={controls} custom={0} />
+        <CTACard headline="Generate on-brand AI content at scale!" sub="Copy, captions, scripts and product descriptions - all AI-drafted, human-approved." cta="Generate" controls={controls} custom={0} />
         <ChartCard title="Generation by Type" controls={controls} custom={1}>
           <VertBars data={[{l:'Captions',v:820},{l:'Copy',v:540},{l:'Scripts',v:380},{l:'Product',v:400}]} height={200} />
         </ChartCard>
@@ -4710,12 +4710,12 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
   const overlays = [
     null,
     { main: 'Step 1. Brief it. Pick Meta or Google.', sub: 'One brief. Every ad platform.' },
-    { main: 'Step 2. Set the objective.', sub: 'Traffic, leads or sales — recommended settings applied.' },
-    { main: 'Step 3. Target exactly who you want.', sub: 'Location, age, interests — pinned on a map.' },
-    { main: 'Step 4. Build the ad, preview everywhere.', sub: 'One creative — every Meta placement.' },
-    { main: 'Step 5. Launch. Then manage it live.', sub: 'Toggle, budget, bid — Meta and Google, one table.' },
-    { main: 'Step 6. Every rupee, measured.', sub: 'Spend, CPL, CTR — Meta and Google side by side.' },
-    { main: 'Every rupee, every platform, one dashboard.', sub: 'Performance marketing — planned, launched, managed, measured.' },
+    { main: 'Step 2. Set the objective.', sub: 'Traffic, leads or sales - recommended settings applied.' },
+    { main: 'Step 3. Target exactly who you want.', sub: 'Location, age, interests - pinned on a map.' },
+    { main: 'Step 4. Build the ad, preview everywhere.', sub: 'One creative - every Meta placement.' },
+    { main: 'Step 5. Launch. Then manage it live.', sub: 'Toggle, budget, bid - Meta and Google, one table.' },
+    { main: 'Step 6. Every rupee, measured.', sub: 'Spend, CPL, CTR - Meta and Google side by side.' },
+    { main: 'Every rupee, every platform, one dashboard.', sub: 'Performance marketing - planned, launched, managed, measured.' },
   ]
   const overlay = overlays[frame]
   const progressLabels = ['PLATFORM', 'CAMPAIGN', 'AD SET', 'AD', 'MANAGE', 'MEASURE']
@@ -4730,9 +4730,9 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
     '',
   ]
 
-  const CAMP_NAME = 'Horizon Motors — Festive Drive · Mumbai'
+  const CAMP_NAME = 'Horizon Motors - Festive Drive · Mumbai'
   const CAMP_DESC = 'Festive-season push for Horizon SUV test drives across Mumbai.'
-  const PRIMARY = 'Festive offers on the Horizon SUV range — book your test drive.'
+  const PRIMARY = 'Festive offers on the Horizon SUV range - book your test drive.'
   const HEADLINE = 'Every road, lit.'
 
   const fieldLabel = { fontSize: 10, color: '#9fa3ac', fontFamily: "'Archivo', sans-serif", fontWeight: 600, display: 'block', marginBottom: 4 }
@@ -4860,7 +4860,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                   <div style={{ opacity: t > 1300 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
                     <label style={fieldLabel}>Ad Account</label>
                     <div style={{ ...fieldBox(t > 1500), display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span>{t > 1500 ? 'CS-META-01 — Horizon Motors' : 'Select ad account'}</span>
+                      <span>{t > 1500 ? 'CS-META-01 - Horizon Motors' : 'Select ad account'}</span>
                       <span style={{ color: '#9fa3ac', fontSize: 9 }}>▾</span>
                     </div>
                   </div>
@@ -4884,7 +4884,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                   </div>
                   {t > 5100 && (
                     <p style={{ margin: 0, fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333', animation: 'amFadeUp 0.5s ease' }}>
-                      Budget — <span style={{ color: G }}>₹2,000/day</span> · Est. reach 4.2L – 6.8L
+                      Budget - <span style={{ color: G }}>₹2,000/day</span> · Est. reach 4.2L – 6.8L
                     </p>
                   )}
                 </div>
@@ -4895,7 +4895,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                     <StoryArt hue={30} style={{ height: 176, borderRadius: 0 }} />
                     <span style={{ position: 'absolute', top: 8, right: 8, background: '#fff4e0', border: '1px solid #f2a33c', color: '#a05c00', fontSize: 8, fontFamily: "'Archivo', sans-serif", fontWeight: 800, letterSpacing: 0.5, padding: '3px 8px', borderRadius: 3 }}>UNPUBLISHED</span>
                     <div style={{ padding: '8px 10px' }}>
-                      <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>Horizon Motors — Festive Drive</p>
+                      <p style={{ margin: 0, fontSize: 11, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>Horizon Motors - Festive Drive</p>
                       <p style={{ margin: 0, fontSize: 9, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>1 creative · Single image · 1080×1080</p>
                     </div>
                   </div>
@@ -5040,7 +5040,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                   <div style={{ display: 'flex', gap: 10 }}>
                     <div style={{ flex: 1.1, opacity: t > 400 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
                       <label style={fieldLabel}>Facebook Page</label>
-                      <div style={{ ...fieldBox(t > 500), fontSize: 11, padding: '7px 10px' }}>{t > 500 ? 'ConvergenSEE — Powai' : ''}</div>
+                      <div style={{ ...fieldBox(t > 500), fontSize: 11, padding: '7px 10px' }}>{t > 500 ? 'ConvergenSEE - Powai' : ''}</div>
                     </div>
                     <div style={{ flex: 1, opacity: t > 800 ? 1 : 0.35, transition: 'opacity 0.5s ease' }}>
                       <label style={fieldLabel}>Instagram Account</label>
@@ -5091,7 +5091,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                     <div style={{ ...fieldBox(t > 5000), fontSize: 11, padding: '7px 10px' }}>{t > 5000 ? 'horizonmotors.in/festive-drive' : ''}</div>
                   </div>
                   {t > 5300 && (
-                    <span style={{ alignSelf: 'flex-start', background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '4px 12px', borderRadius: 12, animation: 'amPop 0.45s ease' }}>Advantage+ creative — Enhancements (8/9) ✓</span>
+                    <span style={{ alignSelf: 'flex-start', background: '#e8fde8', border: `1px solid ${G}`, color: '#1b5e20', fontSize: 9.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, padding: '4px 12px', borderRadius: 12, animation: 'amPop 0.45s ease' }}>Advantage+ creative - Enhancements (8/9) ✓</span>
                   )}
                 </div>
                 {/* Right: ad preview */}
@@ -5105,7 +5105,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px' }}>
                         <div style={{ width: 24, height: 24, borderRadius: 12, background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 12, color: '#000718', flexShrink: 0 }}>C</div>
                         <div>
-                          <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>ConvergenSEE — Powai</p>
+                          <p style={{ margin: 0, fontSize: 10.5, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#333' }}>ConvergenSEE - Powai</p>
                           <p style={{ margin: 0, fontSize: 8, fontFamily: "'Archivo', sans-serif", color: '#9fa3ac' }}>Sponsored · {tabs[tabIdx].charAt(0) + tabs[tabIdx].slice(1).toLowerCase()}</p>
                         </div>
                       </div>
@@ -5154,7 +5154,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
               {t < 3000 && (
                 <div style={{ position: 'absolute', right: 24, top: 30, zIndex: 60, display: 'flex', alignItems: 'center', gap: 8, background: '#000718', border: `1.5px solid ${G}`, borderRadius: 4, padding: '8px 14px', animation: 'amSlideIn 0.5s cubic-bezier(0.22,1,0.36,1)', opacity: t > 2400 ? 0 : 1, transition: 'opacity 0.5s ease' }}>
                   <span style={{ width: 16, height: 16, borderRadius: 8, background: G, color: '#000718', fontSize: 9, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✓</span>
-                  <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#fff' }}>Published — Festive Drive · Mumbai is live</span>
+                  <span style={{ fontSize: 10, fontFamily: "'Archivo', sans-serif", fontWeight: 700, color: '#fff' }}>Published - Festive Drive · Mumbai is live</span>
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
@@ -5322,7 +5322,7 @@ function AmplifyWorkflowContent({ controls, tileVariants, stepCount = 0, onFrame
             <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 32, color: '#000718', textTransform: 'uppercase', margin: '0 0 6px', lineHeight: 1.05 }}>
               Every <span style={{ color: G }}>rupee</span>, every <span style={{ color: G }}>platform</span>,<br />one dashboard.
             </p>
-            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>Performance marketing — planned, launched, managed, measured.</p>
+            <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 13, color: '#666', margin: '10px 0 18px' }}>Performance marketing - planned, launched, managed, measured.</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 900, fontSize: 28, color: G, letterSpacing: 1 }}>AmplifyIT</span>
               <span style={{ width: 1, height: 22, background: '#dee0e7' }} />
@@ -5505,7 +5505,7 @@ function ConvergeContent({ controls, tileVariants }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 30, alignItems: 'flex-start', width: 1119 }}>
       <StatTiles tiles={MODULES.ConvergeIT.tiles} controls={controls} tileVariants={tileVariants} />
       <div style={{ display: 'flex', gap: 30, alignItems: 'flex-start', overflow: 'hidden' }}>
-        <CTACard headline="Every agency, one view!" sub="See performance side by side across every partner — no more chasing updates." cta="Add Agency" controls={controls} custom={0} />
+        <CTACard headline="Every agency, one view!" sub="See performance side by side across every partner, no more chasing updates." cta="Add Agency" controls={controls} custom={0} />
         <ChartCard title="Spend Share by Agency" controls={controls} custom={1}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <HorizRow label="Aurora Media" value={34} max={100} unit="%" />
@@ -5582,7 +5582,7 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
   // gets a fast-start ease so the redirect keeps its apparent momentum.
   const [camCursor, setCamCursor] = useState(null)
   const cam = useRef({ tx: 0, ty: 0, s: 1, panDur: 0.9, zoomDur: 1, panEase: 'cubic-bezier(0.33, 0, 0.15, 1)', zoomEase: 'cubic-bezier(0.33, 0, 0.15, 1)', settleAt: 0 })
-  const camOn = camCursor && ['CreateIT', 'InsightIT', 'SocialiseIT', 'LocateIT', 'ScriptIT', 'AIGenIT', 'AmplifyIT'].includes(activeModule) && showWorkflow
+  const camOn = camCursor && ['CreateIT', 'InsightIT', 'SocialiseIT', 'LocateIT', 'ScriptIT', 'AIgenIT', 'AmplifyIT'].includes(activeModule) && showWorkflow
   // reel local coords → 1440×930 canvas coords (content area offset), clamped to edges
   const camZ = camOn ? (camCursor.z || 1.65) : 1
   const camTx = camOn ? Math.max(1440 - 1440 * camZ, Math.min(0, 720 - camZ * (289 + camCursor.x + 8))) : 0
@@ -5633,7 +5633,7 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
           </div>
         </> : <>
         <Sidebar active={activeModule} insightSub={activeModule === 'InsightIT' && showWorkflow} org={
-          ['ScriptIT', 'AmplifyIT', 'InsightIT', 'LocateIT', 'CreateIT', 'AIGenIT'].includes(activeModule) && showWorkflow ? { initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' }
+          ['ScriptIT', 'AmplifyIT', 'InsightIT', 'LocateIT', 'CreateIT', 'AIgenIT'].includes(activeModule) && showWorkflow ? { initials: 'HM', name: 'Horizon Motors', sub: 'Automobile Ind' }
           : activeModule === 'SocialiseIT' && showWorkflow ? { initials: 'C', name: 'ConvergenSEE', sub: 'Automobile Ind' }
           : undefined} />
         <Header />
@@ -5689,15 +5689,15 @@ export default function CHNCDashboard({ tilesTrigger, activeModule = 'InsightIT'
             {activeModule === 'InfluenceIT' && <InfluenceContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'ScriptIT' && showWorkflow && <ScriptWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
             {activeModule === 'ScriptIT' && !showWorkflow && <ScriptContent controls={controls} tileVariants={tileVariants} />}
-            {activeModule === 'AIGenIT' && showWorkflow && <AIGenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
-            {activeModule === 'AIGenIT' && !showWorkflow && <AIGenContent controls={controls} tileVariants={tileVariants} />}
+            {activeModule === 'AIgenIT' && showWorkflow && <AIGenWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
+            {activeModule === 'AIgenIT' && !showWorkflow && <AIGenContent controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'SearchIT'    && <SearchContent    controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InvoiceIT'   && <InvoiceContent   controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'AdaptIT'     && <AdaptContent     controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'EngageIT'    && <EngageContent    controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'ConvergeIT'  && <ConvergeContent  controls={controls} tileVariants={tileVariants} />}
             {activeModule === 'InsightIT' && showWorkflow && <InsightWorkflowContent controls={controls} tileVariants={tileVariants} stepCount={stepCount} onFrame={onFrame} onCursor={setCamCursor} />}
-            {((activeModule === 'InsightIT' && !showWorkflow) || !['InsightIT','LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AIGenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT','ConvergeIT'].includes(activeModule)) &&
+            {((activeModule === 'InsightIT' && !showWorkflow) || !['InsightIT','LocateIT','AmplifyIT','CreateIT','SocialiseIT','InfluenceIT','ScriptIT','AIgenIT','SearchIT','InvoiceIT','AdaptIT','EngageIT','ConvergeIT'].includes(activeModule)) &&
               <InsightContent controls={controls} tileVariants={tileVariants} />}
           </div>
         </div>

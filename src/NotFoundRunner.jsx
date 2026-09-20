@@ -298,7 +298,7 @@ export default function NotFoundRunner() {
         ctx.fillText('GAME OVER', W / 2, 52)
         ctx.font = "600 12px 'Archivo', sans-serif"
         ctx.fillStyle = 'rgba(255,255,255,0.6)'
-        ctx.fillText('THE ALGORITHM GOT YOU — SPACE / TAP TO RERUN', W / 2, 92)
+        ctx.fillText('THE ALGORITHM GOT YOU - SPACE / TAP TO RERUN', W / 2, 92)
       }
     }
 

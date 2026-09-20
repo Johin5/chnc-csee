@@ -22,9 +22,6 @@ const BORDER = 'rgba(255,255,255,0.1)'
 // ─── Assets ───────────────────────────────────────────────────────────────────
 const imgMahindraHero  = '/figma/case-study-mahindra/img-mahindra1.webp'
 const imgConvergenC    = '/figma/case-study-mahindra/img-c2-d.svg'
-const imgGallery1      = '/figma/case-study-mahindra/img-image111.webp'
-const imgGallery2      = '/figma/case-study-mahindra/img-image112.webp'
-const imgGallery3      = '/figma/case-study-mahindra/img-image113.webp'
 
 // ─── Other case studies — same set as the Case Studies grid, minus the auto brand ───
 const OTHER_CASES = [
@@ -124,8 +121,8 @@ export default function MahindraPage() {
             </span>
           </div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, color: '#fff', lineHeight: '24px', maxWidth: 566, textAlign: 'center', margin: 0 }}>
-            Helping one of India's largest automobile brands win locally through hyperlocal presence
-            &mdash; dealer-specific advertising across 585+ locations.
+            Helping one of India's largest automobile brands win locally through hyperlocal presence:
+            dealer-specific advertising across 585+ locations.
           </p>
         </div>
       </section>
@@ -159,7 +156,7 @@ export default function MahindraPage() {
             {[
               { num: '1.', text: 'With 585+ dealer locations across the country, the brand ran largely on one national voice in its advertising.' },
               { num: '2.', text: "There was an opportunity to bring each dealership's advertising closer to its own local audience." },
-              { num: '3.', text: 'Local relevance had to work at scale — creative, targeting, and handles for every single dealership.' },
+              { num: '3.', text: 'Local relevance had to work at scale: creative, targeting, and handles for every single dealership.' },
             ].map((item, i) => (
               <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 400, maxWidth: isSmall ? 'none' : 400, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <p style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 700, fontSize: 'clamp(36px, 6vw, 50px)', lineHeight: 1, color: G, margin: 0, textTransform: 'uppercase' }}>{item.num}</p>
@@ -176,7 +173,7 @@ export default function MahindraPage() {
           </h2>
           <div style={{ width: isSmall ? '100%' : 786, maxWidth: 786, display: 'flex', flexDirection: 'column', gap: 20 }}>
             {[
-              "ConvergenSEE built and ran hyperlocal, dealer-specific advertising — matching creative and targeting to each dealership's ideal local audience, at scale, across 585+ locations.",
+              "ConvergenSEE built and ran hyperlocal, dealer-specific advertising, matching creative and targeting to each dealership's ideal local audience, at scale, across 585+ locations.",
               'Produced 3,000+ hyperlocal creatives every month tailored to local context instead of one national campaign, and built 2,500+ localised, dealer-specific ads targeting the ideal audience around each dealership.',
               'Managed 200+ dealer handles across Facebook & Instagram and 1,000+ brand & dealer touchpoints, running the program continuously over 30 months (Jun 2020 – Dec 2022).',
             ].map((text, i) => (
@@ -187,7 +184,7 @@ export default function MahindraPage() {
           </div>
           <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, alignItems: 'stretch', width: '100%', justifyContent: 'center' }}>
             {[
-              { val: '75%',    label: 'Increase in website visits — with 65% more phone calls and 40% more direction requests', tag: 'HYPERLOCAL PRESENCE' },
+              { val: '75%',    label: 'Increase in website visits, with 65% more phone calls and 40% more direction requests', tag: 'HYPERLOCAL PRESENCE' },
               { val: '3,000+', label: 'Hyperlocal creatives produced every month, tailored to local context', tag: 'CREATIVE AT SCALE' },
             ].map((s, i) => (
               <div key={i} style={{ border: `2px solid ${BORDER}`, padding: 'clamp(20px, 4vw, 30px)', width: isSmall ? '100%' : 610, maxWidth: isSmall ? 'none' : 610, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -199,31 +196,7 @@ export default function MahindraPage() {
           </div>
         </section>
 
-        {/* ── Gallery ───────────────────────────────────────────────────────── */}
-        <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
-          <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontWeight: 800, fontSize: 'clamp(40px, 8vw, 80px)', lineHeight: 1, color: '#fff', textTransform: 'uppercase', margin: 0 }}>
-            Gallery
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center', width: '100%' }}>
-            {/* Arrows above images, right-aligned to match right edge of 3rd image */}
-            <div style={{ display: 'flex', gap: 10, alignSelf: 'flex-end' }}>
-              <div className="arrow-btn" style={{ width: 40, height: 40, borderRadius: '50%', background: CARD, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                <span style={{ color: '#fff', fontSize: 18, lineHeight: 1 }}>‹</span>
-              </div>
-              <div className="arrow-btn" style={{ width: 40, height: 40, borderRadius: '50%', background: G, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                <span style={{ color: DARK, fontSize: 18, lineHeight: 1 }}>›</span>
-              </div>
-            </div>
-            {/* Photos */}
-            <div style={{ display: 'flex', flexDirection: isSmall ? 'column' : 'row', gap: 20, justifyContent: 'center', width: '100%', alignItems: 'center' }}>
-              {[imgGallery1, imgGallery2, imgGallery3].map((src, i) => (
-                <div key={i} className="card-hover" style={{ width: isSmall ? '100%' : 400, maxWidth: 400, height: isSmall ? 'clamp(320px, 80vw, 562px)' : 562, overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={src} alt={`Gallery ${i + 1}`} loading="lazy" decoding="async" className="img-zoom" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Gallery removed per the 31 Aug brief (Auto case study). */}
 
         {/* ── Other brands ──────────────────────────────────────────────────── */}
         <section style={{ padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px)', width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>

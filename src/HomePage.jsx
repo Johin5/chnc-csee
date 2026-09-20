@@ -119,7 +119,14 @@ function Hero() {
             An extension of your team, your thinking, your brand. We amplify what you already do well, spot the opportunities you're too close to see, and help you grow into them.
           </p>
         </div>
-        <Link href="#contact" className="btn-outline" style={{
+        {/* A repeat click leaves the hash at #contact, so the browser skips the
+            anchor scroll — scroll imperatively on every plain click instead. */}
+        <Link href="#contact" onClick={(e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+          e.preventDefault()
+          document.getElementById('contact')?.scrollIntoView()
+          history.replaceState(null, '', '#contact')
+        }} className="btn-outline" style={{
           background: 'transparent', color: '#fff', border: '1px solid #fff',
           height: 46, padding: '0 20px',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -179,7 +186,7 @@ function About() {
             </h2>
           </div>
           <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, maxWidth: 531 }}>
-            We are you, the dreamers who see what could be, the thinkers who question what is, the builders who refuse to settle. We exist in the space between your vision and reality, turning digital problems into opportunities with technology that actually works. We're not your brand. We're your people &mdash; solving, creating, and growing right alongside you.
+            We are YOU, not you. The dreamers who see what could be, the thinkers who question what is, the builders who refuse to settle. We exist in the space between your vision and reality, turning digital problems into opportunities with technology that actually works. We're not your brand. We're your people, solving, creating, and growing right alongside you.
           </p>
         </div>
         <div style={{ width: isSmall ? '100%' : 562, maxWidth: 562, height: isSmall ? 'clamp(320px, 80vw, 564px)' : 564, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -215,7 +222,7 @@ const chncStats = [
 
 const platformFeatures = [
   { title: 'Location Presence Management', icon: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>,
-    desc: "Manages your brand's presence across maps, listings, and local discovery platforms. Solves inconsistent information, low visibility, and lost walk-in opportunities." },
+    desc: "Manages your brand's presence across Google Search and Maps, listings, and local discovery platforms. Solves inconsistent information, low visibility, and lost walk-in opportunities." },
   { title: 'Performance Marketing', icon: <><path d="m3 11 18-5v12L3 14v-3Z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></>,
     desc: 'Plans and optimises paid campaigns across digital platforms to drive measurable growth. Solves wasted media spend, poor lead quality, and lack of performance accountability.' },
   { title: 'Social Media Management', icon: <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" /></>,
@@ -317,12 +324,12 @@ function CHNC() {
   const MODULE_INFO = {
     InsightIT: { title: 'InsightIT', desc: "Gives your brand clarity on what's working and what to do next." },
     LocateIT: { title: 'LocateIT', desc: 'Helps your brand get discovered in the moments that matter.' },
-    CreateIT: { title: 'CreateIT', desc: 'Gives your brand a steady flow of high-quality creatives at scale.', stats: [{ num: '42%', label: 'reduction in time for creative delivery' }, { num: '50%', label: 'reduction in time to market' }] },
+    CreateIT: { title: 'CreateIT', desc: 'Gives your brand a steady flow of high-quality creatives at scale.' },
     AmplifyIT: { title: 'AmplifyIT', desc: 'Turns your marketing spend into real demand and better leads.' },
     SocialiseIT: { title: 'SocialiseIT', desc: 'Keeps your brand visible, familiar, and remembered every day.' },
     InfluenceIT: { title: 'InfluenceIT', desc: 'Builds trust and traction through creators your audience already follows.' },
     ScriptIT: { title: 'ScriptIT', desc: 'Gives your brand scripts that hold attention and drive response.' },
-    AIGenIT: { title: 'AIGenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.' },
+    AIgenIT: { title: 'AIgenIT', desc: 'Helps your brand move faster with human-like, multi-language conversations.' },
     SearchIT: { title: 'SearchIT', desc: 'Brings in high-intent customers who are ready to take action.' },
     InvoiceIT: { title: 'InvoiceIT', desc: "Keeps your brand's spends, billing, and tracking clean and organised." },
     AdaptIT: { title: 'AdaptIT', desc: "Reshapes your brand's content to fit every platform it lands on." },
@@ -415,7 +422,7 @@ function CHNC() {
           What's inside <span style={{ color: G }}>CHNC?</span>
         </h2>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: MUTED, lineHeight: 1.5, textAlign: 'center', maxWidth: 640, margin: 0 }}>
-          Built to find the gaps, connect the dots, and turn every opportunity into something your brand can actually own.
+          Built to find the gaps, connect the dots, and turn every opportunity into something you can actually own.
         </p>
       </div>
 
@@ -744,15 +751,23 @@ function Impact() {
 // 180KB). Not default.mp4 — that file is a DIFFERENT clip the Aug 20 client
 // change list replaced.
 const auditDefaultGif = '/figma/home/oh-gifs/tell-me-what-you-want.mp4'
+// CHNC Audit question set (31 Aug brief) — one shared set, asked before any
+// module is chosen. Reaction clips are reused across rows (no new assets).
 const auditQs = [
-  { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEADS', 'SALES', 'ALL'],
+  { q: 'What do you want to', qGreen: 'improve?', opts: ['VISIBILITY', 'LEAD VOLUME', 'LEAD QUALITY', 'RETENTION'],
     gifs: ['ooh-wee', 'o-face', 'oh-i-see', 'jimbo'] },
-  { q: "What's the main", qGreen: 'issue', qEnd: ' today?', opts: ['LOW LEADS', 'LOW QUALITY', 'INCONSISTENT', 'NOT SURE'],
+  { q: 'What is the main', qGreen: 'issue', qEnd: ' today?', opts: ['LOW LEADS', 'POOR QUALITY', 'INCONSISTENT RESULTS', 'NOT SURE'],
     gifs: ['giphy-3', 'i-see-wow', 'matrix-ok', 'oh-snap'] },
-  { q: "What's your current", qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'],
+  { q: 'What is your current', qGreen: 'setup?', opts: ['TOO MANY VENDORS', 'SLOW IN-HOUSE', 'UNSTABLE RESULTS', 'STARTING FRESH'],
     gifs: ['giphy-4', 'stranger-things', 'tiffany', 'max-stranger'] },
-  { q: 'How many', qGreen: 'locations', qEnd: ' does your business have?', opts: ['10-20', '20-100', '100+'],
-    gifs: ['oh-i-see', 'i-see-wow', 'ooh-wee'] },
+  { q: 'How many', qGreen: 'locations', qEnd: ' do you have?', opts: ['1-5', '6-20', '20-100', '100+'],
+    gifs: ['oh-i-see', 'i-see-wow', 'ooh-wee', 'jimbo'] },
+  { q: 'What is your monthly digital', qGreen: 'spend?', opts: ['UNDER ₹1L', '₹1-5L', '₹5-10L', '₹10L+'],
+    gifs: ['o-face', 'oh-snap', 'matrix-ok', 'giphy-3'] },
+  { q: 'Who runs your', qGreen: 'marketing', qEnd: ' today?', opts: ['IN-HOUSE TEAM', 'AN AGENCY', 'BOTH', 'NOBODY YET'],
+    gifs: ['stranger-things', 'tiffany', 'giphy-4', 'max-stranger'] },
+  { q: 'When do you want to', qGreen: 'start?', opts: ['RIGHT AWAY', 'THIS QUARTER', 'NEXT QUARTER', 'JUST EXPLORING'],
+    gifs: ['ooh-wee', 'matrix-ok', 'i-see-wow', 'oh-i-see'] },
 ]
 
 function QuizPill({ label, isActive, onClick }) {
@@ -846,6 +861,7 @@ function BrandAudit() {
           </div>
         </div>
         <AuditForm
+          cta="Take the CHNC"
           context={{ page: 'home', answers: auditQs.map((q, qi) => (selections[qi] == null ? null : q.opts[selections[qi]])) }}
           onSuccess={({ name, company }) => { setAuditName(name ?? ''); setAuditCompany(company ?? '') }}
         />
@@ -873,7 +889,7 @@ const testimonials = [
   },
   {
     tab: 'BANKING',
-    quote: ['One dashboard finally showed us where every rupee goes — our campaigns have never been this ', 'accountable', '.'],
+    quote: ['One dashboard finally showed us where every rupee goes; our campaigns have never been this ', 'accountable', '.'],
     name: 'Rohan Mehta', company: 'Meridian Bank', photo: '/testi-rohan.webp',
     stats: [
       { num: '3.2x', label: 'Return on ad spend' },
@@ -893,7 +909,7 @@ const testimonials = [
   },
   {
     tab: 'RETAIL',
-    quote: ['Every store, every listing, every review — ', 'visible', ' and improving week on week.'],
+    quote: ['Every store, every listing, every review: ', 'visible', ' and improving week on week.'],
     name: 'Kabir Malhotra', company: 'UrbanNest Stores', photo: null,
     stats: [
       { num: '120+', label: 'Locations managed' },
@@ -903,7 +919,7 @@ const testimonials = [
   },
   {
     tab: 'FSI',
-    quote: ['Compliance-safe creatives at startup speed — that combination simply did not ', 'exist', ' for us before.'],
+    quote: ['Compliance-safe creatives at startup speed: that combination simply did not ', 'exist', ' for us before.'],
     name: 'Ananya Iyer', company: 'Crestline Insurance', photo: null,
     stats: [
       { num: '52%', label: 'Lift in qualified leads' },
@@ -932,7 +948,7 @@ function Testimonials() {
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(20px, 6vw, 100px) 0' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <SectionLabel>Testimonials</SectionLabel>
+          <SectionLabel>Opportunities</SectionLabel>
           <h2 style={{ fontFamily: "'Saira Condensed', sans-serif", fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, textAlign: 'center' }}>
             Brands who took the <span style={{ color: G }}>CHNC</span>
           </h2>

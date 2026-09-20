@@ -12,7 +12,7 @@ import useResponsive from '../useResponsive'
 
 const items = [
   'InsightIT', 'LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT',
-  'InfluenceIT', 'ScriptIT', 'AIGenIT', 'SearchIT', 'InvoiceIT',
+  'InfluenceIT', 'ScriptIT', 'AIgenIT', 'SearchIT', 'InvoiceIT',
   'AdaptIT', 'EngageIT', 'ConvergeIT',
 ]
 

@@ -103,7 +103,7 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: "We work with brands every single day to make sure everything runs smoothly. Communication, execution, support — we're the ones making sure you always feel taken care of.",
+    blurb: "We work with brands every single day to make sure everything runs smoothly. Communication, execution, support: we're the ones making sure you always feel taken care of.",
     members: [
       'Bhawani Singh Bhati', 'Palak Kothari', 'Rakshit Bangera',
       'Rohan Kharwar', 'Rohit Kanojiya', 'Tanvi Jadhav', 'Vikrant Shedge',
@@ -157,7 +157,7 @@ export const TEAM_GROUPS = [
     ],
     blurb: 'The thinkers who never stop running. We research, we dig, we question everything to understand how to make your brand bigger, better, and sharper online.',
     members: [
-      'Akansha Gwari', 'Johin Jose', 'Aman Rawat', 'Krish Dsilva',
+      'Akansha Gwari', 'Johin Jose', 'Aman Rawat', "Krish D'Silva",
       'Ransley Moraes', 'Charvak Heramb', 'Muskan Aahi',
     ],
   },
@@ -213,7 +213,7 @@ export const TEAM_GROUPS = [
   {
     name: 'Executive Office',
     openings: [],
-    blurb: 'We set the vision and keep ConvergenSEE true to who we are. Our job is steering the ship — making sure we grow without losing what makes us, us.',
+    blurb: 'We set the vision and keep ConvergenSEE true to who we are. Our job is steering the ship, making sure we grow without losing what makes us, us.',
     members: [
       'Balaji Jagannathan', 'Viswanathan Kalyanasundaram',
       'Neha Malhotra', 'Shankar Iyer', 'Tiana Balaji',
@@ -239,7 +239,7 @@ export const TEAM_GROUPS = [
         ],
       },
     ],
-    blurb: "We're building ConvergenSEE from the ground up. Every campaign we run, every story we tell teaches us something new — and we bring those lessons straight to you.",
+    blurb: "We're building ConvergenSEE from the ground up. Every campaign we run, every story we tell teaches us something new, and we bring those lessons straight to you.",
     members: [
       'Kiran Mulchandani', 'Adheet Shetty', 'Archana Vaghela',
       'Ria Mitra', 'Rushika Kathrani',
@@ -289,6 +289,6 @@ export const TEAM_GROUPS = [
       },
     ],
     blurb: 'Shoots, edits, renders, reshoots. The team that turns a line on a deck into something you actually want to watch.',
-    members: ['Akash Khandare', 'Yash Sontate', 'Ankita Jain', 'Manas', 'Aayush Soni'],
+    members: ['Akash Khandare', 'Yash Sontade', 'Ankita Jain', 'Manas Sahoo', 'Aayush Soni'],
   },
 ]

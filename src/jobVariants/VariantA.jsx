@@ -18,9 +18,9 @@ const SAIRA = "'Saira Condensed', sans-serif"
 const ARCHIVO = "'Archivo', sans-serif"
 
 const HIRING_STEPS = [
-  { title: 'Apply', desc: 'Send your CV and your work. That’s it — no cover-letter theatre.' },
+  { title: 'Apply', desc: 'Send your CV and your work. That’s it, no cover-letter theatre.' },
   { title: 'Intro chat', desc: '30 minutes with the team lead about what you’ve made and what you want to make.' },
-  { title: 'Craft task', desc: 'A short exercise close to the real work — never free work we ship.' },
+  { title: 'Craft task', desc: 'A short exercise close to the real work, never free work we ship.' },
   { title: 'Offer', desc: 'We move fast. If it’s a yes, you’ll hear within the week.' },
 ]
 
@@ -66,7 +66,7 @@ export default function VariantA({ job }) {
           margin: 0, lineHeight: 1.7,
         }}>
           <span style={{ color: G }}>Careers</span>
-          <span style={{ color: DIM }}> &mdash; {job.team} team &middot; Mumbai &middot; Full-time</span>
+          <span style={{ color: DIM }}> &middot; {job.team} team &middot; Mumbai &middot; Full-time</span>
         </p>
 
         <h1 style={{

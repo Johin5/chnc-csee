@@ -73,7 +73,7 @@ export default function TeamPage() {
         </h1>
         <p style={{ fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff', lineHeight: 1.5, maxWidth: 798, margin: 0, position: 'relative', zIndex: 1 }}>
           We are you, the dreamers who see what could be, the thinkers who question what is, the
-          builders who refuse to settle. We're not your brand. We're your people &mdash; solving,
+          builders who refuse to settle. We're not your brand. We're your people, solving,
           creating, and growing right alongside you.
         </p>
       </section>

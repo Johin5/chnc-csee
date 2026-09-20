@@ -31,7 +31,9 @@ export async function submitAudit(prevState, formData) {
   const data = {
     name: (formData.get('name') || '').toString().trim(),
     email: (formData.get('email') || '').toString().trim(),
+    phone: (formData.get('phone') || '').toString().trim(),
     company: (formData.get('company') || '').toString().trim(),
+    website: (formData.get('website') || '').toString().trim(),
     context: (formData.get('context') || '').toString(),
   }
 

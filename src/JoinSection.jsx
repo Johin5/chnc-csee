@@ -148,7 +148,7 @@ function MatchScene({ name, isMobile }) {
         You&rsquo;re our type
       </p>
       <p className="form-success-text" style={{ animationDelay: '2.75s', fontFamily: "'Archivo', sans-serif", fontSize: 16, color: 'rgba(255,255,255,0.75)', margin: 0, textAlign: 'center', maxWidth: 480 }}>
-        Application received &mdash; we just swiped right on your CV. The team will be in touch soon.
+        Application received: we just swiped right on your CV. The team will be in touch soon.
       </p>
     </div>
   )

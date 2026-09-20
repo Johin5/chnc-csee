@@ -207,7 +207,7 @@ function Hero() {
           fontFamily: "'Archivo', sans-serif", fontSize: 'clamp(15px, 2vw, 18px)', color: '#fff',
           lineHeight: 1.5, maxWidth: 700, margin: 0, textShadow: '0 2px 20px rgba(0,7,24,0.95)',
         }}>
-          Your next opportunity starts here. {TEAM.length} people already made it onto the team —
+          Your next opportunity starts here. {TEAM.length} people already made it onto the team;
           hover any face to meet them, then decide whether yours belongs up there too.
         </p>
       </div>

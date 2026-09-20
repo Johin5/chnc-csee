@@ -35,7 +35,7 @@ const CHNC_PROJECTS = [
     timeline: '6 weeks',
     img: '/figma/home/img-asset11.png',
     headline: 'Building a brand identity that communicates convergence, ambition, and technological authority in a single mark.',
-    intro: 'CHNC needed a visual identity that could carry weight across a B2B SaaS platform, enterprise pitch decks, and street-level marketing. The identity had to feel premium without feeling distant — authoritative without feeling cold.',
+    intro: 'CHNC needed a visual identity that could carry weight across a B2B SaaS platform, enterprise pitch decks, and street-level marketing. The identity had to feel premium without feeling distant, authoritative without feeling cold.',
     challenge: 'No brand system existed. Every touchpoint was inconsistent, eroding trust with enterprise buyers.',
     challengeBody: 'Stakeholders across verticals were producing materials independently, resulting in five different logo treatments, three colour palettes, and no typographic consistency. The brand was invisible where it needed to be loudest.',
     imgs: [
@@ -61,7 +61,7 @@ const CHNC_PROJECTS = [
     timeline: '8 weeks',
     img: '/figma/dashboard-chnc/img-rectangle51.jpg',
     headline: 'A motion identity that turns data dashboards into cinematic proof of platform capability.',
-    intro: 'Static screenshots couldn\'t communicate the dynamism of the CHNC platform. We developed a motion language — transitions, micro-animations, and a product film — that translated raw feature depth into felt experience.',
+    intro: 'Static screenshots couldn\'t communicate the dynamism of the CHNC platform. We developed a motion language (transitions, micro-animations, and a product film) that translated raw feature depth into felt experience.',
     challenge: 'Video content was ad hoc, inconsistent, and consistently underperforming on paid channels.',
     challengeBody: 'Three separate agencies had produced product videos over two years, each with different visual treatments. Click-through rates on paid social were below industry benchmarks. The platform\'s speed and intelligence were simply not coming through on screen.',
     imgs: [
@@ -87,7 +87,7 @@ const CHNC_PROJECTS = [
     timeline: '10 weeks',
     img: '/figma/home/img-asset31.webp',
     headline: 'A bold consumer brand for a logistics disruptor entering a market dominated by incumbents with thirty-year head starts.',
-    intro: 'KrateIT was entering the last-mile logistics space with a tech-first model that none of the legacy players had. The brand needed to signal speed, reliability, and modernity — and it needed to do it loud enough to cut through category noise.',
+    intro: 'KrateIT was entering the last-mile logistics space with a tech-first model that none of the legacy players had. The brand needed to signal speed, reliability, and modernity, and it needed to do it loud enough to cut through category noise.',
     challenge: 'Breaking into a commoditised market where price is assumed to be the only differentiator.',
     challengeBody: 'Established players owned the trust narrative. Shippers defaulted to incumbents out of habit, not preference. KrateIT had a genuinely superior product but no brand equity to support the claim. They needed identity before they could drive adoption.',
     imgs: [
@@ -109,7 +109,7 @@ const BRAND_PROJECTS = [
     img: '/thar-mountains.webp', logo: '/mahindra-m.webp', logoBg: 'transparent',
     desc: 'End-to-end content creation and social media management driving a 96% surge in website actions.',
     headline: 'How end-to-end content strategy drove a 96% surge in website actions across Mahindra\'s digital channels.',
-    intro: 'Mahindra\'s digital presence spanned multiple product lines, regions, and audiences — yet the content strategy was reactive, siloed, and inconsistent. We embedded as a full-stack content partner: strategy, production, and distribution, running in parallel across their core verticals.',
+    intro: 'Mahindra\'s digital presence spanned multiple product lines, regions, and audiences, yet the content strategy was reactive, siloed, and inconsistent. We embedded as a full-stack content partner: strategy, production, and distribution, running in parallel across their core verticals.',
     challenge: 'A legacy enterprise with fragmented content ownership and no unified digital voice.',
     challengeBody: 'Each product vertical operated its own social presence with no shared editorial calendar, no brand tone guidelines, and no performance benchmarking. Content was produced to fill calendars, not to move audiences. Engagement was declining quarter on quarter despite increasing post frequency.',
     imgs: ['/scorpio-n.webp', '/thar-roxx-delhi.webp'],
@@ -124,8 +124,8 @@ const BRAND_PROJECTS = [
     name: 'UI/UX', category: 'MG Motor', year: '2024', client: 'MG Motor India', timeline: '9 months',
     img: imgAxisPhoto, logo: '/MG-Logo.webp', logoBg: 'transparent',
     desc: 'Location page strategy and UI/UX overhaul across 2,000+ branches for seamless digital discovery.',
-    headline: 'Rebuilding local digital discovery for 2,000+ MG Motor locations — turning search intent into showroom visits.',
-    intro: 'MG Motor had expanded aggressively across India, but their digital infrastructure hadn\'t kept pace. Potential buyers searching for their nearest showroom were landing on outdated, unoptimised location pages — or not finding them at all. We redesigned the entire location-page experience from the ground up.',
+    headline: 'Rebuilding local digital discovery for 2,000+ MG Motor locations, turning search intent into showroom visits.',
+    intro: 'MG Motor had expanded aggressively across India, but their digital infrastructure hadn\'t kept pace. Potential buyers searching for their nearest showroom were landing on outdated, unoptimised location pages, or not finding them at all. We redesigned the entire location-page experience from the ground up.',
     challenge: 'Thousands of location pages generating traffic but failing to convert local intent into footfall.',
     challengeBody: 'Location pages were templated with minimal localisation, poor structured data, and no CTAs calibrated to buyer journey stage. Search visibility for high-intent local queries was being ceded to competitors. The gap between digital discovery and physical visit was costing MG Motor measurable sales.',
     imgs: [imgAxisPhoto, imgSBIPhoto],
@@ -134,10 +134,10 @@ const BRAND_PROJECTS = [
     name: 'Creative Production', category: 'Kotak Mutual Fund', year: '2024', client: 'Kotak Mutual Fund', timeline: '6 months',
     img: imgSBIPhoto, logo: '/kotak-mf.png', logoBg: 'transparent',
     desc: 'Integrated brand communications and campaign production across digital and offline channels.',
-    headline: 'A unified brand communications system for one of India\'s most trusted mutual fund houses — built for scale.',
-    intro: 'Kotak Mutual Fund was managing brand communications across digital, print, OOH, and broadcast simultaneously — with different agencies handling each. The result was a brand that felt fragmented despite its scale. We designed and produced an integrated campaign architecture that brought everything under a single visual and strategic framework.',
+    headline: 'A unified brand communications system for one of India\'s most trusted mutual fund houses, built for scale.',
+    intro: 'Kotak Mutual Fund was managing brand communications across digital, print, OOH, and broadcast simultaneously, with different agencies handling each. The result was a brand that felt fragmented despite its scale. We designed and produced an integrated campaign architecture that brought everything under a single visual and strategic framework.',
     challenge: 'Multi-agency complexity was diluting brand consistency at the exact moment audience trust was being built.',
-    challengeBody: 'Investors interacting with Kotak MF across touchpoints were receiving subtly different brand signals — different tones, different visual hierarchies, different calls to action. In financial services, where trust is the primary conversion driver, inconsistency is expensive. The brand needed to feel like one entity, everywhere.',
+    challengeBody: 'Investors interacting with Kotak MF across touchpoints were receiving subtly different brand signals: different tones, different visual hierarchies, different calls to action. In financial services, where trust is the primary conversion driver, inconsistency is expensive. The brand needed to feel like one entity, everywhere.',
     imgs: [imgSBIPhoto, imgLACPhoto],
   },
   {
@@ -145,16 +145,16 @@ const BRAND_PROJECTS = [
     img: imgLACPhoto, logo: '/Aptech-Logo.webp', logoBg: 'transparent',
     desc: 'Influencer-led creative production and performance campaigns across education verticals.',
     headline: 'Driving enrolment for Aptech\'s education verticals through influencer-led performance campaigns built for Gen Z.',
-    intro: 'Aptech needed to reach a generation that doesn\'t respond to traditional education advertising. We designed and executed an influencer-led content and performance campaign strategy that met prospective students on the platforms they actually live on — with creative that felt native, not sponsored.',
+    intro: 'Aptech needed to reach a generation that doesn\'t respond to traditional education advertising. We designed and executed an influencer-led content and performance campaign strategy that met prospective students on the platforms they actually live on, with creative that felt native, not sponsored.',
     challenge: 'Legacy advertising formats were failing to reach or convert a digitally native student audience.',
-    challengeBody: 'Aptech\'s media mix skewed heavily toward broadcast and OOH — formats with low measurability and poor resonance with 18–24 year olds. Digital spend was being deployed without a coherent influencer or content strategy. Cost per enrolment was rising while lead quality declined.',
+    challengeBody: 'Aptech\'s media mix skewed heavily toward broadcast and OOH, formats with low measurability and poor resonance with 18–24 year olds. Digital spend was being deployed without a coherent influencer or content strategy. Cost per enrolment was rising while lead quality declined.',
     imgs: [imgLACPhoto, imgMahindraPhoto],
   },
 ]
 
 const PLATFORM_SERVICES = [
   'InsightIT', 'LocateIT', 'CreateIT', 'AmplifyIT', 'SocialiseIT',
-  'InfluenceIT', 'ScriptIT', 'AIGenIT', 'SearchIT', 'InvoiceIT',
+  'InfluenceIT', 'ScriptIT', 'AIgenIT', 'SearchIT', 'InvoiceIT',
 ]
 
 const TABS = ['CHNC PLATFORM', 'BRAND WORK']

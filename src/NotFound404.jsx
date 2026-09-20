@@ -135,7 +135,7 @@ export default function NotFound404() {
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         gap: 28, padding: '104px 20px 64px', textAlign: 'center',
       }}>
-        <SectionLabel>Error 404 — page not found</SectionLabel>
+        <SectionLabel>Error 404 - page not found</SectionLabel>
         <h1 style={{
           fontFamily: SAIRA, fontSize: 'clamp(56px, 14vw, 150px)', fontWeight: 800,
           textTransform: 'uppercase', letterSpacing: '-3px', lineHeight: 1, margin: 0,
@@ -146,10 +146,10 @@ export default function NotFound404() {
         </h1>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
           <p style={{ fontFamily: ARCHIVO, fontSize: 18, lineHeight: '26px', color: MUTED, margin: 0, maxWidth: 560 }}>
-            This page doesn't exist — but your reflexes do.
+            This page doesn't exist, but your reflexes do.
           </p>
           <p style={{ fontFamily: ARCHIVO, fontSize: 17, fontWeight: 700, lineHeight: 1.5, color: '#fff', margin: 0, maxWidth: 540 }}>
-            When the screen flips green, hit space — or tap — as fast as you can.{' '}
+            When the screen flips green, hit space, or tap, as fast as you can.{' '}
             <span style={{ fontWeight: 400, color: MUTED }}>The average human takes {AVG_MS} ms.</span>
           </p>
         </div>
@@ -172,7 +172,7 @@ export default function NotFound404() {
           </Link>
         </div>
         <span style={{ fontFamily: ARCHIVO, fontSize: 12, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.35)' }}>
-          {best > 0 ? `YOUR BEST: ${best} MS — OR PRESS SPACE` : 'OR JUST PRESS SPACE'}
+          {best > 0 ? `YOUR BEST: ${best} MS - OR PRESS SPACE` : 'OR JUST PRESS SPACE'}
         </span>
       </section>
 
@@ -230,7 +230,7 @@ export default function NotFound404() {
                 ))}
               </h2>
               <p style={{ fontFamily: ARCHIVO, fontSize: 15, fontWeight: 700, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
-                Hit anywhere — or space — the moment it flips.
+                Hit anywhere, or space, the moment it flips.
               </p>
             </>
           )}
@@ -316,12 +316,12 @@ export default function NotFound404() {
               }}>
                 {ms < 320 ? (
                   <>
-                    Now imagine your brand moving that fast —{' '}
+                    Now imagine your brand moving that fast:{' '}
                     <strong style={{ color: '#fff' }}>CHNC cuts go-to-market time by <span style={{ color: G }}>50%</span>.</strong>
                   </>
                 ) : (
                   <>
-                    Rough day for those reflexes. We can't fix those — but{' '}
+                    Rough day for those reflexes. We can't fix those, but{' '}
                     <strong style={{ color: '#fff' }}>CHNC cuts your brand's go-to-market time by <span style={{ color: G }}>50%</span>.</strong>
                   </>
                 )}

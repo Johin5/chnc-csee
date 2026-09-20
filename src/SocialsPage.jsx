@@ -70,16 +70,16 @@ const PLATFORMS = [
 
 const POSTS = [
   { type: 'image', platform: 'Instagram', caption: 'Behind the scenes of our latest Mahindra campaign shoot', img: '/thar-mountains.webp' },
-  { type: 'image', platform: 'Instagram', caption: 'Scorpio N launch creative — 10M+ impressions in 48 hours', img: '/scorpio-n.webp' },
+  { type: 'image', platform: 'Instagram', caption: 'Scorpio N launch creative - 10M+ impressions in 48 hours', img: '/scorpio-n.webp' },
   { type: 'video', platform: 'Instagram', caption: 'Reel: How we create content at scale for automobile brands', src: '/people-tech.mp4' },
   { type: 'image', platform: 'LinkedIn', caption: 'Our team at the Digital Marketing Summit 2025', img: '/creative-1.webp' },
-  { type: 'image', platform: 'Instagram', caption: 'F&B creative showcase — Tiramisu campaign', img: '/tiramisu.webp' },
+  { type: 'image', platform: 'Instagram', caption: 'F&B creative showcase - Tiramisu campaign', img: '/tiramisu.webp' },
   { type: 'video', platform: 'YouTube', caption: 'Client review: How CHNC transformed their marketing', src: '/review-reel.mp4' },
   { type: 'image', platform: 'Instagram', caption: 'Thar ROXX Delhi launch event recap', img: '/thar-roxx-delhi.webp' },
-  { type: 'image', platform: 'LinkedIn', caption: 'New office vibes — our creative studio in Powai', img: '/creative-5.webp' },
-  { type: 'image', platform: 'Instagram', caption: 'XUV400 EV awareness campaign — going green', img: '/xuv400.webp' },
-  { type: 'image', platform: 'Instagram', caption: 'Coffee story — brewing creativity one post at a time', img: '/coffee-story.webp' },
-  { type: 'image', platform: 'Instagram', caption: 'Chocolate cake campaign — sweet success', img: '/chocolate-cake.webp' },
+  { type: 'image', platform: 'LinkedIn', caption: 'New office vibes - our creative studio in Powai', img: '/creative-5.webp' },
+  { type: 'image', platform: 'Instagram', caption: 'XUV400 EV awareness campaign - going green', img: '/xuv400.webp' },
+  { type: 'image', platform: 'Instagram', caption: 'Coffee story - brewing creativity one post at a time', img: '/coffee-story.webp' },
+  { type: 'image', platform: 'Instagram', caption: 'Chocolate cake campaign - sweet success', img: '/chocolate-cake.webp' },
   { type: 'image', platform: 'LinkedIn', caption: 'Award-winning creative for automobile sector', img: '/ev.webp' },
 ]
 

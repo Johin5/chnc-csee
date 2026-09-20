@@ -12,7 +12,7 @@ export async function generateMetadata({ params }) {
   const job = findJobBySlug(role)
   if (!job) return {}
   return buildMetadata({
-    title: `${job.title} — Careers`,
+    title: `${job.title} - Careers`,
     description: `ConvergenSEE is hiring a ${job.title} for its ${job.team} team in Mumbai. See the role, responsibilities and requirements, and apply.`,
     path: jobPath(job),
   })
